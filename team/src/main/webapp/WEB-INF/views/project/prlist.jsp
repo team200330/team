@@ -8,7 +8,17 @@
   <title>team</title>
 
   <%@include file="/WEB-INF/views/modules/common-css.jsp" %>
-
+ <style>
+	.page-item.active .page-link {
+		z-index: 1;
+		color: #fff;
+		background-color: #6c757d;
+		border-color: #6c757d;
+	}
+	.bg-info {
+	    background-color: #6c757d!important;
+	}
+ </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 
@@ -52,8 +62,8 @@
           <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
               <i class="fas fa-minus"></i></button>
-            <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-              <i class="fas fa-times"></i></button>
+<!--             <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+              <i class="fas fa-times"></i></button> -->
           </div>
         </div>
 		<div class="card-body" style="display: block;">
@@ -93,8 +103,8 @@
           <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
               <i class="fas fa-minus"></i></button>
-            <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-              <i class="fas fa-times"></i></button>
+<!--             <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+              <i class="fas fa-times"></i></button> -->
           </div>
         </div>
 		<div class="card-body" style="display: block;">
@@ -140,7 +150,7 @@
 		          </div>
 		          <!-- /.col -->
 		          <div class="col-md-3 col-sm-6 col-12">
-		            <div class="info-box bg-success">
+		            <div class="info-box bg-info">
 		
 		              <div class="info-box-content">
 		                <span class="info-box-text">Likes</span>
@@ -159,7 +169,7 @@
 		          </div>
 		          <!-- /.col -->
 		          <div class="col-md-3 col-sm-6 col-12">
-		            <div class="info-box bg-warning">
+		            <div class="info-box bg-info">
 		
 		              <div class="info-box-content">
 		                <span class="info-box-text">Events</span>
@@ -178,7 +188,7 @@
 		          </div>
 		          <!-- /.col -->
 		          <div class="col-md-3 col-sm-6 col-12">
-		            <div class="info-box bg-danger">
+		            <div class="info-box bg-info">
 		
 		              <div class="info-box-content">
 		                <span class="info-box-text">Comments</span>
@@ -200,6 +210,10 @@
 	          </div>
 	        </div>
         </div>
+		<button type="button" class="btn btn-block btn-outline-secondary btn-flat" data-toggle="modal" data-target="#modal-lg">
+			<i class="fas fa-plus"></i> Add Project
+		</button>
+		
         <div class="card-footer" style="display: block;">
           <nav aria-label="Contacts Page Navigation">
             <ul class="pagination justify-content-center m-0">
@@ -216,7 +230,30 @@
         </div>
         </div>
       <!-- /.card -->
-
+      
+      <div class="modal fade" id="modal-lg">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Large Modal</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>One fine body&hellip;</p>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+      
     </section>
     <!-- /.content -->
     
