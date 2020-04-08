@@ -44,7 +44,7 @@
         <div class="row">
                     
           <!-- column -->
-          <div class="col-md-12">
+          <div class="col-md-12" id="invite1">
           
           <!-- Horizontal Form -->
             <div class="card card-info">
@@ -53,14 +53,13 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form class="form-horizontal">
                 <div class="card-body">
                 <div class="row">
                     <div class="col-sm-6">
                       <!-- checkbox -->
                       <div class="form-group">
                         <div class="form-check">
-                          <input class="form-check-input" type="radio" name="radio1">
+                          <input class="form-check-input" type="radio" name="radio1" checked="1" value="1">
                           <label class="form-check-label">팀원</label>
                         </div>
                       </div>
@@ -69,13 +68,13 @@
                       <!-- radio -->
                       <div class="form-group">
                         <div class="form-check">
-                          <input class="form-check-input" type="radio" name="radio1" checked="">
+                          <input class="form-check-input" type="radio" name="radio1" value="2">
                           <label class="form-check-label">게스트</label>
                         </div>
                       </div>
                     </div>
-                    <p class="col-sm-12">팀원은 워크스페이스의 공개된 모든 정보에 엑세스할 수 있으며, Taskworld의 다음 기능을 자유롭게 사용할 수 있습니다.</p>
-                      <ul>
+                    <p class="col-sm-12">팀원은 워크스페이스의 공개된 모든 정보에 엑세스할 수 있으며, TEAM의 다음 기능을 자유롭게 사용할 수 있습니다.</p>
+                      <ul id="memberlist">
                         <li>공개/비공개 프로젝트</li>
                         <li>공개/비공개 대화 채널</li>
                         <li>1:1 다이렉트 메시지</li>
@@ -84,7 +83,7 @@
                         <li>필터와 리포트</li>
                       </ul>
                       
-                      <ul>
+                      <ul id="guestlist" style="display:none;">
                         <li>업무 팔로워로서 업무 진행 사항 보기</li>
                         <li>업무 코멘트와 파일 공유</li>
                         <li>프로젝트 대화 채널</li>
@@ -97,15 +96,14 @@
                 
                 </div>
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-info">다음</button>
+                  <button type="submit" class="btn btn-info" id="invitebtn1">다음</button>
                   <button type="submit" class="btn btn-default float-right">뒤로</button>
                 </div>
                 <!-- /.card-footer -->
-              </form>
             </div>
             <!-- /.card -->
             
-          	<div class="col-md-12">
+          	<div class="col-md-12" id="invite2" style="display:none;">
             <!-- Input addon -->            
             <div class="card card-info">
               <div class="card-header">
@@ -135,20 +133,20 @@
                 <!-- /input-group -->
                 <div class="form-check">
                     <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label" for="exampleCheck1">이메일 추가하기</label>
+                    <label class="form-check-label" for="exampleCheck1" id="checkaddemail1">이메일 추가하기</label>
                   </div>
               </div>
               	<!-- /.card-body -->              
                 <!-- /.card-footer -->
             </div>
             <div class="card-footer">
-                  <button type="submit" class="btn btn-info">초대하기</button>
+                  <button type="submit" class="btn btn-info" id="invitebtn2">초대하기</button>
                   <button type="submit" class="btn btn-default float-right">뒤로</button>
                 </div>
             <!-- /.card -->  
             </div>          
             
-            <div class="col-md-12">
+            <div class="col-md-12" id="invite3" style="display:none;">
             <!-- Input addon -->            
             <div class="card card-info">
               <div class="card-header">
@@ -181,8 +179,8 @@
                 
                 <!-- /input-group -->
                 <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label" for="exampleCheck1">이메일 추가하기</label>
+                    <input type="checkbox" class="form-check-input" id="exampleCheck2">
+                    <label class="form-check-label" for="exampleCheck1" id="checkaddemail2">이메일 추가하기</label>
                   </div>
               </div>
               	<!-- /.card-body -->              
@@ -227,6 +225,42 @@ $(document).ready(function () {
 });
 </script>
 
-  <%@include file="/WEB-INF/views/modules/common-js.jsp" %>
+<%@include file="/WEB-INF/views/modules/common-js.jsp" %>
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+    // 라디오버튼 클릭시 이벤트 발생    
+    $("input:radio[name=radio1]").click(function(){
+ 
+        if ($("input[name=radio1]:checked").val() == "1"){
+        	$('#memberlist').show();
+    		$('#guestlist').hide();
+
+    		$("#invitebtn1.btn.btn-info").click(function(){
+    		$('#invite1').hide();
+    		$('#invite2').show();
+        	$('#invite3').hide();
+    		
+    		});    		
+    		
+        } else if ($("input[name=radio1]:checked").val() == "2"){
+        	$('#guestlist').show();
+    		$('#memberlist').hide();
+
+    		$("#invitebtn1.btn.btn-info").click(function(){
+        	$('#invite1').hide();
+        	$('#invite2').hide();
+            $('#invite3').show();
+        		
+        	});
+        }        
+        
+    });	    
+    
+});
+</script>
+
 </body>
 </html>

@@ -17,7 +17,7 @@
   </div>
   <!-- /.login-logo -->
   <div class="card">
-    <div class="card-body login-card-body">
+    <div class="card-body login-card-body" style="box-shadow: 26px 20px 50px 1px rgba(0, 0, 0, 0.2);">
       <h4 class="login-box-msg">워크스페이스 만들기</h4>
 	  <h6 class="login-box-msg">워크스페이스는 회사, 부서, 팀, <br>혹은 개인이 될 수 있습니다.</h6>
 	  <h5 class="login-box-msg">워크스페이스 이름</h5>
