@@ -76,12 +76,8 @@
 		<div class="card-body" style="display: block;">
 	      <div class="card-body pb-0">
 	          <div class="row d-flex align-items-stretch">
-
 				<div class="row">
-
-
 		        </div>
-            
 	          </div>
 	        </div>
         </div>
@@ -241,19 +237,7 @@
       <div class="modal fade" id="modal-lg">
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">새 프로젝트 등록하기</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-            	<jsp:include page="prwrite.jsp" />
-            </div>
-            <div class="modal-footer justify-content-between">
-              <!-- <button type="button" class="btn btn-default" data-dismiss="modal">취소</button> -->
-              <button type="button" class="btn btn-primary" id="saveSubmit">등록</button>
-            </div>
+            <jsp:include page="prwrite.jsp" />
           </div>
           <!-- /.modal-content -->
         </div>
