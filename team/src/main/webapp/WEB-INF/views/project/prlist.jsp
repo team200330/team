@@ -18,6 +18,13 @@
 	.bg-info {
 	    background-color: #6c757d!important;
 	}
+	.btn-primary {
+	    color: #fff;
+	    background-color: #363b3f;
+	    border-color: #363b3f;
+	    box-shadow: none;
+	    margin: 0rem 0rem 0rem auto;
+	}
  </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -235,17 +242,17 @@
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Large Modal</h4>
+              <h4 class="modal-title">새 프로젝트 등록하기</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
-              <p>One fine body&hellip;</p>
+            	<jsp:include page="prwrite.jsp" />
             </div>
             <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
+              <!-- <button type="button" class="btn btn-default" data-dismiss="modal">취소</button> -->
+              <button type="button" class="btn btn-primary" id="saveSubmit">등록</button>
             </div>
           </div>
           <!-- /.modal-content -->
