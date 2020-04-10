@@ -22,10 +22,12 @@
 	  <h6 class="login-box-msg">워크스페이스는 회사, 부서, 팀, <br>혹은 개인이 될 수 있습니다.</h6>
 	  <h5 class="login-box-msg">워크스페이스 이름</h5>
 	  
-      <form action="workspace" method="post">
+      <form action="create-workspace" method="post">
+        <input type="hidden" name="deleted" value="0">
+        <input type="hidden" name="code" value="0">
       
         <div class="input-group mb-3">
-          <input type="email" class="form-control" placeholder="예) 가나다 주식회사, 마케팅 팀...">
+          <input type="text" class="form-control" name="workspaceName" placeholder="예) 가나다 주식회사, 마케팅 팀...">
         </div>
         
       </form>
