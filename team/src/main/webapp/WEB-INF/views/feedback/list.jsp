@@ -62,14 +62,24 @@
 				<div class="col-md-9" style="max-width:100%">
 					<div class="card" style="margin:50px;">
 						<div class="card-header p-2">
-							<ul class="nav nav-pills">
-								<li class="nav-item"><a class="nav-link active"
-									href="#activity" data-toggle="tab">전체 보기</a></li>
-								<li class="nav-item"><a class="nav-link" href="#timeline"
-									data-toggle="tab">보낸 피드백</a></li>
-								<li class="nav-item"><a class="nav-link" href="#settings"
-									data-toggle="tab">받은 피드백</a></li>
+							<ul class="nav nav-pills" style="float:left;">
+								<li class="nav-item">
+									<a class="nav-link active" href="#" data-toggle="tab">전체 보기</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#" data-toggle="tab">보낸 피드백</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#" data-toggle="tab">받은 피드백</a>
+								</li>
+									
+								
 							</ul>
+							<div style="text-align:right;">
+								<div class="btn btn-block btn-info" data-toggle="modal" data-target="writeFeedbackModal"
+									id="writeFeedbackBtn" style="display:inline-block; width:130px;">피드백 작성</div>
+							</div>
+							
 						</div>
 						<!-- /.card-header -->
 						<div class="card-body">
@@ -187,11 +197,38 @@
 		<!-- /.control-sidebar -->
 	</div>
 	<!-- ./wrapper -->
+	
+	
+	<!-- modal -->
+	<div id="writeFeedbackModal" class="modal fade" id="modal-lg">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header" style="border:none; padding:10px;">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div style="text-align:center">
+            	<h4 style="display:inline-block">피드백 주기</h4>
+            </div>
+            <div class="modal-body">
+              <p>One fine body&hellip;</p>
+            </div>
+            <div class="modal-footer" style="text-align:center; display:block; border-top:none; margin:15px;">
+              <div style="display:inline-block;" class="btn btn-info">작성하기</div>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
 
 	<%@include file="/WEB-INF/views/modules/common-js.jsp"%>
 	<script type="text/javascript">
 	$(function() {
-		
+		$("#writeFeedbackBtn").click(function() {
+			$("#writeFeedbackModal").modal();
+		});
 	})
 	</script>
 </body>
