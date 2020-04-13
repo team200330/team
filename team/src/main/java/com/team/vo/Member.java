@@ -14,6 +14,7 @@ public class Member {
 	private String demartment;
 	private String position;
 	private boolean deleted;
+	private String img;
 	
 	private Address address;
 }
