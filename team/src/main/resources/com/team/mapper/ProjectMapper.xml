@@ -4,11 +4,8 @@
 <mapper namespace="com.team.mapper.ProjectMapper">
 
 <!-- 	<insert id="insertProject">
-		<selectKey keyProperty="projectNo" resultType="int" order="AFTER">
-			SELECT seq_project.currval FROM DUAL
-		</selectKey>
-			INSERT INTO project (project_no, project_name, regdate, content, manager_email, isPublic)
-			VALUES (seq_project.nextval, #{projectName}, #{regdate}, #{content}, #{managerEmail}, #{public})
+			INSERT INTO project ( project_name, regdate, content, manager_email, isPublic)
+			VALUES ( #{projectName}, #{regdate}, #{content}, #{managerEmail}, #{public})
 	</insert> -->
 
 
