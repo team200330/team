@@ -11,6 +11,31 @@
 	color: #5d5d5d;
 	font-weight: bold;
 }
+.float_left { float: left; margin-right:10px; }
+h6 { font-weight:bold !important; }
+.mem {
+	border: 1px #dedede;
+    background-color: #dedede;
+    border-radius: 30rem;
+    width: 115px; height: 32px;
+    text-align: center;
+    margin-top: 2px;
+}
+.mem_img {
+	width: 30%; height:32px;
+	border-radius: 30rem;
+	border: 1px solid;
+}
+.mem_name {width: 50%;}
+.mem_rm {width: 20%;}
+.mem *, ._mem *, .t * {display:inline-block;float:left;}
+._mem { height:50px;border:1px solid white;border-radius:.20rem;padding:5px; }
+._mem_img {width:20%;}
+._mem_name {width:60%;}
+._mem_icon {width:20%;}
+.task {padding:10px;padding-bottom:20px;}
+.t_t {font-weight:bold;}
+.t {font-size:10pt}
 </style>
 <%@include file="/WEB-INF/views/modules/common-css.jsp"%>
 
@@ -39,7 +64,9 @@
 			<div class="content-header">
 				<div class="container-fluid">
 					<div class="row mb-2">
-						<div class="col-sm-6"></div>
+						<div class="col-sm-6">
+							<h3></h3>
+						</div>
 						<!-- /.col -->
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
@@ -200,8 +227,8 @@
 	
 	
 	<!-- modal -->
-	<div id="writeFeedbackModal" class="modal fade" id="modal-lg">
-        <div class="modal-dialog">
+	<div id="writeFeedbackModal" class="modal fade">
+        <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header" style="border:none; padding:10px;">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -209,26 +236,170 @@
               </button>
             </div>
             <div style="text-align:center">
-            	<h4 style="display:inline-block">피드백 주기</h4>
+            	<h4 style="display:inline-block; font-weight:bold;">피드백 주기</h4>
             </div>
-            <div class="modal-body">
-              <p>One fine body&hellip;</p>
+            <div class="modal-body" style="margin:40px;margin-bottom:20px;">
+              <div>
+              	<h6>피드백을 받을 멤버</h6>
+              	<div id="add_mem" class="btn btn-secondary float_left" style="width:37px;">+</div>
+              	<div class="float_left mem">
+              		<div class="mem_img">사진</div>
+              		<div class="mem_name">멤버1</div>
+              		<div class="mem_rm" aria-hidden="true">&times;</div>
+              	</div>
+              	<div class="float_left mem">
+              		<div class="mem_img">사진</div>
+              		<div class="mem_name">멤버1</div>
+              		<div class="mem_rm" aria-hidden="true">&times;</div>
+              	</div>
+              	<div class="float_left mem">
+              		<div class="mem_img">사진</div>
+              		<div class="mem_name">멤버1</div>
+              		<div class="mem_rm" aria-hidden="true">&times;</div>
+              	</div>
+              </div>
+
+              <br/>
+              <div>
+              	<h6 style="margin-top:50px">관련된 업무</h6>
+              	<div id="add_task" class="btn btn-secondary float_left" style="width:37px;">+</div>
+              	<div>업무1</div>
+              </div>
+              <br/><br/>
+              <div>
+              	<h6>설명</h6>
+              	<textarea rows="6" style="width:100%;border:1px solid #cccccc;border-radius:.40rem;padding:10px" placeholder="칭찬 혹은 개선할 사항을 작성해보세요..."></textarea>
+              	<div style="margin:10px;">
+              	<input type="checkbox" style="margin-right:10px;"> 받는 사람이 피드백을 프로플에 공개할 수 있도록 허용합니다
+     			<p style="color:#a0a0a0;padding-left:25px;">설명은 기본적으로 회원님과 받는 사람만 볼 수 있도록 비공개로 설정됩니다.</p>
+              	</div>
+             </div>
             </div>
-            <div class="modal-footer" style="text-align:center; display:block; border-top:none; margin:15px;">
-              <div style="display:inline-block;" class="btn btn-info">작성하기</div>
+            <div class="modal-footer" style="text-align:center; display:block; border-top:none; margin:15px; margin-bottom:30px;">
+              <div style="display:inline-block;width:150px;" class="btn btn-info">작성하기</div>
+            </div>
+            
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      
+      <!-- 멤버 추가 모달 -->
+      <div class="modal fade" id="memberAddModal">
+        <div class="modal-dialog modal-sm" style="top:210;left:-195">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h6 class="modal-title" style="font-weight:bold">멤버</h6>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body" style="padding:10px;">
+              <input style="width:100%;height:30px;border:1px solid #17a2b8;border-radius:.20rem;padding:10px;margin-bottom:10px;"type="text" placeholder="이름 혹은 이메일로 찾기">
+            
+            	<div style="margin-bottom:20px;">
+            	<div class="_mem">
+            		<div class="_mem_img">사진</div>
+            		<div class="_mem_name">멤버이름</div>
+            		<div class="_mem_icon">아이콘</div>
+            	</div>
+            	<div class="_mem">
+            		<div class="_mem_img">사진</div>
+            		<div class="_mem_name">멤버이름</div>
+            		<div class="_mem_icon">아이콘</div>
+            	</div>
+            	<div class="_mem">
+            		<div class="_mem_img">사진</div>
+            		<div class="_mem_name">멤버이름</div>
+            		<div class="_mem_icon">아이콘</div>
+            	</div>
+            	</div>
+            	
+            </div>
+            <div id="addFooter" class="modal-footer" style="border:none;color: white;background-color: #17a2b8;font-weight: bold;">
+              <img src="/dist/img/add-user-icon.png">
+              <div>멤버 초대하기</div>
             </div>
           </div>
           <!-- /.modal-content -->
         </div>
         <!-- /.modal-dialog -->
       </div>
-
+      <!-- /.modal -->
+      
+      
+       <!-- 업무 선택  모달 -->
+      <div class="modal fade" id="taskAddModal">
+        <div class="modal-dialog modal-sm" style="top:310;left:-195">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h6 class="modal-title" style="font-weight:bold">업무 선택하기</h6>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body" style="padding:10px;">
+              <input style="width:100%;height:30px;border:1px solid #17a2b8;border-radius:.20rem;padding:10px;margin-bottom:10px;"type="text" placeholder="업무 검색">
+            
+            	<div style="margin-bottom:20px;">
+            	<div class="task">
+            		<div class="t_t">업무명</div>
+            		<div class="t">
+            			<div>프로젝트 이름&nbsp;</div> 
+            			<div>> 업무 작성자 이름</div>
+            		</div>
+            	</div>
+            	<div class="task">
+            		<div class="t_t">업무명</div>
+            		<div class="t">
+            			<div>프로젝트 이름&nbsp;</div> 
+            			<div>> 업무 작성자 이름</div>
+            		</div>
+            	</div>
+            	<div class="task">
+            		<div class="t_t">업무명</div>
+            		<div class="t">
+            			<div>프로젝트 이름&nbsp;</div> 
+            			<div>> 업무 작성자 이름</div>
+            		</div>
+            	</div>
+            	</div>
+            	
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+      
+      
 	<%@include file="/WEB-INF/views/modules/common-js.jsp"%>
 	<script type="text/javascript">
 	$(function() {
 		$("#writeFeedbackBtn").click(function() {
 			$("#writeFeedbackModal").modal();
 		});
+		
+		$("#add_mem").click(function() {
+			$("#memberAddModal").modal();
+		});
+		$("._mem, .task").hover(function() {
+			$(this).css({"background-color" : "#dedede", "border" : "1px solid #dedede"});
+		}, function() {
+			$(this).css({"background-color" : "white", "border" : "1px solid white"});
+		});
+		
+		$("#addFooter").hover(function() {
+			$(this).css("background-color", "#148192");
+		}, function() {
+			$(this).css("background-color", "#17a2b8");
+		});
+		
+		$("#add_task").click(function() {
+			$("#taskAddModal").modal();
+		})
 	})
 	</script>
 </body>
