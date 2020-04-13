@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.team.mapper.ProjectMapper">
+
+<!-- 	<insert id="insertProject">
+		<selectKey keyProperty="projectNo" resultType="int" order="AFTER">
+			SELECT seq_project.currval FROM DUAL
+		</selectKey>
+			INSERT INTO project (project_no, project_name, regdate, content, manager_email, isPublic)
+			VALUES (seq_project.nextval, #{projectName}, #{regdate}, #{content}, #{managerEmail}, #{public})
+	</insert> -->
+
+
+<!-- 	<resultMap type="project" id="projectMap">
+		<id column="project_no" property="projectNo" />
+		<result column="workspace_no" property="workspaceNo" />
+		<result column="project_name" property="projectName" />
+		<result column="regdate" property="regdate" />
+		<result column="content" property="content" />
+		<result column="manager_email" property="managerEmail" />
+		<result column="deleted" property="deleted" />
+		<result column="public" property="isPublic" />
+		<result column="template_no" property="templateNo" />
+	</resultMap> -->
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

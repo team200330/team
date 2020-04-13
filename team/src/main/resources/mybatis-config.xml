@@ -5,10 +5,25 @@
 
 <configuration>
 
-<!-- 	<typeAliases>
-		<typeAlias type="com.springboard.vo.BoardVO" alias="BoardVO" />
-		<typeAlias type="com.springboard.vo.ReplyVO" alias="ReplyVO" />
-		<typeAlias type="com.springboard.vo.MemberVO" alias="MemberVO" />
-	</typeAliases> -->
+	<typeAliases>
+		<typeAlias type="com.team.vo.Address" alias="Address" />
+		<typeAlias type="com.team.vo.Feedback" alias="Feedback" />
+		<typeAlias type="com.team.vo.File" alias="File" />
+		<typeAlias type="com.team.vo.Log" alias="Log" />
+		<typeAlias type="com.team.vo.Member" alias="Member" />
+		<typeAlias type="com.team.vo.Project" alias="Project" />
+		<typeAlias type="com.team.vo.ProjectMember" alias="ProjectMember" />
+		<typeAlias type="com.team.vo.Task" alias="Task" />
+		<typeAlias type="com.team.vo.TaskList" alias="TaskList" />
+		<typeAlias type="com.team.vo.TaskMember" alias="TaskMember" />
+		<typeAlias type="com.team.vo.Template" alias="Template" />
+		<typeAlias type="com.team.vo.Workspace" alias="Workspace" />
+		<typeAlias type="com.team.vo.WorkspaceMember" alias="WorkspaceMember" />
+	</typeAliases>
 	
 </configuration>
+
+
+
+
+

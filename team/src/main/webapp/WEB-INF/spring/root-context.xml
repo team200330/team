@@ -21,6 +21,17 @@
 		<property name="maxTotal" value="${datasource.maxpool}" />
 		<property name="maxWaitMillis" value="${datasource.conntimeout}" />
 	</bean>
+	
+	<bean id="hikariDataSource"
+		  class="com.zaxxer.hikari.HikariDataSource">
+		<property name="driverClassName" value="${datasource.driver}" />
+		<property name="jdbcUrl" value="${datasource.url}" />
+		<property name="username" value="${datasource.username}" />
+		<property name="password" value="${datasource.password}" />
+		<property name="minimumIdle" value="${datasource.minidle}" />
+		<property name="maximumPoolSize" value="${datasource.maxpool}" />
+		<property name="connectionTimeout" value="${datasource.conntimeout}" />
+	</bean>
 
 	<!-- beans for mybatis & mybatis-spring -->
 	<!-- SqlSessionFactoryBean.getObject()를 호출해서 SqlSessionFactory 생성 -->
@@ -35,6 +46,16 @@
 		<constructor-arg ref="sqlSessionFactory" />	  
 	</bean>
 	
-	<mybatis-spring:scan base-package="com.springboard.mapper" />
-
+	<mybatis-spring:scan base-package="com.team.mapper" />
+	
+	<bean id="workspaceService"
+		  class="com.team.service.WorkspaceServiceImpl">
+	<property name="workspaceMapper" ref="workspaceMapper" />	
+	</bean>
+	
+	<bean id="projectService" class="com.team.service.ProjectServiceImpl">
+		<property name="projectMapper" ref="projectMapper"/>
+	</bean>
+	
+	
 </beans>
