@@ -1,6 +1,7 @@
 <%@ page language="java" 
 		 contentType="text/html; charset=utf-8"
     	 pageEncoding="utf-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -15,11 +16,19 @@
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="/team/resources/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-        </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+        <ul>
+			<c:choose>
+			<c:when test="${ empty sessionScope.loginuser }">
+				<li><a href="/team/account/login.action">로그인</a></li>
+				<li><a href="/team/account/register.action">회원가입</a></li>
+			</c:when>
+			<c:otherwise>
+				<li>${ loginuser.name }님 환영합니다</li>
+				<li><a href="/team/account/logout.action">로그아웃</a></li>
+			</c:otherwise>
+			</c:choose>
+			</ul>
         </div>
       </div>
 

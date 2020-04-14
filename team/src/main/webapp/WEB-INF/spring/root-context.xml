@@ -53,4 +53,8 @@
 	<property name="workspaceMapper" ref="workspaceMapper" />	
 	</bean>
 	
+	<bean id="memberService" class="com.team.service.MemberServiceImpl">
+		<property name="memberMapper" ref="memberMapper"></property>
+	</bean>
+	
 </beans>

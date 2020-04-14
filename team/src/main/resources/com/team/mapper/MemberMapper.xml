@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+		   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.team.mapper.MemberMapper">
+
+	<insert id="insertMember" parameterType="Member">
+		INSERT INTO member (name, email, password, phone, addressno, address )
+		VALUES (#{ name }, #{ email }, #{ password }, #{ phone }, #{ addressno }, #{ address } )
+	</insert>
+	
+	<select id="selectMemberByEmailAndPassword" parameterType="Member" resultType="Member">
+		SELECT * FROM member WHERE email = #{ email } AND password = #{ password } AND deleted = '0'
+	</select>
+
+
+
+</mapper>
