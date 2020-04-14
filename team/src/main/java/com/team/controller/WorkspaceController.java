@@ -47,5 +47,10 @@ public class WorkspaceController {
 	return "workspace/setting-workspace"; 
 	}
 	
+	@GetMapping(path = { "/workspace-member" })
+	public String workspacemember() {
+
+	return "workspace/workspace-member"; 
+	}
 	
 }
