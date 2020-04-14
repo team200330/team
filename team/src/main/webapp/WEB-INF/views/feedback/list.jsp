@@ -6,11 +6,17 @@
 <meta charset="utf-8">
 <title>feedback</title>
 <style>
+.post{ padding:35px; margin-bottom:0px !important; border-bottom: 1.7px solid #dedbdb;}
+.post:last-of-type{padding-bottom:30px !important;}
 .f_link {
-	padding: 10px;
-	color: #5d5d5d;
+	padding: 22px;
+	color: #464c59;
 	font-weight: bold;
 }
+.link-black:focus, .link-black:hover { color: #6c757d !important; }
+#active { border-bottom: 3px solid #17a2b8; color:#17a2b8; }
+.feedback-contents {margin: 70px 0px 30px 0px;}
+.comments { display:none; }
 .float_left { float: left; margin-right:10px; }
 h6 { font-weight:bold !important; }
 .mem {
@@ -52,31 +58,30 @@ h6 { font-weight:bold !important; }
 		<%@include file="/WEB-INF/views/modules/sidebar.jsp"%>
 
 		<!-- Content Wrapper. Contains page content -->
-		<div class="content-wrapper">
+		<div class="content-wrapper" style="background-color:#ececec">
 			<!-- Content Header (Page header) -->
 			<div style="height: 50px; text-align: center; padding-top: 20px;">
-				<a class="f_link" href="#">활동 로그</a>&nbsp;&nbsp; <a class="f_link"
+				<a class="f_link" href="#">활동 로그</a>&nbsp;&nbsp; <a id="active" class="f_link"
 					href="/team/feedback/list">피드백</a>
 			</div>
 
 			<hr />
 
-			<div class="content-header">
+			<div class="content-header" style="margin:25px 50px 25px 50px">
 				<div class="container-fluid">
 					<div class="row mb-2">
 						<div class="col-sm-6">
-							<h3></h3>
+							<i style="float: left;margin:5px;" class="fas fa-bars"></i>
+							<h5 style="font-weight:bold;color:#464c59">나의 피드백</h5>
 						</div>
 						<!-- /.col -->
-						<div class="col-sm-6">
+						<!-- <div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
 								<li class="breadcrumb-item"><a href="/team/home">Home</a></li>
 								<li class="breadcrumb-item active"><a href="/feedback/list">Feedback
 										list</a></li>
 							</ol>
-						</div>
-						<hr />
-						<div></div>
+						</div> -->
 						<!-- /.row -->
 					</div>
 					<!-- /.container-fluid -->
@@ -84,32 +89,33 @@ h6 { font-weight:bold !important; }
 			</div>
 			<!-- /.content-header -->
 
+			<div class="content" style="margin:0 65px 20px 65px; padding:0px">
+				<div style="float:left;">
+				<div class="input-group-prepend">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="background-color:white;border-radius:unset;border-color:#cfcfcf">
+                      	읽지 않은 피드백만 보기 
+                    </button>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="#">전체 보기</a>
+                      <a class="dropdown-item" href="#">내가 작성한 피드백</a>
+                      <a class="dropdown-item" href="#">보낸 피드백</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">읽지 않은 피드백만 보기</a>
+                    </div>
+                  </div>
+                  </div>
+				<div style="text-align:right">
+					<input type="text" style="width:300px;height:35px;margin-right:10px;padding-left:12px;border:1px solid #cfcfcf;"placeholder="업무, 멤버, 내용으로 피드백 검색">
+					<button id="writeFeedbackBtn" class="btn btn-info btn-flat" style="height:35px;">피드백 주기</button>
+				</div>
+			</div>
 			<!-- Main content -->
 			<section class="content">
-				<div class="col-md-9" style="max-width:100%">
-					<div class="card" style="margin:50px;">
-						<div class="card-header p-2">
-							<ul class="nav nav-pills" style="float:left;">
-								<li class="nav-item">
-									<a class="nav-link active" href="#" data-toggle="tab">전체 보기</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" href="#" data-toggle="tab">보낸 피드백</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" href="#" data-toggle="tab">받은 피드백</a>
-								</li>
-									
-								
-							</ul>
-							<div style="text-align:right;">
-								<div class="btn btn-block btn-info" data-toggle="modal" data-target="writeFeedbackModal"
-									id="writeFeedbackBtn" style="display:inline-block; width:130px;">피드백 작성</div>
-							</div>
-							
-						</div>
+				<div class="col-md-9" style="max-width:100%; padding-bottom:50px">
+					<div class="card" style="margin-left:50px;margin-right:50px;border-radius:unset">
+						
 						<!-- /.card-header -->
-						<div class="card-body">
+						<div class="card-body" style="padding:0px">
 							<div class="tab-content">
 								<div class="active tab-pane" id="activity">
 									<!-- Post -->
@@ -123,29 +129,38 @@ h6 { font-weight:bold !important; }
 											<span class="description">피드백 보낸 날짜</span>
 										</div>
 										<!-- /.user-block -->
+										<p class="feedback-contents">
+											피드백 내용 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~```
+										</p>
+										
 										<p>
-											피드백 내용
+											<a href="#" class="link-black text-sm mr-2">
+												<i class="fas fa-user-edit"></i> 코멘트 작성자
+											</a>
 										</p>
 										<p>
 											<a href="#" class="link-black text-sm mr-2">
 												<i class="fas fa-share mr-1"></i> 관련 업무 제목
 											</a>
+											
 											<span class="float-right"> 
-												<a href="#" class="link-black text-sm"> 
+												<a href="#" class="link-black text-sm comment-btn"> 
 													<i class="far fa-comments mr-1"></i> Comments (0)
 												</a>
 											</span>
 										</p>
+										
 
-										<form class="form-horizontal">
-					                        <div class="input-group input-group-sm mb-0">
-					                          <input class="form-control form-control-sm" placeholder="Response">
-					                          <div class="input-group-append">
-					                            <button type="submit" class="btn btn-info">Send</button>
-					                          </div>
-					                        </div>
-					                    </form>
-					                    <div>
+										<div class="comments">
+											<form class="form-horizontal">
+						                        <div class="input-group input-group-sm mb-0">
+						                          <input class="form-control form-control-sm" placeholder="Response">
+						                          <div class="input-group-append">
+						                            <button type="submit" class="btn btn-info">Send</button>
+						                          </div>
+						                        </div>
+						                    </form>
+						                    <div >
 					                    	<p>
 					                    		<a href="#">보낸 사람</a>&nbsp;&nbsp;
 					                    		<span>내용</span>
@@ -162,9 +177,10 @@ h6 { font-weight:bold !important; }
 					                    		<span class="float-right">코멘트 날짜</span>
 					                    	</p>
 					                    </div>
+					                    </div>
 									</div>
 									<!-- /.post -->
-									<div class="post">
+																		<div class="post">
 										<div class="user-block">
 											<img class="img-circle img-bordered-sm" src="" alt="user image">
 											<span class="username"> 
@@ -174,30 +190,56 @@ h6 { font-weight:bold !important; }
 											<span class="description">피드백 보낸 날짜</span>
 										</div>
 										<!-- /.user-block -->
+										<p class="feedback-contents">
+											피드백 내용 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~```
+										</p>
+										
 										<p>
-											피드백 내용
+											<a href="#" class="link-black text-sm mr-2">
+												<i class="fas fa-user-edit"></i> 코멘트 작성자
+											</a>
 										</p>
 										<p>
 											<a href="#" class="link-black text-sm mr-2">
 												<i class="fas fa-share mr-1"></i> 관련 업무 제목
 											</a>
+											
 											<span class="float-right"> 
-												<a href="#" class="link-black text-sm"> 
+												<a href="#" class="link-black text-sm comment-btn"> 
 													<i class="far fa-comments mr-1"></i> Comments (0)
 												</a>
 											</span>
 										</p>
+										
 
-										<form class="form-horizontal">
-					                        <div class="input-group input-group-sm mb-0">
-					                          <input class="form-control form-control-sm" placeholder="Response">
-					                          <div class="input-group-append">
-					                            <button type="submit" class="btn btn-info">Send</button>
-					                          </div>
-					                        </div>
-					                    </form>
+										<div class="comments">
+											<form class="form-horizontal">
+						                        <div class="input-group input-group-sm mb-0">
+						                          <input class="form-control form-control-sm" placeholder="Response">
+						                          <div class="input-group-append">
+						                            <button type="submit" class="btn btn-info">Send</button>
+						                          </div>
+						                        </div>
+						                    </form>
+						                    <div >
+					                    	<p>
+					                    		<a href="#">보낸 사람</a>&nbsp;&nbsp;
+					                    		<span>내용</span>
+					                    		<span class="float-right">코멘트 날짜</span>
+					                    	</p>
+					                    	<p>
+					                    		<a href="#">보낸 사람</a>&nbsp;&nbsp;
+					                    		<span>내용</span>
+					                    		<span class="float-right">코멘트 날짜</span>
+					                    	</p>
+					                    	<p>
+					                    		<a href="#">보낸 사람</a>&nbsp;&nbsp;
+					                    		<span>내용</span>
+					                    		<span class="float-right">코멘트 날짜</span>
+					                    	</p>
+					                    </div>
+					                    </div>
 									</div>
-
 								</div>
 							</div>
 						</div>
@@ -378,6 +420,39 @@ h6 { font-weight:bold !important; }
 	<%@include file="/WEB-INF/views/modules/common-js.jsp"%>
 	<script type="text/javascript">
 	$(function() {
+		// 상단 로그 / 피드백 메뉴 
+		$(".f_link").click(function() {
+			$("#active").removeAttr("id");
+			$(this).attr("id", "active");
+		});
+		$(".f_link").hover(function() {
+			$(this).css("color", "#17a2b8");
+		}, function() {
+			if ($(this).attr("id") != "active")
+				$(this).css("color", "#464c59");
+		});
+		
+		// 댓글 열기 / 닫기 버튼
+		var clicked = false;
+		$(".comment-btn").click(function() {
+			if (clicked == false) {
+				$(".comments").css("display", "block");
+				clicked = true;
+			}
+			else {
+				$(".comments").css("display", "none");
+				clicked = false;
+			}
+		});
+		
+		// 피드백 hover 색깔 변하기
+		$(".post").hover(function() {
+			$(this).css("background-color", "#f7f7f7");
+		}, function() {
+			$(this).css("background-color", "white");
+		});
+		
+		
 		$("#writeFeedbackBtn").click(function() {
 			$("#writeFeedbackModal").modal();
 		});
@@ -399,7 +474,8 @@ h6 { font-weight:bold !important; }
 		
 		$("#add_task").click(function() {
 			$("#taskAddModal").modal();
-		})
+		});
+		
 	})
 	</script>
 </body>

@@ -20,6 +20,8 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		//System.out.println("in interceptor : " + uri);
 		HttpSession session = request.getSession();
 		
+		System.out.println("URI : " + uri);
+		
 		if (uri.contains("/board/") || uri.contains("/reply/")) { 
 			if (session.getAttribute("loginuser") == null) {
 				response.sendRedirect("/academy/resources/login");
