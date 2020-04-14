@@ -5,44 +5,7 @@
 <head>
 <meta charset="utf-8">
 <title>feedback</title>
-<style>
-.post{ padding:35px; margin-bottom:0px !important; border-bottom: 1.7px solid #dedbdb;}
-.post:last-of-type{padding-bottom:30px !important;}
-.f_link {
-	padding: 22px;
-	color: #464c59;
-	font-weight: bold;
-}
-.link-black:focus, .link-black:hover { color: #6c757d !important; }
-#active { border-bottom: 3px solid #17a2b8; color:#17a2b8; }
-.feedback-contents {margin: 70px 0px 30px 0px;}
-.comments { display:none; }
-.float_left { float: left; margin-right:10px; }
-h6 { font-weight:bold !important; }
-.mem {
-	border: 1px #dedede;
-    background-color: #dedede;
-    border-radius: 30rem;
-    width: 115px; height: 32px;
-    text-align: center;
-    margin-top: 2px;
-}
-.mem_img {
-	width: 30%; height:32px;
-	border-radius: 30rem;
-	border: 1px solid;
-}
-.mem_name {width: 50%;}
-.mem_rm {width: 20%;}
-.mem *, ._mem *, .t * {display:inline-block;float:left;}
-._mem { height:50px;border:1px solid white;border-radius:.20rem;padding:5px; }
-._mem_img {width:20%;}
-._mem_name {width:60%;}
-._mem_icon {width:20%;}
-.task {padding:10px;padding-bottom:20px;}
-.t_t {font-weight:bold;}
-.t {font-size:10pt}
-</style>
+<link rel="stylesheet" href="/team/resources/css/log-feedback.css">
 <%@include file="/WEB-INF/views/modules/common-css.jsp"%>
 
 </head>
@@ -61,13 +24,13 @@ h6 { font-weight:bold !important; }
 		<div class="content-wrapper" style="background-color:#ececec">
 			<!-- Content Header (Page header) -->
 			<div style="height: 50px; text-align: center; padding-top: 20px;">
-				<a class="f_link" href="#">활동 로그</a>&nbsp;&nbsp; <a id="active" class="f_link"
+				<a class="f_link" href="/team/log/list">활동 로그</a>&nbsp;&nbsp; <a id="active" class="f_link"
 					href="/team/feedback/list">피드백</a>
 			</div>
 
 			<hr />
 
-			<div class="content-header" style="margin:25px 50px 25px 50px">
+			<div class="content-header">
 				<div class="container-fluid">
 					<div class="row mb-2">
 						<div class="col-sm-6">

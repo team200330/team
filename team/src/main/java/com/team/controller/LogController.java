@@ -5,13 +5,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/feedback")
-public class FeedbackController {
+@RequestMapping("/log")
+public class LogController {
 	
 	@GetMapping("/list")
-	public String feedbackList() {
+	public String logList() {
 		
-		return "/feedback/list";
+		return "/log/list";
 	}
 	
 }
