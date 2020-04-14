@@ -21,6 +21,11 @@
 		<typeAlias type="com.team.vo.WorkspaceMember" alias="WorkspaceMember" />
 	</typeAliases>
 	
+	<mappers>
+		<mapper resource="com/team/mapper/ProjectMapper.xml" />
+		<mapper resource="com/team/mapper/WorkspaceMapper.xml" />
+	</mappers>
+	
 </configuration>
 
 

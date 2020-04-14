@@ -13,4 +13,5 @@ public class FeedbackController {
 		
 		return "/feedback/list";
 	}
+	
 }

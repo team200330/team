@@ -23,18 +23,17 @@
 	  <h5 class="login-box-msg">워크스페이스 이름</h5>
 	  
       <form action="create-workspace" method="post">
-        <input type="hidden" name="deleted" value="0">
         <input type="hidden" name="code" value="0">
       
         <div class="input-group mb-3">
           <input type="text" class="form-control" name="workspaceName" placeholder="예) 가나다 주식회사, 마케팅 팀...">
         </div>
-        
+        <div class="social-auth-links text-center mb-3">
+        	<button type="submit" class="btn btn-block btn-danger">만들기</button>
+      	</div>
       </form>
 
-      <div class="social-auth-links text-center mb-3">
-        <a href="/team" class="btn btn-block btn-danger">만들기</a>
-      </div>
+      
       <!-- /.social-auth-links -->
 
       <p class="mb-1">
