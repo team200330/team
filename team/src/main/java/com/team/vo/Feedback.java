@@ -11,11 +11,11 @@ public class Feedback {
 	private String content;
 	private Date writeDate;
 	private String sender;
-	private String receiver;
 	private int workspaceNo;
 	private int projectNo;
 	private boolean isRead;
 	private boolean isPublic;
 	
+	private List<Receiver> receivers;
 	private List<Comments> comments;
 }

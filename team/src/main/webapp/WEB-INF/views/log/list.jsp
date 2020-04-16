@@ -7,9 +7,12 @@
 <title>활동 로그</title>
 <style>
 .card-header {color:#464c59}
+tr td:nth-child(1) {width:200px;}
 tr td:nth-child(2), tr td:nth-child(3) {padding-top:20px;}
 tr td:nth-child(3) {text-align:right;}
 .img-circle {width:40px;margin-right:10px;}
+table i {margin:5px;}
+tr td:nth-child(3) a {font-size:10pt;}
 </style>
 
 <link rel="stylesheet" href="/team/resources/css/log-feedback.css">
@@ -51,6 +54,17 @@ tr td:nth-child(3) {text-align:right;}
 			<!-- /.content-header -->
 
 			<div class="content" style="margin:0 65px 20px 65px; padding:0px">
+				<div style="float:left;">
+				<div class="input-group-prepend">
+                    <button id="dropdown-select" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="background-color:white;border-radius:unset;border-color:#cfcfcf">
+                      	최신 순으로 보기
+                    </button>
+                    <div class="log dropdown-menu">
+                      <a class="dropdown-item" href="#">최신 순으로 보기</a>
+                      <a class="dropdown-item" href="#">오래된 순으로 보기</a>
+                    </div>
+                  </div>
+                  </div>
 				<!-- <h5 style="float:left">업데이트 사항을 모두 확인했습니다.</h5> -->
 				<div style="text-align:right">
 					<button class="btn btn-secondary btn-flat" style="height:35px;margin-right:10px;">모두 읽음 상태로 표시</button>
@@ -81,7 +95,7 @@ tr td:nth-child(3) {text-align:right;}
 		                <table class="table table-head-fixed text-nowrap">
 		                  <tbody>
 		                    <tr>
-		                      <td >
+		                      <td>
 		                      <img class="img-circle img-bordered-sm" src="" alt="user image">
 								<span class="username"> 
 									<a href="#">유저 이름</a>
@@ -203,7 +217,9 @@ tr td:nth-child(3) {text-align:right;}
 	<%@include file="/WEB-INF/views/modules/common-js.jsp"%>
 	<script type="text/javascript">
 	$(function() {
-		// 상단 로그 / 피드백 메뉴 
+		// CSS
+		
+		// 상단 로그 / 피드백 메뉴  css
 		$(".f_link").click(function() {
 			$("#active").removeAttr("id");
 			$(this).attr("id", "active");
@@ -215,13 +231,24 @@ tr td:nth-child(3) {text-align:right;}
 				$(this).css("color", "#464c59");
 		});
 		
-		// 로그 hover
+		// 로그 table css
 		$("tr").hover(function() {
 			$(this).css("background-color", "#efefef");
+			$(this).children(":nth-child(3)").html(
+				'<a href="#">읽은 상태로 표시</a><i class="far fa-check-square"></i>&nbsp;&nbsp;' +
+		        '<a href="#">삭제</a><i class="fas fa-times"></i>'
+			);
 		}, function() {
 			$(this).css("background-color", "white");
-		})
+			$(this).children(":nth-child(3)").html("11-7-2014");
+		});
 		
+		////////////////////////////////////////////////////
+		
+		// select box
+		$(".log .dropdown-item").click(function() {
+			$("#dropdown-select").text($(this).text());
+		});
 		
 	})
 	</script>
