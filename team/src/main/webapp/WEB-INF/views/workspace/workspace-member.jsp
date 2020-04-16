@@ -44,10 +44,8 @@
     <!-- Main content -->
     <section class="content">
     <div class="row">
-                    
-				    
 				  <div class="form-group col-12 col-sm-6 col-md-3">
-                        <input class="form-control" type="search" placeholder="검색하기" aria-label="Search" style="margin-right: -40px;">                   
+                        <input class="form-control" type="search" placeholder="이름 또는 직함으로 검색하기" aria-label="Search" style="margin-right: -40px;">                   
                   </div>
 				  <div class="form-group col-12 col-sm-6 col-md-3">
                         <select class="form-control">
@@ -65,7 +63,7 @@
                         </select>
                   </div>
                   <div class="form-group col-12 col-sm-6 col-md-3">
-                    <a href="#" class="form-control btn btn-sm btn-success">
+                    <a href="invite-workspace" class="form-control btn btn-sm btn-success">
                       <i class="fas fa-user" style="margin-top: 7px;"></i> 멤버 초대하기
                     </a>
                   </div>
@@ -82,7 +80,13 @@
                 <div class="card-body pt-0">
                   <div class="row">
                     <div class="col-7">
-                      <h2 class="lead"><b>김연아</b></h2>
+                      <h2 class="lead"><b>김연아</b>
+                      <a data-toggle="dropdown"><i class="fas fa-cog ml-3" style="font-size: 18px; color: darkgray;"></i>
+                      <div class="dropdown-menu">
+                            <button class="dropdown-item" >관리자 권한부여</button>
+                        </div>
+                      </a>
+                      </h2>
                       <p class="text-muted text-sm"><b>부서: </b>마케팅팀</p>
                       <ul class="mb-0 text-muted" style="list-style-type: none; padding:0;">
                         <li class="small">로그인 4월 10일 15:07</li>
@@ -125,7 +129,7 @@
                 <div class="card-body pt-0">
                   <div class="row">
                     <div class="col-7">
-                      <h2 class="lead"><b>박지성</b></h2>
+                      <h2 class="lead"><b>박지성</b><span class="badge bg-danger ml-3">관리자</span></h2>
                       <p class="text-muted text-sm"><b>부서: </b>영업팀</p>
                       <ul class="mb-0 text-muted" style="list-style-type: none; padding:0;">
                         <li class="small">로그인 4월 10일 15:07</li>
@@ -168,7 +172,13 @@
                 <div class="card-body pt-0">
                   <div class="row">
                     <div class="col-7">
-                      <h2 class="lead"><b>박세리</b></h2>
+                      <h2 class="lead"><b>박세리</b>
+                      <a data-toggle="dropdown"><i class="fas fa-cog ml-3" style="font-size: 18px; color: darkgray;"></i>
+                      <div class="dropdown-menu">
+                            <button class="dropdown-item" >관리자 권한부여</button>
+                        </div>
+                      </a>
+                      </h2>
                       <p class="text-muted text-sm"><b>부서: </b>개발팀</p>
                       <ul class="mb-0 text-muted" style="list-style-type: none; padding:0;">
                         <li class="small">로그인 4월 10일 15:07</li>
@@ -211,7 +221,13 @@
                 <div class="card-body pt-0">
                   <div class="row">
                     <div class="col-7">
-                      <h2 class="lead"><b>박세리</b></h2>
+                      <h2 class="lead"><b>박세리</b>
+                      <a data-toggle="dropdown"><i class="fas fa-cog ml-3" style="font-size: 18px; color: darkgray;"></i>
+                      <div class="dropdown-menu">
+                            <button class="dropdown-item" >관리자 권한부여</button>
+                        </div>
+                      </a>
+                      </h2>
                       <p class="text-muted text-sm"><b>부서: </b>개발팀</p>
                       <ul class="mb-0 text-muted" style="list-style-type: none; padding:0;">
                         <li class="small">로그인 4월 10일 15:07</li>

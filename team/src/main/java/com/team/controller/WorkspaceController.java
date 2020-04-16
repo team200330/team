@@ -32,7 +32,7 @@ public class WorkspaceController {
 	@PostMapping(path = { "/create-workspace" })
 	public String docreateworkspace(Workspace workspace) {		
 		   workspaceService.insertWorkspace(workspace);		   
-	return "redirect:/workspace/setting-workspace"; //임시
+	return "workspace/setting-workspace"; //임시
 	}
 	
 	@GetMapping(path = { "/invite-workspace" })

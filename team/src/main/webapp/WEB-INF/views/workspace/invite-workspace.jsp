@@ -73,9 +73,11 @@
                           <label class="form-check-label">게스트</label>
                         </div>
                       </div>
-                    </div>
-                    <p class="col-sm-12">팀원은 워크스페이스의 공개된 모든 정보에 엑세스할 수 있으며, TEAM의 다음 기능을 자유롭게 사용할 수 있습니다.</p>
-                      <ul id="memberlist">
+                    </div>                    
+                      <ul id="memberlist" style="width: 100%;">
+                      <li class="col-sm-12 mb-3"
+                      style="list-style: none; margin-left: -30px; font-size: 15px; letter-spacing: -1px;"
+                      >팀원은 워크스페이스의 공개된 모든 정보에 엑세스할 수 있으며, TEAM의 다음 기능을 자유롭게 사용할 수 있습니다.</li>
                         <li>공개/비공개 프로젝트</li>
                         <li>공개/비공개 대화 채널</li>
                         <li>1:1 다이렉트 메시지</li>
@@ -84,7 +86,10 @@
                         <li>필터와 리포트</li>
                       </ul>
                       
-                      <ul id="guestlist" style="display:none;">
+                      <ul id="guestlist" style="width: 100%; display:none;">
+                      <li class="col-sm-12 mb-3"
+                      style="list-style: none; margin-left: -30px; font-size: 15px; letter-spacing: -1px;"
+                      >게스트는 워크스페이스의 정보에 제한적으로 엑세스가 필요한 외부 협력자 입니다.<br>게스트가 프로젝트 멤버로 추가되면, 다음 기능을 사용할 수 있습니다.</li>
                         <li>업무 팔로워로서 업무 진행 사항 보기</li>
                         <li>업무 코멘트와 파일 공유</li>
                         <li>프로젝트 대화 채널</li>
