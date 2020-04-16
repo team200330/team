@@ -1,48 +1,61 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" pageEncoding="utf-8" contentType="text/html; charset=utf-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page pageEncoding="utf-8"%>
 <html>
+
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>team</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<title>워크스페이스 멤버</title>
+<link rel="stylesheet" href="/team/resources/css/log-feedback.css">
+<%@include file="/WEB-INF/views/modules/common-css.jsp"%>
 
-  <!-- Font Awesome -->
-    <%@include file="/WEB-INF/views/modules/common-css.jsp" %>
+<style>
+
+</style>
 </head>
-<body class="hold-transition sidebar-mini">
-<!-- Site wrapper -->
-<div class="wrapper">
-  <!-- Navbar -->
-  <%@include file="/WEB-INF/views/modules/topbar.jsp" %>
-  <!-- /.navbar -->
+<body class="hold-transition sidebar-mini layout-fixed">
 
-  <!-- Main Sidebar Container -->
-  <%@include file="/WEB-INF/views/modules/sidebar.jsp" %>
+	<!-- Navbar -->
+	<%@include file="/WEB-INF/views/modules/topbar.jsp"%>
+	<!-- /.navbar -->
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>○○○ 워크스페이스 멤버</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item"><a href="#">workspace</a></li>
-              <li class="breadcrumb-item active">workspace-member</li>
-            </ol>
-          </div>
-        </div>
-      </div><!-- /.container-fluid -->
-    </section>
+	<div class="wrapper">
 
-    <!-- Main content -->
-    <section class="content">
+		<!-- Main Sidebar Container -->
+		<%@include file="/WEB-INF/views/modules/sidebar.jsp"%>
+
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper" style="background-color:#ececec">
+			<!-- Content Header (Page header) -->
+			<div style="height: 50px; text-align: center; padding-top: 20px;">
+				<a id="active" class="f_link" href="/team/workspace/workspace-member">멤버</a>&nbsp;&nbsp; <a class="f_link"
+					href="#">내 프로필</a>
+			</div>
+
+			<hr />
+
+			<div class="content-header">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+							<i style="float: left;margin:5px;" class="fas fa-bars"></i>
+							<h5 style="font-weight:bold;color:#464c59">워크스페이스 멤버</h5>
+						</div>
+						<!-- /.col -->
+						<!-- <div class="col-sm-6">
+							<ol class="breadcrumb float-sm-right">
+								<li class="breadcrumb-item"><a href="/team/home">Home</a></li>
+								<li class="breadcrumb-item active"><a href="/feedback/list">Feedback
+										list</a></li>
+							</ol>
+						</div> -->
+						<!-- /.row -->
+					</div>
+					<!-- /.container-fluid -->
+				</div>
+			</div>
+			<!-- /.content-header -->
+
+			<section class="content"  style="padding: 0 4% 0 4%;">
     <div class="row">
 				  <div class="form-group col-12 col-sm-6 col-md-3">
                         <input class="form-control" type="search" placeholder="이름 또는 직함으로 검색하기" aria-label="Search" style="margin-right: -40px;">                   
@@ -282,13 +295,9 @@
         <!-- /.card-footer -->
       </div>
       <!-- /.card -->
-
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
-
-  <%@include file="/WEB-INF/views/modules/footer.jsp" %>
+		</div>
+		<!-- /.content-wrapper -->
+		<%@include file="/WEB-INF/views/modules/footer.jsp" %>
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
@@ -300,5 +309,7 @@
 
 <!-- jQuery -->
 <%@include file="/WEB-INF/views/modules/common-js.jsp" %>
+      
 </body>
+
 </html>

@@ -61,6 +61,12 @@
                   <p>업무 테스트페이지</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="/team/workspace/workspace-member" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>워크스페이스 멤버</p>
+                </a>
+              </li>
             </ul>
           </li>
           <li class="nav-item">

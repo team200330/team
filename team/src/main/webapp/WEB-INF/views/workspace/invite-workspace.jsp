@@ -103,7 +103,7 @@
                 </div>
                 <div class="card-footer">
                   <button type="submit" class="btn btn-info" id="invitebtn1">다음</button>
-                  <button type="submit" class="btn btn-default float-right">뒤로</button>
+                  <button onclick="location.href='/team'" type="submit" class="btn btn-default float-right">뒤로</button>
                 </div>
                 <!-- /.card-footer -->
             </div>
@@ -147,7 +147,7 @@
             </div>
             <div class="card-footer">
                   <button type="submit" class="btn btn-info" id="invitebtn2">초대하기</button>
-                  <button type="submit" class="btn btn-default float-right">뒤로</button>
+                  <button type="submit" class="btn btn-default float-right cancelbtn">뒤로</button>
                 </div>
             <!-- /.card -->  
             </div>          
@@ -194,7 +194,7 @@
             </div>
             <div class="card-footer">
                   <button type="submit" class="btn btn-info">초대하기</button>
-                  <button type="submit" class="btn btn-default float-right">뒤로</button>
+                  <button type="submit" class="btn btn-default float-right cancelbtn">뒤로</button>
                 </div>
             <!-- /.card -->  
             </div>          
@@ -257,6 +257,11 @@ $(document).ready(function(){
         }        
         
     });	    
+	    $(".cancelbtn").click(function(){    	 
+	    	$('#invite1').show();
+	    	$('#invite2').hide();
+	        $('#invite3').hide();        
+	    });	
     
 });
 </script>
