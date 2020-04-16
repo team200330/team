@@ -17,4 +17,17 @@
 		)
 	</insert>	
 	
+	
+	<select id="selectWorkspaceMembers" parameterType="int" resultMap="workspaceMemberMap">
+		SELECT * FROM workspace_member
+		WHERE workspace_no = #{ workspaceNo } 
+		AND ( type_no = 1 OR type_no = 2 );
+	</select>
+	
+	<resultMap type="WorkspaceMember" id="workspaceMemberMap">
+		<id column="workspace_no" property="workspaceNo" />
+		<result column="email" property="email" />
+		<result column="type_no" property="typeNo" />
+	</resultMap> 
+	
 </mapper>

@@ -8,6 +8,9 @@
 <link rel="stylesheet" href="/team/resources/css/log-feedback.css">
 <%@include file="/WEB-INF/views/modules/common-css.jsp"%>
 
+<style>
+
+</style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 
@@ -55,10 +58,10 @@
 			<div class="content" style="margin:0 65px 20px 65px; padding:0px">
 				<div style="float:left;">
 				<div class="input-group-prepend">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="background-color:white;border-radius:unset;border-color:#cfcfcf">
+                    <button id="dropdown-select" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="background-color:white;border-radius:unset;border-color:#cfcfcf">
                       	읽지 않은 피드백만 보기 
                     </button>
-                    <div class="dropdown-menu">
+                    <div class="feedback dropdown-menu">
                       <a class="dropdown-item" href="#">전체 보기</a>
                       <a class="dropdown-item" href="#">내가 작성한 피드백</a>
                       <a class="dropdown-item" href="#">보낸 피드백</a>
@@ -301,30 +304,24 @@
               </button>
             </div>
             <div class="modal-body" style="padding:10px;">
-              <input style="width:100%;height:30px;border:1px solid #17a2b8;border-radius:.20rem;padding:10px;margin-bottom:10px;"type="text" placeholder="이름 혹은 이메일로 찾기">
+              <input style="width:100%;height:30px;border:1px solid #17a2b8;padding:10px;margin-bottom:10px;"type="text" placeholder="이름 혹은 이메일로 찾기">
             
             	<div style="margin-bottom:20px;">
-            	<div class="_mem">
-            		<div class="_mem_img">사진</div>
-            		<div class="_mem_name">멤버이름</div>
-            		<div class="_mem_icon">아이콘</div>
-            	</div>
-            	<div class="_mem">
-            		<div class="_mem_img">사진</div>
-            		<div class="_mem_name">멤버이름</div>
-            		<div class="_mem_icon">아이콘</div>
-            	</div>
-            	<div class="_mem">
-            		<div class="_mem_img">사진</div>
-            		<div class="_mem_name">멤버이름</div>
-            		<div class="_mem_icon">아이콘</div>
-            	</div>
+	            	<c:forEach var="m" items="${ workspaceMembers }">
+	            		<div class="_mem">
+		            		<img class="_mem_img img-circle img-bordered-sm" src="" alt="user image">
+		            		<div class="_mem_name">${ m.email }</div>
+		            		<div class="_mem_icon" style="text-align:right" >
+		            			<i class="fas fa-check"></i>
+		            		</div>
+		            	</div>
+	            	</c:forEach>
             	</div>
             	
             </div>
             <div id="addFooter" class="modal-footer" style="border:none;color: white;background-color: #17a2b8;font-weight: bold;">
-              <img src="/dist/img/add-user-icon.png">
-              <div>멤버 초대하기</div>
+              <i class="fas fa-user-plus"></i>
+              <a href="/team/workspace/invite-workspace" style="color:white">멤버 초대하기</a>
             </div>
           </div>
           <!-- /.modal-content -->
@@ -383,7 +380,9 @@
 	<%@include file="/WEB-INF/views/modules/common-js.jsp"%>
 	<script type="text/javascript">
 	$(function() {
-		// 상단 로그 / 피드백 메뉴 
+		// CSS
+		
+		// 상단 로그 / 피드백 메뉴 css
 		$(".f_link").click(function() {
 			$("#active").removeAttr("id");
 			$(this).attr("id", "active");
@@ -408,14 +407,14 @@
 			}
 		});
 		
-		// 피드백 hover 색깔 변하기
+		// 피드백 post css
 		$(".post").hover(function() {
 			$(this).css("background-color", "#f7f7f7");
 		}, function() {
 			$(this).css("background-color", "white");
 		});
 		
-		
+		// 모달 css
 		$("#writeFeedbackBtn").click(function() {
 			$("#writeFeedbackModal").modal();
 		});
@@ -439,6 +438,16 @@
 			$("#taskAddModal").modal();
 		});
 		
+		////////////////////////////////////////////////////////////////////////////////////////
+		
+		// select box
+		$(".feedback .dropdown-item").click(function() {
+			$("#dropdown-select").text($(this).text());
+		});
+		
+		$("._mem").click(function() {
+			
+		});
 	})
 	</script>
 </body>

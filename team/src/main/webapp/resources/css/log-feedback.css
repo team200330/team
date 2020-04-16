@@ -28,9 +28,10 @@ h6 { font-weight:bold !important; }
 .mem_rm {width: 20%;}
 .mem *, ._mem *, .t * {display:inline-block;float:left;}
 ._mem { height:50px;border:1px solid white;border-radius:.20rem;padding:5px; }
-._mem_img {width:20%;}
 ._mem_name {width:60%;}
 ._mem_icon {width:20%;}
+._mem_icon > i {padding-left:30px;}
+._mem_img {width:43px;margin-right:10px;}
 .task {padding:10px;padding-bottom:20px;}
 .t_t {font-weight:bold;}
 .t {font-size:10pt}
