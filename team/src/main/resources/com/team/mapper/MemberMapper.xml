@@ -15,6 +15,28 @@
 		SELECT * FROM member WHERE email = #{ email } AND password = #{ password } AND deleted = '0'
 	</select>
 
-
+	<select id="selectMemberByEmail" parameterType="Member" resultType="Member">
+		SELECT * FROM member WHERE email = #{ email } AND deleted = '0'
+	</select>
+	
+	
+	
+	
+	
+	
+	<resultMap type="Member" id="memberMap">
+		<id column="email" property="email"/>
+		<result column="password" property="password"/>
+		<result column="regdate" property="regdate"/>
+		<result column="name" property="name"/>
+		<result column="phone" property="phone"/>
+		<result column="department" property="department"/>
+		<result column="position" property="position" />
+		<result column="deleted" property="deleted"/>
+		<result column="address_no" property="addressNo"/>
+		<result column="roadname_addr" property="roadnameAddr"/>
+		<result column="detail_addr" property="detailAddr"/>
+		<result column="img" property="img"/>
+	</resultMap>
 
 </mapper>

@@ -3,6 +3,7 @@ package com.team.service;
 import java.util.List;
 
 import com.team.vo.Feedback;
+import com.team.vo.Member;
 import com.team.vo.WorkspaceMember;
 
 public interface FeedbackService {
@@ -11,5 +12,5 @@ public interface FeedbackService {
 	
 	////////////////////////////////////////////////////
 	
-	public List<WorkspaceMember> findWorkspaceMembers(int workspaceNo);
+	public List<Member> findWorkspaceMembers(int workspaceNo);
 }

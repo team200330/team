@@ -247,24 +247,12 @@
             	<h4 style="display:inline-block; font-weight:bold;">피드백 주기</h4>
             </div>
             <div class="modal-body" style="margin:40px;margin-bottom:20px;">
-              <div>
+            	<form method="post" action="/write">
+              <div >
               	<h6>피드백을 받을 멤버</h6>
               	<div id="add_mem" class="btn btn-secondary float_left" style="width:37px;">+</div>
-              	<div class="float_left mem">
-              		<div class="mem_img">사진</div>
-              		<div class="mem_name">멤버1</div>
-              		<div class="mem_rm" aria-hidden="true">&times;</div>
-              	</div>
-              	<div class="float_left mem">
-              		<div class="mem_img">사진</div>
-              		<div class="mem_name">멤버1</div>
-              		<div class="mem_rm" aria-hidden="true">&times;</div>
-              	</div>
-              	<div class="float_left mem">
-              		<div class="mem_img">사진</div>
-              		<div class="mem_name">멤버1</div>
-              		<div class="mem_rm" aria-hidden="true">&times;</div>
-              	</div>
+              	<div id="mem"></div>
+              	
               </div>
 
               <br/>
@@ -282,6 +270,7 @@
      			<p style="color:#a0a0a0;padding-left:25px;">설명은 기본적으로 회원님과 받는 사람만 볼 수 있도록 비공개로 설정됩니다.</p>
               	</div>
              </div>
+             </form>
             </div>
             <div class="modal-footer" style="text-align:center; display:block; border-top:none; margin:15px; margin-bottom:30px;">
               <div style="display:inline-block;width:150px;" class="btn btn-info">작성하기</div>
@@ -304,14 +293,14 @@
               </button>
             </div>
             <div class="modal-body" style="padding:10px;">
-              <input style="width:100%;height:30px;border:1px solid #17a2b8;padding:10px;margin-bottom:10px;"type="text" placeholder="이름 혹은 이메일로 찾기">
+              <input id="_mem_input" style="width:100%;height:30px;border:1px solid #17a2b8;padding:10px;margin-bottom:10px;"type="text" placeholder="이름 혹은 이메일로 찾기">
             
-            	<div style="margin-bottom:20px;">
+            	<div id="workspace_mem" style="margin-bottom:20px;">
 	            	<c:forEach var="m" items="${ workspaceMembers }">
-	            		<div class="_mem">
+	            		<div class="_mem" data-email="${ m.email }" data-name="${ m.name }">
 		            		<img class="_mem_img img-circle img-bordered-sm" src="" alt="user image">
-		            		<div class="_mem_name">${ m.email }</div>
-		            		<div class="_mem_icon" style="text-align:right" >
+		            		<div class="_mem_name">${ m.email }<br/>${ m.name }</div>
+		            		<div class="_mem_icon _mem_icon_default" style="text-align:right" >
 		            			<i class="fas fa-check"></i>
 		            		</div>
 		            	</div>
@@ -376,7 +365,6 @@
       </div>
       <!-- /.modal -->
       
-      
 	<%@include file="/WEB-INF/views/modules/common-js.jsp"%>
 	<script type="text/javascript">
 	$(function() {
@@ -422,6 +410,7 @@
 		$("#add_mem").click(function() {
 			$("#memberAddModal").modal();
 		});
+		
 		$("._mem, .task").hover(function() {
 			$(this).css({"background-color" : "#dedede", "border" : "1px solid #dedede"});
 		}, function() {
@@ -445,10 +434,58 @@
 			$("#dropdown-select").text($(this).text());
 		});
 		
-		$("._mem").click(function() {
+		// 멤버 추가 작은모달 이벤트
+		$(document).on("click", "._mem", function() {
+			var name = $(this).attr("data-name");
+			var email = $(this).attr("data-email");
 			
+			if ($(this).children().hasClass("_mem_icon_default")) {
+				$(this).children().removeClass("_mem_icon_default");
+				
+				$("#mem").html($("#mem").html() + 
+					'<div class="float_left mem" data-name="' + name +'" data-email="' + email + '">' +
+						'<img class="mem_img"></img>' +
+						'<div class="mem_name" name="email">'+ name + '</div>' +
+						'<a href="#" class="mem_rm" aria-hidden="true">&times;</a>' +
+						'<input type="hidden" value="' + email + '"/>' + 
+					'</div>'	
+				);
+				
+			} else {
+				$(this).children("._mem_icon").addClass("_mem_icon_default");
+				$("#mem div[data-email='" + email + "']").remove();
+			}
 		});
-	})
+		
+		// 멤버 추가 츼소 큰모달 이벤트
+		$(document).on("click", ".mem_rm", function() {
+			var name = $(this).parent().attr("data-name");
+			var email = $(this).parent().attr("data-email");
+			
+			$(this).parent().remove();
+			$("#workspace_mem div[data-email='" + email +"']").children("._mem_icon").addClass("_mem_icon_default");
+		});
+		
+		
+		// 멤버 추가 작은모달 ajax
+		$("#_mem_input").keyup(function() {
+			$.ajax({
+				url : "getWorkspaceMembers",
+				method : "get",
+				async : true,
+				data : {"str" : $(this).val()},
+				success : function(resp, status, xhr) {
+					$("#workspace_mem").html("");
+					$("#workspace_mem").html(resp);
+					
+				},
+				error : function(xhr, status, err) {
+					console.log(err);
+				}
+			});
+		});
+		
+	});
 	</script>
 </body>
 
