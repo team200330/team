@@ -6,39 +6,16 @@
 
 <mapper namespace="com.team.mapper.WorkspaceMapper">
 
-	<insert id="insertWorkspace" parameterType="Workspace"
+	<insert id="insertWorkspace" parameterType="com.team.vo.Workspace"
 			useGeneratedKeys="true" keyColumn="workspaceNo" keyProperty="workspaceNo">
-		INSERT INTO Workspace (
-			workspaceNo, workspaceName, 
+		INSERT INTO workspace (
+			workspace_name, 
 			deleted, code
 		)
 		VALUES (
-			#{ workspaceNo }, #{ workspaceName }, 
+			#{ workspaceName }, 
 			#{ deleted }, #{ code }
 		)
 	</insert>
 	
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

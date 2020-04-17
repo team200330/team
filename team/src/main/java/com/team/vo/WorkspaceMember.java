@@ -6,5 +6,6 @@ import lombok.Data;
 public class WorkspaceMember {
 	private int workspaceNo;
 	private String email;
-	private char userType;
+	
+	private UserType userType;
 }

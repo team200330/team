@@ -6,7 +6,6 @@
 <configuration>
 
 	<typeAliases>
-		<typeAlias type="com.team.vo.Address" alias="Address" />
 		<typeAlias type="com.team.vo.Feedback" alias="Feedback" />
 		<typeAlias type="com.team.vo.File" alias="File" />
 		<typeAlias type="com.team.vo.Log" alias="Log" />
@@ -20,6 +19,12 @@
 		<typeAlias type="com.team.vo.Workspace" alias="Workspace" />
 		<typeAlias type="com.team.vo.WorkspaceMember" alias="WorkspaceMember" />
 	</typeAliases>
+	
+	<mappers>
+		<mapper resource="com/team/mapper/ProjectMapper.xml" />
+		<mapper resource="com/team/mapper/WorkspaceMapper.xml" />
+		<mapper resource="com/team/mapper/MemberMapper.xml" />
+	</mappers>
 	
 </configuration>
 

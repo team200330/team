@@ -1,6 +1,7 @@
 package com.team.vo;
 
 import java.sql.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -16,4 +17,5 @@ public class Feedback {
 	private boolean isRead;
 	private boolean isPublic;
 	
+	private List<Comments> comments;
 }

@@ -11,9 +11,12 @@ public class Member {
 	private Date regdate;
 	private String name;
 	private String phone;
-	private String demartment;
+	private String department;
 	private String position;
 	private boolean deleted;
+	private String img;
 	
-	private Address address;
+	private String addressNo;
+	private String roadnameAddr;
+	private String detailAddr;
 }

@@ -128,6 +128,56 @@
           <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
         </div>
       </li>
+      
+      <!-- WorkspaceList Dropdown Menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <i class="far fa-bell"></i>
+          <span class="badge badge-success navbar-badge">15</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          
+          <div class="dropdown-divider"></div>
+          <a href="workspace/setting-workspace" class="dropdown-item">
+            <p class="text-sm">워크스페이스이름<br>워크스페이스 설정, 결제 그 외 더보기...</p>
+          </a>
+          <div class="dropdown-divider"></div>
+            <!-- Message Start -->
+            <div class="media dropdown-item">              
+              <div class="media-body">
+                <h3 class="dropdown-item-title" style="margin-bottom: 10px;">워크스페이스 변경</h3>
+                
+                <div class="input-group input-group-sm" style="margin-bottom: 10px;">                
+                	<input class="form-control form-control-navbar" type="search" placeholder="검색하기" aria-label="Search">
+                    <div class="input-group-append">
+                         <button class="btn btn-navbar" type="submit">
+                         <i class="fas fa-search"></i>
+                         </button>
+                    </div>                     
+                </div>
+              </div>                
+            </div> 
+  
+              <div class="dropdown-divider"></div>          
+          	  <a href="#" class="dropdown-item">
+              <p class="text-sm">팀플랜 - 프로젝트 진행 내용 작성 될곳 테스트는 다른곳에서</p>
+              </a>                 
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item">
+              <p class="text-sm">팀플랜 - 프로젝트 진행 내용 작성 될곳 테스트는 다른곳에서</p>
+              </a> 
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item">
+              <p class="text-sm">팀플랜 - 프로젝트 진행 내용 작성 될곳 테스트는 다른곳에서</p>
+              </a> 
+              <div class="dropdown-divider"></div>
+            <!-- Message End -->
+                   
+          <a href="workspace/create-workspace" class="dropdown-item dropdown-footer">새 워크스페이스 만들기</a>
+        </div>
+      </li>
+      <!-- WorkspaceList Dropdown Menu -->
+      
       <!-- 필요한사람이 살리세요  -->
       <!-- 
       <li class="nav-item">

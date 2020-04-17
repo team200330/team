@@ -22,27 +22,31 @@ public class AccountController {
 	@Qualifier("memberService")
 	private MemberService memberService;
 	
+	//회원가입 페이지 이동
 	@GetMapping(path = {"/register.action"})
 	public String toRegister() {
 		
 		return "account/register";
 	}
 	
+	//회원가입
 	@PostMapping(path = {"/register.action"})
 	public String register(Member member, RedirectAttributes attr) {
 		
 		memberService.registerMember(member);
 		
-		attr.addFlashAttribute("newId", member.getEmail());
+		//attr.addFlashAttribute("newEmail", member.getEmail());
 		
 		return "redirect:login.action";
 	}
 	
+	//로그인 페이지 이동
 	@GetMapping(path = {"/login.action"})
 	public String toLogin() {
 		return "account/login";
 	}
 	
+	//로그인
 	@PostMapping(path = {"login.action"})
 	public String login(Member member, HttpSession session) {
 	
@@ -55,6 +59,7 @@ public class AccountController {
 		}
 	}
 	
+	//로그아웃 
 	@GetMapping(path = {"/logout.action"})
 	public String logout(HttpSession session) {
 		

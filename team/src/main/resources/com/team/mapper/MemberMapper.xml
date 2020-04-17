@@ -7,8 +7,8 @@
 <mapper namespace="com.team.mapper.MemberMapper">
 
 	<insert id="insertMember" parameterType="Member">
-		INSERT INTO member (name, email, password, phone, addressno, address )
-		VALUES (#{ name }, #{ email }, #{ password }, #{ phone }, #{ addressno }, #{ address } )
+		INSERT INTO member (name, email, password, phone, department, address_no, roadname_addr, detail_addr )
+		VALUES ( #{ name }, #{ email }, #{ password }, #{ phone }, #{ department }, #{ addressNo }, #{ roadnameAddr }, #{ detailAddr } )
 	</insert>
 	
 	<select id="selectMemberByEmailAndPassword" parameterType="Member" resultType="Member">

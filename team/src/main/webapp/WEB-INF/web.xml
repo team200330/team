@@ -30,4 +30,24 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
+	<!-- filter : 서블릿 또는 JSP가 호출되기 전에 실행되는 모듈 -->
+	<!-- 여기서는 모든 요청에 대해 utf-8 encoding 설정 -->
+	<filter>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>utf-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
 </web-app>

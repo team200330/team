@@ -6,7 +6,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 3 | Registration Page</title>
+  <title>TEAMPLAN | Registration Page</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -64,7 +64,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone">
+          <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone : ex)000-0000-0000">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-phone-alt"></span>
@@ -88,7 +88,15 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="text" class="form-control" id="address" name="address" placeholder="Address">
+          <input type="text" class="form-control" id="roadAddr" name="roadAddr" placeholder="Address">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-home"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" id="detailAddr" name="detailAddr" placeholder="Address">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-home"></span>
@@ -99,7 +107,7 @@
         <div class="row">
           <!-- /.col -->
           <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block">Register</button>
+            <button type="button" id="register" class="btn btn-primary btn-block">Register</button>
           </div>
           <!-- /.col -->
         </div>
@@ -129,15 +137,14 @@
 	<script type="text/javascript">
 	$(function(){
 
-		$("#addressNo").attr({"readonly": "readonly" });
+		$("#addressNo, #roadAddr").attr({"readonly": "readonly" });
 
 		$("#btn").on("click", function(event) {
 			 new daum.Postcode({
 			        oncomplete: function(data) {
 
 						$("#addressNo").val(data.postcode);
-						$("#address").val(data.roadAddress);
-						//$("#jibunAddress").val(data.jibunAddress);
+						$("#roadAddr").val(data.roadAddress);
 	                   	
 			        }
 			    }).open();
@@ -146,16 +153,6 @@
 		$("#register").on("click" , function(event) {
 			
 			// 1. 유효성 검사
-			if($("#password").val() == '' ){
-				alert("패스워드를 입력하세요!");
-				$("#passwd").focus();
-				return;
-			}
-			if($("#confirm").val() == '' ){
-				alert("패스워드 확인을 입력하세요!");
-				$("#confirm").focus();
-				return;
-			}
 			if($("#name").val() == '' ){
 				alert("이름을 입력하세요!");
 				$("#name").focus();
@@ -166,42 +163,25 @@
 				$("#email").focus();
 				return;
 			}
+			if($("#password").val() == '' ){
+				alert("패스워드를 입력하세요!");
+				$("#password").focus();
+				return;
+			}
+			if($("#confirm").val() == '' ){
+				alert("패스워드 확인을 입력하세요!");
+				$("#confirm").focus();
+				return;
+			}
 			if($("#phone").val() == '' ){
 				alert("핸드폰을 입력하세요!");
 				$("#phone").focus();
-				return;
-			}if($("#addressNo").val() == '' ){
-				alert("우편번호를 입력하세요!");
-				return;
-			}
-			if($("#address").val() == '' ){
-				alert("상세주소를 입력하세요!");
-				$("#address").focus();
 				return;
 			}
 			
 			// 2. 오류가 없다면 서버로 전송
 			$("#register-form").submit();
 		});
-
-		/* // id 중복체크
-		$("#id-check").on("click", function(event) {
-			
-			$.ajax({
-				"url" : "checkId.action",
-				"method" : "get",
-				"data" : { "id" : $("#id").val() },
-				"success" : function(result, status, xhr) {
-					if (result == "success") $("#id-check-result").text("사용 가능한 아이디 입니다.");
-					else {
-						$("#id-check-result").text("중복된 아이디 입니다.");
-						$("#id").focus().val("");
-					}
-				},
-				"error" : function(xhr, status, err) { alert("아이디 중복체크 실패"); }
-			});
-
-		}); */
 
 		// 비밀번호 confirm
 		$("#confirm").change(function(event) {
