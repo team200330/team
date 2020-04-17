@@ -65,7 +65,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="task/tasklist." class="nav-link">
+                <a href="/team/task/test" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>업무 테스트페이지</p>
                 </a>
