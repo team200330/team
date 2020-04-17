@@ -15,8 +15,8 @@ public class Project {
 	private String managerEmail;
 	private boolean deleted;
 	private boolean isPublic;
+	private int templateNo;
 	
-	private Template template;
 	private List<TaskList> taskLists;
 	private List<ProjectMember> projectMembers;
 	
