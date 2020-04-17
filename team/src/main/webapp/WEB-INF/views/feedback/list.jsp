@@ -247,7 +247,18 @@
             	<h4 style="display:inline-block; font-weight:bold;">피드백 주기</h4>
             </div>
             <div class="modal-body" style="margin:40px;margin-bottom:20px;">
-            	<form method="post" action="/write">
+            <form id="feedback_write_form" method="post" action="/team/feedback/write">
+            
+            
+            
+            	<!-- 로그인 임시 -->
+            	<input type="hidden" name="sender" value="user1@example.com"/>
+            	<!-- 워크스페이스 임시 -->
+            	<input type="hidden" name="workspaceNo" value="3" />
+            	
+            	
+            	
+            	
               <div >
               	<h6>피드백을 받을 멤버</h6>
               	<div id="add_mem" class="btn btn-secondary float_left" style="width:37px;">+</div>
@@ -264,16 +275,17 @@
               <br/><br/>
               <div>
               	<h6>설명</h6>
-              	<textarea rows="6" style="width:100%;border:1px solid #cccccc;border-radius:.40rem;padding:10px" placeholder="칭찬 혹은 개선할 사항을 작성해보세요..."></textarea>
+              	<textarea name="content" rows="6" style="width:100%;border:1px solid #cccccc;border-radius:.40rem;padding:10px" placeholder="칭찬 혹은 개선할 사항을 작성해보세요..."></textarea>
               	<div style="margin:10px;">
-              	<input type="checkbox" style="margin-right:10px;"> 받는 사람이 피드백을 프로플에 공개할 수 있도록 허용합니다
+              	<input id="isPublic" type="hidden" name="isPublic" value=true/>
+              	<input id="checkbox" type="checkbox" checked style="margin-right:10px;"> 받는 사람이 피드백을 프로필에 공개할 수 있도록 허용합니다
      			<p style="color:#a0a0a0;padding-left:25px;">설명은 기본적으로 회원님과 받는 사람만 볼 수 있도록 비공개로 설정됩니다.</p>
               	</div>
              </div>
              </form>
             </div>
             <div class="modal-footer" style="text-align:center; display:block; border-top:none; margin:15px; margin-bottom:30px;">
-              <div style="display:inline-block;width:150px;" class="btn btn-info">작성하기</div>
+              <div id="submit_btn" style="display:inline-block;width:150px;" class="btn btn-info">작성하기</div>
             </div>
             
           </div>
@@ -445,9 +457,9 @@
 				$("#mem").html($("#mem").html() + 
 					'<div class="float_left mem" data-name="' + name +'" data-email="' + email + '">' +
 						'<img class="mem_img"></img>' +
-						'<div class="mem_name" name="email">'+ name + '</div>' +
+						'<div class="mem_name" >'+ name + '</div>' +
 						'<a href="#" class="mem_rm" aria-hidden="true">&times;</a>' +
-						'<input type="hidden" value="' + email + '"/>' + 
+						'<input type="hidden" name="email" value="' + email + '"/>' + 
 					'</div>'	
 				);
 				
@@ -469,11 +481,17 @@
 		
 		// 멤버 추가 작은모달 ajax
 		$("#_mem_input").keyup(function() {
+			
+			var selected = "";
+			for (i = 0; i < $(".mem").length; i++) 
+				selected += $(".mem:eq("+ i +")").attr("data-email") + ":";
+				
 			$.ajax({
 				url : "getWorkspaceMembers",
 				method : "get",
 				async : true,
-				data : {"str" : $(this).val()},
+				data : {"str" : $(this).val(),
+						"selected" : selected},
 				success : function(resp, status, xhr) {
 					$("#workspace_mem").html("");
 					$("#workspace_mem").html(resp);
@@ -483,6 +501,24 @@
 					console.log(err);
 				}
 			});
+		});
+		
+		
+		// 피드백 폼 전송
+		$("#checkbox").click(function() {
+			if ($(this).attr("checked")) {
+				$(this).removeAttr("checked");
+				$("#isPublic").val(false);
+			} 
+			else {
+				$(this).attr("checked", "");
+				$("#isPublic").val(true);
+			}
+		});
+		
+		$("#submit_btn").click(function() {
+			if (!confirm("피드백을 작성할까요?")) return;
+			$("#feedback_write_form").submit();
 		});
 		
 	});
