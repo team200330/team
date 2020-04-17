@@ -32,7 +32,7 @@
     </form> 
     -->
       
-      <div class="input-group input-group-sm">
+      <div class="input-group input-group-sm" style="width: 70%;">
         <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
         <div class="input-group-append">
           <button class="btn btn-navbar" type="submit">
@@ -131,14 +131,11 @@
       
       <!-- WorkspaceList Dropdown Menu -->
       <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-bell"></i>
-          <span class="badge badge-success navbar-badge">15</span>
-        </a>
+        <a class="nav-link" data-toggle="dropdown" href="#" style="letter-spacing:-1px;">워크스페이스 이름</a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           
           <div class="dropdown-divider"></div>
-          <a href="workspace/setting-workspace" class="dropdown-item">
+          <a href="/team/workspace/setting-workspace" class="dropdown-item">
             <p class="text-sm">워크스페이스이름<br>워크스페이스 설정, 결제 그 외 더보기...</p>
           </a>
           <div class="dropdown-divider"></div>
@@ -173,7 +170,7 @@
               <div class="dropdown-divider"></div>
             <!-- Message End -->
                    
-          <a href="workspace/create-workspace" class="dropdown-item dropdown-footer">새 워크스페이스 만들기</a>
+          <a href="/team/workspace/create-workspace" class="dropdown-item dropdown-footer">새 워크스페이스 만들기</a>
         </div>
       </li>
       <!-- WorkspaceList Dropdown Menu -->

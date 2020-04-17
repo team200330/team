@@ -61,7 +61,5 @@
 	<bean id="projectService" class="com.team.service.ProjectServiceImpl">
 		<property name="projectMapper" ref="projectMapper"/>
 	</bean>
-	
 
-	
 </beans>

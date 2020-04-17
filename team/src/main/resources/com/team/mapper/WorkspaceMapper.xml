@@ -3,11 +3,10 @@
 <!DOCTYPE mapper
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 		   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="com.team.mapper.WorkspaceMapper">
-
+	
 	<insert id="insertWorkspace" parameterType="com.team.vo.Workspace"
-			useGeneratedKeys="true" keyColumn="workspaceNo" keyProperty="workspaceNo">
+			useGeneratedKeys="true" keyColumn="workspaceNo" keyProperty="workspaceNo">			
 		INSERT INTO workspace (
 			workspace_name, 
 			deleted, code
@@ -16,6 +15,19 @@
 			#{ workspaceName }, 
 			#{ deleted }, #{ code }
 		)
-	</insert>
+	</insert>	
+	
+	
+	<select id="selectWorkspaceMembers" parameterType="int" resultMap="workspaceMemberMap">
+		SELECT * FROM workspace_member
+		WHERE workspace_no = #{ workspaceNo } 
+		AND ( type_no = 1 OR type_no = 2 );
+	</select>
+	
+	<resultMap type="WorkspaceMember" id="workspaceMemberMap">
+		<id column="workspace_no" property="workspaceNo" />
+		<result column="email" property="email" />
+		<result column="type_no" property="typeNo" />
+	</resultMap> 
 	
 </mapper>

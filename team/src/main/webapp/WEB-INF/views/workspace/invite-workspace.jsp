@@ -31,6 +31,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="/home">Home</a></li>
+              <li class="breadcrumb-item"><a href="#">workspace</a></li>
               <li class="breadcrumb-item active">invite-workspace</li>
             </ol>
           </div>
@@ -72,9 +73,11 @@
                           <label class="form-check-label">게스트</label>
                         </div>
                       </div>
-                    </div>
-                    <p class="col-sm-12">팀원은 워크스페이스의 공개된 모든 정보에 엑세스할 수 있으며, TEAM의 다음 기능을 자유롭게 사용할 수 있습니다.</p>
-                      <ul id="memberlist">
+                    </div>                    
+                      <ul id="memberlist" style="width: 100%;">
+                      <li class="col-sm-12 mb-3"
+                      style="list-style: none; margin-left: -30px; font-size: 15px; letter-spacing: -1px;"
+                      >팀원은 워크스페이스의 공개된 모든 정보에 엑세스할 수 있으며, TEAM의 다음 기능을 자유롭게 사용할 수 있습니다.</li>
                         <li>공개/비공개 프로젝트</li>
                         <li>공개/비공개 대화 채널</li>
                         <li>1:1 다이렉트 메시지</li>
@@ -83,7 +86,10 @@
                         <li>필터와 리포트</li>
                       </ul>
                       
-                      <ul id="guestlist" style="display:none;">
+                      <ul id="guestlist" style="width: 100%; display:none;">
+                      <li class="col-sm-12 mb-3"
+                      style="list-style: none; margin-left: -30px; font-size: 15px; letter-spacing: -1px;"
+                      >게스트는 워크스페이스의 정보에 제한적으로 엑세스가 필요한 외부 협력자 입니다.<br>게스트가 프로젝트 멤버로 추가되면, 다음 기능을 사용할 수 있습니다.</li>
                         <li>업무 팔로워로서 업무 진행 사항 보기</li>
                         <li>업무 코멘트와 파일 공유</li>
                         <li>프로젝트 대화 채널</li>
@@ -97,7 +103,7 @@
                 </div>
                 <div class="card-footer">
                   <button type="submit" class="btn btn-info" id="invitebtn1">다음</button>
-                  <button type="submit" class="btn btn-default float-right">뒤로</button>
+                  <button onclick="location.href='/team'" type="submit" class="btn btn-default float-right">뒤로</button>
                 </div>
                 <!-- /.card-footer -->
             </div>
@@ -141,7 +147,7 @@
             </div>
             <div class="card-footer">
                   <button type="submit" class="btn btn-info" id="invitebtn2">초대하기</button>
-                  <button type="submit" class="btn btn-default float-right">뒤로</button>
+                  <button type="submit" class="btn btn-default float-right cancelbtn">뒤로</button>
                 </div>
             <!-- /.card -->  
             </div>          
@@ -188,7 +194,7 @@
             </div>
             <div class="card-footer">
                   <button type="submit" class="btn btn-info">초대하기</button>
-                  <button type="submit" class="btn btn-default float-right">뒤로</button>
+                  <button type="submit" class="btn btn-default float-right cancelbtn">뒤로</button>
                 </div>
             <!-- /.card -->  
             </div>          
@@ -203,14 +209,7 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  <footer class="main-footer">
-    <div class="float-right d-none d-sm-block">
-      <b>Version</b> 3.0.3-pre
-    </div>
-    <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong> All rights
-    reserved.
-  </footer>
-
+  <%@include file="/WEB-INF/views/modules/footer.jsp" %>
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
@@ -258,6 +257,11 @@ $(document).ready(function(){
         }        
         
     });	    
+	    $(".cancelbtn").click(function(){    	 
+	    	$('#invite1').show();
+	    	$('#invite2').hide();
+	        $('#invite3').hide();        
+	    });	
     
 });
 </script>
