@@ -3,7 +3,36 @@
 
 <mapper namespace="com.team.mapper.FeedbackMapper">
 
+	<insert id="insertFeedback" parameterType="Feedback">
+	INSERT INTO feedback(content, sender, workspace_no, is_public)
+	VALUES (#{content}, #{sender}, #{workspaceNo}, #{isPublic})
+		<selectKey keyProperty="feedbackNo" order="AFTER" resultType="int">
+			SELECT LAST_INSERT_ID();
+		</selectKey>
+	</insert>
 
+	<insert id="insertReceivers" parameterType="java.util.List">
+	INSERT INTO receiver VALUES
+		<foreach collection="list" item="receiver" index="index">
+			(#{receiver.feedbackNo}, #{receiver.email})
+			<if test="index != list.size - 1"> , </if>
+		</foreach>
+	</insert>
+	
+	
+	
+
+	<resultMap type="Feedback" id="feedbackMap">
+		<id column="feedback_no" property="feedbackNo"/>
+		<result column="content" property="content"/>
+		<result column="writedate" property="writedate"/>
+		<result column="sender" property="sender"/>
+		<result column="workspace_no" property="workspaceNo"/>
+		<result column="is_read" property="isRead"/>
+		<result column="is_public" property="isPublic"/>
+		<result column="task_no" property="taskNo"/>
+	</resultMap>
+	
 </mapper>
 
 

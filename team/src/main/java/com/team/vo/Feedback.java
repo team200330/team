@@ -16,6 +16,5 @@ public class Feedback {
 	private boolean isRead;
 	private boolean isPublic;
 	
-	private List<Receiver> receivers;
 	private List<Comments> comments;
 }

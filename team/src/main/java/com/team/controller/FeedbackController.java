@@ -1,5 +1,6 @@
 package com.team.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.team.service.FeedbackService;
 import com.team.vo.Feedback;
 import com.team.vo.Member;
+import com.team.vo.Receiver;
 
 @Controller
 @RequestMapping("/feedback")
@@ -30,9 +32,25 @@ public class FeedbackController {
 	public String feedbackList(Model model) {
 		if ( workspaceMembers == null ) workspaceMembers = feedbackService.findWorkspaceMembers(3);
 		model.addAttribute("workspaceMembers", workspaceMembers);
+		
+		
 
 		return "/feedback/list";
 	}
+	
+	@PostMapping("/write")
+	public String writeFeedback(Feedback feedback,String[] email, String isPublic) {
+		feedback.setPublic(isPublic.equals("true") ? true : false);
+		
+		System.out.println(feedback.toString());
+	
+		
+		feedbackService.writeFeedback(feedback, email);
+		
+		return "redirect:/feedback/list";
+	}
+	
+	
 	
 	@GetMapping("/getWorkspaceMembers")
 	@ResponseBody
@@ -44,9 +62,7 @@ public class FeedbackController {
 		
 		for (Member m : workspaceMembers) {
 			String className = "_mem_icon_default";
-			
 			for (String s : selectedMems) if (s.equals(m.getEmail())) { className = ""; break; }
-			
 			
 			if (m.getEmail().contains(str) || m.getName().contains(str)) 
 				result += 
@@ -57,19 +73,7 @@ public class FeedbackController {
 			        		"<i class='fas fa-check'></i>" +
 			        	"</div>" +
 			        "</div>";
-		
-			
 		}
 		return result;
-	}
-	
-	@PostMapping("/write")
-	public String writeFeedback(Feedback feedback,String[] email) {
-		// isPublic 이상함
-		
-		for (String s : email) System.out.println(s.toString());
-		System.out.println(feedback.toString());
-		
-		return "redirect:/feedback/list";
 	}
 }

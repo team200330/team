@@ -277,7 +277,7 @@
               	<h6>설명</h6>
               	<textarea name="content" rows="6" style="width:100%;border:1px solid #cccccc;border-radius:.40rem;padding:10px" placeholder="칭찬 혹은 개선할 사항을 작성해보세요..."></textarea>
               	<div style="margin:10px;">
-              	<input id="isPublic" type="hidden" name="isPublic" value=true/>
+              	<input id="isPublic" type="hidden" name="isPublic" value="true"/>
               	<input id="checkbox" type="checkbox" checked style="margin-right:10px;"> 받는 사람이 피드백을 프로필에 공개할 수 있도록 허용합니다
      			<p style="color:#a0a0a0;padding-left:25px;">설명은 기본적으로 회원님과 받는 사람만 볼 수 있도록 비공개로 설정됩니다.</p>
               	</div>
@@ -506,13 +506,10 @@
 		
 		// 피드백 폼 전송
 		$("#checkbox").click(function() {
-			if ($(this).attr("checked")) {
-				$(this).removeAttr("checked");
-				$("#isPublic").val(false);
-			} 
-			else {
-				$(this).attr("checked", "");
-				$("#isPublic").val(true);
+			if ($(this).attr("checked")) { 
+				$(this).removeAttr("checked"); $("#isPublic").val("false");
+			} else { 
+				$(this).attr("checked", ""); $("#isPublic").val("true"); 
 			}
 		});
 		
