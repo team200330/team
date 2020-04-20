@@ -71,7 +71,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/team/workspace/workspace-member" class="nav-link">
+                <a href="/team/workspace/workspace-member?workspaceNo=3" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>워크스페이스 멤버</p>
                 </a>

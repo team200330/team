@@ -16,8 +16,7 @@
 			#{ deleted }, #{ code }
 		)
 	</insert>	
-	
-	
+		
 	<select id="selectWorkspaceMembers" parameterType="int" resultMap="workspaceMemberMap">
 		SELECT * FROM workspace_member
 		WHERE workspace_no = #{ workspaceNo } 

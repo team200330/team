@@ -163,13 +163,9 @@
                 <div class="form-group">
                 <label>프로젝트 선택</label>
                   <select class="form-control select2" style="width: 100%;">
-                    <option selected="selected">프로젝트A</option>
-                    <option>프로젝트B</option>
-                    <option>프로젝트C</option>
-                    <option>프로젝트D</option>
-                    <option>프로젝트E</option>
-                    <option>프로젝트F</option>
-                    <option>프로젝트G</option>
+                  	<c:forEach var="Project" items="${ Projects }">
+                    <option>${ Project.projectName }</option>
+                    </c:forEach>
                   </select>
                 </div>                
                 <hr>

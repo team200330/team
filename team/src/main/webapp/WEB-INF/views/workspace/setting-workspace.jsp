@@ -62,10 +62,9 @@
                     </div>
                     <div id="collapseOne" class="panel-collapse collapse show">
                       <div class="card-body">
-                        <p>워크스페이스 이름</p>
-                        
-                        <div class="input-group input-group-sm mb-3">
-		                  <input type="text" class="form-control">
+                        <p>워크스페이스 이름</p>                        
+                        <div class="input-group input-group-sm mb-3">${ workspace.workspaceName }
+		                  <input type="text" class="form-control">${ workspace.workspaceName }<input>
 		                  <span class="input-group-append">
 		                    <button type="button" class="btn btn-info btn-flat">변경사항 저장</button>
 		                  </span>

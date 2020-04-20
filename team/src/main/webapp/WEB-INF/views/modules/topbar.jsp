@@ -135,7 +135,7 @@
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           
           <div class="dropdown-divider"></div>
-          <a href="/team/workspace/setting-workspace" class="dropdown-item">
+          <a href="/team/workspace/setting-workspace?workspaceNo=3" class="dropdown-item">
             <p class="text-sm">워크스페이스이름<br>워크스페이스 설정, 결제 그 외 더보기...</p>
           </a>
           <div class="dropdown-divider"></div>

@@ -25,6 +25,10 @@
 		SELECT * FROM project
 	</select>
 	
+	<select id="selectProjectByWorkspaceNo" parameterType="int" resultMap="projectMap">
+		SELECT * FROM project
+		WHERE workspace_no = #{ workspaceNo } 
+	</select>
 
 
 <!-- 	<resultMap type="project" id="projectMap">
