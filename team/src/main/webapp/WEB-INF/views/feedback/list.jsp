@@ -303,6 +303,7 @@
 		// select box
 		$(".feedback .dropdown-item").click(function() {
 			$("#dropdown-select").text($(this).text());
+			$("#dropdown-select").attr("data-value", $(this).attr("data-value"));
 		});
 		
 		// 열기 / 닫기 함수
@@ -419,29 +420,52 @@
 			}); 
 		});
 		
+		// 피드백 삭제
 		$(document).on("click", ".close-btn", function() {
 			if (!confirm("해당 피드백을 삭제할까요?")) return;
-			
-			$(this).parents("form").submit();
-		});
-		
-		$(document).on("click", ".comment-write-btn", function() {
-			if (!confirm("코멘트를 작성할까요?")) return;
-			if ($(this).parents("form").children(".form-control").val() == null) {
-				alert("코멘트 내용을 입력하세요."); return;
-			}
+			var searchType = $("#dropdown-select").attr("data-value");
 
-			var values = $(".comment-form").serializeArray();
 			$.ajax({
-				url : "/team/feedback/comment/write",
-				method : "post", 
-				data : {"comment" : values},
+				url : "/team/feedback/delete",
+				method : "post",
+				data : {"feedbackNo": $(this).prev().val()},
 				success : function(resp, status, xhr) {
-					load("/team/list2");
-				}, error : function(xhr, status, err) {
+					$("#feedback-list-container").load("/team/feedback/search?searchType=" + searchType + "&email=" + "${loginuser.email}");
+				}, 
+				error : function(xhr, status, err) {
 					console.log(err);
 				}
 			}); 
+		});
+		
+		
+		// 여기 고치기!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		// 코멘트 작성
+		$(document).on("click", ".comment-write-btn", function(event) {
+			if (!confirm("코멘트를 작성할까요?")) return;
+			
+			var content = $(this).closest("div").prev().prev().val();
+			if (content.length <= 0) {
+				alert("코멘트 내용을 입력하세요."); return;
+			}
+			
+			var values = $(this).parents(".comment-form").serializeArray();
+			console.log(values);
+			
+			var searchType = $("#dropdown-select").attr("data-value");
+			$.ajax({
+				url : "/team/feedback/comment/write",
+				method : "post",
+				data : {"comment" : values},
+				dataType : "json",
+				success : function(resp, status, xhr) {
+					$("#feedback-list-container").load("/team/feedback/search?searchType=" + searchType + "&email=" + "${loginuser.email}");
+				},
+				error : function(xhr, status, err) {
+					console.log(err);
+				}
+			});
+
 		});
 		
 	});

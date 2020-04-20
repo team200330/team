@@ -30,19 +30,19 @@
 	WHERE 
 		<choose>
 			<when test="searchType == 'M'.toString()">
-				(sender = #{email} OR email = #{email})
+				(sender = #{email} OR email = #{email}) AND
 			</when>
 			<when test="searchType == 'S'.toString()">
-				sender = #{email}
+				sender = #{email} AND
 			</when>
 			<when test="searchType == 'R'.toString()">
-				email = #{email}
+				email = #{email} AND
 			</when>
 			<when test="searchType == 'A'.toString()">
-				is_public = '1'
+				is_public = '1' AND
 			</when>
 		</choose>
-	AND deleted = '0' AND workspace_no = #{workspaceNo}
+	deleted = '0' AND workspace_no = #{workspaceNo}
 	ORDER BY f.feedback_no DESC
 	</select>
 	

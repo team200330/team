@@ -20,10 +20,10 @@
 							<img class="img-circle img-bordered-sm" src="" alt="user image">
 							<span class="username"> 
 								<a href="#">${feedback.sender}</a> 
-								<form method="post" action="/team/feedback/delete">
+								<!-- <form method="post" action="/team/feedback/delete"> -->
 									<input type="hidden" value="${feedback.feedbackNo}" name="feedbackNo">
 									<a href="#" class="float-right btn-tool close-btn"><i class="fas fa-times"></i> </a>
-								</form>
+								<!-- </form> -->
 							</span> <span class="description">${feedback.writedate}</span>
 						</div>
 						<!-- /.user-block -->
@@ -59,10 +59,10 @@
 							<form class="form-horizontal comment-form">
 								<input type="hidden" name="feedbackNo" value="${feedback.feedbackNo}">
 								<div class="input-group input-group-sm mb-0">
-									<input name="content" class="form-control form-control-sm" placeholder="작성할 코멘트를 입력하세요 ..." >
+									<input name="content" class="form-control form-control-sm comment-content" placeholder="작성할 코멘트를 입력하세요 ..." >
 									<input type="hidden" value="${loginuser.email}" name="writer">
 									<div class="input-group-append">
-										<button data-value="${feedback.feedbackNo}" class="btn btn-info comment-write-btn">Send</button>
+										<a style="color:white" data-value="${feedback.feedbackNo}" class="btn btn-info comment-write-btn">Send</a>
 									</div>
 								</div>
 							</form>

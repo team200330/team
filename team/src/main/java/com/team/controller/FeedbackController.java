@@ -2,15 +2,15 @@ package com.team.controller;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,7 +19,6 @@ import com.team.service.FeedbackService;
 import com.team.vo.Comments;
 import com.team.vo.Feedback;
 import com.team.vo.Member;
-import com.team.vo.Receiver;
 
 @Controller
 @RequestMapping("/feedback")
@@ -80,21 +79,20 @@ public class FeedbackController {
 	}
 	
 	@PostMapping("/delete")
+	@ResponseBody
 	public String deleteFeedback(int feedbackNo) {
 		feedbackService.deleteFeedback(feedbackNo);
 		
-		return "redirect:/feedback/list";
+		return "success";
 	}
 	
 	
-
-	
+	//여기 고치기!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	@PostMapping("/comment/write")
 	@ResponseBody
-	public String writeComment(Comments comment) {
+	public String writeComment(@RequestBody Comments comment) {
 		System.out.println(comment.toString());
-		feedbackService.writeComment(comment);
-		return "redirect:/list";
+		return "success";
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////
