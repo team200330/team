@@ -7,6 +7,8 @@ public interface MemberMapper {
 	void insertMember(Member member);
 
 	Member selectMemberByEmailAndPassword(Member member);
+	
+	Member selectMemberByEmail(String email);
 
 	Member selectMemberByEmail(String email);
 

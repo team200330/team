@@ -19,6 +19,7 @@ h6 { font-weight:bold !important; }
     text-align: center;
     margin-top: 2px;
 }
+.mem a {color:black;}
 .mem_img {
 	width: 30%; height:32px;
 	border-radius: 30rem;
@@ -27,11 +28,12 @@ h6 { font-weight:bold !important; }
 .mem_name {width: 50%;}
 .mem_rm {width: 20%;}
 .mem *, ._mem *, .t * {display:inline-block;float:left;}
-._mem { height:50px;border:1px solid white;border-radius:.20rem;padding:5px; }
+._mem { height:50px;border:1px solid white;border-radius:.20rem;padding:5px; margin-bottom: 15px; }
 ._mem_name {width:60%;}
-._mem_icon {width:20%;}
+._mem_icon {width:20%; display:block;}
 ._mem_icon > i {padding-left:30px;}
 ._mem_img {width:43px;margin-right:10px;}
+._mem_icon_default {display:none;}
 .task {padding:10px;padding-bottom:20px;}
 .t_t {font-weight:bold;}
 .t {font-size:10pt}

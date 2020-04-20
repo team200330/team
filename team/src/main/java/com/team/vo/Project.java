@@ -16,6 +16,7 @@ public class Project {
 	private boolean deleted;
 	private boolean isPublic;
 	private int templateNo;
+	private int proNo;
 	
 	private List<TaskList> taskLists;
 	private List<ProjectMember> projectMembers;
