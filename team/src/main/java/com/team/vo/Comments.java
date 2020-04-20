@@ -9,6 +9,6 @@ public class Comments {
 	private int commentNo;
 	private int feedbackNo;
 	private String writer;
-	private String conetent;
-	private Time writeDate;
+	private String content;
+	private Time writedate;
 }

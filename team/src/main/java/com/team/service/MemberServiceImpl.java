@@ -32,7 +32,13 @@ public class MemberServiceImpl implements MemberService {
 		
 		return member2;
 	}
-	
+
+	@Override
+	public Member findMemberByEmail(String email) {
+		
+		return memberMapper.selectMemberByEmail(email);
+	}
+
 	
 
 }

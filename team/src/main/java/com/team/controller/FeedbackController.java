@@ -1,18 +1,22 @@
 package com.team.controller;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.team.service.FeedbackService;
+import com.team.vo.Comments;
 import com.team.vo.Feedback;
 import com.team.vo.Member;
 import com.team.vo.Receiver;
@@ -28,29 +32,72 @@ public class FeedbackController {
 	// 워크스페이스 멤버 리스트
 	private List<Member> workspaceMembers = null;
 	
+
 	@GetMapping("/list")
 	public String feedbackList(Model model) {
+		// 임시 워크스페이스 번호
 		if ( workspaceMembers == null ) workspaceMembers = feedbackService.findWorkspaceMembers(3);
 		model.addAttribute("workspaceMembers", workspaceMembers);
 		
+		// 임시 로그인유저
+		Member mem = new Member();
+		mem.setEmail("user1@example.com");
+		model.addAttribute("loginuser", mem);
 		
-
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("email", "user1@example.com");
+		params.put("searchType", "M");
+		params.put("workspaceNo", 3);
+		
+		model.addAttribute(feedbackService.searchFeedback(params));
+		
 		return "/feedback/list";
 	}
 	
-	@PostMapping("/write")
-	public String writeFeedback(Feedback feedback,String[] email, String isPublic) {
-		feedback.setPublic(isPublic.equals("true") ? true : false);
-		
-		System.out.println(feedback.toString());
+	@GetMapping("/list2")
+	public String feedbacklist2() {
+		return "/feedback/list";
+	}
 	
+	@GetMapping("/search")
+	public String searchFeedback(@RequestParam(defaultValue = "M")String searchType, String email, Model model) {
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("email", email);
+		params.put("searchType", searchType);
+		params.put("workspaceNo", 3);
+
+		model.addAttribute("feedbackList", feedbackService.searchFeedback(params));
 		
+		return "/feedback/modules/feedback-list";
+	}
+	
+	@PostMapping("/write")
+	public String writeFeedback(Feedback feedback, String[] email, String isPublic) {
+		feedback.setPublic(isPublic.equals("true") ? true : false);
 		feedbackService.writeFeedback(feedback, email);
 		
 		return "redirect:/feedback/list";
 	}
 	
+	@PostMapping("/delete")
+	public String deleteFeedback(int feedbackNo) {
+		feedbackService.deleteFeedback(feedbackNo);
+		
+		return "redirect:/feedback/list";
+	}
 	
+	
+
+	
+	@PostMapping("/comment/write")
+	@ResponseBody
+	public String writeComment(Comments comment) {
+		System.out.println(comment.toString());
+		feedbackService.writeComment(comment);
+		return "redirect:/list";
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////
 	
 	@GetMapping("/getWorkspaceMembers")
 	@ResponseBody

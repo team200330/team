@@ -1,5 +1,4 @@
 <%@ page pageEncoding="utf-8" contentType="text/html; charset=utf-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html>
@@ -39,14 +38,20 @@
             </div>
           </div>
         </div>
+        
         <div class="input-group mb-3">
           <input type="email" class="form-control" id="email" name="email" placeholder="Email">
           <div class="input-group-append">
             <div class="input-group-text">
-              <span class="fas fa-envelope"></span>
+            <span class="fas fa-envelope"></span>
             </div>
           </div>
         </div>
+        <div  class="col-auto">
+             <button type="button" id="email-check">중복확인</button><p id="email-check-result" style="display: inline; margin-left: 15px;"></p>
+        </div><br>
+        
+        
         <div class="input-group mb-3">
           <input type="password" class="form-control" id="password" name="password" placeholder="Password">
           <div class="input-group-append">
@@ -55,6 +60,7 @@
             </div>
           </div>
         </div>
+        
         <div class="input-group mb-3">
           <input type="password" class="form-control" id="confirm" placeholder="Retype password">
           <div class="input-group-append">
@@ -63,6 +69,7 @@
             </div>
           </div>
         </div>
+        
         <div class="input-group mb-3">
           <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone : ex)000-0000-0000">
           <div class="input-group-append">
@@ -71,6 +78,7 @@
             </div>
           </div>
         </div>
+        
         <div class="input-group mb-3">
           <input type="text" class="form-control" id="department" name="department" placeholder="Department">
           <div class="input-group-append">
@@ -79,6 +87,7 @@
             </div>
           </div>
         </div>
+        
         <div class="input-group mb-3">
           <input type="text" class="form-control" id="addressNo" name="addressNo" placeholder="Address">
           <div class="input-group-append">
@@ -87,6 +96,7 @@
             </div>
           </div>
         </div>
+        
         <div class="input-group mb-3">
           <input type="text" class="form-control" id="roadAddr" name="roadAddr" placeholder="Address">
           <div class="input-group-append">
@@ -95,6 +105,7 @@
             </div>
           </div>
         </div>
+        
         <div class="input-group mb-3">
           <input type="text" class="form-control" id="detailAddr" name="detailAddr" placeholder="Address">
           <div class="input-group-append">
@@ -181,6 +192,25 @@
 			
 			// 2. 오류가 없다면 서버로 전송
 			$("#register-form").submit();
+		});
+		
+		// email 중복체크
+		$("#email-check").on("click", function(event) {
+			
+			$.ajax({
+				"url" : "checkEmail.action",
+				"method" : "get",
+				"data" : { "email" : $("#email").val() },
+				"success" : function(result, status, xhr) {
+					if (result == "success") $("#email-check-result").text("사용 가능한 이메일 입니다.");
+					else {
+						$("#email-check-result").text("중복된 이메일 입니다.");
+						$("#email").focus().val("");
+					}
+				},
+				"error" : function(xhr, status, err) { alert("이메일 중복체크 실패"); }
+			});
+
 		});
 
 		// 비밀번호 confirm

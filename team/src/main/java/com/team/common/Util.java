@@ -2,15 +2,12 @@ package com.team.common;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.UUID;
 
-import javax.management.RuntimeErrorException;
-import javax.servlet.http.HttpServletRequest;
 
 public class Util {
 	

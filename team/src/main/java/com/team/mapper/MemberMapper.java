@@ -10,4 +10,5 @@ public interface MemberMapper {
 	
 	Member selectMemberByEmail(String email);
 
+
 }
