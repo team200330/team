@@ -8,5 +8,8 @@ public interface MemberService {
 
 	Member findMemberByEmailAndPassword(Member member);
 
+	Member findMemberByEmail(String email);
+
+
 
 }

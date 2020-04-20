@@ -8,4 +8,6 @@ public interface MemberMapper {
 
 	Member selectMemberByEmailAndPassword(Member member);
 
+	Member selectMemberByEmail(String email);
+
 }
