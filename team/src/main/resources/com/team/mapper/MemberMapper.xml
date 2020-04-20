@@ -18,11 +18,6 @@
 	<select id="selectMemberByEmail" parameterType="String" resultType="Member">
 		SELECT * FROM member WHERE email = #{ email }
 	</select>
-
-	<select id="selectMemberByEmail" parameterType="Member" resultType="Member">
-		SELECT * FROM member WHERE email = #{ email } AND deleted = '0'
-	</select>
-	
 	
 	
 	

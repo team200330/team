@@ -39,3 +39,7 @@ h6 { font-weight:bold !important; }
 .t {font-size:10pt}
 
 .content-header {margin:25px 50px 25px 50px;}
+.display-none {display:none;}
+.display-block {display:block;}
+
+.user-block .description {margin-top: -15px;}
