@@ -26,25 +26,6 @@ public class ProjectController {
 	@Qualifier("projectService")
 	private ProjectService projectService;
 	
-	/* 6 : 워크스페이스 번호
-
-	template 쓸려면 templateVO에 있는 
-	int templateNo;
-	String templateName;
-	목록을 조회해서
-
-	controller에서 
-
-	템플릭 목록 (리스트 가져오기)
-	controller에서 보낼때 템플릿 이름과 프로젝트 정보들을 보냄
-	템플릿 이름과 템플릿 목록을 비교해서 이름 똑같은 번호를 
-		for(템플릿VO 변수이름 : 템플릿 목록)
-			if(변수이름 getTemplatName.equals(가져온 템플릿 이름))
-				프로젝트 변수 (setTemplsetNo(번호))
-
-	*/
-	
-	
 	@GetMapping(path = { "/prlist" })
 	public String showProjectList(Model model) {
 		
@@ -62,6 +43,12 @@ public class ProjectController {
 		return "redirect:prlist.action";
 		
 	}
+	
+//	@ReaustMapping(value="/project-list/selectProNo")
+//	public void selectAjax(HttpServletRequest request, HttpServletResponse response, String param) {
+//		
+//	} 
+	
 //	
 //	@ RequestMapping ( value = "view_1_typeCnt")
 //	 public ModelAndView product_typeCnt ( HttpServletRequest request , HttpServletResponse response , ModelMap model ) throws Exception {

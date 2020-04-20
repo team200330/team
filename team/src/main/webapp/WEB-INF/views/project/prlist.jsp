@@ -128,19 +128,42 @@
 		                <c:if test="${ project.content == null}"><span class="progress-description">&nbsp;&nbsp;&nbsp;</span></c:if>
 		                <c:if test="${ project.content eq project.content }"><span class="progress-description">${ project.content }</span></c:if>
 		                <span class="info-box-number">
-		                	<select name="proNo">
-		                		<option>
-				                	<c:if test="${project.proNo eq '1' }">상태없음</c:if>
-					                <c:if test="${project.proNo eq '2' }">진행중</c:if>
-					                <c:if test="${project.proNo eq '3' }">완료</c:if>
-					                <c:if test="${project.proNo eq '4' }">보류</c:if>
-					                <c:if test="${project.proNo eq '5' }">취소</c:if>
-				                </option>
-		                		<option value="1">상태없음 </option>
-		                		<option value="2">진행중 </option>
-		                		<option value="3">완료 </option>
-		                		<option value="4">보류 </option>
-		                		<option value="5">취소 </option>
+		                	<select name="proNo" class="seletProNo">
+			                	<c:if test="${project.proNo eq '1' }">
+				                	<option value="1" selected="selected">상태없음 </option>
+			                		<option value="2">진행중 </option>
+			                		<option value="3">완료 </option>
+			                		<option value="4">보류 </option>
+			                		<option value="5">취소 </option>
+			                	</c:if>
+				                <c:if test="${project.proNo eq '2' }">
+					                <option value="1">상태없음 </option>
+			                		<option value="2" selected="selected">진행중 </option>
+			                		<option value="3">완료 </option>
+			                		<option value="4">보류 </option>
+			                		<option value="5">취소 </option>
+				                </c:if>
+				                <c:if test="${project.proNo eq '3' }">
+				                	<option value="1">상태없음 </option>
+			                		<option value="2">진행중 </option>
+			                		<option value="3" selected="selected">완료 </option>
+			                		<option value="4">보류 </option>
+			                		<option value="5">취소 </option>
+				                </c:if>
+				                <c:if test="${project.proNo eq '4' }">
+				                	<option value="1">상태없음 </option>
+			                		<option value="2">진행중 </option>
+			                		<option value="3">완료 </option>
+			                		<option value="4" selected="selected">보류 </option>
+			                		<option value="5">취소 </option>
+				                </c:if>
+				                <c:if test="${project.proNo eq '5' }">
+				                	<option value="1">상태없음 </option>
+			                		<option value="2">진행중 </option>
+			                		<option value="3">완료 </option>
+			                		<option value="4">보류 </option>
+			                		<option value="5" selected="selected">취소 </option>
+				                </c:if>
 		                	</select>
 					    </span>
 		                <div class="progress">
@@ -310,24 +333,45 @@ $(function() {
 
 	});
 
-/* 	$.ajax({
-		"url" : "/project-list",
-		"dataType":"json",
-		"data":"param",
-		"success":function(data){
-			if (data.result.length > 0) {
-				$('select[name=proNo]').find('option').remove()
-				for( var _idx = 0 ; _idx < data.result.length ; _idx++ ) {
-					$('select[name=proNo]').append("<option value'"+data.result[_idx].CNT+"'>" + data.result[_idx].CNT_NM + '</option>');
-				}
-			} else {
-				$('select[name=proNo]').find('option').remove()
-				$( 'select[name=proNo]' ).append ( "<option value=''>선택</option>" );
-			}
-		}
-	});
+	function option(){
+		$(".selectProNo").append("<option value='1'>상태없음</option>");
+		$(".selectProNo").append("<option value='2'>진행중</option>");
+		$(".selectProNo").append("<option value='3'>완료</option>");
+		$(".selectProNo").append("<option value='4'>보류</option>");
+		$(".selectProNo").append("<option value='5'>취소</option>");
+	};
+
+	var select_val = $('.selectProNo[name:proNo]').val();
+	console.log(select_val)
 	
-	$.ajax({
+	if(  )
+
+	//$(document).on('click','.selectProNo', function(event){
+	$('selectProNo').on('click', function(event){
+		
+		var data = $(this).val();
+		
+		console.log(data);
+		
+		$.ajax({
+			"url":"/project-proNo",
+			"method":"put",
+			"data": JSON.stringify(data),
+			"contentType" : "application/json"
+			"success":function(result, status, xhr) {
+				// projectlist 뿌려주는 곳 따로 빼서 ajax로 처리할곳 
+				// $('인크루드할 projectlist div').load("/team/project/prlist")
+				//$('input[name=proNo]').val(project.proNo);
+			},
+			"error":fucntion(xhr, status, err){
+				alert(err);
+			}
+		});
+		
+	}
+	
+	
+/* 	$.ajax({
 		"url":"/project-proNo",
 		"method":"put",
 		"data": JSON.stringify(data),
@@ -340,10 +384,11 @@ $(function() {
 		"error":fucntion(xhr, status, err){
 			alert(err);
 		}
-	});  */
+	}); */
 	
 });
 </script>
 </body>
 
 </html>
+
