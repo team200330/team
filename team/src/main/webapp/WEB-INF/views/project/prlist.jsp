@@ -332,22 +332,47 @@ $(function() {
 		$('#writeform').submit();
 
 	});
-
-	function option(){
-		$(".selectProNo").append("<option value='1'>상태없음</option>");
-		$(".selectProNo").append("<option value='2'>진행중</option>");
-		$(".selectProNo").append("<option value='3'>완료</option>");
-		$(".selectProNo").append("<option value='4'>보류</option>");
-		$(".selectProNo").append("<option value='5'>취소</option>");
-	};
-
-	var select_val = $('.selectProNo[name:proNo]').val();
-	console.log(select_val)
 	
-	if(  )
+	$('.selectProNo').on('click', function(){
+
+		var prono = $(this).val();
+		
+		$.ajax({
+		      type: 'POST',
+		      url: "/project-proNo", //데이터 가져올 경로 세팅
+		      dataType : 'json',
+		      data : {              
+		      month:month
+		      },
+		      success: function(result) {       
+
+		      // 세팅 selectbox 초기화
+
+		      $(this).find("option").remove().end().append("<option value=''>- 선택  -</option>");
+
+		 
+		      //결과 갯수 만큼 세팅
+		      $.each(result, function(i){
+					var i = 5;
+		           $("").append("<option value='"+result[i]+"'>"+ prono +"</option>")
+		      });       
+
+		   
+
+		      if(null !=  #{projsect.proNo} && "" != #{project.proNo}) {
+
+		           $(this).val(); //이전검색 값 세팅 
+		      }
+
+		      },
+		      error: function(result) {
+		      }
+		    });
+	});
+		
 
 	//$(document).on('click','.selectProNo', function(event){
-	$('selectProNo').on('click', function(event){
+	$('.selectProNo').on('click', function(event){
 		
 		var data = $(this).val();
 		
@@ -371,20 +396,6 @@ $(function() {
 	}
 	
 	
-/* 	$.ajax({
-		"url":"/project-proNo",
-		"method":"put",
-		"data": JSON.stringify(data),
-		"contentType" : "application/json"
-		"success":function(result, status, xhr) {
-			// projectlist 뿌려주는 곳 따로 빼서 ajax로 처리할곳 
-			// $('인크루드할 projectlist div').load("/team/project/prlist")
-			$('input[name=proNo]').val(project.proNo);
-		},
-		"error":fucntion(xhr, status, err){
-			alert(err);
-		}
-	}); */
 	
 });
 </script>
