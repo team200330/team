@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.team.mapper.ProjectMapper;
 import com.team.mapper.WorkspaceMapper;
+import com.team.vo.Member;
 import com.team.vo.Project;
 import com.team.vo.Workspace;
 import com.team.vo.WorkspaceMember;
@@ -30,11 +31,11 @@ public class WorkspaceServiceImpl implements WorkspaceService {
 	}
 
 	@Override
-	public List<WorkspaceMember> selectWorkspaceMembersByWorkspaceNo(int workspaceNo) {
-		List<WorkspaceMember> workspaceMembers = workspaceMapper.selectWorkspaceMembers(workspaceNo);
-		return workspaceMembers;
+	public List<Member> selectMembersByWorkspaceNo(int workspaceNo) {
+		List <Member> members = workspaceMapper.selectMembersByWorkspaceNo(workspaceNo);
+		return members;
 	}
-
+	
 	@Override
 	public List<Project> selectProjectByWorkspaceNo(int workspaceNo) {
 		List<Project> Projects = projectMapper.selectProjectByWorkspaceNo(workspaceNo);
@@ -56,6 +57,12 @@ public class WorkspaceServiceImpl implements WorkspaceService {
 	public void deleteWorkspace(Workspace workspace) {
 		workspaceMapper.deleteWorkspace(workspace);
 		
+	}
+
+	@Override
+	public Member selectMemberTypeNo1ByWorkspaceNo(int workspaceNo) {
+		Member member1 = workspaceMapper.selectMemberTypeNo1ByWorkspaceNo(workspaceNo);
+		return member1;
 	}
 	
 }
