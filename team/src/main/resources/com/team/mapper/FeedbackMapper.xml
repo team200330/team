@@ -25,7 +25,7 @@
 	</insert>
 	
 	<select id="selectFeedback" parameterType="hashmap" resultMap="feedbackMap">
-	SELECT 	* FROM feedback f
+	SELECT * FROM feedback f
 	INNER JOIN receiver r ON f.feedback_no = r.feedback_no
 	WHERE 
 		<choose>
@@ -41,6 +41,11 @@
 			<when test="searchType == 'A'.toString()">
 				is_public = '1' AND
 			</when>
+			<when test="searchType == 'I'.toString()">
+			(sender LIKE CONCAT('%',#{key},'%') OR 
+			email LIKE CONCAT('%',#{key},'%') OR 
+			f.content LIKE CONCAT('%',#{key},'%') ) AND
+			</when>
 		</choose>
 	deleted = '0' AND workspace_no = #{workspaceNo}
 	ORDER BY f.feedback_no DESC
@@ -50,7 +55,6 @@
 	SELECT * FROM comments WHERE feedback_no = #{feedback_no}
 	</select>
 
-	
 	<update id="deleteFeedback" parameterType="int">
 	UPDATE feedback SET deleted = '1'
 	WHERE feedback_no = #{feedbackNo}

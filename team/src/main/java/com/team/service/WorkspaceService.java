@@ -13,4 +13,10 @@ public interface WorkspaceService {
 	List<WorkspaceMember> selectWorkspaceMembersByWorkspaceNo(int workspaceNo);
 
 	List<Project> selectProjectByWorkspaceNo(int workspaceNo);
+
+	Workspace selectWorkspaceByWorkspaceNo(int workspaceNo);
+
+	void updateWorkspaceName(Workspace workspace);
+
+	void deleteWorkspace(Workspace workspace);
 }

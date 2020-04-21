@@ -37,7 +37,6 @@ public class FeedbackServiceImpl implements FeedbackService {
 	
 	@Override
 	public void writeFeedback(Feedback feedback, String[] email) {
-		
 		// insert feedback
 		feedbackMapper.insertFeedback(feedback);
 		int key = feedback.getFeedbackNo();

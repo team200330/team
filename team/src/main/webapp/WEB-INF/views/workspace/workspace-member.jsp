@@ -58,21 +58,21 @@
 			<section class="content"  style="padding: 0 4% 0 4%;">
     <div class="row">
 				  <div class="form-group col-12 col-sm-6 col-md-3">
-                        <input class="form-control" type="search" placeholder="이름 또는 직함으로 검색하기" aria-label="Search" style="margin-right: -40px;">                   
+                        <input class="form-control" type="search" placeholder="이름 또는 직함으로 검색하기(작업중)" aria-label="Search" style="margin-right: -40px;">                   
                   </div>
 				  <div class="form-group col-12 col-sm-6 col-md-3">
                         <select class="form-control">
-                          <option>모든 멤버(5)</option>
-                          <option>활동 중인 멤버(5)</option>
-                          <option>초대 중인 멤버(0)</option>
-                          <option>삭제된 팀원(1)</option>
+                          <option>모든 멤버(5)(작업중)</option>
+                          <option>활동 중인 멤버(5)(작업중)</option>
+                          <option>초대 중인 멤버(0)(작업중)</option>
+                          <option>삭제된 팀원(1)(작업중)</option>
                         </select>
                   </div>
                   <div class="form-group col-12 col-sm-6 col-md-3">
                         <select class="form-control">
-                          <option>이름순</option>
-                          <option>관리자/멤버</option>
-                          <option>온라인/오프라인</option>
+                          <option>이름순(작업중)</option>
+                          <option>관리자/멤버(작업중)</option>
+                          <option>온라인/오프라인(작업중)</option>
                         </select>
                   </div>
                   <div class="form-group col-12 col-sm-6 col-md-3">
@@ -89,15 +89,15 @@
             <div class="col-12 col-sm-6 col-md-3 d-flex align-items-stretch">
               <div class="card bg-light">
                 <div class="card-header text-muted border-bottom-0">
-                  직함 : 땡땡땡
+                  직함 : 땡땡땡 (작업중)
                 </div>
                 <div class="card-body pt-0">
                   <div class="row">
                     <div class="col-7">
-                      <h2 class="lead"><b>박지성</b><c:choose><c:when test="${ workspaceMember.typeNo == '1' }"><span class="badge bg-danger ml-3">관리자</span></c:when><c:otherwise></c:otherwise></c:choose></h2>
-                      <p class="text-muted text-sm"><b>부서: </b>영업팀</p>
+                      <h2 class="lead"><b>박지성(작업중)</b><c:choose><c:when test="${ workspaceMember.typeNo == '1' }"><span class="badge bg-danger ml-3">관리자</span></c:when><c:otherwise></c:otherwise></c:choose></h2>
+                      <p class="text-muted text-sm"><b>부서: </b>영업팀 (작업중)</p>
                       <ul class="mb-0 text-muted" style="list-style-type: none; padding:0;">
-                        <li class="small">로그인 4월 10일 15:07</li>
+                        <li class="small">로그인 4월 10일 15:07 (작업중)</li>
                         <li class="small">${ workspaceMember.email }</li>
                       </ul>
                     </div>

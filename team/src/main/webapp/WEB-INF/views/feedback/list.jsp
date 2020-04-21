@@ -40,21 +40,11 @@
 							<i style="float: left;margin:5px;" class="fas fa-bars"></i>
 							<h5 style="font-weight:bold;color:#464c59">나의 피드백</h5>
 						</div>
-						<!-- /.col -->
-						<!-- <div class="col-sm-6">
-							<ol class="breadcrumb float-sm-right">
-								<li class="breadcrumb-item"><a href="/team/home">Home</a></li>
-								<li class="breadcrumb-item active"><a href="/feedback/list">Feedback
-										list</a></li>
-							</ol>
-						</div> -->
-						<!-- /.row -->
 					</div>
 					<!-- /.container-fluid -->
 				</div>
 			</div>
 			<!-- /.content-header -->
-
 			<div class="content" style="margin:0 65px 20px 65px; padding:0px">
 				<div style="float:left;">
 				<div class="input-group-prepend">
@@ -71,7 +61,7 @@
                   </div>
                   </div>
 				<div style="text-align:right">
-					<input type="text" style="width:300px;height:35px;margin-right:10px;padding-left:12px;border:1px solid #cfcfcf;"placeholder="업무, 멤버, 내용으로 피드백 검색">
+					<input id="search-all" type="text" style="width:300px;height:35px;margin-right:10px;padding-left:12px;border:1px solid #cfcfcf;"placeholder="업무, 멤버, 내용으로 피드백 검색">
 					<button id="writeFeedbackBtn" class="btn btn-info btn-flat" style="height:35px;">피드백 주기</button>
 				</div>
 			</div>
@@ -144,7 +134,7 @@
               	<div>업무1</div>
               </div>
               <br/><br/>
-              <div>
+              <div id="textarea">
               	<h6>설명</h6>
               	<textarea name="content" rows="6" style="width:100%;border:1px solid #cccccc;border-radius:.40rem;padding:10px" placeholder="칭찬 혹은 개선할 사항을 작성해보세요..."></textarea>
               	<div style="margin:10px;">
@@ -248,11 +238,33 @@
       </div>
       <!-- /.modal -->
       
+      
 	<%@include file="/WEB-INF/views/modules/common-js.jsp"%>
 	<script type="text/javascript">
 	$(function() {
-		// CSS
+		// Toast 모달
+		const Toast = Swal.mixin({
+			toast: true,
+			position: 'top-end',
+			showConfirmButton: false,
+			timer: 3000
+		});
+		$('.toastrDefaultSuccess').click(function() { // 기본 success
+		      toastr.success('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
+		});
+		$('.toastrDefaultInfo').click(function() {
+		      toastr.info('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
+		});
+		$('.toastsDefaultInfo').click(function() {
+		      $(document).Toasts('create', {
+		        class: 'bg-info', 
+		        title: 'Toast Title',
+		        subtitle: 'Subtitle',
+		        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+		      });
+		});
 		
+		// CSS
 		// 상단 로그 / 피드백 메뉴 css
 		$(".f_link").click(function() {
 			$("#active").removeAttr("id");
@@ -265,10 +277,24 @@
 				$(this).css("color", "#464c59");
 		});
 
+		// 피드백 멤버이미지 css
+		$(document).on("click", ".user-count-img, .user-count-span", function() {
+			//closeOrOpen($(this).parents(".user-block").children(".username").children(".hover-user-block"));
+			var target = $(this).parents(".user-block").children(".username").children(".hover-user-block");
+			
+			if (target.hasClass("display-none")) {
+				target.fadeIn(200);
+				target.removeClass("display-none");
+			} else {
+				target.fadeOut(200);
+				target.addClass("display-none");
+			}
+		});
+	
 		// 피드백 post css
 		$(document).on({
 		    mouseenter: function () {
-		    	$(this).css("background-color", "#e2e2e2");
+		    	$(this).css("background-color", "#efefef");
 		    },
 		    mouseleave: function () {
 		    	$(this).css("background-color", "white");
@@ -331,6 +357,12 @@
 		
 		////////////////////////////////////////////////////////////////////////////////////////
 		
+		// 텍스트 자르고 ... 포함된 문자열 반환하는 함수
+		function textSubString(text) {
+			return ((text.length > 10) ? text.substring(0, 10) + "..." : text);
+		}
+		
+		
 		// 멤버 추가 작은모달 이벤트
 		$(document).on("click", "._mem", function() {
 			var name = $(this).attr("data-name");
@@ -372,9 +404,8 @@
 				selected += $(".mem:eq("+ i +")").attr("data-email") + ":";
 				
 			$.ajax({
-				url : "getWorkspaceMembers",
+				url : "/team/feedback/getWorkspaceMembers",
 				method : "get",
-				async : true,
 				data : {"str" : $(this).val(),
 						"selected" : selected},
 				success : function(resp, status, xhr) {
@@ -388,7 +419,7 @@
 			});
 		});
 		
-		
+	
 		// 피드백 폼 전송
 		$("#checkbox").click(function() {
 			if ($(this).attr("checked")) { 
@@ -397,12 +428,28 @@
 				$(this).attr("checked", ""); $("#isPublic").val("true"); 
 			}
 		});
-		
 		$("#submit_btn").click(function() {
 			if (!confirm("피드백을 작성할까요?")) return;
-			$("#feedback_write_form").submit();
+			
+			var searchType = $(this).attr("data-value");
+			var feedback = $("#feedback_write_form").serializeArray();
+			var content = $("#feedback_write_form").children("#textarea").children("textarea").val();
+			
+			$.ajax({
+				url : "/team/feedback/write",
+				method : "post",
+				data : feedback,
+				success : function(resp, status, xhr) {
+					$("#writeFeedbackModal").modal("hide");
+					$("#feedback-list-container").load("/team/feedback/search?searchType=" + searchType + "&email=${loginuser.email}");
+
+					toastr.success("피드백&nbsp;&nbsp; " + textSubString(content) + " 을 작성했습니다");
+				},
+				error : function(xhr, status, err) {
+					console.log(err);
+				}
+			}); 
 		});
-		
 		
 		// 피드백 검색
 		$(".feedback .dropdown-item").click(function() {
@@ -412,7 +459,7 @@
 				url : "list2",
 				method : "get",
 				success : function(resp, status, xhr) {
-					$("#feedback-list-container").load("/team/feedback/search?searchType=" + searchType + "&email=" + "${loginuser.email}");
+					$("#feedback-list-container").load("/team/feedback/search?searchType=" + searchType + "&email=${loginuser.email}");
 				},
 				error : function(xhr, status, err) {
 					console.log(err);
@@ -423,14 +470,17 @@
 		// 피드백 삭제
 		$(document).on("click", ".close-btn", function() {
 			if (!confirm("해당 피드백을 삭제할까요?")) return;
+			
 			var searchType = $("#dropdown-select").attr("data-value");
+			var content = $(this).parents(".post").children(".feedback-contents").text();
 
 			$.ajax({
 				url : "/team/feedback/delete",
 				method : "post",
 				data : {"feedbackNo": $(this).prev().val()},
 				success : function(resp, status, xhr) {
-					$("#feedback-list-container").load("/team/feedback/search?searchType=" + searchType + "&email=" + "${loginuser.email}");
+					$("#feedback-list-container").load("/team/feedback/search?searchType=" + searchType + "&email=${loginuser.email}");
+					toastr.error("피드백 &nbsp;&nbsp;" + textSubString(content) + " 을 삭제했습니다");
 				}, 
 				error : function(xhr, status, err) {
 					console.log(err);
@@ -438,8 +488,6 @@
 			}); 
 		});
 		
-		
-		// 여기 고치기!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		// 코멘트 작성
 		$(document).on("click", ".comment-write-btn", function(event) {
 			if (!confirm("코멘트를 작성할까요?")) return;
@@ -449,27 +497,44 @@
 				alert("코멘트 내용을 입력하세요."); return;
 			}
 			
-			var values = $(this).parents(".comment-form").serializeArray();
-			console.log(values);
-			
+			var comment = $(this).parents(".comment-form").serializeArray();
 			var searchType = $("#dropdown-select").attr("data-value");
 			$.ajax({
 				url : "/team/feedback/comment/write",
 				method : "post",
-				data : {"comment" : values},
-				dataType : "json",
+				data : comment,
 				success : function(resp, status, xhr) {
-					$("#feedback-list-container").load("/team/feedback/search?searchType=" + searchType + "&email=" + "${loginuser.email}");
+					$("#feedback-list-container").load("/team/feedback/search?searchType=" + searchType + "&email=${loginuser.email}");
+					toastr.info("코멘트&nbsp;&nbsp; " + textSubString(content) + " 을 작성했습니다");
 				},
 				error : function(xhr, status, err) {
 					console.log(err);
 				}
 			});
-
+		}); 
+		
+		
+		// 피드백 전체 검색 
+		$("#search-all").keyup(function() {
+			var key = $(this).val();
+			
+			$.ajax({
+				url : "list2",
+				method : "get",
+				success : function(resp, status, xhr) {
+					$("#feedback-list-container").load("/team/feedback/search?searchType=I&email=${loginuser.email}&key="+ key);
+				},
+				error : function(xhr, status, err) {
+					console.log(err);
+				}
+			});
 		});
+		
 		
 	});
 	</script>
 </body>
+
+
 
 </html>

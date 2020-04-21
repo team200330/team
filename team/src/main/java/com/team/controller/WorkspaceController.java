@@ -46,8 +46,22 @@ public class WorkspaceController {
 	}
 	
 	@GetMapping(path = { "/setting-workspace" })
-	public String settingworkspaceform() {
+	public String settingworkspaceform(int workspaceNo,Model model) {
+		Workspace workspace = workspaceService.selectWorkspaceByWorkspaceNo(workspaceNo);
+		model.addAttribute("workspace",workspace);
 	return "workspace/setting-workspace"; 
+	}
+	
+	@PostMapping(path = { "/setting-workspace" })
+	public String Dosettingworkspace(Workspace workspace) {
+		workspaceService.updateWorkspaceName(workspace);
+	return "workspace/setting-workspace"; 
+	}
+	
+	@PostMapping(path = { "/delete-workspace" })
+	public String Dodeleteworkspace(Workspace workspace) {
+		workspaceService.deleteWorkspace(workspace);
+	return "workspace/create-workspace"; //임시
 	}
 	
 	@GetMapping(path = { "/workspace-member" })

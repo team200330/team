@@ -33,3 +33,7 @@
 <script src="/team/resources/dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="/team/resources/dist/js/demo.js"></script>
+<!-- SweetAlert2 -->
+<script src="/team/resources/plugins/sweetalert2/sweetalert2.min.js"></script>
+<!-- Toastr -->
+<script src="/team/resources/plugins/toastr/toastr.min.js"></script>

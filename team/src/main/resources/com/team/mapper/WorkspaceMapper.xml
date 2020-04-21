@@ -29,4 +29,29 @@
 		<result column="type_no" property="typeNo" />
 	</resultMap> 
 	
+	<select id="selectWorkspaceByWorkspaceNo" parameterType="int" resultMap="workspaceMap">
+		SELECT * FROM workspace
+		WHERE workspace_no = #{ workspaceNo } 
+	</select>
+	
+	<resultMap type="workspace" id="workspaceMap">
+		<id column="workspace_no" property="workspaceNo" />
+		<result column="workspace_name" property="workspaceName" />
+		<result column="deleted" property="deleted" />
+		<result column="code" property="code" />		
+	</resultMap> 	
+	
+	<update id="updateWorkspaceName" parameterType="com.team.vo.Workspace">
+		UPDATE workspace
+		SET workspace_name = #{ workspaceName } 
+		WHERE workspace_no = #{ workspaceNo } 
+	</update>
+	
+	<update id="deleteWorkspace" parameterType="com.team.vo.Workspace">
+		UPDATE workspace
+		SET deleted = '1'
+		WHERE workspace_no = #{ workspaceNo } 
+	</update>
+	
+	
 </mapper>

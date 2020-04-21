@@ -1,6 +1,6 @@
 package com.team.vo;
 
-import java.sql.Time;
+import java.sql.Date;
 
 import lombok.Data;
 
@@ -10,5 +10,5 @@ public class Comments {
 	private int feedbackNo;
 	private String writer;
 	private String content;
-	private Time writedate;
+	private Date writedate;
 }
