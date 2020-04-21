@@ -10,5 +10,11 @@ public interface WorkspaceMapper {
 	void insertWorkspace(Workspace workspace);
 	
 	List<WorkspaceMember> selectWorkspaceMembers(int workspaceNo);
+
+	Workspace selectWorkspaceByWorkspaceNo(int workspaceNo);
+
+	void updateWorkspaceName(Workspace workspace);
+
+	void deleteWorkspace(Workspace workspace);
 	
 }

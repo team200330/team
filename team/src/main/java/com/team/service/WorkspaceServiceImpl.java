@@ -40,5 +40,22 @@ public class WorkspaceServiceImpl implements WorkspaceService {
 		List<Project> Projects = projectMapper.selectProjectByWorkspaceNo(workspaceNo);
 		return Projects;
 	}
+
+	@Override
+	public Workspace selectWorkspaceByWorkspaceNo(int workspaceNo) {
+		return workspaceMapper.selectWorkspaceByWorkspaceNo(workspaceNo);
+	}
+
+	@Override
+	public void updateWorkspaceName(Workspace workspace) {
+		workspaceMapper.updateWorkspaceName(workspace);
+		
+	}
+
+	@Override
+	public void deleteWorkspace(Workspace workspace) {
+		workspaceMapper.deleteWorkspace(workspace);
+		
+	}
 	
 }
