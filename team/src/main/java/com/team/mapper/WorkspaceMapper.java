@@ -21,5 +21,7 @@ public interface WorkspaceMapper {
 	List<Member> selectMembersByWorkspaceNo(int workspaceNo);
 
 	Member selectMemberTypeNo1ByWorkspaceNo(int workspaceNo);
+
+	List<Member> WorkspaceMemberNameAndDepartmentSearch(Member member);
 	
 }

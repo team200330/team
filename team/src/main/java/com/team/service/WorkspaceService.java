@@ -21,4 +21,6 @@ public interface WorkspaceService {
 	void deleteWorkspace(Workspace workspace);
 
 	Member selectMemberTypeNo1ByWorkspaceNo(int workspaceNo);
+
+	List<Member> WorkspaceMemberNameAndDepartmentSearch(Member member);
 }

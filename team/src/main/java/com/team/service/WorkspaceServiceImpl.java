@@ -64,5 +64,11 @@ public class WorkspaceServiceImpl implements WorkspaceService {
 		Member member1 = workspaceMapper.selectMemberTypeNo1ByWorkspaceNo(workspaceNo);
 		return member1;
 	}
+
+	@Override
+	public List<Member> WorkspaceMemberNameAndDepartmentSearch(Member member) {
+		List <Member> members = workspaceMapper.WorkspaceMemberNameAndDepartmentSearch(member);
+		return members;
+	}
 	
 }

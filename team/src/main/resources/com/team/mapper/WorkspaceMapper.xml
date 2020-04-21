@@ -69,6 +69,17 @@
 		AND type_no = 1;
 	</select>
 	
+	<select id="WorkspaceMemberNameAndDepartmentSearch" parameterType="com.team.vo.Member" resultMap="memberMap">
+		SELECT * FROM workspace_member wm
+		INNER JOIN member m
+		ON wm.email = m.email		
+		INNER JOIN workspace w
+		ON wm.workspace_no = w.workspace_no
+		WHERE w.workspace_no = #{ position } 
+		AND m.name like concat('%',#{name},'%')
+		OR m.department like concat('%',#{name},'%')
+	</select>
+	
 	<resultMap type="workspace" id="workspaceMap">
 		<id column="workspace_no" property="workspaceNo" />
 		<result column="workspace_name" property="workspaceName" />
@@ -88,5 +99,9 @@
 		WHERE workspace_no = #{ workspaceNo } 
 	</update>
 	
+	<!-- update
+		 set type_no = 1
+		 where email = user2@example.com
+	 -->
 	
 </mapper>

@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.team.service.WorkspaceService;
 import com.team.vo.Member;
@@ -69,11 +70,18 @@ public class WorkspaceController {
 	
 	@GetMapping(path = { "/workspace-member" })
 	public String workspacemember(int workspaceNo,Model model) {
-	List <Member> members = workspaceService.selectMembersByWorkspaceNo(workspaceNo);
-	model.addAttribute("members",members);
-	Member member = workspaceService.selectMemberTypeNo1ByWorkspaceNo(workspaceNo);
-	model.addAttribute("member",member);
+		List <Member> members = workspaceService.selectMembersByWorkspaceNo(workspaceNo);
+		model.addAttribute("members",members);
+		Member member = workspaceService.selectMemberTypeNo1ByWorkspaceNo(workspaceNo);
+		model.addAttribute("member",member);
 	return "workspace/workspace-member"; 
+	}
+	
+	@PostMapping(path = { "/WorkspaceMemberNameAndDepartmentSearch" })
+	public String Searchworkspacemember(Member member,Model model) {
+		List <Member> members = workspaceService.WorkspaceMemberNameAndDepartmentSearch(member);
+		model.addAttribute("members",members);
+	return "redirect:workspace/workspace-member"; 
 	}
 
 }

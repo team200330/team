@@ -58,7 +58,10 @@
 			<section class="content"  style="padding: 0 4% 0 4%;">
     <div class="row">
 				  <div class="form-group col-12 col-sm-6 col-md-3">
-                        <input class="form-control" type="search" placeholder="이름 또는 직함으로 검색하기(작업중)" aria-label="Search" style="margin-right: -40px;">                   
+				  <form action="WorkspaceMemberNameAndDepartmentSearch" method="post">
+				  <input type="hidden" name="position" value="3">
+                  <input class="form-control" type="search" name="name" placeholder="이름 또는 직함으로 검색하기" aria-label="Search" style="margin-right: -40px;">
+                  </form>                   
                   </div>
 				  <div class="form-group col-12 col-sm-6 col-md-3">
                         <select class="form-control">
@@ -95,11 +98,11 @@
                   <div class="row">
                     <div class="col-7">
                       <h2 class="lead"><b>${ member.name }</b><span class="badge bg-danger ml-3">관리자</span></h2>
-                      <p class="text-muted text-sm"><b>부서: </b>${ member.department }</p>
+                      <p class="text-muted text-sm"><b>부서 : </b>${ member.department }</p>
                       <ul class="mb-0 text-muted" style="list-style-type: none; padding:0;">
-                      	<li class="small">연락처: ${ member.phone }</li>
-                        <li class="small">가입날짜: ${ member.regdate }</li>
-                        <li class="small">${ member.email }</li>
+                      	<li class="small">연락처 : ${ member.phone }</li>
+                        <li class="small">가입날짜 : ${ member.regdate }</li>
+                        <li class="small">이메일 : ${ member.email }</li>
                       </ul>
                     </div>
                     <div class="col-5 text-center">
@@ -140,12 +143,16 @@
                 <div class="card-body pt-0">
                   <div class="row">
                     <div class="col-7">
-                      <h2 class="lead"><b>${ member.name }</b></h2>
-                      <p class="text-muted text-sm"><b>부서: </b>${ member.department }</p>
+                      <h2 class="lead"><b>${ member.name }</b><a data-toggle="dropdown" href="#"><i class="fas fa-cog ml-3" style="font-size: 18px; color: darkgray;"></i>
+                      <div class="dropdown-menu">
+                            <button class="dropdown-item" onclick="location.href='/team/changeworkspacemembertype?workspaceNo=3&email=${ member.email }'">관리자 권한부여</button>
+                        </div>
+                      </a></h2>
+                      <p class="text-muted text-sm"><b>부서 : </b>${ member.department }</p>
                       <ul class="mb-0 text-muted" style="list-style-type: none; padding:0;">
-                      	<li class="small">연락처: ${ member.phone }</li>
-                        <li class="small">가입날짜: ${ member.regdate }</li>
-                        <li class="small">${ member.email }</li>
+                      	<li class="small">연락처 : ${ member.phone }</li>
+                        <li class="small">가입날짜 : ${ member.regdate }</li>
+                        <li class="small">이메일 : ${ member.email }</li>
                       </ul>
                     </div>
                     <div class="col-5 text-center">
@@ -159,7 +166,7 @@
                     <a href="#" class="btn btn-sm bg-danger" data-toggle="dropdown" style="padding-top: 7px; height: 30px;">
                     <i class="fas fa-trash-alt"></i>
                     	<div class="dropdown-menu">
-                            <button class="dropdown-item" >워크스페이스에서 삭제</button>
+                            <button class="dropdown-item" onclick="location.href='/team/deleteworkspacemember?workspaceNo=3&email=${ member.email }'">워크스페이스에서 삭제</button>
                         </div>
                     </a>
                     <a href="#" class="btn btn-sm bg-teal">
