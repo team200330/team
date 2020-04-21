@@ -1,6 +1,7 @@
 package com.team.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.team.mapper.ProjectMapper;
 import com.team.vo.Project;
@@ -22,6 +23,13 @@ public class ProjectServiceImpl implements ProjectService {
 	public List<Project> findProject() {
 		
 		return projectMapper.selectProject();
+	}
+
+	@Override
+	public void updateProjectNo(Map<String, String> arrMap) {
+
+		projectMapper.updateProjectNo(arrMap);
+		
 	}
 
 
