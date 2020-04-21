@@ -1,5 +1,6 @@
 <%@ page pageEncoding="utf-8" contentType="text/html; charset=utf-8" %>
-<%@taglib prefix='c' uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix='c'   uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"  %>
 <html>
 
 <head>
@@ -29,7 +30,11 @@
 	._mem_img {width:20%;}
 	._mem_name {width:60%;}
 	._mem_icon {width:20%;}
-
+	.seletProNo { margin: 15px 0 0; padding: .175rem .55rem; width: 120px; }
+	.progress { width:100%}
+	.progress-description {display:block; height: 100%;}
+	.btn-default { background-color: #f3f3f3; border-color: #6c757d; color: #333;}
+	.info-box .progress {margin:10px 0;} 
  </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -66,7 +71,7 @@
     <!-- Main content -->
     <section class="content">
 
-      <!-- 최근 프로젝트  -->
+      <!-- 최근 프로젝트 -->
       <div class="card">
         <div class="card-header">
           <h3 class="card-title">최근 프로젝트</h3>
@@ -81,11 +86,13 @@
 		<div class="card-body" style="display: block;">
 	      <div class="card-body pb-0">
 	          <div class="row d-flex align-items-stretch">
-				<div class="row">
-		        </div>
+				
+				<jsp:include page="list2.jsp" />
+
 	          </div>
 	        </div>
         </div>
+		
         <div class="card-footer" style="display: block;">
           <nav aria-label="Contacts Page Navigation">
             <ul class="pagination justify-content-center m-0">
@@ -101,7 +108,7 @@
           </nav>
         </div>
         </div>
-      <!-- /.최근 프로젝트 끝 -->
+      <!-- /최근프로젝트 -->
 
       <!-- 내가 속한 프로젝트 -->
       <div class="card">
@@ -118,85 +125,9 @@
 		<div class="card-body" style="display: block;">
 	      <div class="card-body pb-0">
 	          <div class="row d-flex align-items-stretch">
+				
+				<jsp:include page="list.jsp" />
 
-			<c:forEach items="${ project }" var="project">
-		          <div class="col-md-3 col-sm-6 col-12">
-		            <div class="info-box bg-info">
-		
-		              <div class="info-box-content">
-		                <span class="info-box-text">${ project.projectName }</span>
-		                <c:if test="${ project.content == null}"><span class="progress-description">&nbsp;&nbsp;&nbsp;</span></c:if>
-		                <c:if test="${ project.content eq project.content }"><span class="progress-description">${ project.content }</span></c:if>
-		                <span class="info-box-number">
-		                	<select name="proNo" class="seletProNo">
-			                	<c:if test="${project.proNo eq '1' }">
-				                	<option value="1" selected="selected">상태없음 </option>
-			                		<option value="2">진행중 </option>
-			                		<option value="3">완료 </option>
-			                		<option value="4">보류 </option>
-			                		<option value="5">취소 </option>
-			                	</c:if>
-				                <c:if test="${project.proNo eq '2' }">
-					                <option value="1">상태없음 </option>
-			                		<option value="2" selected="selected">진행중 </option>
-			                		<option value="3">완료 </option>
-			                		<option value="4">보류 </option>
-			                		<option value="5">취소 </option>
-				                </c:if>
-				                <c:if test="${project.proNo eq '3' }">
-				                	<option value="1">상태없음 </option>
-			                		<option value="2">진행중 </option>
-			                		<option value="3" selected="selected">완료 </option>
-			                		<option value="4">보류 </option>
-			                		<option value="5">취소 </option>
-				                </c:if>
-				                <c:if test="${project.proNo eq '4' }">
-				                	<option value="1">상태없음 </option>
-			                		<option value="2">진행중 </option>
-			                		<option value="3">완료 </option>
-			                		<option value="4" selected="selected">보류 </option>
-			                		<option value="5">취소 </option>
-				                </c:if>
-				                <c:if test="${project.proNo eq '5' }">
-				                	<option value="1">상태없음 </option>
-			                		<option value="2">진행중 </option>
-			                		<option value="3">완료 </option>
-			                		<option value="4">보류 </option>
-			                		<option value="5" selected="selected">취소 </option>
-				                </c:if>
-		                	</select>
-					    </span>
-		                <div class="progress">
-		                  <div class="progress-bar" style="width: 70%"></div>
-		                </div>
-		              </div>
-		              <!-- /.info-box-content -->
-		            </div>
-		            <!-- /.info-box -->
-		          </div>
-		          <!-- /.col -->
-			</c:forEach>
-			
-		          <div class="col-md-3 col-sm-6 col-12">
-		            <div class="info-box bg-info">
-		
-		              <div class="info-box-content">
-		                <span class="info-box-text">Bookmarks</span>
-		                <span class="info-box-number">41,410</span>
-		
-		                <div class="progress">
-		                  <div class="progress-bar" style="width: 70%"></div>
-		                </div>
-		                <span class="progress-description">
-		                  70% Increase in 30 Days
-		                </span>
-		              </div>
-		              <!-- /.info-box-content -->
-		            </div>
-		            <!-- /.info-box -->
-		          </div>
-		          <!-- /.col -->
-            
 	          </div>
 	        </div>
         </div>
@@ -219,7 +150,7 @@
           </nav>
         </div>
         </div>
-      <!-- /.card -->
+      <!-- /.내가속한프로젝트 -->
       
       <div class="modal fade" id="modal-lg">
         <div class="modal-dialog modal-lg">
@@ -278,15 +209,10 @@ $(function() {
 		$(this).css("background-color", "#17a2b8");
 	});
 	$('input[name=templateNo]').on('click', function(){ 
-
 		var input_id_check = $(this).attr("id");
 		var label_for_check = $("label[for='"+ input_id_check + "']").attr("for");
 		var check_label = $($("label[for='"+ input_id_check + "']")).find( '#chklabel1' )
-		
-/* 		console.log(input_id_check);
-		console.log(label_for_check);  
-		console.log($(this).prop('checked')) */
-		
+
 		if( $(this).prop('checked') ){
 			if(  check_label ){
 				$(".selected1").removeClass("selected1");
@@ -309,8 +235,7 @@ $(function() {
 		
 	});
 
-	$('input[name=templateNo]').on('click', function(){
-		
+	$('input[name=templateNo]').on('click', function(){	
 		if( $(this).val() == "basics"){ $(this).val("1") }
 		else if($(this).val() == "weekday"){ $(this).val("2") }
 		else if($(this).val() == "individual"){ $(this).val("3") }
@@ -318,7 +243,61 @@ $(function() {
 		else if($(this).val() == "khanban"){ $(this).val("5") }
 		console.log($(this).val())
 	});
-	
+
+	/*$('.selectProNo2').on('click', function(){
+		//var selectProNoName = ['상태없음', '진행중', '완료', '보류', '취소'];
+		
+		var projectNo = $(this).prev('.projectNo').attr('id');
+		var proNo = $(this).val();
+		console.log(projectNo); // 12345
+		console.log(proNo)		// 상태없음, 진행중, 완료, 보류, 취소
+
+		var option1 = $("<option value='"+projectNo+"'>"+ proNo+"</option>" )
+		console.log(option1)
+		$('.selectProNo2').append(option1);
+		//처음에 추가
+		$('.selectProNo2').prepend(option1);
+ 		$('.selectProNo2 option:first').remove();
+		$('.selectProNo2').append('<option value="'+ projectNo +'">'+ proNo +'</option>');
+		if ($('.selectProNo2').val() == '1'){ 
+			for(var count = 0; count < proNo.size(); count++){
+				var option2 = $("<option value='"+projectNo[count]+"'>"+ proNo+"</option>" )
+				console.log(optopn2)
+				$('.selectProNo2').append(option2);
+			}
+			$("<option value='"+projectNo+"'>"+ proNo+"</option>" ).css({'display':'none'});
+			
+		} 
+		
+ 		for(var count = 0; count < changeItem.size(); count++){                
+		                var option = $("<option>"+changeItem[count]+"</option>");
+		                $('#select2').append(option);
+		} 
+		
+	})*/
+
+	$('.seletProNo').on('click', function(){
+		var projectNo = $(this).prev('.projectNo').attr('id');
+		console.log(projectNo)
+		var proNo = $(this).val();
+		console.log(proNo);
+
+		$.ajax({
+			"url":"/team/project/projectByproNo",
+			"method":"post",
+			"async":true,
+			"data":{"projectNo" : projectNo,
+				    "proNo":proNo },
+			"success":function(resp, status, xhr){
+
+			},
+			"error" : function(xhr, status, err){
+				console.log(err);
+			}
+		});
+		
+	});
+
 	
 	$('#saveSubmit').on('click', function(event){
 
@@ -332,69 +311,8 @@ $(function() {
 		$('#writeform').submit();
 
 	});
-	
-	$('.selectProNo').on('click', function(){
 
-		var prono = $(this).val();
-		
-		$.ajax({
-		      type: 'POST',
-		      url: "/project-proNo", //데이터 가져올 경로 세팅
-		      dataType : 'json',
-		      data : {              
-		      month:month
-		      },
-		      success: function(result) {       
 
-		      // 세팅 selectbox 초기화
-
-		      $(this).find("option").remove().end().append("<option value=''>- 선택  -</option>");
-
-		 
-		      //결과 갯수 만큼 세팅
-		      $.each(result, function(i){
-					var i = 5;
-		           $("").append("<option value='"+result[i]+"'>"+ prono +"</option>")
-		      });       
-
-		   
-
-		      if(null !=  #{projsect.proNo} && "" != #{project.proNo}) {
-
-		           $(this).val(); //이전검색 값 세팅 
-		      }
-
-		      },
-		      error: function(result) {
-		      }
-		    });
-	});
-		
-
-	//$(document).on('click','.selectProNo', function(event){
-	$('.selectProNo').on('click', function(event){
-		
-		var data = $(this).val();
-		
-		console.log(data);
-		
-		$.ajax({
-			"url":"/project-proNo",
-			"method":"put",
-			"data": JSON.stringify(data),
-			"contentType" : "application/json"
-			"success":function(result, status, xhr) {
-				// projectlist 뿌려주는 곳 따로 빼서 ajax로 처리할곳 
-				// $('인크루드할 projectlist div').load("/team/project/prlist")
-				//$('input[name=proNo]').val(project.proNo);
-			},
-			"error":fucntion(xhr, status, err){
-				alert(err);
-			}
-		});
-		
-	}
-	
 	
 	
 });

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.team.service.WorkspaceService;
+import com.team.vo.Member;
 import com.team.vo.Project;
 import com.team.vo.Workspace;
 import com.team.vo.WorkspaceMember;
@@ -42,6 +43,8 @@ public class WorkspaceController {
 	public String inviteworkspaceform(int workspaceNo,Model model) {		
 	List<Project> Projects = workspaceService.selectProjectByWorkspaceNo(workspaceNo);
 	model.addAttribute("Projects",Projects);
+	Workspace workspace = workspaceService.selectWorkspaceByWorkspaceNo(workspaceNo);
+	model.addAttribute("workspace",workspace);	
 	return "workspace/invite-workspace"; 
 	}
 	
@@ -66,11 +69,10 @@ public class WorkspaceController {
 	
 	@GetMapping(path = { "/workspace-member" })
 	public String workspacemember(int workspaceNo,Model model) {
-	List <WorkspaceMember> workspaceMembers	= workspaceService.selectWorkspaceMembersByWorkspaceNo(workspaceNo);
-	model.addAttribute("workspaceMembers",workspaceMembers);
-	
-	
-	
+	List <Member> members = workspaceService.selectMembersByWorkspaceNo(workspaceNo);
+	model.addAttribute("members",members);
+	Member member = workspaceService.selectMemberTypeNo1ByWorkspaceNo(workspaceNo);
+	model.addAttribute("member",member);
 	return "workspace/workspace-member"; 
 	}
 

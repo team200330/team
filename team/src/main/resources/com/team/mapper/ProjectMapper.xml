@@ -22,13 +22,21 @@
 	</resultMap>	
 	
 	<select id="selectProject" resultMap="projectMap">
-		SELECT * FROM project
+		SELECT * FROM project ORDER BY project_no DESC
+	</select>
+	
+	<select id="selectProject2" resultMap="projectMap">
+		<![CDATA[ SELECT * FROM project WHERE project_no >= 4 ORDER BY project_no DESC ]]>
 	</select>
 	
 	<select id="selectProjectByWorkspaceNo" parameterType="int" resultMap="projectMap">
 		SELECT * FROM project
 		WHERE workspace_no = #{ workspaceNo } 
 	</select>
+	
+	<update id="updateProjectNo" parameterType="hashmap">
+		UPDATE project SET pro_no=#{ proNo } WHERE project_no = #{ projectNo }
+	</update>
 
 
 <!-- 	<resultMap type="project" id="projectMap">
