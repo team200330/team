@@ -85,20 +85,21 @@
       <div class="card card-solid">
         <div class="card-body pb-0">
           <div class="row d-flex align-items-stretch">
-          <c:forEach var="workspaceMember" items="${ workspaceMembers }">
-            <div class="col-12 col-sm-6 col-md-3 d-flex align-items-stretch">
+          
+           <div class="col-12 col-sm-6 col-md-3 d-flex align-items-stretch">
               <div class="card bg-light">
                 <div class="card-header text-muted border-bottom-0">
-                  직함 : 땡땡땡 (작업중)
+                  	직함 : ${ member.position }
                 </div>
                 <div class="card-body pt-0">
                   <div class="row">
                     <div class="col-7">
-                      <h2 class="lead"><b>박지성(작업중)</b><c:choose><c:when test="${ workspaceMember.typeNo == '1' }"><span class="badge bg-danger ml-3">관리자</span></c:when><c:otherwise></c:otherwise></c:choose></h2>
-                      <p class="text-muted text-sm"><b>부서: </b>영업팀 (작업중)</p>
+                      <h2 class="lead"><b>${ member.name }</b><span class="badge bg-danger ml-3">관리자</span></h2>
+                      <p class="text-muted text-sm"><b>부서: </b>${ member.department }</p>
                       <ul class="mb-0 text-muted" style="list-style-type: none; padding:0;">
-                        <li class="small">로그인 4월 10일 15:07 (작업중)</li>
-                        <li class="small">${ workspaceMember.email }</li>
+                      	<li class="small">연락처: ${ member.phone }</li>
+                        <li class="small">가입날짜: ${ member.regdate }</li>
+                        <li class="small">${ member.email }</li>
                       </ul>
                     </div>
                     <div class="col-5 text-center">
@@ -121,7 +122,53 @@
                     <a href="#" class="btn btn-sm btn-primary">
                       <i class="fas fa-user"></i> 업무 배정
                     </a>
-                    <a href="/team/feedback/list?email=${ workspaceMember.email }" class="btn btn-sm btn-warning">
+                    <a href="/team/feedback/list?email=${ member.email }" class="btn btn-sm btn-warning">
+                    	피드백을 작성
+                    </a>
+                    <i class="fas fa-trash-o"></i>                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+          <c:forEach var="member" items="${ members }">
+            <div class="col-12 col-sm-6 col-md-3 d-flex align-items-stretch">
+              <div class="card bg-light">
+                <div class="card-header text-muted border-bottom-0">
+                  직함 : ${ member.position }
+                </div>
+                <div class="card-body pt-0">
+                  <div class="row">
+                    <div class="col-7">
+                      <h2 class="lead"><b>${ member.name }</b></h2>
+                      <p class="text-muted text-sm"><b>부서: </b>${ member.department }</p>
+                      <ul class="mb-0 text-muted" style="list-style-type: none; padding:0;">
+                      	<li class="small">연락처: ${ member.phone }</li>
+                        <li class="small">가입날짜: ${ member.regdate }</li>
+                        <li class="small">${ member.email }</li>
+                      </ul>
+                    </div>
+                    <div class="col-5 text-center">
+                      <img src="/team/resources/dist/img/user2-160x160.jpg" alt="" class="img-circle img-fluid">
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer">                
+                  <div class="text-right">
+                                      
+                    <a href="#" class="btn btn-sm bg-danger" data-toggle="dropdown" style="padding-top: 7px; height: 30px;">
+                    <i class="fas fa-trash-alt"></i>
+                    	<div class="dropdown-menu">
+                            <button class="dropdown-item" >워크스페이스에서 삭제</button>
+                        </div>
+                    </a>
+                    <a href="#" class="btn btn-sm bg-teal">
+                      <i class="fas fa-comments"></i> 대화
+                    </a>
+                    <a href="#" class="btn btn-sm btn-primary">
+                      <i class="fas fa-user"></i> 업무 배정
+                    </a>
+                    <a href="/team/feedback/list?email=${ member.email }" class="btn btn-sm btn-warning">
                     	피드백을 작성
                     </a>
                     <i class="fas fa-trash-o"></i>                    
@@ -130,6 +177,7 @@
               </div>
             </div>
             </c:forEach>
+            
           </div>
         </div>
         <!-- /.card-body -->

@@ -119,7 +119,7 @@
               
                 <p>링크를 공유하여 귀하의 팀을 ○○○○○○에 초대하세요</p>              
                 <div class="input-group input-group-sm mb-3">
-                  <input type="text" class="form-control">
+                  <input type="text" class="form-control" value="/team/workspace/invite-workspace?workspaceNo=3?code=${ workspace.code }">
                   <span class="input-group-append">
                     <button type="button" class="btn btn-info btn-flat">링크 복사</button>
                   </span>

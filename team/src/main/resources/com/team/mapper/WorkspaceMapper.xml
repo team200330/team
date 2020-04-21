@@ -23,6 +23,31 @@
 		AND ( type_no = 1 OR type_no = 2 );
 	</select>
 	
+	<select id="selectMembersByWorkspaceNo" parameterType="int" resultMap="memberMap">
+		SELECT * FROM workspace_member wm
+		INNER JOIN member m
+		ON wm.email = m.email		
+		INNER JOIN workspace w
+		ON wm.workspace_no = w.workspace_no
+		WHERE w.workspace_no = #{ workspaceNo } 
+		AND type_no = 2;	
+	</select>
+		
+	<resultMap type="Member" id="memberMap">
+		<id column="email" property="email"/>
+		<result column="password" property="password"/>
+		<result column="regdate" property="regdate"/>
+		<result column="name" property="name"/>
+		<result column="phone" property="phone"/>
+		<result column="department" property="department"/>
+		<result column="position" property="position" />
+		<result column="deleted" property="deleted"/>
+		<result column="address_no" property="addressNo"/>
+		<result column="roadname_addr" property="roadnameAddr"/>
+		<result column="detail_addr" property="detailAddr"/>
+		<result column="img" property="img"/>
+	</resultMap>
+	
 	<resultMap type="WorkspaceMember" id="workspaceMemberMap">
 		<id column="workspace_no" property="workspaceNo" />
 		<result column="email" property="email" />
@@ -32,6 +57,16 @@
 	<select id="selectWorkspaceByWorkspaceNo" parameterType="int" resultMap="workspaceMap">
 		SELECT * FROM workspace
 		WHERE workspace_no = #{ workspaceNo } 
+	</select>
+	
+	<select id="selectMemberTypeNo1ByWorkspaceNo" parameterType="int" resultMap="memberMap">
+		SELECT * FROM workspace_member wm
+		INNER JOIN member m
+		ON wm.email = m.email		
+		INNER JOIN workspace w
+		ON wm.workspace_no = w.workspace_no
+		WHERE w.workspace_no = #{ workspaceNo } 
+		AND type_no = 1;
 	</select>
 	
 	<resultMap type="workspace" id="workspaceMap">
