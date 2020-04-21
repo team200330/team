@@ -26,11 +26,18 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
+	public List<Project> findProject2() {
+		// TODO Auto-generated method stub
+		return projectMapper.selectProject2();
+	}
+	
+	@Override
 	public void updateProjectNo(Map<String, String> arrMap) {
 
 		projectMapper.updateProjectNo(arrMap);
 		
 	}
+
 
 
 	

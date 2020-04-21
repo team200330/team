@@ -22,7 +22,11 @@
 	</resultMap>	
 	
 	<select id="selectProject" resultMap="projectMap">
-		SELECT * FROM project
+		SELECT * FROM project ORDER BY project_no DESC
+	</select>
+	
+	<select id="selectProject2" resultMap="projectMap">
+		<![CDATA[ SELECT * FROM project WHERE project_no >= 4 ORDER BY project_no DESC ]]>
 	</select>
 	
 	<select id="selectProjectByWorkspaceNo" parameterType="int" resultMap="projectMap">

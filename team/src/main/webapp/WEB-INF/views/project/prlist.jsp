@@ -1,5 +1,6 @@
 <%@ page pageEncoding="utf-8" contentType="text/html; charset=utf-8" %>
-<%@taglib prefix='c' uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix='c'   uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"  %>
 <html>
 
 <head>
@@ -70,7 +71,7 @@
     <!-- Main content -->
     <section class="content">
 
-      <!-- 최근 프로젝트  -->
+      <!-- 최근 프로젝트 -->
       <div class="card">
         <div class="card-header">
           <h3 class="card-title">최근 프로젝트</h3>
@@ -85,11 +86,13 @@
 		<div class="card-body" style="display: block;">
 	      <div class="card-body pb-0">
 	          <div class="row d-flex align-items-stretch">
-				<div class="row">
-		        </div>
+				
+				<jsp:include page="list2.jsp" />
+
 	          </div>
 	        </div>
         </div>
+		
         <div class="card-footer" style="display: block;">
           <nav aria-label="Contacts Page Navigation">
             <ul class="pagination justify-content-center m-0">
@@ -105,7 +108,7 @@
           </nav>
         </div>
         </div>
-      <!-- /.최근 프로젝트 끝 -->
+      <!-- /최근프로젝트 -->
 
       <!-- 내가 속한 프로젝트 -->
       <div class="card">
@@ -123,75 +126,7 @@
 	      <div class="card-body pb-0">
 	          <div class="row d-flex align-items-stretch">
 				
-			<c:forEach items="${ project }" var="project">
-		          <div class="col-md-3 col-sm-6 col-12 projectChk">
-		            <div class="info-box bg-info">
-					  
-		              <div class="info-box-content">
-		                <span class="info-box-text">${ project.projectName }</span>
-		                <c:if test="${ project.content == null}"><span class="progress-description">&nbsp;&nbsp;&nbsp;</span></c:if>
-		                <c:if test="${ project.content eq project.content }"><span class="progress-description">${ project.content }</span></c:if>
-		                <div class="progress">
-		                  <div class="progress-bar" style="width: 70%"></div>
-		                </div>
-						<span class="info-box-number">
-		                	<div style="display:none" id="${project.projectNo }" class="projectNo">${project.projectNo }</div>
-		                	<select name="proNo" class="seletProNo btn btn-block btn-default" >
-			                	<c:if test="${project.proNo eq '1' }">
-				                	<option value="1" selected="selected">상태없음 </option>
-			                		<option value="2">진행중 </option>
-			                		<option value="3">완료 </option>
-			                		<option value="4">보류 </option>
-			                		<option value="5">취소 </option>
-			                	</c:if>
-				                <c:if test="${project.proNo eq '2' }">
-					                <option value="1">상태없음 </option>
-			                		<option value="2" selected="selected">진행중 </option>
-			                		<option value="3">완료 </option>
-			                		<option value="4">보류 </option>
-			                		<option value="5">취소 </option>
-				                </c:if>
-				                <c:if test="${project.proNo eq '3' }">
-				                	<option value="1">상태없음 </option>
-			                		<option value="2">진행중 </option>
-			                		<option value="3" selected="selected">완료 </option>
-			                		<option value="4">보류 </option>
-			                		<option value="5">취소 </option>
-				                </c:if>
-				                <c:if test="${project.proNo eq '4' }">
-				                	<option value="1">상태없음 </option>
-			                		<option value="2">진행중 </option>
-			                		<option value="3">완료 </option>
-			                		<option value="4" selected="selected">보류 </option>
-			                		<option value="5">취소 </option>
-				                </c:if>
-				                <c:if test="${project.proNo eq '5' }">
-				                	<option value="1">상태없음 </option>
-			                		<option value="2">진행중 </option>
-			                		<option value="3">완료 </option>
-			                		<option value="4">보류 </option>
-			                		<option value="5" selected="selected">취소 </option>
-				                </c:if>
-		                	</select>
-		                	
-		                	<%-- <select name="proNo2" class="selectProNo2 btn btn-block btn-default">
-		                		<option>
-		                			<c:if test="${project.proNo eq '1' }">상태없음</c:if>
-		                			<c:if test="${project.proNo eq '2' }">진행중</c:if>
-		                			<c:if test="${project.proNo eq '3' }">완료</c:if>
-		                			<c:if test="${project.proNo eq '4' }">보류</c:if>
-		                			<c:if test="${project.proNo eq '5' }">취소</c:if>
-		                		</option>
-		                	</select>
- --%>		                	
-					    </span>
-		              </div>
-		              <!-- /.info-box-content -->
-		            </div>
-		            <!-- /.info-box -->
-		          </div>
-		          <!-- /.col -->
-			</c:forEach>
+				<jsp:include page="list.jsp" />
 
 	          </div>
 	        </div>
@@ -215,7 +150,7 @@
           </nav>
         </div>
         </div>
-      <!-- /.card -->
+      <!-- /.내가속한프로젝트 -->
       
       <div class="modal fade" id="modal-lg">
         <div class="modal-dialog modal-lg">

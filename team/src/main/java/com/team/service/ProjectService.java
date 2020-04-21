@@ -11,8 +11,12 @@ public interface ProjectService {
 	void writeProject(Project project);
 
 	List<Project> findProject();
-
+	
+	List<Project> findProject2();
+	
 	void updateProjectNo(Map<String, String> arrMap);
+
+
 
 
 }

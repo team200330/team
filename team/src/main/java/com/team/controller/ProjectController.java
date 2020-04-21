@@ -35,9 +35,23 @@ public class ProjectController {
 		
 		List<Project> projectList = projectService.findProject();
 		model.addAttribute("project", projectList);
+		List<Project> projectList2 = projectService.findProject2();
+		model.addAttribute("project2", projectList2);
 		
 		return "project/prlist";
 	}
+	
+	/*
+	 * // 최근 4건만 가져오는 것
+	 * 
+	 * @GetMapping(path = { "/prlist2" }) public String showProjectList2(Model
+	 * model) {
+	 * 
+	 * List<Project> projectList = projectService.findProject2();
+	 * model.addAttribute("project2", projectList);
+	 * 
+	 * return "project/prlist"; }
+	 */
 	
 	@PostMapping(path = {"/write.action"})
 	public String write(Project project) {

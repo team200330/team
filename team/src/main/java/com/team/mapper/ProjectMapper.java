@@ -11,10 +11,12 @@ public interface ProjectMapper {
 
 	List<Project> selectProject();
 	
+	List<Project> selectProject2();
+	
 	void updateProjectNo(Map<String, String> arrMaparrMap);
 	
-	
 	List<Project> selectProjectByWorkspaceNo(int workspaceNo);
+
 
 
 }
