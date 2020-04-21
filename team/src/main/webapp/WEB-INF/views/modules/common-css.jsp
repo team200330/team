@@ -26,3 +26,7 @@
   <link rel="stylesheet" href="/team/resources/plugins/summernote/summernote-bs4.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="/team/resources/plugins/fontawesome-free/css/all.min.css">
+   <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="/team/resources/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+  <!-- Toastr -->
+  <link rel="stylesheet" href="/team/resources/plugins/toastr/toastr.min.css">

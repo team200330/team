@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -59,11 +58,12 @@ public class FeedbackController {
 	}
 	
 	@GetMapping("/search")
-	public String searchFeedback(@RequestParam(defaultValue = "M")String searchType, String email, Model model) {
+	public String searchFeedback(@RequestParam(defaultValue = "M")String searchType, String email, String key, Model model) {
 		HashMap<String, Object> params = new HashMap<>();
 		params.put("email", email);
 		params.put("searchType", searchType);
 		params.put("workspaceNo", 3);
+		params.put("key", key);
 
 		model.addAttribute("feedbackList", feedbackService.searchFeedback(params));
 		
@@ -71,11 +71,12 @@ public class FeedbackController {
 	}
 	
 	@PostMapping("/write")
+	@ResponseBody
 	public String writeFeedback(Feedback feedback, String[] email, String isPublic) {
 		feedback.setPublic(isPublic.equals("true") ? true : false);
 		feedbackService.writeFeedback(feedback, email);
-		
-		return "redirect:/feedback/list";
+	
+		return "success";
 	}
 	
 	@PostMapping("/delete")
@@ -87,11 +88,10 @@ public class FeedbackController {
 	}
 	
 	
-	//여기 고치기!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	@PostMapping("/comment/write")
 	@ResponseBody
-	public String writeComment(@RequestBody Comments comment) {
-		System.out.println(comment.toString());
+	public String writeComment(@ModelAttribute Comments comment) {
+		feedbackService.writeComment(comment);
 		return "success";
 	}
 	
