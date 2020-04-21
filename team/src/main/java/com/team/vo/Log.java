@@ -10,7 +10,7 @@ public class Log {
 	private boolean isRead;
 	private String email;
 	private Date writeDate;
-	private String content;
+	private String state;
 	private boolean deleted;
 	private int taskNo;
 }

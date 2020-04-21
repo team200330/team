@@ -56,7 +56,7 @@
 	</select>
 
 	<update id="deleteFeedback" parameterType="int">
-	UPDATE feedback SET deleted = '1'
+	UPDATE receiver SET deleted = '1'
 	WHERE feedback_no = #{feedbackNo}
 	</update>
 	
@@ -67,9 +67,7 @@
 		<result column="writedate" property="writedate"/>
 		<result column="sender" property="sender"/>
 		<result column="workspace_no" property="workspaceNo"/>
-		<result column="is_read" property="isRead"/>
 		<result column="is_public" property="isPublic"/>
-		<result column="deleted" property="deleted"/>
 		<result column="task_no" property="taskNo"/>
 		<collection property="receivers" column="feedback_no" resultMap="receiverMap" />
 	</resultMap>
@@ -77,6 +75,8 @@
 	<resultMap type="Receiver" id="receiverMap">
 		<result column="feedback_no" property="feedbackNo"/>
 		<result column="email" property="email"/>
+		<result column="is_read" property="isRead"/>
+		<result column="deleted" property="deleted"/>
 	</resultMap>
 	
 	<resultMap type="Comments" id="commentMap">

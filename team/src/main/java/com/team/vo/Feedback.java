@@ -12,9 +12,7 @@ public class Feedback {
 	private String sender;
 	private int workspaceNo;
 	private int projectNo;
-	private boolean isRead;
 	private boolean isPublic;
-	private boolean deleted;
 	
 	private List<Receiver> receivers;
 	private List<Comments> comments;

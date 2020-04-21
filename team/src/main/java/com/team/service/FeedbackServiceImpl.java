@@ -65,8 +65,8 @@ public class FeedbackServiceImpl implements FeedbackService {
 		feedbackMapper.deleteFeedback(feedbackNo);
 	}
 	
-	////////////////////////////////////////////////////////////
 	
+	////////////////////////////////////////////////////////////
 	
 	@Override
 	public List<Member> findWorkspaceMembers(int workspaceNo) {

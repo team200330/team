@@ -362,7 +362,6 @@
 			return ((text.length > 10) ? text.substring(0, 10) + "..." : text);
 		}
 		
-		
 		// 멤버 추가 작은모달 이벤트
 		$(document).on("click", "._mem", function() {
 			var name = $(this).attr("data-name");
@@ -487,6 +486,7 @@
 				}
 			}); 
 		});
+		
 		
 		// 코멘트 작성
 		$(document).on("click", ".comment-write-btn", function(event) {
