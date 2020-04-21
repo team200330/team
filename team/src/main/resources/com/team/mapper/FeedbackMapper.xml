@@ -55,7 +55,6 @@
 	SELECT * FROM comments WHERE feedback_no = #{feedback_no}
 	</select>
 
-	
 	<update id="deleteFeedback" parameterType="int">
 	UPDATE feedback SET deleted = '1'
 	WHERE feedback_no = #{feedbackNo}

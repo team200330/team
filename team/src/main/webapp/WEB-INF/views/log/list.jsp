@@ -235,8 +235,8 @@ tr td:nth-child(3) a {font-size:10pt;}
 		$("tr").hover(function() {
 			$(this).css("background-color", "#efefef");
 			$(this).children(":nth-child(3)").html(
-				'<a href="#">읽은 상태로 표시</a><i class="far fa-check-square"></i>&nbsp;&nbsp;' +
-		        '<a href="#">삭제</a><i class="fas fa-times"></i>'
+				'<a>읽은 상태로 표시</a><i class="far fa-check-square"></i>&nbsp;&nbsp;' +
+		        '<a>삭제</a><i class="fas fa-times"></i>'
 			);
 		}, function() {
 			$(this).css("background-color", "white");

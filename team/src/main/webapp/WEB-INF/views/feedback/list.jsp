@@ -238,6 +238,7 @@
       </div>
       <!-- /.modal -->
       
+      
 	<%@include file="/WEB-INF/views/modules/common-js.jsp"%>
 	<script type="text/javascript">
 	$(function() {
@@ -248,17 +249,19 @@
 			showConfirmButton: false,
 			timer: 3000
 		});
-		$('.swalDefaultSuccess').click(function() { // 애니메이션 있는거
-		      Toast.fire({
-		        type: 'success',
-		        title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-		      });
-		});
 		$('.toastrDefaultSuccess').click(function() { // 기본 success
 		      toastr.success('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
 		});
 		$('.toastrDefaultInfo').click(function() {
 		      toastr.info('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
+		});
+		$('.toastsDefaultInfo').click(function() {
+		      $(document).Toasts('create', {
+		        class: 'bg-info', 
+		        title: 'Toast Title',
+		        subtitle: 'Subtitle',
+		        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+		      });
 		});
 		
 		// CSS
@@ -274,10 +277,24 @@
 				$(this).css("color", "#464c59");
 		});
 
+		// 피드백 멤버이미지 css
+		$(document).on("click", ".user-count-img, .user-count-span", function() {
+			//closeOrOpen($(this).parents(".user-block").children(".username").children(".hover-user-block"));
+			var target = $(this).parents(".user-block").children(".username").children(".hover-user-block");
+			
+			if (target.hasClass("display-none")) {
+				target.fadeIn(200);
+				target.removeClass("display-none");
+			} else {
+				target.fadeOut(200);
+				target.addClass("display-none");
+			}
+		});
+	
 		// 피드백 post css
 		$(document).on({
 		    mouseenter: function () {
-		    	$(this).css("background-color", "#ecf5ff");
+		    	$(this).css("background-color", "#efefef");
 		    },
 		    mouseleave: function () {
 		    	$(this).css("background-color", "white");
