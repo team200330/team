@@ -93,20 +93,6 @@
 	        </div>
         </div>
 		
-        <div class="card-footer" style="display: block;">
-          <nav aria-label="Contacts Page Navigation">
-            <ul class="pagination justify-content-center m-0">
-              <li class="page-item active"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" href="#">4</a></li>
-              <li class="page-item"><a class="page-link" href="#">5</a></li>
-              <li class="page-item"><a class="page-link" href="#">6</a></li>
-              <li class="page-item"><a class="page-link" href="#">7</a></li>
-              <li class="page-item"><a class="page-link" href="#">8</a></li>
-            </ul>
-          </nav>
-        </div>
         </div>
       <!-- /최근프로젝트 -->
 
@@ -124,7 +110,7 @@
         </div>
 		<div class="card-body" style="display: block;">
 	      <div class="card-body pb-0">
-	          <div class="row d-flex align-items-stretch">
+	          <div class="row d-flex align-items-stretch list-container1">
 				
 				<jsp:include page="list.jsp" />
 
@@ -299,7 +285,7 @@ $(function() {
 	});
 
 	
-	$('#saveSubmit').on('click', function(event){
+/* 	$('#saveSubmit').on('click', function(event){
 
 		console.log()
 		if ($('#projectName').val() == '') {
@@ -310,6 +296,34 @@ $(function() {
 		
 		$('#writeform').submit();
 
+	}); */
+
+	$('#saveSubmit').on('click', function(event){
+
+		if ($('#projectName').val() == '') {
+			alert('제목을 입력해주세요')
+			$('#projectName').focus();
+			return;
+		};
+		
+		//$('#writeform').submit();
+
+		var values = $('#writeform').serializeArray();
+		//console.log(values); return;
+		
+		$.ajax({
+			"url":"/team/project/write",
+			"method":"post",
+			"data":values,
+			"success":function(data, status, xhr){
+				$('#modal-lg').modal('hide');
+				//$('.list-container1').load("/team/project/prlist");
+				//$('.content').html("");
+			},
+			"error" : function(xhr, status, err){
+				console.log(err)
+			}
+		});
 	});
 
 

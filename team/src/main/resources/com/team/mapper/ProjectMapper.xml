@@ -4,8 +4,8 @@
 <mapper namespace="com.team.mapper.ProjectMapper">
 
 	<insert id="insertProject">
-		INSERT INTO project ( project_name, manager_email, is_public, template_no, workspace_no)
-		VALUES ( #{projectName}, "1@1", #{public}, #{templateNo}, "6" )
+		INSERT INTO project ( project_name, content, manager_email, is_public, template_no, workspace_no)
+		VALUES ( #{projectName}, #{content}, "1@1", #{public}, #{templateNo}, "6" )
 	</insert>
 	
 	<resultMap type="project" id="projectMap">
@@ -26,7 +26,7 @@
 	</select>
 	
 	<select id="selectProject2" resultMap="projectMap">
-		<![CDATA[ SELECT * FROM project WHERE project_no >= 4 ORDER BY project_no DESC ]]>
+		<![CDATA[ SELECT * FROM project ORDER BY project_no DESC LIMIT 4 ]]>
 	</select>
 	
 	<select id="selectProjectByWorkspaceNo" parameterType="int" resultMap="projectMap">
