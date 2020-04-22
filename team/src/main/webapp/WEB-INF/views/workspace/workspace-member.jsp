@@ -58,25 +58,28 @@
 			<section class="content"  style="padding: 0 4% 0 4%;">
     <div class="row">
 				  <div class="form-group col-12 col-sm-6 col-md-3">
-                        <input class="form-control" type="search" placeholder="이름 또는 직함으로 검색하기" aria-label="Search" style="margin-right: -40px;">                   
+				  <form action="WorkspaceMemberNameAndDepartmentSearch" method="post">
+				  <input type="hidden" name="position" value="3">
+                  <input class="form-control" type="search" name="name" placeholder="이름 또는 직함으로 검색하기" aria-label="Search" style="margin-right: -40px;">
+                  </form>                   
                   </div>
 				  <div class="form-group col-12 col-sm-6 col-md-3">
                         <select class="form-control">
-                          <option>모든 멤버(5)</option>
-                          <option>활동 중인 멤버(5)</option>
-                          <option>초대 중인 멤버(0)</option>
-                          <option>삭제된 팀원(1)</option>
+                          <option>모든 멤버(5)(작업중)</option>
+                          <option>활동 중인 멤버(5)(작업중)</option>
+                          <option>초대 중인 멤버(0)(작업중)</option>
+                          <option>삭제된 팀원(1)(작업중)</option>
                         </select>
                   </div>
                   <div class="form-group col-12 col-sm-6 col-md-3">
                         <select class="form-control">
-                          <option>이름순</option>
-                          <option>관리자/멤버</option>
-                          <option>온라인/오프라인</option>
+                          <option>이름순(작업중)</option>
+                          <option>관리자/멤버(작업중)</option>
+                          <option>온라인/오프라인(작업중)</option>
                         </select>
                   </div>
                   <div class="form-group col-12 col-sm-6 col-md-3">
-                    <a href="invite-workspace" class="form-control btn btn-sm btn-success">
+                    <a href="invite-workspace?workspaceNo=3" class="form-control btn btn-sm btn-success">
                       <i class="fas fa-user" style="margin-top: 7px;"></i> 멤버 초대하기
                     </a>
                   </div>
@@ -85,68 +88,21 @@
       <div class="card card-solid">
         <div class="card-body pb-0">
           <div class="row d-flex align-items-stretch">
-            <div class="col-12 col-sm-6 col-md-3 d-flex align-items-stretch">
+          
+           <div class="col-12 col-sm-6 col-md-3 d-flex align-items-stretch">
               <div class="card bg-light">
                 <div class="card-header text-muted border-bottom-0">
-                  직함 : 땡땡땡
+                  	직함 : ${ member.position }
                 </div>
                 <div class="card-body pt-0">
                   <div class="row">
                     <div class="col-7">
-                      <h2 class="lead"><b>김연아</b>
-                      <a data-toggle="dropdown"><i class="fas fa-cog ml-3" style="font-size: 18px; color: darkgray;"></i>
-                      <div class="dropdown-menu">
-                            <button class="dropdown-item" >관리자 권한부여</button>
-                        </div>
-                      </a>
-                      </h2>
-                      <p class="text-muted text-sm"><b>부서: </b>마케팅팀</p>
+                      <h2 class="lead"><b>${ member.name }</b><span class="badge bg-danger ml-3">관리자</span></h2>
+                      <p class="text-muted text-sm"><b>부서 : </b>${ member.department }</p>
                       <ul class="mb-0 text-muted" style="list-style-type: none; padding:0;">
-                        <li class="small">로그인 4월 10일 15:07</li>
-                        <li class="small">ABCabc@co.kr</li>
-                      </ul>
-                    </div>
-                    <div class="col-5 text-center">
-                      <img src="/team/resources/dist/img/user1-128x128.jpg" alt="" class="img-circle img-fluid">
-                    </div>
-                  </div>
-                </div>
-                <div class="card-footer">                
-                  <div class="text-right">
-                                      
-                    <a href="#" class="btn btn-sm bg-danger" data-toggle="dropdown" style="padding-top: 7px; height: 30px;">
-                    <i class="fas fa-trash-alt"></i>
-                    	<div class="dropdown-menu">
-                            <button class="dropdown-item" >워크스페이스에서 삭제</button>
-                        </div>
-                    </a>
-                    <a href="#" class="btn btn-sm bg-teal">
-                      <i class="fas fa-comments"></i> 대화
-                    </a>
-                    <a href="#" class="btn btn-sm btn-primary">
-                      <i class="fas fa-user"></i> 업무 배정
-                    </a>
-                    <a href="#" class="btn btn-sm btn-warning">
-                    	피드백을 작성
-                    </a>
-                    <i class="fas fa-trash-o"></i>                    
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 col-sm-6 col-md-3 d-flex align-items-stretch">
-              <div class="card bg-light">
-                <div class="card-header text-muted border-bottom-0">
-                  직함 : 땡땡땡
-                </div>
-                <div class="card-body pt-0">
-                  <div class="row">
-                    <div class="col-7">
-                      <h2 class="lead"><b>박지성</b><span class="badge bg-danger ml-3">관리자</span></h2>
-                      <p class="text-muted text-sm"><b>부서: </b>영업팀</p>
-                      <ul class="mb-0 text-muted" style="list-style-type: none; padding:0;">
-                        <li class="small">로그인 4월 10일 15:07</li>
-                        <li class="small">ABCabc@co.kr</li>
+                      	<li class="small">연락처 : ${ member.phone }</li>
+                        <li class="small">가입날짜 : ${ member.regdate }</li>
+                        <li class="small">이메일 : ${ member.email }</li>
                       </ul>
                     </div>
                     <div class="col-5 text-center">
@@ -169,7 +125,7 @@
                     <a href="#" class="btn btn-sm btn-primary">
                       <i class="fas fa-user"></i> 업무 배정
                     </a>
-                    <a href="#" class="btn btn-sm btn-warning">
+                    <a href="/team/feedback/list?email=${ member.email }" class="btn btn-sm btn-warning">
                     	피드백을 작성
                     </a>
                     <i class="fas fa-trash-o"></i>                    
@@ -177,29 +133,30 @@
                 </div>
               </div>
             </div>
+          
+          <c:forEach var="member" items="${ members }">
             <div class="col-12 col-sm-6 col-md-3 d-flex align-items-stretch">
               <div class="card bg-light">
                 <div class="card-header text-muted border-bottom-0">
-                  직함 : 땡땡땡
+                  직함 : ${ member.position }
                 </div>
                 <div class="card-body pt-0">
                   <div class="row">
                     <div class="col-7">
-                      <h2 class="lead"><b>박세리</b>
-                      <a data-toggle="dropdown"><i class="fas fa-cog ml-3" style="font-size: 18px; color: darkgray;"></i>
+                      <h2 class="lead"><b>${ member.name }</b><a data-toggle="dropdown" href="#"><i class="fas fa-cog ml-3" style="font-size: 18px; color: darkgray;"></i>
                       <div class="dropdown-menu">
-                            <button class="dropdown-item" >관리자 권한부여</button>
+                            <button class="dropdown-item" onclick="location.href='/team/changeworkspacemembertype?workspaceNo=3&email=${ member.email }'">관리자 권한부여</button>
                         </div>
-                      </a>
-                      </h2>
-                      <p class="text-muted text-sm"><b>부서: </b>개발팀</p>
+                      </a></h2>
+                      <p class="text-muted text-sm"><b>부서 : </b>${ member.department }</p>
                       <ul class="mb-0 text-muted" style="list-style-type: none; padding:0;">
-                        <li class="small">로그인 4월 10일 15:07</li>
-                        <li class="small">ABCabc@co.kr</li>
+                      	<li class="small">연락처 : ${ member.phone }</li>
+                        <li class="small">가입날짜 : ${ member.regdate }</li>
+                        <li class="small">이메일 : ${ member.email }</li>
                       </ul>
                     </div>
                     <div class="col-5 text-center">
-                      <img src="/team/resources/dist/img/user1-128x128.jpg" alt="" class="img-circle img-fluid">
+                      <img src="/team/resources/dist/img/user2-160x160.jpg" alt="" class="img-circle img-fluid">
                     </div>
                   </div>
                 </div>
@@ -209,7 +166,7 @@
                     <a href="#" class="btn btn-sm bg-danger" data-toggle="dropdown" style="padding-top: 7px; height: 30px;">
                     <i class="fas fa-trash-alt"></i>
                     	<div class="dropdown-menu">
-                            <button class="dropdown-item" >워크스페이스에서 삭제</button>
+                            <button class="dropdown-item" onclick="location.href='/team/deleteworkspacemember?workspaceNo=3&email=${ member.email }'">워크스페이스에서 삭제</button>
                         </div>
                     </a>
                     <a href="#" class="btn btn-sm bg-teal">
@@ -218,7 +175,7 @@
                     <a href="#" class="btn btn-sm btn-primary">
                       <i class="fas fa-user"></i> 업무 배정
                     </a>
-                    <a href="#" class="btn btn-sm btn-warning">
+                    <a href="/team/feedback/list?email=${ member.email }" class="btn btn-sm btn-warning">
                     	피드백을 작성
                     </a>
                     <i class="fas fa-trash-o"></i>                    
@@ -226,55 +183,8 @@
                 </div>
               </div>
             </div>
-            <div class="col-12 col-sm-6 col-md-3 d-flex align-items-stretch">
-              <div class="card bg-light">
-                <div class="card-header text-muted border-bottom-0">
-                  직함 : 땡땡땡
-                </div>
-                <div class="card-body pt-0">
-                  <div class="row">
-                    <div class="col-7">
-                      <h2 class="lead"><b>박세리</b>
-                      <a data-toggle="dropdown"><i class="fas fa-cog ml-3" style="font-size: 18px; color: darkgray;"></i>
-                      <div class="dropdown-menu">
-                            <button class="dropdown-item" >관리자 권한부여</button>
-                        </div>
-                      </a>
-                      </h2>
-                      <p class="text-muted text-sm"><b>부서: </b>개발팀</p>
-                      <ul class="mb-0 text-muted" style="list-style-type: none; padding:0;">
-                        <li class="small">로그인 4월 10일 15:07</li>
-                        <li class="small">ABCabc@co.kr</li>
-                      </ul>
-                    </div>
-                    <div class="col-5 text-center">
-                      <img src="/team/resources/dist/img/user1-128x128.jpg" alt="" class="img-circle img-fluid">
-                    </div>
-                  </div>
-                </div>
-                <div class="card-footer">                
-                  <div class="text-right">
-                                      
-                    <a href="#" class="btn btn-sm bg-danger" data-toggle="dropdown" style="padding-top: 7px; height: 30px;">
-                    <i class="fas fa-trash-alt"></i>
-                    	<div class="dropdown-menu">
-                            <button class="dropdown-item" >워크스페이스에서 삭제</button>
-                        </div>
-                    </a>
-                    <a href="#" class="btn btn-sm bg-teal">
-                      <i class="fas fa-comments"></i> 대화
-                    </a>
-                    <a href="#" class="btn btn-sm btn-primary">
-                      <i class="fas fa-user"></i> 업무 배정
-                    </a>
-                    <a href="#" class="btn btn-sm btn-warning">
-                    	피드백을 작성
-                    </a>
-                    <i class="fas fa-trash-o"></i>                    
-                  </div>
-                </div>
-              </div>
-            </div>
+            </c:forEach>
+            
           </div>
         </div>
         <!-- /.card-body -->

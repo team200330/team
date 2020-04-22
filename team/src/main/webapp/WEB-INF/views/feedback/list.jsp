@@ -9,7 +9,7 @@
 <%@include file="/WEB-INF/views/modules/common-css.jsp"%>
 
 <style>
-
+.dropdown-item:active {background-color:white;}
 </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -40,178 +40,40 @@
 							<i style="float: left;margin:5px;" class="fas fa-bars"></i>
 							<h5 style="font-weight:bold;color:#464c59">나의 피드백</h5>
 						</div>
-						<!-- /.col -->
-						<!-- <div class="col-sm-6">
-							<ol class="breadcrumb float-sm-right">
-								<li class="breadcrumb-item"><a href="/team/home">Home</a></li>
-								<li class="breadcrumb-item active"><a href="/feedback/list">Feedback
-										list</a></li>
-							</ol>
-						</div> -->
-						<!-- /.row -->
 					</div>
 					<!-- /.container-fluid -->
 				</div>
 			</div>
 			<!-- /.content-header -->
-
 			<div class="content" style="margin:0 65px 20px 65px; padding:0px">
 				<div style="float:left;">
 				<div class="input-group-prepend">
                     <button id="dropdown-select" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="background-color:white;border-radius:unset;border-color:#cfcfcf">
-                      	읽지 않은 피드백만 보기 
+                      	나와 관련된 피드백
                     </button>
                     <div class="feedback dropdown-menu">
-                      <a class="dropdown-item" href="#">전체 보기</a>
-                      <a class="dropdown-item" href="#">내가 작성한 피드백</a>
-                      <a class="dropdown-item" href="#">보낸 피드백</a>
+                      <a class="dropdown-item" data-value="M" >나와 관련된 피드백</a>
+                      <a class="dropdown-item" data-value="S" >내가 작성한 피드백</a>
+                      <a class="dropdown-item" data-value="R" >받은 피드백</a>
                       <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">읽지 않은 피드백만 보기</a>
+                      <a class="dropdown-item" data-value="A" >공개된 모든 피드백 보기</a>
                     </div>
                   </div>
                   </div>
 				<div style="text-align:right">
-					<input type="text" style="width:300px;height:35px;margin-right:10px;padding-left:12px;border:1px solid #cfcfcf;"placeholder="업무, 멤버, 내용으로 피드백 검색">
+					<input id="search-all" type="text" style="width:300px;height:35px;margin-right:10px;padding-left:12px;border:1px solid #cfcfcf;"placeholder="업무, 멤버, 내용으로 피드백 검색">
 					<button id="writeFeedbackBtn" class="btn btn-info btn-flat" style="height:35px;">피드백 주기</button>
 				</div>
 			</div>
 			<!-- Main content -->
 			<section class="content">
-				<div class="col-md-9" style="max-width:100%; padding-bottom:50px">
-					<div class="card" style="margin-left:50px;margin-right:50px;border-radius:unset">
-						
-						<!-- /.card-header -->
-						<div class="card-body" style="padding:0px">
-							<div class="tab-content">
-								<div class="active tab-pane" id="activity">
-									<!-- Post -->
-									<div class="post">
-										<div class="user-block">
-											<img class="img-circle img-bordered-sm" src="" alt="user image">
-											<span class="username"> 
-												<a href="#">유저 프로필 링크</a> <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i>
-												</a>
-											</span>
-											<span class="description">피드백 보낸 날짜</span>
-										</div>
-										<!-- /.user-block -->
-										<p class="feedback-contents">
-											피드백 내용 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~```
-										</p>
-										
-										<p>
-											<a href="#" class="link-black text-sm mr-2">
-												<i class="fas fa-user-edit"></i> 코멘트 작성자
-											</a>
-										</p>
-										<p>
-											<a href="#" class="link-black text-sm mr-2">
-												<i class="fas fa-share mr-1"></i> 관련 업무 제목
-											</a>
-											
-											<span class="float-right"> 
-												<a href="#" class="link-black text-sm comment-btn"> 
-													<i class="far fa-comments mr-1"></i> Comments (0)
-												</a>
-											</span>
-										</p>
-										
-
-										<div class="comments">
-											<form class="form-horizontal">
-						                        <div class="input-group input-group-sm mb-0">
-						                          <input class="form-control form-control-sm" placeholder="Response">
-						                          <div class="input-group-append">
-						                            <button type="submit" class="btn btn-info">Send</button>
-						                          </div>
-						                        </div>
-						                    </form>
-						                    <div >
-					                    	<p>
-					                    		<a href="#">보낸 사람</a>&nbsp;&nbsp;
-					                    		<span>내용</span>
-					                    		<span class="float-right">코멘트 날짜</span>
-					                    	</p>
-					                    	<p>
-					                    		<a href="#">보낸 사람</a>&nbsp;&nbsp;
-					                    		<span>내용</span>
-					                    		<span class="float-right">코멘트 날짜</span>
-					                    	</p>
-					                    	<p>
-					                    		<a href="#">보낸 사람</a>&nbsp;&nbsp;
-					                    		<span>내용</span>
-					                    		<span class="float-right">코멘트 날짜</span>
-					                    	</p>
-					                    </div>
-					                    </div>
-									</div>
-									<!-- /.post -->
-																		<div class="post">
-										<div class="user-block">
-											<img class="img-circle img-bordered-sm" src="" alt="user image">
-											<span class="username"> 
-												<a href="#">유저 프로필 링크</a> <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i>
-												</a>
-											</span>
-											<span class="description">피드백 보낸 날짜</span>
-										</div>
-										<!-- /.user-block -->
-										<p class="feedback-contents">
-											피드백 내용 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~```
-										</p>
-										
-										<p>
-											<a href="#" class="link-black text-sm mr-2">
-												<i class="fas fa-user-edit"></i> 코멘트 작성자
-											</a>
-										</p>
-										<p>
-											<a href="#" class="link-black text-sm mr-2">
-												<i class="fas fa-share mr-1"></i> 관련 업무 제목
-											</a>
-											
-											<span class="float-right"> 
-												<a href="#" class="link-black text-sm comment-btn"> 
-													<i class="far fa-comments mr-1"></i> Comments (0)
-												</a>
-											</span>
-										</p>
-										
-
-										<div class="comments">
-											<form class="form-horizontal">
-						                        <div class="input-group input-group-sm mb-0">
-						                          <input class="form-control form-control-sm" placeholder="Response">
-						                          <div class="input-group-append">
-						                            <button type="submit" class="btn btn-info">Send</button>
-						                          </div>
-						                        </div>
-						                    </form>
-						                    <div >
-					                    	<p>
-					                    		<a href="#">보낸 사람</a>&nbsp;&nbsp;
-					                    		<span>내용</span>
-					                    		<span class="float-right">코멘트 날짜</span>
-					                    	</p>
-					                    	<p>
-					                    		<a href="#">보낸 사람</a>&nbsp;&nbsp;
-					                    		<span>내용</span>
-					                    		<span class="float-right">코멘트 날짜</span>
-					                    	</p>
-					                    	<p>
-					                    		<a href="#">보낸 사람</a>&nbsp;&nbsp;
-					                    		<span>내용</span>
-					                    		<span class="float-right">코멘트 날짜</span>
-					                    	</p>
-					                    </div>
-					                    </div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- /.content -->
+			
+				<div id="feedback-list-container">
+				<!-- feedback list -->
+				<jsp:include page="modules/feedback-list.jsp"></jsp:include>
+				
 				</div>
+				
 			</section>
 			<!-- /.content -->
 		</div>
@@ -248,11 +110,10 @@
             </div>
             <div class="modal-body" style="margin:40px;margin-bottom:20px;">
             <form id="feedback_write_form" method="post" action="/team/feedback/write">
-            
-            
-            
-            	<!-- 로그인 임시 -->
-            	<input type="hidden" name="sender" value="user1@example.com"/>
+            	<input type="hidden" name="sender" value="${ loginuser.email }"/>
+            	
+            	
+            	
             	<!-- 워크스페이스 임시 -->
             	<input type="hidden" name="workspaceNo" value="3" />
             	
@@ -273,7 +134,7 @@
               	<div>업무1</div>
               </div>
               <br/><br/>
-              <div>
+              <div id="textarea">
               	<h6>설명</h6>
               	<textarea name="content" rows="6" style="width:100%;border:1px solid #cccccc;border-radius:.40rem;padding:10px" placeholder="칭찬 혹은 개선할 사항을 작성해보세요..."></textarea>
               	<div style="margin:10px;">
@@ -377,11 +238,33 @@
       </div>
       <!-- /.modal -->
       
+      
 	<%@include file="/WEB-INF/views/modules/common-js.jsp"%>
 	<script type="text/javascript">
 	$(function() {
-		// CSS
+		// Toast 모달
+		const Toast = Swal.mixin({
+			toast: true,
+			position: 'top-end',
+			showConfirmButton: false,
+			timer: 3000
+		});
+		$('.toastrDefaultSuccess').click(function() { // 기본 success
+		      toastr.success('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
+		});
+		$('.toastrDefaultInfo').click(function() {
+		      toastr.info('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
+		});
+		$('.toastsDefaultInfo').click(function() {
+		      $(document).Toasts('create', {
+		        class: 'bg-info', 
+		        title: 'Toast Title',
+		        subtitle: 'Subtitle',
+		        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+		      });
+		});
 		
+		// CSS
 		// 상단 로그 / 피드백 메뉴 css
 		$(".f_link").click(function() {
 			$("#active").removeAttr("id");
@@ -393,26 +276,30 @@
 			if ($(this).attr("id") != "active")
 				$(this).css("color", "#464c59");
 		});
-		
-		// 댓글 열기 / 닫기 버튼
-		var clicked = false;
-		$(".comment-btn").click(function() {
-			if (clicked == false) {
-				$(".comments").css("display", "block");
-				clicked = true;
-			}
-			else {
-				$(".comments").css("display", "none");
-				clicked = false;
+
+		// 피드백 멤버이미지 css
+		$(document).on("click", ".user-count-img, .user-count-span", function() {
+			//closeOrOpen($(this).parents(".user-block").children(".username").children(".hover-user-block"));
+			var target = $(this).parents(".user-block").children(".username").children(".hover-user-block");
+			
+			if (target.hasClass("display-none")) {
+				target.fadeIn(200);
+				target.removeClass("display-none");
+			} else {
+				target.fadeOut(200);
+				target.addClass("display-none");
 			}
 		});
-		
+	
 		// 피드백 post css
-		$(".post").hover(function() {
-			$(this).css("background-color", "#f7f7f7");
-		}, function() {
-			$(this).css("background-color", "white");
-		});
+		$(document).on({
+		    mouseenter: function () {
+		    	$(this).css("background-color", "#efefef");
+		    },
+		    mouseleave: function () {
+		    	$(this).css("background-color", "white");
+		    }
+		}, ".post"); 
 		
 		// 모달 css
 		$("#writeFeedbackBtn").click(function() {
@@ -439,12 +326,41 @@
 			$("#taskAddModal").modal();
 		});
 		
-		////////////////////////////////////////////////////////////////////////////////////////
-		
 		// select box
 		$(".feedback .dropdown-item").click(function() {
 			$("#dropdown-select").text($(this).text());
+			$("#dropdown-select").attr("data-value", $(this).attr("data-value"));
 		});
+		
+		// 열기 / 닫기 함수
+		function closeOrOpen(target) {
+			if (target.hasClass("display-none")) {
+				target.removeClass("display-none");
+				target.addClass("display-block");
+			}
+			else {
+				target.addClass("display-none");
+				target.removeClass("display-block");
+			}
+		}
+		
+		// 댓글 열기 / 닫기 버튼
+		$(document).on("click", ".comment-btn", function() {
+			closeOrOpen($(this).parents(".post").children(".comments"));
+		});
+		
+		// 받는사람 열기 / 닫기 버튼
+		$(document).on("click", ".receiver-btn", function() {
+			closeOrOpen($(this).parents(".post").children(".receivers"));
+		});
+
+		
+		////////////////////////////////////////////////////////////////////////////////////////
+		
+		// 텍스트 자르고 ... 포함된 문자열 반환하는 함수
+		function textSubString(text) {
+			return ((text.length > 10) ? text.substring(0, 10) + "..." : text);
+		}
 		
 		// 멤버 추가 작은모달 이벤트
 		$(document).on("click", "._mem", function() {
@@ -487,9 +403,8 @@
 				selected += $(".mem:eq("+ i +")").attr("data-email") + ":";
 				
 			$.ajax({
-				url : "getWorkspaceMembers",
+				url : "/team/feedback/getWorkspaceMembers",
 				method : "get",
-				async : true,
 				data : {"str" : $(this).val(),
 						"selected" : selected},
 				success : function(resp, status, xhr) {
@@ -503,7 +418,7 @@
 			});
 		});
 		
-		
+	
 		// 피드백 폼 전송
 		$("#checkbox").click(function() {
 			if ($(this).attr("checked")) { 
@@ -512,14 +427,114 @@
 				$(this).attr("checked", ""); $("#isPublic").val("true"); 
 			}
 		});
-		
 		$("#submit_btn").click(function() {
 			if (!confirm("피드백을 작성할까요?")) return;
-			$("#feedback_write_form").submit();
+			
+			var searchType = $(this).attr("data-value");
+			var feedback = $("#feedback_write_form").serializeArray();
+			var content = $("#feedback_write_form").children("#textarea").children("textarea").val();
+			
+			$.ajax({
+				url : "/team/feedback/write",
+				method : "post",
+				data : feedback,
+				success : function(resp, status, xhr) {
+					$("#writeFeedbackModal").modal("hide");
+					$("#feedback-list-container").load("/team/feedback/search?searchType=" + searchType + "&email=${loginuser.email}");
+
+					toastr.success("피드백&nbsp;&nbsp; " + textSubString(content) + " 을 작성했습니다");
+				},
+				error : function(xhr, status, err) {
+					console.log(err);
+				}
+			}); 
 		});
+		
+		// 피드백 검색
+		$(".feedback .dropdown-item").click(function() {
+			var searchType = $(this).attr("data-value");
+			
+ 			$.ajax({
+				url : "list2",
+				method : "get",
+				success : function(resp, status, xhr) {
+					$("#feedback-list-container").load("/team/feedback/search?searchType=" + searchType + "&email=${loginuser.email}");
+				},
+				error : function(xhr, status, err) {
+					console.log(err);
+				}
+			}); 
+		});
+		
+		// 피드백 삭제
+		$(document).on("click", ".close-btn", function() {
+			if (!confirm("해당 피드백을 삭제할까요?")) return;
+			
+			var searchType = $("#dropdown-select").attr("data-value");
+			var content = $(this).parents(".post").children(".feedback-contents").text();
+
+			$.ajax({
+				url : "/team/feedback/delete",
+				method : "post",
+				data : {"feedbackNo": $(this).prev().val()},
+				success : function(resp, status, xhr) {
+					$("#feedback-list-container").load("/team/feedback/search?searchType=" + searchType + "&email=${loginuser.email}");
+					toastr.error("피드백 &nbsp;&nbsp;" + textSubString(content) + " 을 삭제했습니다");
+				}, 
+				error : function(xhr, status, err) {
+					console.log(err);
+				}
+			}); 
+		});
+		
+		
+		// 코멘트 작성
+		$(document).on("click", ".comment-write-btn", function(event) {
+			if (!confirm("코멘트를 작성할까요?")) return;
+			
+			var content = $(this).closest("div").prev().prev().val();
+			if (content.length <= 0) {
+				alert("코멘트 내용을 입력하세요."); return;
+			}
+			
+			var comment = $(this).parents(".comment-form").serializeArray();
+			var searchType = $("#dropdown-select").attr("data-value");
+			$.ajax({
+				url : "/team/feedback/comment/write",
+				method : "post",
+				data : comment,
+				success : function(resp, status, xhr) {
+					$("#feedback-list-container").load("/team/feedback/search?searchType=" + searchType + "&email=${loginuser.email}");
+					toastr.info("코멘트&nbsp;&nbsp; " + textSubString(content) + " 을 작성했습니다");
+				},
+				error : function(xhr, status, err) {
+					console.log(err);
+				}
+			});
+		}); 
+		
+		
+		// 피드백 전체 검색 
+		$("#search-all").keyup(function() {
+			var key = $(this).val();
+			
+			$.ajax({
+				url : "list2",
+				method : "get",
+				success : function(resp, status, xhr) {
+					$("#feedback-list-container").load("/team/feedback/search?searchType=I&email=${loginuser.email}&key="+ key);
+				},
+				error : function(xhr, status, err) {
+					console.log(err);
+				}
+			});
+		});
+		
 		
 	});
 	</script>
 </body>
+
+
 
 </html>

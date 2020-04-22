@@ -26,7 +26,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>○○○ 워크스페이스</h1>
+            <h1>${ workspace.workspaceName }</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -62,15 +62,16 @@
                     </div>
                     <div id="collapseOne" class="panel-collapse collapse show">
                       <div class="card-body">
-                        <p>워크스페이스 이름</p>
-                        
+                        <p>워크스페이스 이름</p>   
+                        <form action="setting-workspace" method="post">     
+                        <input type="hidden" name="workspaceNo" value="${ workspace.workspaceNo }">                
                         <div class="input-group input-group-sm mb-3">
-		                  <input type="text" class="form-control">
+		                  <input type="text" name="workspaceName" class="form-control" value="${ workspace.workspaceName }">
 		                  <span class="input-group-append">
-		                    <button type="button" class="btn btn-info btn-flat">변경사항 저장</button>
+		                    <button type="submit" class="btn btn-info btn-flat">변경사항 저장</button>
 		                  </span>
 		                </div>
-		                
+		                </form>
                       </div>
                     </div>
                   </div>
@@ -111,7 +112,10 @@
                     <div id="collapseThree" class="panel-collapse collapse">
                       <div class="card-body">
                         <p>워크스페이스를 삭제하면 모든 팀원이 워크스페이스에 접속할 수 없게됩니다. </br>삭제 버튼을 클릭하면, 만약의 경우에 대비하여 워크스페이스를 복원할 수 있도록 14일의 기간이 주어집니다.</p>
-                        <button type="button" class="btn btn-block btn-danger btn-lg">이 워크스페이스 삭제하기</button>
+                        <form action="delete-workspace" method="post">     
+                        <input type="hidden" name="workspaceNo" value="${ workspace.workspaceNo }"> 
+                        <button type="submit" class="btn btn-block btn-danger btn-lg">이 워크스페이스 삭제하기</button>
+                        </form>
                       </div>
                     </div>
                   </div>

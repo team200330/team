@@ -19,7 +19,46 @@
 		</foreach>
 	</insert>
 	
+	<insert id="insertComment" parameterType="Comments">
+	INSERT INTO comments(feedback_no, content, writer) 
+	VALUES (#{feedbackNo}, #{content}, #{writer})
+	</insert>
 	
+	<select id="selectFeedback" parameterType="hashmap" resultMap="feedbackMap">
+	SELECT * FROM feedback f
+	INNER JOIN receiver r ON f.feedback_no = r.feedback_no
+	WHERE 
+		<choose>
+			<when test="searchType == 'M'.toString()">
+				(sender = #{email} OR email = #{email}) AND
+			</when>
+			<when test="searchType == 'S'.toString()">
+				sender = #{email} AND
+			</when>
+			<when test="searchType == 'R'.toString()">
+				email = #{email} AND
+			</when>
+			<when test="searchType == 'A'.toString()">
+				is_public = '1' AND
+			</when>
+			<when test="searchType == 'I'.toString()">
+			(sender LIKE CONCAT('%',#{key},'%') OR 
+			email LIKE CONCAT('%',#{key},'%') OR 
+			f.content LIKE CONCAT('%',#{key},'%') ) AND
+			</when>
+		</choose>
+	deleted = '0' AND workspace_no = #{workspaceNo}
+	ORDER BY f.feedback_no DESC
+	</select>
+	
+	<select id="selectComments" parameterType="int" resultMap="commentMap">
+	SELECT * FROM comments WHERE feedback_no = #{feedback_no}
+	</select>
+
+	<update id="deleteFeedback" parameterType="int">
+	UPDATE receiver SET deleted = '1'
+	WHERE feedback_no = #{feedbackNo}
+	</update>
 	
 
 	<resultMap type="Feedback" id="feedbackMap">
@@ -28,11 +67,25 @@
 		<result column="writedate" property="writedate"/>
 		<result column="sender" property="sender"/>
 		<result column="workspace_no" property="workspaceNo"/>
-		<result column="is_read" property="isRead"/>
 		<result column="is_public" property="isPublic"/>
 		<result column="task_no" property="taskNo"/>
+		<collection property="receivers" column="feedback_no" resultMap="receiverMap" />
 	</resultMap>
 	
+	<resultMap type="Receiver" id="receiverMap">
+		<result column="feedback_no" property="feedbackNo"/>
+		<result column="email" property="email"/>
+		<result column="is_read" property="isRead"/>
+		<result column="deleted" property="deleted"/>
+	</resultMap>
+	
+	<resultMap type="Comments" id="commentMap">
+		<id column="comment_no" property="commentNo"/>
+		<result column="feedback_no" property="feedbackNo"/>
+		<result column="writer" property="writer"/>
+		<result column="content" property="content"/>
+		<result column="writedate" property="writedate"/>
+	</resultMap>
 </mapper>
 
 

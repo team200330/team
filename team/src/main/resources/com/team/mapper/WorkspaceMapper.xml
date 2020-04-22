@@ -16,18 +16,92 @@
 			#{ deleted }, #{ code }
 		)
 	</insert>	
-	
-	
+		
 	<select id="selectWorkspaceMembers" parameterType="int" resultMap="workspaceMemberMap">
 		SELECT * FROM workspace_member
 		WHERE workspace_no = #{ workspaceNo } 
 		AND ( type_no = 1 OR type_no = 2 );
 	</select>
 	
+	<select id="selectMembersByWorkspaceNo" parameterType="int" resultMap="memberMap">
+		SELECT * FROM workspace_member wm
+		INNER JOIN member m
+		ON wm.email = m.email		
+		INNER JOIN workspace w
+		ON wm.workspace_no = w.workspace_no
+		WHERE w.workspace_no = #{ workspaceNo } 
+		AND type_no = 2;	
+	</select>
+		
+	<resultMap type="Member" id="memberMap">
+		<id column="email" property="email"/>
+		<result column="password" property="password"/>
+		<result column="regdate" property="regdate"/>
+		<result column="name" property="name"/>
+		<result column="phone" property="phone"/>
+		<result column="department" property="department"/>
+		<result column="position" property="position" />
+		<result column="deleted" property="deleted"/>
+		<result column="address_no" property="addressNo"/>
+		<result column="roadname_addr" property="roadnameAddr"/>
+		<result column="detail_addr" property="detailAddr"/>
+		<result column="img" property="img"/>
+	</resultMap>
+	
 	<resultMap type="WorkspaceMember" id="workspaceMemberMap">
 		<id column="workspace_no" property="workspaceNo" />
 		<result column="email" property="email" />
 		<result column="type_no" property="typeNo" />
 	</resultMap> 
+	
+	<select id="selectWorkspaceByWorkspaceNo" parameterType="int" resultMap="workspaceMap">
+		SELECT * FROM workspace
+		WHERE workspace_no = #{ workspaceNo } 
+	</select>
+	
+	<select id="selectMemberTypeNo1ByWorkspaceNo" parameterType="int" resultMap="memberMap">
+		SELECT * FROM workspace_member wm
+		INNER JOIN member m
+		ON wm.email = m.email		
+		INNER JOIN workspace w
+		ON wm.workspace_no = w.workspace_no
+		WHERE w.workspace_no = #{ workspaceNo } 
+		AND type_no = 1;
+	</select>
+	
+	<select id="WorkspaceMemberNameAndDepartmentSearch" parameterType="com.team.vo.Member" resultMap="memberMap">
+		SELECT * FROM workspace_member wm
+		INNER JOIN member m
+		ON wm.email = m.email		
+		INNER JOIN workspace w
+		ON wm.workspace_no = w.workspace_no
+		WHERE w.workspace_no = #{ position } 
+		AND m.name like concat('%',#{name},'%')
+		OR m.department like concat('%',#{name},'%')
+	</select>
+	
+	<resultMap type="workspace" id="workspaceMap">
+		<id column="workspace_no" property="workspaceNo" />
+		<result column="workspace_name" property="workspaceName" />
+		<result column="deleted" property="deleted" />
+		<result column="code" property="code" />		
+	</resultMap> 	
+	
+	<update id="updateWorkspaceName" parameterType="com.team.vo.Workspace">
+		UPDATE workspace
+		SET workspace_name = #{ workspaceName } 
+		WHERE workspace_no = #{ workspaceNo } 
+	</update>
+	
+	<update id="deleteWorkspace" parameterType="com.team.vo.Workspace">
+		UPDATE workspace
+		SET deleted = '1'
+		WHERE workspace_no = #{ workspaceNo } 
+	</update>
+	
+	<!-- update
+		 set type_no = 1
+		 where email = user2@example.com
+	 -->
 	
 </mapper>

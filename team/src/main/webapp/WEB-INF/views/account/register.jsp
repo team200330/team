@@ -116,7 +116,7 @@
         </div>
         
         <div>
-        	<label for="img">이미지</label>
+        	<label for="img">프로필 이미지</label>
         	<input type="file" id="img" name="img" />
         	<div class="select-img"><img src="" /></div>
         </div>
@@ -153,16 +153,6 @@
 
 	<script type="text/javascript">
 	$(function(){
-		$("#img").change(function(){
-			if(this.files && this.files[0]) {
-			var reader = new FileReader;
-			reader.onload = function(data) {
-				$(".select-img img").attr("src", data.target.result).width(300);
-				}
-				reader.readAsDataURL(this.files[0]);
-				}
-			});
-		
 
 		$("#addressNo, #roadAddr").attr({"readonly": "readonly" });
 
@@ -176,6 +166,18 @@
 			        }
 			    }).open();
 		});
+
+
+		$("#img").change(function(){
+			if(this.files && this.files[0]) {
+			var reader = new FileReader;
+			reader.onload = function(data) {
+				$(".select-img img").attr("src", data.target.result).width(300);
+				}
+				reader.readAsDataURL(this.files[0]);
+				}
+			});
+		
 
 		$("#register").on("click" , function(event) {
 			

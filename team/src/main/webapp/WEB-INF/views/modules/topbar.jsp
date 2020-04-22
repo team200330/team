@@ -11,7 +11,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Home</a>
+        <a href="/team" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Contact</a>
@@ -125,7 +125,7 @@
             <span class="float-right text-muted text-sm">2 days</span>
           </a>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+          <a href="/team/feedback/list" class="dropdown-item dropdown-footer">See All Notifications</a>
         </div>
       </li>
       
@@ -135,7 +135,7 @@
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           
           <div class="dropdown-divider"></div>
-          <a href="/team/workspace/setting-workspace" class="dropdown-item">
+          <a href="/team/workspace/setting-workspace?workspaceNo=3" class="dropdown-item">
             <p class="text-sm">워크스페이스이름<br>워크스페이스 설정, 결제 그 외 더보기...</p>
           </a>
           <div class="dropdown-divider"></div>

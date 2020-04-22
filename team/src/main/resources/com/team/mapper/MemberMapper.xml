@@ -14,13 +14,10 @@
 	<select id="selectMemberByEmailAndPassword" parameterType="Member" resultType="Member">
 		SELECT * FROM member WHERE email = #{ email } AND password = #{ password } AND deleted = '0'
 	</select>
-
+	
 	<select id="selectMemberByEmail" parameterType="Member" resultType="Member">
 		SELECT * FROM member WHERE email = #{ email }
 	</select>
-	
-	
-	
 	
 	
 	

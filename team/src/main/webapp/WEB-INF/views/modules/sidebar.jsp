@@ -6,7 +6,7 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="/team/" class="brand-link">
       <img src="/team/resources/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
       <span class="brand-text font-weight-light">AdminLTE 3</span>
@@ -71,7 +71,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/team/workspace/workspace-member" class="nav-link">
+                <a href="/team/workspace/workspace-member?workspaceNo=3" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>워크스페이스 멤버</p>
                 </a>
@@ -79,11 +79,11 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+            <a href="/team/project/prlist" class="nav-link">
+              <i class="nav-icon fas fa-folder-plus"></i>
               <p>
-                Widgets
-                <span class="right badge badge-danger">New</span>
+                        프로젝트 관리
+                <!-- <span class="right badge badge-danger">New</span> -->
               </p>
             </a>
           </li>
@@ -113,6 +113,29 @@
                 <a href="pages/charts/inline.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Inline</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+             <i class="nav-icon far fa-bell"></i>
+              <p> 알림
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/team/log/list" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>활동 로그</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/team/feedback/list" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>피드백</p>
                 </a>
               </li>
             </ul>
