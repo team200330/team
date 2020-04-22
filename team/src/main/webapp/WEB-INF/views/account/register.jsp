@@ -92,7 +92,7 @@
           <input type="text" class="form-control" id="addressNo" name="addressNo" placeholder="Address">
           <div class="input-group-append">
             <div class="input-group-text">
-              <button id="btn" class="fas fa-home">우편번호 찾기</button>
+              <button type="button" id="btn" class="fas fa-home">우편번호 찾기</button>
             </div>
           </div>
         </div>
@@ -113,6 +113,12 @@
               <span class="fas fa-home"></span>
             </div>
           </div>
+        </div>
+        
+        <div>
+        	<label for="img">프로필 이미지</label>
+        	<input type="file" id="img" name="img" />
+        	<div class="select-img"><img src="" /></div>
         </div>
         
         <div class="row">
@@ -160,6 +166,18 @@
 			        }
 			    }).open();
 		});
+
+
+		$("#img").change(function(){
+			if(this.files && this.files[0]) {
+			var reader = new FileReader;
+			reader.onload = function(data) {
+				$(".select-img img").attr("src", data.target.result).width(300);
+				}
+				reader.readAsDataURL(this.files[0]);
+				}
+			});
+		
 
 		$("#register").on("click" , function(event) {
 			

@@ -32,6 +32,12 @@
 		<property name="maximumPoolSize" value="${datasource.maxpool}" />
 		<property name="connectionTimeout" value="${datasource.conntimeout}" />
 	</bean>
+	<!-- MultipartResolver -->
+	<bean id="multipartResolver" 
+		  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <property name="maxUploadSize" value="100000000"/>  <!-- 10MB-->
+    <property name="maxInMemorySize" value="100000000"/> <!-- 10MB-->
+	</bean>
 
 	<!-- beans for mybatis & mybatis-spring -->
 	<!-- SqlSessionFactoryBean.getObject()를 호출해서 SqlSessionFactory 생성 -->

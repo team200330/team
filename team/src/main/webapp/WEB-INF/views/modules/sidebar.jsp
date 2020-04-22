@@ -24,7 +24,7 @@
 				<li><a href="/team/account/register.action">회원가입</a></li>
 			</c:when>
 			<c:otherwise>
-				<li>${ loginuser.name }님 환영합니다</li>
+				<li style="color:white">${ loginuser.name }님 환영합니다</li>
 				<li><a href="/team/account/logout.action">로그아웃</a></li>
 			</c:otherwise>
 			</c:choose>
