@@ -15,9 +15,9 @@
 				<c:forEach var="feedback" items="${feedbackList}">
 				
 				<!-- Post -->
-					<div class="post" id="post${feedback.feedbackNo}">
+					<div class="post" data-value="${feedback}" id="post${feedback.feedbackNo}">
 						<div style="display:flex;max-height:70px;">
-							<div class="user-block" style="width:auto">
+							<div class="user-block" data-value="${feedback.sender}"style="width:auto">
 								<img class="img-circle img-bordered-sm" src="" alt="user image">
 								<span class="username"> 
 									<a href="#">${feedback.sender}</a> 
@@ -35,7 +35,7 @@
 										<span style="cursor:pointer" class="user-count-span">외 ${feedback.receivers.size() - 1} 명</span>
 										<div class="hover-user-block display-none">
 											<c:forEach var="receiver" items="${feedback.receivers}">
-												${receiver.email}<br/>
+												<span >${receiver.email}<br/></span>
 											</c:forEach>
 										</div>
 									</c:if>
@@ -47,7 +47,7 @@
 						<input type="hidden" value="${feedback.feedbackNo}" name="feedbackNo">
 						<a href="#" class="float-right btn-tool close-btn"><i class="fas fa-times"></i> </a>
 						</div>
-						<p class="feedback-contents">${feedback.content}</p>
+						<p  class="feedback-contents">${feedback.content}</p>
 						<p>
 							<a class="link-black text-sm mr-2" style="font-weight:bold"> <i
 								class="fas fa-share mr-1"></i> 관련 업무 제목
