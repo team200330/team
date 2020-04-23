@@ -154,6 +154,7 @@
 	<script type="text/javascript">
 	$(function(){
 
+		//우편번호 api
 		$("#addressNo, #roadAddr").attr({"readonly": "readonly" });
 
 		$("#btn").on("click", function(event) {
@@ -167,7 +168,7 @@
 			    }).open();
 		});
 
-
+		//프로필 이미지
 		$("#img").change(function(){
 			if(this.files && this.files[0]) {
 			var reader = new FileReader;
