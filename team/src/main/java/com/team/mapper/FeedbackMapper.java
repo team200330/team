@@ -7,13 +7,13 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.team.vo.Comments;
 import com.team.vo.Feedback;
-import com.team.vo.Receiver;
+import com.team.vo.FeedbackReceiver;
 
 @Mapper
 public interface FeedbackMapper {
 	
 	public int insertFeedback(Feedback feedback);
-	public void insertReceivers(List<Receiver> receivers);
+	public void insertFeedbackReceivers(List<FeedbackReceiver> receivers);
 	public void insertComment(Comments comment);
 	
 	public List<Feedback> selectFeedback(HashMap<String, Object> params);

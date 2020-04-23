@@ -14,6 +14,6 @@ public class Feedback {
 	private int projectNo;
 	private boolean isPublic;
 	
-	private List<Receiver> receivers;
+	private List<FeedbackReceiver> receivers;
 	private List<Comments> comments;
 }

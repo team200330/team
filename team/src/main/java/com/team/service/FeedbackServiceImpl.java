@@ -17,7 +17,7 @@ import com.team.mapper.WorkspaceMapper;
 import com.team.vo.Comments;
 import com.team.vo.Feedback;
 import com.team.vo.Member;
-import com.team.vo.Receiver;
+import com.team.vo.FeedbackReceiver;
 import com.team.vo.WorkspaceMember;
 
 @Service("feedbackService")
@@ -42,9 +42,9 @@ public class FeedbackServiceImpl implements FeedbackService {
 		int key = feedback.getFeedbackNo();
 		
 		// insert receivers
-		List<Receiver> receivers = new ArrayList<>();
-		for (String s : email) receivers.add(new Receiver(key, s));
-		feedbackMapper.insertReceivers(receivers);
+		List<FeedbackReceiver> receivers = new ArrayList<>();
+		for (String s : email) receivers.add(new FeedbackReceiver(key, s));
+		feedbackMapper.insertFeedbackReceivers(receivers);
 	}
 	
 	@Override
