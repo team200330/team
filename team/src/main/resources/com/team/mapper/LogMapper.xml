@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.team.mapper.LogMapper">
+
+	<select id="selectLogByProjectNo" parameterType="int" resultMap="logMap">
+	SELECT * FROM log l
+	INNER JOIN log_receiver r ON l.log_no = r.log_no 
+	WHERE project_no = #{projectNo}
+	AND is_read = 0 AND deleted = 0
+	</select>
+
+	<resultMap type="Log" id="logMap">
+		<id column="log_no" property="logNo"/>
+		<result column="email" property="email"/>
+		<result column="writedate" property="writedate"/>
+		<result column="task_no" property="taskNo"/>
+		<result column="state" property="state"/>
+		<result column="project_no" property="projectNo" />
+		<collection property="receiver" column="log_no" resultMap="logReceiverMap" />
+	</resultMap>
+	
+	<resultMap type="LogReceiver" id="logReceiverMap">
+		<result column="log_no" property="logNo"/>
+		<result column="email" property="email"/>
+		<result column="is_read" property="isRead"/>
+		<result column="deleted" property="deleted"/>
+	</resultMap>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

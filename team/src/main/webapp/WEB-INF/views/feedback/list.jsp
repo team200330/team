@@ -10,6 +10,22 @@
 
 <style>
 .dropdown-item:active {background-color:white;}
+.modal-body-inner {margin:35px 50px 35px 50px;}
+#feedbackDetailModal .modal-footer {
+	text-align:center; 
+	display:block;
+	margin-top:60px;padding-top:30px;
+	border-top: 1.3px solid #dcdcdc;
+	font-size:11pt;
+}
+
+#feedbackDetailModal .mem {width:auto;}
+#feedbackDetailModal .mem_name {
+	margin: 2px 10px 0px 6px; 
+}
+#feedbackDetailModal .mem_img {width:33px}
+#detail-modal-public i {color:gray;}
+#detail-modal-public span {margin-left: 10px;color: gray;}
 </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -111,22 +127,11 @@
             <div class="modal-body" style="margin:40px;margin-bottom:20px;">
             <form id="feedback_write_form" method="post" action="/team/feedback/write">
             	<input type="hidden" name="sender" value="${ loginuser.email }"/>
-            	
-            	
-            	
-            	<!-- 워크스페이스 임시 -->
-            	<input type="hidden" name="workspaceNo" value="3" />
-            	
-            	
-            	
-            	
               <div >
               	<h6>피드백을 받을 멤버</h6>
               	<div id="add_mem" class="btn btn-secondary float_left" style="width:37px;">+</div>
               	<div id="mem"></div>
-              	
               </div>
-
               <br/>
               <div>
               	<h6 style="margin-top:50px">관련된 업무</h6>
@@ -170,6 +175,7 @@
             
             	<div id="workspace_mem" style="margin-bottom:20px;">
 	            	<c:forEach var="m" items="${ workspaceMembers }">
+	            		<c:if test="${ m.email != loginuser.email }">
 	            		<div class="_mem" data-email="${ m.email }" data-name="${ m.name }">
 		            		<img class="_mem_img img-circle img-bordered-sm" src="" alt="user image">
 		            		<div class="_mem_name">${ m.email }<br/>${ m.name }</div>
@@ -177,6 +183,7 @@
 		            			<i class="fas fa-check"></i>
 		            		</div>
 		            	</div>
+		            	</c:if>
 	            	</c:forEach>
             	</div>
             	
@@ -239,6 +246,52 @@
       <!-- /.modal -->
       
       
+      <!-- 피드백 상세보기 모달 -->
+      <div id="feedbackDetailModal" class="modal fade">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content" style="cursor:pointer">
+            <div class="modal-header" style="border:none; padding:10px;">
+            </div>
+            <div style="text-align:center;padding:30px">
+            	<h4 style="display:inline-block; font-weight:bold;">피드백 상세</h4>
+            </div>
+            <div class="modal-body" style="margin-bottom:20px;padding:0px;">
+            	<div class="modal-body-inner">
+            		<h6>피드백 보낸 날짜</h6>
+            		<div id="detail-modal-writedate"></div>
+            	</div>
+              <div  class="modal-body-inner">
+              	<h6>작성자</h6>
+              	<div class="user-block"  style="width: auto;">
+					<img class="img-circle img-bordered-sm" src="" alt="user image">
+					<span class="username">
+						<a href="#" id="detail-modal-sender">보낸사람 이메일</a>
+						<div style="font-weight: normal;font-size:10pt">보낸사람 이름</div>
+					</span> 
+				</div>
+              </div>
+              <br/>
+              <div  class="modal-body-inner">
+              	<h6 >피드백을 받을 멤버</h6>
+				<div id="detail-modal-receivers">
+					
+				</div>
+            </div>
+            <br/>
+             <div class="modal-body-inner">
+              	<h6>설명</h6>
+              		<div id="detail-modal-content">피드백 설명 표시될 자리</div>
+              </div>
+            <div class="modal-footer">
+              <div id="detail-modal-public"></div>
+            </div>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      
 	<%@include file="/WEB-INF/views/modules/common-js.jsp"%>
 	<script type="text/javascript">
 	$(function() {
@@ -265,6 +318,7 @@
 		});
 		
 		// CSS
+		
 		// 상단 로그 / 피드백 메뉴 css
 		$(".f_link").click(function() {
 			$("#active").removeAttr("id");
@@ -278,8 +332,7 @@
 		});
 
 		// 피드백 멤버이미지 css
-		$(document).on("click", ".user-count-img, .user-count-span", function() {
-			//closeOrOpen($(this).parents(".user-block").children(".username").children(".hover-user-block"));
+		$(document).on("click", ".user-count-img, .user-count-span", function(event) {
 			var target = $(this).parents(".user-block").children(".username").children(".hover-user-block");
 			
 			if (target.hasClass("display-none")) {
@@ -289,27 +342,10 @@
 				target.fadeOut(200);
 				target.addClass("display-none");
 			}
-		});
-	
-		// 피드백 post css
-		$(document).on({
-		    mouseenter: function () {
-		    	$(this).css("background-color", "#efefef");
-		    },
-		    mouseleave: function () {
-		    	$(this).css("background-color", "white");
-		    }
-		}, ".post"); 
-		
-		// 모달 css
-		$("#writeFeedbackBtn").click(function() {
-			$("#writeFeedbackModal").modal();
+			event.stopPropagation(); // 상위 이벤트 발생을 막음
 		});
 		
-		$("#add_mem").click(function() {
-			$("#memberAddModal").modal();
-		});
-		
+		// 작은모달 멤버추가 css
 		$("._mem, .task").hover(function() {
 			$(this).css({"background-color" : "#dedede", "border" : "1px solid #dedede"});
 		}, function() {
@@ -322,10 +358,67 @@
 			$(this).css("background-color", "#17a2b8");
 		});
 		
+		// 피드백 post css
+		$(document).on({
+		    mouseenter: function () {
+		    	$(this).css("background-color", "#efefef");
+		    },
+		    mouseleave: function () {
+		    	$(this).css("background-color", "white");
+		    }
+		}, ".post"); 
+		
+		// 모달 show
+		$("#writeFeedbackBtn").click(function() {
+			$("#writeFeedbackModal").modal();
+		});
+		$("#add_mem").click(function() {
+			$("#memberAddModal").modal();
+		});
 		$("#add_task").click(function() {
 			$("#taskAddModal").modal();
 		});
 		
+		// 피드백 상세보기 모달
+		$(document).on("click", ".feedback-contents", function() {
+			$("#feedbackDetailModal").modal();
+			
+			var data = $(this).parents(".post").attr("data-value");
+			var isPublic = data.split("isPublic=")[1].split(",")[0];
+			var r = data.split("Receiver");
+			
+			$("#detail-modal-content").text(data.split("content=")[1].split(",")[0]);
+			$("#detail-modal-writedate").text(data.split("writedate=")[1].split(",")[0]);
+			$("#detail-modal-sender").text(data.split("sender=")[1].split(",")[0]);
+			
+			if (isPublic == "true") {
+				$("#detail-modal-public").html(
+					"<i class='fas fa-lock-open'></i>" +
+					"<span>이 피드백은 모든 사람이 볼 수 있습니다.</span"
+				);
+			} else {
+				$("#detail-modal-public").html(
+					"<i class='fas fa-lock'></i>" +
+					"<span>이 피드백은 작성자와 받는 사람만 볼 수 있습니다.</span>"		
+				);
+			}
+
+			for (var i = 1; i < r.length; i++) {
+				$("#detail-modal-receivers").html($("#detail-modal-receivers").html() +
+					"<div class='float_left mem'>" +
+						"<img class='mem_img'></img>" +
+						"<div class='mem_name'>" + r[i].split("email=")[1].split(",")[0] + "</div>" +
+					"</div>"
+				);
+			}
+		});
+		$("#feedbackDetailModal").click(function() {
+			$("#feedbackDetailModal").modal("hide");
+			$("#detail-modal-receivers").html("");
+			$("#detail-modal-public").html("");
+		})
+		
+
 		// select box
 		$(".feedback .dropdown-item").click(function() {
 			$("#dropdown-select").text($(this).text());
@@ -349,10 +442,6 @@
 			closeOrOpen($(this).parents(".post").children(".comments"));
 		});
 		
-		// 받는사람 열기 / 닫기 버튼
-		$(document).on("click", ".receiver-btn", function() {
-			closeOrOpen($(this).parents(".post").children(".receivers"));
-		});
 
 		
 		////////////////////////////////////////////////////////////////////////////////////////
@@ -410,7 +499,6 @@
 				success : function(resp, status, xhr) {
 					$("#workspace_mem").html("");
 					$("#workspace_mem").html(resp);
-					
 				},
 				error : function(xhr, status, err) {
 					console.log(err);
@@ -430,7 +518,7 @@
 		$("#submit_btn").click(function() {
 			if (!confirm("피드백을 작성할까요?")) return;
 			
-			var searchType = $(this).attr("data-value");
+			var searchType = $("#dropdown-select").attr("data-value");
 			var feedback = $("#feedback_write_form").serializeArray();
 			var content = $("#feedback_write_form").children("#textarea").children("textarea").val();
 			

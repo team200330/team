@@ -3,6 +3,8 @@ package com.team.controller;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -30,22 +32,24 @@ public class FeedbackController {
 	// 워크스페이스 멤버 리스트
 	private List<Member> workspaceMembers = null;
 	
+	// 임시 워크스페이스번호
+	// 워크스페이스 번호 세션에 저장되면 바꿀거 : feedbackList, searchFeedback, writeFeedback
+	static final int workspaceNo = 15;
+	
 
 	@GetMapping("/list")
-	public String feedbackList(Model model) {
+	public String feedbackList(Model model, HttpSession session) {
 		// 임시 워크스페이스 번호
-		if ( workspaceMembers == null ) workspaceMembers = feedbackService.findWorkspaceMembers(3);
+		if ( workspaceMembers == null ) workspaceMembers = feedbackService.findWorkspaceMembers(workspaceNo);
 		model.addAttribute("workspaceMembers", workspaceMembers);
 		
-		// 임시 로그인유저
-		Member mem = new Member();
-		mem.setEmail("user1@example.com");
-		model.addAttribute("loginuser", mem);
+		Member loginuser = (Member) session.getAttribute("loginuser");
+		if (loginuser == null) return "redirect:/account/login.action";
 		
 		HashMap<String, Object> params = new HashMap<>();
-		params.put("email", "user1@example.com");
+		params.put("email", loginuser.getEmail());
 		params.put("searchType", "M");
-		params.put("workspaceNo", 3);
+		params.put("workspaceNo", workspaceNo);
 		
 		model.addAttribute(feedbackService.searchFeedback(params));
 		
@@ -62,9 +66,9 @@ public class FeedbackController {
 		HashMap<String, Object> params = new HashMap<>();
 		params.put("email", email);
 		params.put("searchType", searchType);
-		params.put("workspaceNo", 3);
+		params.put("workspaceNo", workspaceNo);
 		params.put("key", key);
-
+	
 		model.addAttribute("feedbackList", feedbackService.searchFeedback(params));
 		
 		return "/feedback/modules/feedback-list";
@@ -74,6 +78,7 @@ public class FeedbackController {
 	@ResponseBody
 	public String writeFeedback(Feedback feedback, String[] email, String isPublic) {
 		feedback.setPublic(isPublic.equals("true") ? true : false);
+		feedback.setWorkspaceNo(workspaceNo);
 		feedbackService.writeFeedback(feedback, email);
 	
 		return "success";
@@ -99,7 +104,7 @@ public class FeedbackController {
 	
 	@GetMapping("/getWorkspaceMembers")
 	@ResponseBody
-	public String getWorkspaceMembers(String str, String selected) {
+	public String getWorkspaceMembers(String str, String selected, String email) {
 		String result = "";
 		String selectedMems[] = selected.split(":");
 		
@@ -109,7 +114,7 @@ public class FeedbackController {
 			String className = "_mem_icon_default";
 			for (String s : selectedMems) if (s.equals(m.getEmail())) { className = ""; break; }
 			
-			if (m.getEmail().contains(str) || m.getName().contains(str)) 
+			if ( m.getEmail().contains(str) || m.getName().contains(str) ) 
 				result += 
 					"<div class='_mem' data-email='" + m.getEmail() + "' data-name='" + m.getName() + "'>" +
 						"<img class='_mem_img img-circle img-bordered-sm' src='' alt='user image'>" +

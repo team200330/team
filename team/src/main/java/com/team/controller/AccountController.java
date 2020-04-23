@@ -35,7 +35,7 @@ public class AccountController {
 	public String register(Member member, RedirectAttributes attr) {
 		
 		memberService.registerMember(member);
-		
+		System.out.println(member.toString());
 		attr.addFlashAttribute("newEmail", member.getEmail());
 		
 		return "redirect:login.action";

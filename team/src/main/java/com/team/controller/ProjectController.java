@@ -1,5 +1,7 @@
 package com.team.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,10 +18,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.team.service.ProjectService;
+import com.team.ui.ThePager;
 import com.team.vo.Project;
 
 @Controller
@@ -31,36 +35,69 @@ public class ProjectController {
 	private ProjectService projectService;
 	
 	@GetMapping(path = { "/prlist" })
-	public String showProjectList(Model model) {
+	public String showProjectList(@RequestParam(defaultValue = "1") int pageNo, HttpServletRequest req,Model model) {
 		
 		List<Project> projectList = projectService.findProject();
 		model.addAttribute("project", projectList);
 		List<Project> projectList2 = projectService.findProject2();
 		model.addAttribute("project2", projectList2);
 		
+		int pageSize = 3;
+		int pagerSize = 4;
+		HashMap<String, Object> params = new HashMap<>();
+		int beginningPageNo = (pageNo - 1) * pageNo + 1;
+		params.put("beginningPageNo", beginningPageNo);
+		params.put("end", beginningPageNo + pageSize);
+		
+		List<Project> projectPage = projectService.findPageing(params);
+		int projectListCount = projectService.projectListCount(params);
+		
+		ThePager pager = new ThePager(projectListCount, pageNo, pageSize, pagerSize, "prlist.action", req.getQueryString() );
+		model.addAttribute("pager", pager);
+		
+		
+		
 		return "project/prlist";
+		
 	}
 	
-	/*
-	 * // 최근 4건만 가져오는 것
-	 * 
-	 * @GetMapping(path = { "/prlist2" }) public String showProjectList2(Model
-	 * model) {
-	 * 
-	 * List<Project> projectList = projectService.findProject2();
-	 * model.addAttribute("project2", projectList);
-	 * 
-	 * return "project/prlist"; }
-	 */
 	
-	@PostMapping(path = {"/write.action"})
+	
+//	@PostMapping(path = {"/write.action"})
+//	public String write(Project project) {
+//		
+//		projectService.writeProject(project);
+//		
+//		return "redirect:prlist.action";
+//		
+//	}
+	@PostMapping(path = {"/write"})
+	@ResponseBody
 	public String write(Project project) {
 		
 		projectService.writeProject(project);
 		
-		return "redirect:prlist.action";
+		return "success";
 		
 	}
+	
+	@GetMapping(path = {"/list"})
+	public String list(Model model) {
+		
+		List<Project> projectList = projectService.findProject();
+		model.addAttribute("project", projectList);
+		
+		return "project/list";
+	}
+	@GetMapping(path = {"/list2"})
+	public String list2(Model model) {
+		
+		List<Project> projectList2 = projectService.findProject2();
+		model.addAttribute("project2", projectList2);
+		
+		return "project/list2";
+	}
+	
 
 	@PostMapping(value="/projectByproNo")
 	@ResponseBody

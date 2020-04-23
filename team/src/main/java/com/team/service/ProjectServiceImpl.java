@@ -1,5 +1,6 @@
 package com.team.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,6 +38,20 @@ public class ProjectServiceImpl implements ProjectService {
 		projectMapper.updateProjectNo(arrMap);
 		
 	}
+
+	@Override
+	public List<Project> findPageing(HashMap<String, Object> params) {
+		// TODO Auto-generated method stub
+		return projectMapper.selectPageing(params);
+	}
+
+	@Override
+	public int projectListCount(HashMap<String, Object> params) {
+		// TODO Auto-generated method stub
+		return projectMapper.selectProjectListCount(params);
+	}
+
+
 
 
 

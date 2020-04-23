@@ -2,11 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.team.mapper.ProjectMapper">
-
-	<insert id="insertProject">
-		INSERT INTO project ( project_name, manager_email, is_public, template_no, workspace_no)
-		VALUES ( #{projectName}, "1@1", #{public}, #{templateNo}, "6" )
-	</insert>
 	
 	<resultMap type="project" id="projectMap">
 		<id column="project_no" property="projectNo" />
@@ -19,14 +14,19 @@
 		<result column="public" property="isPublic" />
 		<result column="template_no" property="templateNo" />
 		<result column="pro_no" property="proNo" />
-	</resultMap>	
+	</resultMap>
+	
+	<insert id="insertProject">
+		INSERT INTO project ( project_name, content, manager_email, is_public, template_no, workspace_no)
+		VALUES ( #{projectName}, #{content}, "1@1", #{public}, #{templateNo}, "6" )
+	</insert>
 	
 	<select id="selectProject" resultMap="projectMap">
-		SELECT * FROM project ORDER BY project_no DESC
+		<![CDATA[ SELECT * FROM project WHERE deleted = 0 ORDER BY project_no DESC ]]>
 	</select>
 	
 	<select id="selectProject2" resultMap="projectMap">
-		<![CDATA[ SELECT * FROM project WHERE project_no >= 4 ORDER BY project_no DESC ]]>
+		<![CDATA[ SELECT * FROM project ORDER BY project_no DESC LIMIT 4 ]]>
 	</select>
 	
 	<select id="selectProjectByWorkspaceNo" parameterType="int" resultMap="projectMap">
@@ -35,8 +35,34 @@
 	</select>
 	
 	<update id="updateProjectNo" parameterType="hashmap">
-		UPDATE project SET pro_no=#{ proNo } WHERE project_no = #{ projectNo }
+		UPDATE project SET pro_no=#{ proNo } 
+		WHERE project_no = #{ projectNo }
 	</update>
+	
+	<select id="selectPageing" parameterType="hashmap" resultMap="projectMap">
+		SELECT *
+		FROM (
+			  SELECT row_number() over(order by project_no) rnum,project_no,project_name, manager_email, regdate, is_public, template_no, pro_no
+		      FROM project
+		      WHERE deleted = '0'
+		      AND <![CDATA[ project_no < #{ end } ]]>
+		      ORDER BY project_no desc
+		     ) project
+		WHERE project_no BETWEEN project_no AND  #{ beginningPageNo };
+		
+<!-- 		SELECT project_no, manager_email, regdate, deleted
+		FROM (
+					SELECT rownum idx, project_no, project_name, manager_email, regdate, deleted
+					FROM project
+					WHERE deleted = '0'
+					AND <![CDATA[ rownum < #{ end } ]]>
+					ORDER BY project_no desc
+				)
+		WHERE idx >= #{ beginningPageNo }; -->
+	</select>
+	<select id="selectProjectListCount" parameterType="hashmap" resultType="int" >
+		<![CDATA[ SELECT COUNT(*) FROM project WHERE deleted = '0' ORDER BY project_no DESC ]]>
+	</select>
 
 
 <!-- 	<resultMap type="project" id="projectMap">

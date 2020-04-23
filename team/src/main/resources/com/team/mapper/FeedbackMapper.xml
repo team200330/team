@@ -11,11 +11,11 @@
 		</selectKey>
 	</insert>
 
-	<insert id="insertReceivers" parameterType="java.util.List">
-	INSERT INTO receiver VALUES
-		<foreach collection="list" item="receiver" index="index">
-			(#{receiver.feedbackNo}, #{receiver.email})
-			<if test="index != list.size - 1"> , </if>
+	<insert id="insertFeedbackReceivers" parameterType="java.util.List">
+	INSERT INTO feedback_receiver(feedback_no, email) VALUES
+		<foreach collection="list" item="feedbackReceiver" index="index" separator=",">
+			(#{feedbackReceiver.feedbackNo}, #{feedbackReceiver.email})
+			<!-- <if test="index != list.size - 1"> , </if> -->
 		</foreach>
 	</insert>
 	
@@ -26,7 +26,7 @@
 	
 	<select id="selectFeedback" parameterType="hashmap" resultMap="feedbackMap">
 	SELECT * FROM feedback f
-	INNER JOIN receiver r ON f.feedback_no = r.feedback_no
+	INNER JOIN feedback_receiver r ON f.feedback_no = r.feedback_no
 	WHERE 
 		<choose>
 			<when test="searchType == 'M'.toString()">
@@ -56,7 +56,7 @@
 	</select>
 
 	<update id="deleteFeedback" parameterType="int">
-	UPDATE receiver SET deleted = '1'
+	UPDATE feedback_receiver SET deleted = '1'
 	WHERE feedback_no = #{feedbackNo}
 	</update>
 	
@@ -69,10 +69,10 @@
 		<result column="workspace_no" property="workspaceNo"/>
 		<result column="is_public" property="isPublic"/>
 		<result column="task_no" property="taskNo"/>
-		<collection property="receivers" column="feedback_no" resultMap="receiverMap" />
+		<collection property="receivers" column="feedback_no" resultMap="feedbackReceiverMap" />
 	</resultMap>
 	
-	<resultMap type="Receiver" id="receiverMap">
+	<resultMap type="FeedbackReceiver" id="feedbackReceiverMap">
 		<result column="feedback_no" property="feedbackNo"/>
 		<result column="email" property="email"/>
 		<result column="is_read" property="isRead"/>
