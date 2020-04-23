@@ -1,6 +1,6 @@
 package com.team.vo;
 
-import java.sql.Date;
+import java.util.Date;
 
 import lombok.Data;
 
@@ -14,4 +14,5 @@ public class Log {
 	private int projectNo;
 	
 	private LogReceiver receiver;
+	private Task task;
 }

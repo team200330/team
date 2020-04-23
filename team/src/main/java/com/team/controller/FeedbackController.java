@@ -114,7 +114,7 @@ public class FeedbackController {
 			String className = "_mem_icon_default";
 			for (String s : selectedMems) if (s.equals(m.getEmail())) { className = ""; break; }
 			
-			if ( m.getEmail().contains(str) || m.getName().contains(str) ) 
+			if ( (m.getEmail().contains(str) || m.getName().contains(str)) && !m.getEmail().equals(email) ) 
 				result += 
 					"<div class='_mem' data-email='" + m.getEmail() + "' data-name='" + m.getName() + "'>" +
 						"<img class='_mem_img img-circle img-bordered-sm' src='' alt='user image'>" +

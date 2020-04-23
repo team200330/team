@@ -484,7 +484,7 @@
 		});
 		
 		
-		// 멤버 추가 작은모달 ajax
+		// 멤버 검색 작은모달 ajax
 		$("#_mem_input").keyup(function() {
 			
 			var selected = "";
@@ -495,7 +495,9 @@
 				url : "/team/feedback/getWorkspaceMembers",
 				method : "get",
 				data : {"str" : $(this).val(),
-						"selected" : selected},
+						"selected" : selected,
+						"email" : "${loginuser.email}"
+				},
 				success : function(resp, status, xhr) {
 					$("#workspace_mem").html("");
 					$("#workspace_mem").html(resp);
