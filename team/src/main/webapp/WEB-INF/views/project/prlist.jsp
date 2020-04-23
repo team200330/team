@@ -10,17 +10,27 @@
 
   <%@include file="/WEB-INF/views/modules/common-css.jsp" %>
  <style>
+
 	.page-item.active .page-link {z-index: 1;color: #fff;background-color: #6c757d;border-color: #6c757d;}
-	.bg-info {  background-color: #6c757d!important;}
-	.btn-primary {   color: #fff;   background-color: #363b3f;   border-color: #363b3f;   box-shadow: none;   margin: 0rem 0rem 0rem auto;	}
-	.selected1{background-color:#2390f1!important}
-	.selected2{background-color:#2390f1!important}  
+ 	.bg-info { background-color: #f4f6f9!important; }
+ 	.bg-info, .bg-info>a { color: #343a40!important; }
+ 	.info-box .progress .progress-bar { background-color: #527aa2;}
+	.info-box .progress { background-color: rgba(0,0,0,.125); height: 6px; border-radius: 10px;}
 	.info-box-content{max-width: 100%;}
+	.btn-primary {   color: #fff;   background-color: #363b3f;   border-color: #363b3f;   box-shadow: none;   margin: 0rem 0rem 0rem auto;	}
+	.btn-default {   background-color: #ffffff;  border-color: #b9b9b9;  color: #343a40;}
+	.selected1{background-color:#ffbf00!important}
+	.selected2{background-color:#ffbf00!important}  
+	.seletProNo { margin: 15px 0 0; padding: .145rem .35rem; width: 100px; font-size: 14px;}
 	.iconstyle { font-size: 50px; top: 10px;     color: rgba(0,0,0,.15); z-index: 0; }
 	.rowstyle { margin: 0; flex: 1 1 auto; padding: 1.25rem;}
 	.width-50px {width:50px}
 	.margin-right-10px {margin-right: 10px;}
 	.float_left2 { float: left; margin-right:10px; }
+	.progress { width:100%}
+	.progress-description {display:block; height: 100%;}
+	.info-box .progress {margin:10px 0;} 
+	
 	.mem {	border: 1px #dedede;   background-color: #dedede;   border-radius: 30rem;   width: 115px; height: 32px;    text-align: center;   margin-top: 2px;}
 	.mem_img {	width: 30%; height:32px;	border-radius: 30rem;	border: 1px solid;}
 	.mem_name {width: 50%;}
@@ -30,11 +40,7 @@
 	._mem_img {width:20%;}
 	._mem_name {width:60%;}
 	._mem_icon {width:20%;}
-	.seletProNo { margin: 15px 0 0; padding: .175rem .55rem; width: 120px; }
-	.progress { width:100%}
-	.progress-description {display:block; height: 100%;}
-	.btn-default { background-color: #f3f3f3; border-color: #6c757d; color: #333;}
-	.info-box .progress {margin:10px 0;} 
+	
  </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -85,7 +91,7 @@
         </div>
 		<div class="card-body" style="display: block;">
 	      <div class="card-body pb-0">
-	          <div class="row d-flex align-items-stretch list-container1">
+	          <div class="row d-flex align-items-stretch list-container2">
 				
 				<jsp:include page="list2.jsp" />
 
@@ -124,6 +130,7 @@
         <div class="card-footer" style="display: block;">
           <nav aria-label="Contacts Page Navigation">
             <ul class="pagination justify-content-center m-0">
+              <li class="paginate_button page-item previous disabled" id="example2_previous"><a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li>
               <li class="page-item active"><a class="page-link" href="#">1</a></li>
               <li class="page-item"><a class="page-link" href="#">2</a></li>
               <li class="page-item"><a class="page-link" href="#">3</a></li>
@@ -132,9 +139,12 @@
               <li class="page-item"><a class="page-link" href="#">6</a></li>
               <li class="page-item"><a class="page-link" href="#">7</a></li>
               <li class="page-item"><a class="page-link" href="#">8</a></li>
+              <li class="paginate_button page-item next" id="example2_next"><a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a></li>
             </ul>
           </nav>
         </div>
+       
+        
         </div>
       <!-- /.내가속한프로젝트 -->
       
@@ -167,6 +177,10 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
+<form id="detail-form" action="detail.action" method="get">
+	<input type="hidden" id="projectNo" />
+	<input type="hidden" id="pageNo" value="${pager.pageNo }"/>
+</form>
 
   <%@include file="/WEB-INF/views/modules/common-js.jsp" %>
 <script>
@@ -179,6 +193,7 @@ $(function() {
 	// .prop( propertyName ) : 속성값 가져옴
 	// .prop( propertyName, value ) : 속성값 추가
 	// parent 상위요소
+
 	
 	$("#add_mem").click(function() {
 		$("#memberAddModal").modal();
@@ -194,6 +209,7 @@ $(function() {
 	}, function() {
 		$(this).css("background-color", "#17a2b8");
 	});
+	// 템플릿 선택
 	$('input[name=templateNo]').on('click', function(){ 
 		var input_id_check = $(this).attr("id");
 		var label_for_check = $("label[for='"+ input_id_check + "']").attr("for");
@@ -206,21 +222,8 @@ $(function() {
 			}
 		}
 	});
-
-	$('input[name=isPublic]').on('click', function(){
-		var input_id_check =  $(this).attr("id")
-		var label_for_check = $("label[for='"+ input_id_check+"']").attr("for")
-		var check_label = $($("label[for='"+ input_id_check + "']")).find( '#chklabel2' )
-
-		if( $(this).prop('checked') ){
-			if( check_label ){
-				$(".selected2").removeClass("selected2");
-				check_label.addClass("selected2");
-			}
-		}
-		
-	});
-
+	
+	
 	$('input[name=templateNo]').on('click', function(){	
 		if( $(this).val() == "basics"){ $(this).val("1") }
 		else if($(this).val() == "weekday"){ $(this).val("2") }
@@ -229,7 +232,9 @@ $(function() {
 		else if($(this).val() == "khanban"){ $(this).val("5") }
 		console.log($(this).val())
 	});
+	// -- 템플릿 선택 끝
 
+	
 	/*$('.selectProNo2').on('click', function(){
 		//var selectProNoName = ['상태없음', '진행중', '완료', '보류', '취소'];
 		
@@ -261,7 +266,25 @@ $(function() {
 		} 
 		
 	})*/
+	
+	// 비공개 공개 선택
+	$('input[name=isPublic]').on('click', function(){
+		var input_id_check =  $(this).attr("id")
+		var label_for_check = $("label[for='"+ input_id_check+"']").attr("for")
+		var check_label = $($("label[for='"+ input_id_check + "']")).find( '#chklabel2' )
 
+		if( $(this).prop('checked') ){
+			if( check_label ){
+				$(".selected2").removeClass("selected2");
+				check_label.addClass("selected2");
+			}
+		}
+		
+	});
+	// -- 비공개 공개 선택
+
+
+	// 프로젝트 진행상황 구분 list에서 변경하기
 	$('.seletProNo').on('click', function(){
 		var projectNo = $(this).prev('.projectNo').attr('id');
 		console.log(projectNo)
@@ -283,21 +306,9 @@ $(function() {
 		});
 		
 	});
+	// -- 프로젝트 진행상황 구분 list에서 변경하기 끝
 
-	
-/* 	$('#saveSubmit').on('click', function(event){
-
-		console.log()
-		if ($('#projectName').val() == '') {
-			alert('제목을 입력해주세요')
-			$('#projectName').focus();
-			return;
-		};
-		
-		$('#writeform').submit();
-
-	}); */
-
+	// write-form-submit 
 	$('#saveSubmit').on('click', function(event){
 
 		if ($('#projectName').val() == '') {
@@ -316,18 +327,39 @@ $(function() {
 			"data":values,
 			"success":function(data, status, xhr){
 				$('#modal-lg').modal('hide');
-				//$('.content-wrapper').load("/team/project/prlist");
+				// list
 				$('.list-container1').load('/team/project/list');
-				//$('.content').html("");
-				  $('form').each(function() {
-				      this.reset();
-				  });
+				$('.list-container2').load('/team/project/list2');
+				// form 초기화
+				$('form').each(function() {
+				    this.reset();
+				});
+				var t_input_id_check =  $('input[name=templateNo]').val("basics");
+				var t_label_for_check = $("label[for='"+ t_input_id_check+"']").attr("for");
+				var t_check_label = $($("label[for='"+ t_input_id_check + "']")).find( '#chklabel2' );
+				if( t_check_label ){
+					$(".selected2").removeClass("selected2");
+					t_check_label.addClass("selected2");
+				}
+
+				var p_input_id_check =  $('input[name=isPublic]').val("basics");
+				var p_label_for_check = $("label[for='"+ p_input_id_check+"']").attr("for");
+				var p_check_label = $($("label[for='"+ p_input_id_check + "']")).find( '#chklabel1' );
+				if( p_check_label ){
+					$(".selected1").removeClass("selected1");
+					p_check_label.addClass("selected1");
+				}
 			},
 			"error" : function(xhr, status, err){
 				console.log(err)
 			}
 		});
 	});
+	// -- write-form-submit 끝
+
+	//////////////////// 페이징 처리
+
+	
 
 	
 	

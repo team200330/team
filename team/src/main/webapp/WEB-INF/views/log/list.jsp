@@ -1,4 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%-- <fmt:formatDate value="${ logs.get(0).writedate }" pattern="yyyy-MM-dd hh:mm"/> --%>
 <%@ page pageEncoding="utf-8"%>
 <html>
 
@@ -7,12 +9,14 @@
 <title>활동 로그</title>
 <style>
 .card-header {color:#464c59}
-tr td:nth-child(1) {width:200px;}
-tr td:nth-child(2), tr td:nth-child(3) {padding-top:20px;}
-tr td:nth-child(3) {text-align:right;}
+.log-table tr td:nth-child(1) {width:200px;}
+.log-table tr td:nth-child(2), tr td:nth-child(3) {padding-top:20px;}
+.log-table tr td:nth-child(3) {text-align:right; width:220px; cursor:default}
 .img-circle {width:40px;margin-right:10px;}
-table i {margin:5px;}
-tr td:nth-child(3) a {font-size:10pt;}
+.log-table i {margin:5px; cursor:pointer;}
+.log-table tr td:nth-child(3) {font-size:10pt;}
+.log-table span {font-weight:bold; margin:10px;}
+.log-table {font-size:11pt;}
 </style>
 
 <link rel="stylesheet" href="/team/resources/css/log-feedback.css">
@@ -57,11 +61,11 @@ tr td:nth-child(3) a {font-size:10pt;}
 				<div style="float:left;">
 				<div class="input-group-prepend">
                     <button id="dropdown-select" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="background-color:white;border-radius:unset;border-color:#cfcfcf">
-                      	최신 순으로 보기
+                      	전체 보기
                     </button>
                     <div class="log dropdown-menu">
-                      <a class="dropdown-item" href="#">최신 순으로 보기</a>
-                      <a class="dropdown-item" href="#">오래된 순으로 보기</a>
+                      <a class="dropdown-item" href="#">전체 보기</a>
+                      <a class="dropdown-item" href="#">읽지 않은 로그만 보기</a>
                     </div>
                   </div>
                   </div>
@@ -71,126 +75,69 @@ tr td:nth-child(3) a {font-size:10pt;}
 					<button class="btn btn-info btn-flat" style="height:35px;">모두 지우기</button>
 				</div>
 			</div>
-			
 			<!-- Main content -->
+			
 			<section class="content">
-				<div class="col-md-9" style="max-width:100%;">
+
+
+				<c:if test="${not empty logs}">
+					<c:forEach var="key" items="${keys}">
+						<div class="log-content col-md-9" style="max-width:100%;">
+							<div class="card" style="margin-left:50px;margin-right:50px;border-radius:unset">
+				              <div class="card-header">
+				                <h3 class="card-title">${key}</h3>						
+				                <div class="card-tools">
+				                  <div class="input-group input-group-sm" style="width: 150px;">
+				                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+				                    <div class="input-group-append">
+				                      <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+				                    </div>
+				                  </div>
+				                </div>
+				              </div>
+				              <!-- /.card-header -->
+				              <div class="card-body table-responsive p-0" style="max-height:500px;">
+				                <table class="log-table table table-head-fixed text-nowrap">
+				                  <tbody>
+				                  
+				                  	<c:forEach var="log" items="${logs[key]}">
+				                  	
+				                  	<%-- <c:choose>
+				                  		<c:when test="${log.receiver.isRead == false}"> --%>
+					                  	<tr>
+					                      <td>
+					                       
+					                      <img class="img-circle img-bordered-sm" src="" alt="user image">
+											<span class="username"> 
+												<a href="#">${log.email}</a>
+											</span>
+					                      </td>
+					                      <td>님이 (업무이름) 을 <span>${log.state}</span>했습니다</td>
+					                      	<td>
+											<div><fmt:formatDate value="${log.writedate}" pattern="yyyy-MM-dd hh:mm"/></div>
+											<input class="logWriteDate" type="hidden" value="<fmt:formatDate value="${log.writedate}" pattern="yyyy-MM-dd hh:mm"/>">
+											</td>
+					                    </tr>		
+				                  		<%-- </c:when>
+				                  		<c:otherwise>
+				                  			<tr>
+				                  				<td colspan="3">읽음 처리</td>
+				                  			</tr>
+				                  		</c:otherwise>
+				                  	</c:choose> --%>
+				                   
+				                    </c:forEach>
+				                    
+				                  </tbody>
+				                </table>
+				              </div>
+				              <!-- /.card-body -->
+				            </div>
+		            <!-- /.card -->
+						</div>
+					</c:forEach>
+				</c:if>
 				
-					<div class="card" style="margin-left:50px;margin-right:50px;border-radius:unset">
-		              <div class="card-header">
-		                <h3 class="card-title">몇월 몇일 로그</h3>
-		
-		                <div class="card-tools">
-		                  <div class="input-group input-group-sm" style="width: 150px;">
-		                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-		
-		                    <div class="input-group-append">
-		                      <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-		                    </div>
-		                  </div>
-		                </div>
-		              </div>
-		              <!-- /.card-header -->
-		              <div class="card-body table-responsive p-0" style="max-height:500px;">
-		                <table class="table table-head-fixed text-nowrap">
-		                  <tbody>
-		                    <tr>
-		                      <td>
-		                      <img class="img-circle img-bordered-sm" src="" alt="user image">
-								<span class="username"> 
-									<a href="#">유저 이름</a>
-								</span>
-		                      </td>
-		                      <td>로그 내용!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</td>
-		                      <td>11-7-2014</td>
-		                    </tr>
-		                    <tr>
-		                      <td >
-		                      <img class="img-circle img-bordered-sm" src="" alt="user image">
-								<span class="username"> 
-									<a href="#">유저 이름</a>
-								</span>
-		                      </td>
-		                      <td>로그 내용!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</td>
-		                      <td>11-7-2014</td>
-		                    </tr>
-		                    <tr>
-		                      <td >
-		                      <img class="img-circle img-bordered-sm" src="" alt="user image">
-								<span class="username"> 
-									<a href="#">유저 이름</a>
-								</span>
-		                      </td>
-		                      <td>로그 내용!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</td>
-		                      <td>11-7-2014</td>
-		                    </tr>
-		
-		                  </tbody>
-		                </table>
-		              </div>
-		              <!-- /.card-body -->
-		            </div>
-            <!-- /.card -->
-				</div>
-				
-				<div class="col-md-9" style="max-width:100%;">
-				
-					<div class="card" style="margin-left:50px;margin-right:50px;border-radius:unset">
-		              <div class="card-header">
-		                <h3 class="card-title">몇월 몇일 로그</h3>
-		
-		                <div class="card-tools">
-		                  <div class="input-group input-group-sm" style="width: 150px;">
-		                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-		
-		                    <div class="input-group-append">
-		                      <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-		                    </div>
-		                  </div>
-		                </div>
-		              </div>
-		              <!-- /.card-header -->
-		              <div class="card-body table-responsive p-0" style="max-height:500px;">
-		                <table class="table table-head-fixed text-nowrap">
-		                  <tbody>
-		                    <tr>
-		                      <td >
-		                      <img class="img-circle img-bordered-sm" src="" alt="user image">
-								<span class="username"> 
-									<a href="#">유저 이름</a>
-								</span>
-		                      </td>
-		                      <td>로그 내용!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</td>
-		                      <td>11-7-2014</td>
-		                    </tr>
-		                    <tr>
-		                      <td >
-		                      <img class="img-circle img-bordered-sm" src="" alt="user image">
-								<span class="username"> 
-									<a href="#">유저 이름</a>
-								</span>
-		                      </td>
-		                      <td>로그 내용!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</td>
-		                      <td>11-7-2014</td>
-		                    </tr>
-		                    <tr>
-		                      <td >
-		                      <img class="img-circle img-bordered-sm" src="" alt="user image">
-								<span class="username"> 
-									<a href="#">유저 이름</a>
-								</span>
-		                      </td>
-		                      <td>로그 내용!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</td>
-		                      <td>11-7-2014</td>
-		                    </tr>
-		
-		                  </tbody>
-		                </table>
-		              </div>
-		              <!-- /.card-body -->
-		            </div>
-            <!-- /.card -->
-				</div>
 			</section>
 			<!-- /.content -->
 		</div>
@@ -234,13 +181,14 @@ tr td:nth-child(3) a {font-size:10pt;}
 		// 로그 table css
 		$("tr").hover(function() {
 			$(this).css("background-color", "#efefef");
-			$(this).children(":nth-child(3)").html(
-				'<a>읽은 상태로 표시</a><i class="far fa-check-square"></i>&nbsp;&nbsp;' +
-		        '<a>삭제</a><i class="fas fa-times"></i>'
+			$(this).children(":nth-child(3)").children("div").html(
+				'읽은 상태로 표시<i class="far fa-check-square"></i>&nbsp;&nbsp;' +
+		        '삭제<i class="fas fa-times"></i>'
 			);
 		}, function() {
 			$(this).css("background-color", "white");
-			$(this).children(":nth-child(3)").html("11-7-2014");
+			var date = $(this).children(":nth-child(3)").children("input").val();
+			$(this).children(":nth-child(3)").children("div").html(date);
 		});
 		
 		////////////////////////////////////////////////////

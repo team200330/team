@@ -1,5 +1,6 @@
 package com.team.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,8 @@ public class LogServiceImpl implements LogService {
 	private LogMapper logMapper;
 
 	@Override
-	public List<Log> findLogByProjectNo(int projectNo) {
-		return logMapper.selectLogByProjectNo(projectNo);
+	public List<Log> findLogByProjectNo(HashMap<String, Object> params) {
+		return logMapper.selectLogByProjectNo(params);
 	}
 	
 	

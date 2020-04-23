@@ -30,7 +30,7 @@ input#add-task {
 	<%@include file="/WEB-INF/views/modules/topbar.jsp"%>
 	<!-- /.navbar -->
 
-	<div class="wrapper">
+	<div class="wrapper" style="min-height:auto;">
 		<!-- Main Sidebar Container -->
 		<%@include file="/WEB-INF/views/modules/sidebar.jsp"%>
 
@@ -55,55 +55,9 @@ input#add-task {
 			</section>
 			<hr />
 			<!-- /.content-body -->
-			<section class="section-body">
-				<div class="body-top">
-				<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-					<i class="fas fa-search"></i>
-					<button class="navbar-toggler" type="button" data-toggle="collapse"
-						data-target="#navbarSupportedContent"
-						aria-controls="navbarSupportedContent" aria-expanded="false"
-						aria-label="Toggle navigation">
-						<span class="navbar-toggler-icon"></span>
-					</button>
-	
-					<div class="collapse navbar-collapse" id="navbarSupportedContent">
-						<ul class="navbar-nav mr-auto">
-							<li class="nav-item dropdown"><a
-								class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
-								role="button" data-toggle="dropdown" aria-haspopup="true"
-								aria-expanded="false"> 전체 </a>
-								<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-									<a class="dropdown-item" href="#">나에게 배정된 업무</a> <a
-										class="dropdown-item" href="#">내가 생성한 업무</a> <a
-										class="dropdown-item" href="#">팔로우 중</a>
-								</div></li>
-						</ul>
-						<form class="form-inline my-2 my-lg-0">
-							<input class="form-control mr-sm-2" type="search"
-								placeholder="업무 검색" aria-label="Search">
-							<button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
-						</form>
-					</div>
-				</nav>
-				</div>
-				<section class="body-task" style="padding-top: 15pt; padding-left:15pt; width:300px; height: 100%;">
-					<div id="add-task-div" class="btn btn-secondary" style="cursor: pointer; width: 100%">
-						<span id="add-task-span">
-							<i class="fas fa-plus"></i> 새 업무리스트 만들기
-						</span>
-						<div id="add-task-textarea-div" style="display: none;">
-							<input id="add-task-textarea" type="text" style="width:170pt; height: 18pt;">
-							<span id="cancel-add" style="padding-left:5pt; cursor: pointer;" >
-								<i class="fas fa-times"></i>
-							</span>
-						</div>
-					</div>
-				</section>
-			</section>
-			
-			
-			<section class="content" style="padding: 0 4% 0 4%;"></section>
-			<!-- Default box -->
+			<div id="task-body">
+				<jsp:include page="modules/task-list.jsp"></jsp:include>
+			</div>
 			<!-- /.card -->
 		</div>
 		<!-- /.content-wrapper -->
@@ -127,7 +81,7 @@ input#add-task {
 					flag = "false";
 					return;
 				}else{
-					$("#add-task-div").css("cursor","default");
+					//$("#add-task-div").css("cursor","default");
 					$("#add-task-span").hide();
 					$("#add-task-textarea-div").show();
 				}
@@ -136,8 +90,42 @@ input#add-task {
 				flag = "true";
 				$("#add-task-textarea-div").hide();
 				$("#add-task-span").show();
-				$("#add-task-div").css("cursor","pointer");
+				//$("#add-task-div").css("cursor","pointer");
 			});
+			//엔터 submit 시 ajax로 task Add
+			$("#add-task-textarea").keydown(function(key) {
+				if (key.keyCode == 13) {
+					var taskList = $("#addTaskForm").serializeArray();
+					console.log(taskList);
+					$.ajax({
+						url : "addlist.action",
+						method : "post",
+						data : taskList,
+						success : function(resp, status, xhr) {
+							$("#task-body").load("loadtask.action");
+						},
+						error : function(xhr, status, err) {
+							console.log(err);
+						}
+					});
+				}
+			});
+
+			/* $("#addTaskForm").submit(function(event) {
+				var taskList = $("#addTaskForm").serializeArray();
+				console.log(taskList);
+				$.ajax({
+					"url" : "/team/task/main",
+					"method" : "post",
+					"data" : taskList,
+					"success" : function(resp, status, xhr) {
+						$(".section-body").load("/team/task/main");
+					},
+					"error" : function(xhr, status, err) {
+						console.log(err);
+					}
+				});
+			}); */
 		});
 	</script>
 </body>

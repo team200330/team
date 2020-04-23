@@ -5,12 +5,9 @@
 		            <div class="info-box bg-info">
 					  
 		              <div class="info-box-content">
-		                <span class="info-box-text">${ project.projectName }</span>
+		                <span class="info-box-text" style="font-weight: 500;">${ project.projectName }</span>
 		                <c:if test="${ project.content == null}"><span class="progress-description">&nbsp;&nbsp;&nbsp;</span></c:if>
 		                <c:if test="${ project.content eq project.content }"><span class="progress-description">${ project.content }</span></c:if>
-		                <div class="progress">
-		                  <div class="progress-bar" style="width: 70%"></div>
-		                </div>
 						<span class="info-box-number">
 		                	<div style="display:none" id="${project.projectNo }" class="projectNo">${project.projectNo }</div>
 		                	<select name="proNo" class="seletProNo btn btn-block btn-default" >
@@ -62,6 +59,9 @@
 		                	</select>
  --%>		                	
 					    </span>
+		                <div class="progress">
+		                  <div class="progress-bar" style="width: 70%"></div>
+		                </div>
 		              </div>
 		              <!-- /.info-box-content -->
 		            </div>

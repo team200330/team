@@ -3,11 +3,12 @@
 
 <mapper namespace="com.team.mapper.LogMapper">
 
-	<select id="selectLogByProjectNo" parameterType="int" resultMap="logMap">
+	<select id="selectLogByProjectNo" parameterType="hashmap" resultMap="logMap">
 	SELECT * FROM log l
 	INNER JOIN log_receiver r ON l.log_no = r.log_no 
 	WHERE project_no = #{projectNo}
-	AND is_read = 0 AND deleted = 0
+	AND r.email = #{email} AND deleted = 0
+	ORDER BY l.log_no DESC
 	</select>
 
 	<resultMap type="Log" id="logMap">
