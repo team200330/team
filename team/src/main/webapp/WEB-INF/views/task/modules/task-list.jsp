@@ -41,11 +41,16 @@
 						<span>${ taskList.listName }</span>
 					</div>
 					<div id="settings" style="width:20%; display:flex; padding-top: 3pt">
-						<div style="width:50%;">
-							<i class="fas fa-plus"></i>
+						<div style="width:60%;">
+							<i id="add-task" style="cursor: pointer" class="fas fa-plus"></i>
 						</div>
-						<div style="width:50%">
-							<i class="fas fa-ellipsis-v"></i>
+						<div style="width:40%;">
+							<i id="task-setting" style="cursor: pointer" class="fas fa-ellipsis-v" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+							<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+							    <button class="dropdown-item" type="button">Action</button>
+							    <button class="dropdown-item" type="button">Another action</button>
+							    <button class="dropdown-item" type="button">Something else here</button>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -53,6 +58,8 @@
 			</div>
 		</div>
 		<div id="add-task-div" style="padding-right: 15px;">
+		
+		
 			<div class="btn btn-secondary" style="width:300px">
 				<div id="add-task-button-div" style="cursor: pointer;">
 					<span id="add-task-span"> <i class="fas fa-plus"></i> 새 업무리스트만들기</span>
