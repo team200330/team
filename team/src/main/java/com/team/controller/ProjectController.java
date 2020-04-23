@@ -42,8 +42,9 @@ public class ProjectController {
 		List<Project> projectList2 = projectService.findProject2();
 		model.addAttribute("project2", projectList2);
 		
-		int pageSize = 3;
-		int pagerSize = 4;
+		
+		int pageSize = 2;
+		int pagerSize = 5;
 		HashMap<String, Object> params = new HashMap<>();
 		int beginningPageNo = (pageNo - 1) * pageNo + 1;
 		params.put("beginningPageNo", beginningPageNo);
@@ -60,7 +61,6 @@ public class ProjectController {
 		return "project/prlist";
 		
 	}
-	
 	
 	
 //	@PostMapping(path = {"/write.action"})
