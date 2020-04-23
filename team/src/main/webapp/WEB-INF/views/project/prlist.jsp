@@ -85,7 +85,7 @@
         </div>
 		<div class="card-body" style="display: block;">
 	      <div class="card-body pb-0">
-	          <div class="row d-flex align-items-stretch">
+	          <div class="row d-flex align-items-stretch list-container1">
 				
 				<jsp:include page="list2.jsp" />
 
@@ -310,22 +310,24 @@ $(function() {
 
 		var values = $('#writeform').serializeArray();
 		//console.log(values); return;
-		
 		$.ajax({
 			"url":"/team/project/write",
 			"method":"post",
 			"data":values,
 			"success":function(data, status, xhr){
 				$('#modal-lg').modal('hide');
-				//$('.list-container1').load("/team/project/prlist");
+				//$('.content-wrapper').load("/team/project/prlist");
+				$('.list-container1').load('/team/project/list');
 				//$('.content').html("");
+				  $('form').each(function() {
+				      this.reset();
+				  });
 			},
 			"error" : function(xhr, status, err){
 				console.log(err)
 			}
 		});
 	});
-
 
 	
 	
