@@ -1,5 +1,6 @@
 package com.team.mapper;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,8 +16,12 @@ public interface ProjectMapper {
 	
 	void updateProjectNo(Map<String, String> arrMaparrMap);
 	
+	List<Project> selectPageing(HashMap<String, Object> params);
+
+	int selectProjectListCount(HashMap<String, Object> params);
+
+	
+	
+
 	List<Project> selectProjectByWorkspaceNo(int workspaceNo);
-
-
-
 }

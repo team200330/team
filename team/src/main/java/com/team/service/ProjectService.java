@@ -1,5 +1,6 @@
 package com.team.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,11 @@ public interface ProjectService {
 	List<Project> findProject2();
 	
 	void updateProjectNo(Map<String, String> arrMap);
+
+	List<Project> findPageing(HashMap<String, Object> params);
+
+	int projectListCount(HashMap<String, Object> params);
+
 
 
 
