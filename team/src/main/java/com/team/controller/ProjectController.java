@@ -53,12 +53,21 @@ public class ProjectController {
 	 * return "project/prlist"; }
 	 */
 	
-	@PostMapping(path = {"/write.action"})
+//	@PostMapping(path = {"/write.action"})
+//	public String write(Project project) {
+//		
+//		projectService.writeProject(project);
+//		
+//		return "redirect:prlist.action";
+//		
+//	}
+	@PostMapping(path = {"/write"})
+	@ResponseBody
 	public String write(Project project) {
 		
 		projectService.writeProject(project);
 		
-		return "redirect:prlist.action";
+		return "success";
 		
 	}
 

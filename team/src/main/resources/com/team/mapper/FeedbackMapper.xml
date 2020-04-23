@@ -12,10 +12,10 @@
 	</insert>
 
 	<insert id="insertReceivers" parameterType="java.util.List">
-	INSERT INTO receiver VALUES
-		<foreach collection="list" item="receiver" index="index">
+	INSERT INTO receiver(feedback_no, email) VALUES
+		<foreach collection="list" item="receiver" index="index" separator=",">
 			(#{receiver.feedbackNo}, #{receiver.email})
-			<if test="index != list.size - 1"> , </if>
+			<!-- <if test="index != list.size - 1"> , </if> -->
 		</foreach>
 	</insert>
 	

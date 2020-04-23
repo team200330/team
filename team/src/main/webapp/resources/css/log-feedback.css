@@ -7,7 +7,7 @@
 }
 .link-black:focus, .link-black:hover { color: #6c757d !important; }
 #active { border-bottom: 3px solid #17a2b8; color:#17a2b8; }
-.feedback-contents {margin: 30px 0px 30px 0px;}
+.feedback-contents {padding: 30px 0px 30px 0px; cursor:pointer;}
 .comments { display:none; }
 .float_left { float: left; margin-right:10px; }
 h6 { font-weight:bold !important; }
