@@ -1,16 +1,17 @@
 package com.team.vo;
 
-import java.util.Date;
+import java.sql.Date;
 
 import lombok.Data;
 
 @Data
 public class Log {
 	private int logNo;
-	private boolean isRead;
 	private String email;
-	private Date writeDate;
+	private Date writedate;
 	private String state;
-	private boolean deleted;
 	private int taskNo;
+	private int projectNo;
+	
+	private LogReceiver receiver;
 }

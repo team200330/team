@@ -10,6 +10,7 @@
 		<typeAlias type="com.team.vo.Feedback" alias="Feedback" />
 		<typeAlias type="com.team.vo.File" alias="File" />
 		<typeAlias type="com.team.vo.Log" alias="Log" />
+		<typeAlias type="com.team.vo.LogReceiver" alias="LogReceiver"/>
 		<typeAlias type="com.team.vo.Member" alias="Member" />
 		<typeAlias type="com.team.vo.Project" alias="Project" />
 		<typeAlias type="com.team.vo.ProjectMember" alias="ProjectMember" />
@@ -19,7 +20,7 @@
 		<typeAlias type="com.team.vo.Template" alias="Template" />
 		<typeAlias type="com.team.vo.Workspace" alias="Workspace" />
 		<typeAlias type="com.team.vo.WorkspaceMember" alias="WorkspaceMember" />
-		<typeAlias type="com.team.vo.Receiver" alias="Receiver"/>
+		<typeAlias type="com.team.vo.FeedbackReceiver" alias="FeedbackReceiver"/>
 		<typeAlias type="com.team.vo.Comments" alias="Comments"/>
 	</typeAliases>
 	

@@ -68,10 +68,7 @@ public class FeedbackController {
 		params.put("searchType", searchType);
 		params.put("workspaceNo", workspaceNo);
 		params.put("key", key);
-		
-		System.out.println(searchType);
-		System.out.println(email);
-
+	
 		model.addAttribute("feedbackList", feedbackService.searchFeedback(params));
 		
 		return "/feedback/modules/feedback-list";
