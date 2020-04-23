@@ -30,7 +30,7 @@
 									<div style="padding: 5px;padding-left: 10px;cursor:pointer" class="img-circle img-bordered-sm user-count-img">+ ${feedback.receivers.size() - 1}</div>
 								</c:if>
 								<div class="username">
-									<a href="#" >${feedback.sender}</a> 
+									<a href="#" >${feedback.receivers.get(0).email}</a> 
 									<c:if test="${feedback.receivers.size() > 1}">
 										<span style="cursor:pointer" class="user-count-span">외 ${feedback.receivers.size() - 1} 명</span>
 										<div class="hover-user-block display-none">

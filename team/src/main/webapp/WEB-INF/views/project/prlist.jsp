@@ -317,7 +317,7 @@ $(function() {
 			"data":values,
 			"success":function(data, status, xhr){
 				$('#modal-lg').modal('hide');
-				//$('.list-container1').load("/team/project/prlist");
+				$('.list-container1').load('<jsp:include page="list.jsp" />');
 				//$('.content').html("");
 			},
 			"error" : function(xhr, status, err){
