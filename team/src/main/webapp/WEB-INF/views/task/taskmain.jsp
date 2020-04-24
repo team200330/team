@@ -23,6 +23,11 @@ input#add-task {
 	font-size: 1.0em;
 	font-weight: 900;
 }
+
+input::placeholder {
+	font-size: 11pt;
+	font-style: inherit;
+}
 </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -76,29 +81,30 @@ input#add-task {
 	<script type="text/javascript">
 		$(function() {
 			var flag = "false";
-			$("#add-task-div").click(function(event) {
+			$(document).on("click","#add-task-div",function(event) {
 				if( flag == "true"){
 					flag = "false";
 					return;
 				}else{
-					//$("#add-task-div").css("cursor","default");
 					$("#add-task-span").hide();
 					$("#add-task-textarea-div").show();
 				}
 			});
-			$("#cancel-add").click(function() {
+			$(document).on("click","#cancel-add",function() {
 				flag = "true";
 				$("#add-task-textarea-div").hide();
 				$("#add-task-span").show();
 				//$("#add-task-div").css("cursor","pointer");
 			});
 			//엔터 submit 시 ajax로 task Add
-			$("#add-task-textarea").keydown(function(key) {
+			//$("#add-task-textarea").keydown(function(key) {
+			$(document).on("keydown","#add-task-textarea",function(key) {
 				if (key.keyCode == 13) {
-					var taskList = $("#addTaskForm").serializeArray();
-					console.log(taskList);
+					//console.log("눌렀다");
+					//var taskList = $("#addTaskForm").serializeArray();
+					var taskList = {"listName":$("#add-task-textarea").val(),"projectNo":$("#add-task-projectNo").attr("value")};
 					$.ajax({
-						url : "addlist.action",
+						url : "/team/task/addlist.action",
 						method : "post",
 						data : taskList,
 						success : function(resp, status, xhr) {
@@ -110,22 +116,36 @@ input#add-task {
 					});
 				}
 			});
+			//업무 리스트의 + 누를시 업무 추가
+			$(document).on("click","#add-task",function(){
+				$("#task-add-div").show();
+			});
 
-			/* $("#addTaskForm").submit(function(event) {
-				var taskList = $("#addTaskForm").serializeArray();
-				console.log(taskList);
+			$(document).on("click","#cancel-task",function(){
+				$("#task-add-div").hide();
+			});
+
+			//업무 리스트 삭제
+			//$(".list-delete-btn").click(function(){
+			$(document).on("click",".list-delete-btn",function(){
+				var listNo = $(this).parents().attr("id");
 				$.ajax({
-					"url" : "/team/task/main",
-					"method" : "post",
-					"data" : taskList,
-					"success" : function(resp, status, xhr) {
-						$(".section-body").load("/team/task/main");
+					url : "/team/task/deletelist.action",
+					method : "post",
+					data : {"listNo":listNo},
+					success : function(resp, status, xhr) {
+						$("#task-body").load("loadtask.action");
 					},
-					"error" : function(xhr, status, err) {
+					error : function(xhr, status, err) {
 						console.log(err);
 					}
 				});
-			}); */
+			});
+			$('.taskwrap').on('keyup', 'textarea', function(e) {
+				$(this).css('height', 'auto');
+				$(this).height(this.scrollHeight);
+			});
+			$('.taskwrap').find('textarea').keyup();
 		});
 	</script>
 </body>

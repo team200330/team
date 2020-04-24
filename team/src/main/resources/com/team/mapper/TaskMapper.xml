@@ -11,6 +11,7 @@
 	<select id="selectTaskList" resultMap="taskListMap">
 		SELECT *
 		FROM task_list
+		WHERE deleted = '0'
 	</select>
 	
 	<resultMap type="TaskList" id="taskListMap">
@@ -18,6 +19,12 @@
 		<result column="project_no" property="projectNo"/>
 		<result column="list_name" property="listName"/>
 	</resultMap>
+	
+	<delete id="deleteTaskList" parameterType="int">
+		UPDATE task_list
+		SET deleted = '1' 
+		WHERE list_no = #{ listNo }
+	</delete>
 </mapper>
 
 

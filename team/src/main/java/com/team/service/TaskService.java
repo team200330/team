@@ -9,4 +9,6 @@ public interface TaskService {
 	void addTaskList(TaskList taskList);
 
 	List<TaskList> searchTaskList();
+
+	void deleteTaskList(int listNo);
 }

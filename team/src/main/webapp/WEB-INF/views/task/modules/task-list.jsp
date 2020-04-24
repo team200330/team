@@ -36,18 +36,39 @@
 		<div id="task-container">
 			<div style="display: flex; flex-wrap: nowrap;">
 			<c:forEach items="${ taskLists }" var="taskList">
-				<div class="btn btn-primary" style="width: 300px; margin-right: 5pt; display: flex">
-					<div id="listname" style="width:80%; text-align: left;">
-						<span>${ taskList.listName }</span>
-					</div>
-					<div id="settings" style="width:20%; display:flex; padding-top: 3pt">
-						<div style="width:50%;">
-							<i class="fas fa-plus"></i>
+				<div class="btn btn-primary active" style="width:300px; margin-right: 5pt; padding: 0 0 0 0;">
+					<div id="taskList-${ taskList.listNo }" class="btn btn-primary active" style="display: flex" data-tno="${ taskList.listNo }" data-pno="${ taskList.projectNo }">
+						<div id="listname" style="width:80%; text-align: left;">
+							<span>${ taskList.listName }</span>
 						</div>
-						<div style="width:50%">
-							<i class="fas fa-ellipsis-v"></i>
+						<div id="settings" style="width:20%; display:flex; padding-top: 3pt">
+							<div style="width:60%;">
+								<i id="add-task" style="cursor: pointer" class="fas fa-plus"></i>
+							</div>
+							<div style="width:40%;">
+								<i id="task-setting" style="cursor: pointer" class="fas fa-ellipsis-v" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+								<div id="${ taskList.listNo }" class="dropdown-menu" aria-labelledby="dropdownMenu2">
+								    <button class="dropdown-item list-delete-btn" type="button">리스트 삭제</button>
+								    <button class="dropdown-item" type="button">Another action</button>
+								    <button class="dropdown-item" type="button">Something else here</button>
+								</div>
+							</div>
 						</div>
 					</div>
+					<section id="task-add-div" style="display: none;">
+						<div class="taskwrap" style="display:table; margin-left:auto; margin-right:auto;">
+							<textarea id="task-content" class="form-control" style="width:290px; min-height:77px; overflow-y:hidden; resize: none;"></textarea>
+						</div>
+						<div style="display:flex; flex-wrap:nowrap; height:30px;  margin-top: 5px;  margin-bottom: 5px;">
+							<div style="padding-left:10px; padding-right:10px; width:50%; margin-top: 7px; text-align: left;">
+								<i class="fas fa-user-plus" style="padding-right:10px;"></i><i class="far fa-calendar-alt"></i>
+							</div>
+							<div style="float:right; width:50%; text-align: right; padding-right:5px;">
+								<button id="cancel-task" type="button" class="btn btn-light" style="width:70px; height:30px; padding: 0 0 0 0; font-size:13px; font-weight:bold;">취소</button>
+								<button id="create-task" type="button" class="btn btn-info" style="width:70px; height:30px; padding: 0 0 0 0; font-size:13px; font-weight:bold;">만들기</button>
+							</div>
+						</div>
+					</section>
 				</div>
 			</c:forEach>
 			</div>
@@ -58,16 +79,16 @@
 					<span id="add-task-span"> <i class="fas fa-plus"></i> 새 업무리스트만들기</span>
 				</div>
 				<div id="add-task-textarea-div" style="display: none;">
-					<form id="addTaskForm" style="margin: 0pt">
-						<input id="add-task-textarea" name="listName" type="text"
-							style="width: 170pt; height: 18pt;">
+					<div id="addTaskForm" style="margin: 0pt">
+						<input id="add-task-textarea" name="listName" type="text" value=""
+							placeholder="업무리스트 이름" style="width: 190pt; height: 18pt;">
 						<!-- 임시 프로젝트 번호 -->
-						<input id="add-task-projectId" name="projectNo" type="hidden"
+						<input id="add-task-projectNo" name="projectNo" type="hidden"
 							value="1"> <span id="cancel-add"
 							style="padding-left: 5pt; cursor: pointer;"> <i
 							class="fas fa-times"></i>
 						</span>
-					</form>
+					</div>
 				</div>
 			</div>
 		</div>
