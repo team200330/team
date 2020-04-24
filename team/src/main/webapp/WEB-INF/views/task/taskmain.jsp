@@ -110,21 +110,12 @@ input#add-task {
 					});
 				}
 			});
-
-			/* $("#addTaskForm").submit(function(event) {
-				var taskList = $("#addTaskForm").serializeArray();
-				console.log(taskList);
-				$.ajax({
-					"url" : "/team/task/main",
-					"method" : "post",
-					"data" : taskList,
-					"success" : function(resp, status, xhr) {
-						$(".section-body").load("/team/task/main");
-					},
-					"error" : function(xhr, status, err) {
-						console.log(err);
-					}
-				});
+			//업무 리스트의 + 누를시 업무 추가
+			$("#add-task").click(function() {
+				alert("업무추가")
+			});
+			//업무 리스트의 설정 버튼 누를 시 기능
+			/* $("#task-setting").click(function() {
 			}); */
 		});
 	</script>
