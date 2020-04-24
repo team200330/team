@@ -143,6 +143,13 @@
             </ul>
           </nav>
         </div>
+        <div>
+         <nav aria-label="Contacts Page Navigation">
+            <ul class="pagination justify-content-center m-0">
+            ${ pager }
+            </ul>
+        </nav>
+        </div>
        
         
         </div>
@@ -165,7 +172,12 @@
     
   </div>
   <!-- /.content-wrapper -->
-
+  <form id="detail-form" action="detail.action" method="get">
+  	<input type="hidden" id="bno" name="bno">
+  	<input type="hidden" id="pageNo" name="pageNo" value="${ pager.pageNo }">
+  	<input type="hidden" id="searchType" name="searchType" value="${ param.searchType }">
+  	<input type="hidden" id="searchKey" name="searchKey" value="${ param.searchKey }">
+  </form>
   
   <!-- footer -->
   <%@include file="/WEB-INF/views/modules/footer.jsp" %>
@@ -268,7 +280,7 @@ $(function() {
 	})*/
 	
 	// 비공개 공개 선택
-	$('input[name=isPublic]').on('click', function(){
+	$('input[name=proPublic]').on('click', function(){
 		var input_id_check =  $(this).attr("id")
 		var label_for_check = $("label[for='"+ input_id_check+"']").attr("for")
 		var check_label = $($("label[for='"+ input_id_check + "']")).find( '#chklabel2' )
@@ -298,7 +310,7 @@ $(function() {
 			"data":{"projectNo" : projectNo,
 				    "proNo":proNo },
 			"success":function(resp, status, xhr){
-
+				
 			},
 			"error" : function(xhr, status, err){
 				console.log(err);
@@ -310,7 +322,6 @@ $(function() {
 
 	// write-form-submit 
 	$('#saveSubmit').on('click', function(event){
-
 		if ($('#projectName').val() == '') {
 			alert('제목을 입력해주세요')
 			$('#projectName').focus();
@@ -334,17 +345,14 @@ $(function() {
 				$('form').each(function() {
 				    this.reset();
 				});
-				var t_input_id_check =  $('input[name=templateNo]').val("basics");
-				var t_label_for_check = $("label[for='"+ t_input_id_check+"']").attr("for");
-				var t_check_label = $($("label[for='"+ t_input_id_check + "']")).find( '#chklabel2' );
+				var t_input_value_check = $("input[value=basics]");
+				var t_check_label = $($("label[for='"+ t_input_value_check + "']")).find( '#chklabel2' );
 				if( t_check_label ){
 					$(".selected2").removeClass("selected2");
 					t_check_label.addClass("selected2");
 				}
-
-				var p_input_id_check =  $('input[name=isPublic]').val("basics");
-				var p_label_for_check = $("label[for='"+ p_input_id_check+"']").attr("for");
-				var p_check_label = $($("label[for='"+ p_input_id_check + "']")).find( '#chklabel1' );
+				var p_input_value_check = $("input[value=proPublic]");
+				var p_check_label = $($("label[for='"+ p_input_value_check + "']")).find( '#chklabel2' );
 				if( p_check_label ){
 					$(".selected1").removeClass("selected1");
 					p_check_label.addClass("selected1");

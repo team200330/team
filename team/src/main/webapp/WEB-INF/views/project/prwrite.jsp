@@ -21,13 +21,13 @@
                       <!-- radio -->
                       <div class="form-group"  style="display: none;">
                         <div class="custom-control custom-radio float-left" style="width:50%;">
-                          <input id="publicRadio1" name="isPublic" value="false" class="custom-control-input" type="radio" checked>
+                          <input id="publicRadio1" name="proPublic" value="false" class="custom-control-input" type="radio" checked>
                           <label for="publicRadio1" class="custom-control-label">비공개
                           <br><p style="font-weight: 400; font-size: 0.9rem;">추가된 멤버만 엑세스 가능</p>
                           </label>
                         </div>
                         <div class="custom-control custom-radio float-left" style="width:50%;">
-                          <input id="publicRadio2" name="isPublic" value="true"  class="custom-control-input" type="radio">
+                          <input id="publicRadio2" name="proPublic" value="true"  class="custom-control-input" type="radio">
                           <label for="publicRadio2" class="custom-control-label">공개
                           <br><p style="font-weight: 400; font-size: 0.9rem;" >워크스페이스의 모든 멤버 엑세스 가능</p>
                           </label>
@@ -36,7 +36,7 @@
 					  <div class="row">
 				 		<label for="publicRadio1" class="overflow-hidden display-none margin-right-10px">
 			            <div class="info-box">
-			              <span id="chklabel2" class="selected2 info-box-icon bg-info elevation-1 width-50px"><i class="fas fa-user-lock"></i></i></span>
+			              <span id="chklabel2" class="selected2 info-box-icon bg-info elevation-1 width-50px"><i class="fas fa-user-lock"></i></span>
 			              <div class="info-box-content">
 			                <span class="info-box-text">비공개</span>
 			                <span class="info-box-text">추가된 멤버만 엑세스 가능</span>
@@ -47,7 +47,7 @@
 			            <!-- /.info-box -->
 			            <label for="publicRadio2" class="overflow-hidden display-none margin-right-10px">
 			            <div class="info-box">
-			              <span id="chklabel2" class="info-box-icon bg-info elevation-1 width-50px"><i class="fas fa-globe"></i></i></span>
+			              <span id="chklabel2" class="info-box-icon bg-info elevation-1 width-50px"><i class="fas fa-globe"></i></span>
 			              <div class="info-box-content">
 			                <span class="info-box-text">공개</span>
 			                <span class="info-box-text">모든가 멤버 엑세스 가능</span>
