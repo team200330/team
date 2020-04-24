@@ -12,4 +12,8 @@ public interface LogMapper {
 
 	public List<Log> selectLogByProjectNo(HashMap<String, Object> params);
 	
+	public void updateCheckedByReceiver(HashMap<String, Object> params);
+	
+	public void deleteLogByReceiver(HashMap<String, Object> params);
+	
 }

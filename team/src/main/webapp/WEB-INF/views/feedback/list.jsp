@@ -293,159 +293,11 @@
       </div>
       
 	<%@include file="/WEB-INF/views/modules/common-js.jsp"%>
+	
+	<script src="/team/resources/js/toast.js"></script>
+	<script src="/team/resources/js/feedback-css.js"></script>
 	<script type="text/javascript">
 	$(function() {
-		// Toast 모달
-		const Toast = Swal.mixin({
-			toast: true,
-			position: 'top-end',
-			showConfirmButton: false,
-			timer: 3000
-		});
-		$('.toastrDefaultSuccess').click(function() { // 기본 success
-		      toastr.success('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
-		});
-		$('.toastrDefaultInfo').click(function() {
-		      toastr.info('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
-		});
-		$('.toastsDefaultInfo').click(function() {
-		      $(document).Toasts('create', {
-		        class: 'bg-info', 
-		        title: 'Toast Title',
-		        subtitle: 'Subtitle',
-		        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-		      });
-		});
-		
-		// CSS
-		
-		// 상단 로그 / 피드백 메뉴 css
-		$(".f_link").click(function() {
-			$("#active").removeAttr("id");
-			$(this).attr("id", "active");
-		});
-		$(".f_link").hover(function() {
-			$(this).css("color", "#17a2b8");
-		}, function() {
-			if ($(this).attr("id") != "active")
-				$(this).css("color", "#464c59");
-		});
-
-		// 피드백 멤버이미지 css
-		$(document).on("click", ".user-count-img, .user-count-span", function(event) {
-			var target = $(this).parents(".user-block").children(".username").children(".hover-user-block");
-			
-			if (target.hasClass("display-none")) {
-				target.fadeIn(200);
-				target.removeClass("display-none");
-			} else {
-				target.fadeOut(200);
-				target.addClass("display-none");
-			}
-			event.stopPropagation(); // 상위 이벤트 발생을 막음
-		});
-		
-		// 작은모달 멤버추가 css
-		$("._mem, .task").hover(function() {
-			$(this).css({"background-color" : "#dedede", "border" : "1px solid #dedede"});
-		}, function() {
-			$(this).css({"background-color" : "white", "border" : "1px solid white"});
-		});
-		
-		$("#addFooter").hover(function() {
-			$(this).css("background-color", "#148192");
-		}, function() {
-			$(this).css("background-color", "#17a2b8");
-		});
-		
-		// 피드백 post css
-		$(document).on({
-		    mouseenter: function () {
-		    	$(this).css("background-color", "#efefef");
-		    },
-		    mouseleave: function () {
-		    	$(this).css("background-color", "white");
-		    }
-		}, ".post"); 
-		
-		// 모달 show
-		$("#writeFeedbackBtn").click(function() {
-			$("#writeFeedbackModal").modal();
-		});
-		$("#add_mem").click(function() {
-			$("#memberAddModal").modal();
-		});
-		$("#add_task").click(function() {
-			$("#taskAddModal").modal();
-		});
-		
-		// 피드백 상세보기 모달
-		$(document).on("click", ".feedback-contents", function() {
-			$("#feedbackDetailModal").modal();
-			
-			var data = $(this).parents(".post").attr("data-value");
-			var isPublic = data.split("isPublic=")[1].split(",")[0];
-			var r = data.split("Receiver");
-			
-			$("#detail-modal-content").text(data.split("content=")[1].split(",")[0]);
-			$("#detail-modal-writedate").text(data.split("writedate=")[1].split(",")[0]);
-			$("#detail-modal-sender").text(data.split("sender=")[1].split(",")[0]);
-			
-			if (isPublic == "true") {
-				$("#detail-modal-public").html(
-					"<i class='fas fa-lock-open'></i>" +
-					"<span>이 피드백은 모든 사람이 볼 수 있습니다.</span"
-				);
-			} else {
-				$("#detail-modal-public").html(
-					"<i class='fas fa-lock'></i>" +
-					"<span>이 피드백은 작성자와 받는 사람만 볼 수 있습니다.</span>"		
-				);
-			}
-
-			for (var i = 1; i < r.length; i++) {
-				$("#detail-modal-receivers").html($("#detail-modal-receivers").html() +
-					"<div class='float_left mem'>" +
-						"<img class='mem_img'></img>" +
-						"<div class='mem_name'>" + r[i].split("email=")[1].split(",")[0] + "</div>" +
-					"</div>"
-				);
-			}
-		});
-		$("#feedbackDetailModal").click(function() {
-			$("#feedbackDetailModal").modal("hide");
-			$("#detail-modal-receivers").html("");
-			$("#detail-modal-public").html("");
-		})
-		
-
-		// select box
-		$(".feedback .dropdown-item").click(function() {
-			$("#dropdown-select").text($(this).text());
-			$("#dropdown-select").attr("data-value", $(this).attr("data-value"));
-		});
-		
-		// 열기 / 닫기 함수
-		function closeOrOpen(target) {
-			if (target.hasClass("display-none")) {
-				target.removeClass("display-none");
-				target.addClass("display-block");
-			}
-			else {
-				target.addClass("display-none");
-				target.removeClass("display-block");
-			}
-		}
-		
-		// 댓글 열기 / 닫기 버튼
-		$(document).on("click", ".comment-btn", function() {
-			closeOrOpen($(this).parents(".post").children(".comments"));
-		});
-		
-
-		
-		////////////////////////////////////////////////////////////////////////////////////////
-		
 		// 텍스트 자르고 ... 포함된 문자열 반환하는 함수
 		function textSubString(text) {
 			return ((text.length > 10) ? text.substring(0, 10) + "..." : text);
@@ -560,7 +412,7 @@
 		$(document).on("click", ".close-btn", function() {
 			if (!confirm("해당 피드백을 삭제할까요?")) return;
 			
-			var searchType = $("#dropdown-select").attr("data-value");
+			var searchType = $("#dropdown-select").attr("data-value") == undefined ? "M" : $("#dropdown-select").attr("data-value");
 			var content = $(this).parents(".post").children(".feedback-contents").text();
 
 			$.ajax({
@@ -588,7 +440,7 @@
 			}
 			
 			var comment = $(this).parents(".comment-form").serializeArray();
-			var searchType = $("#dropdown-select").attr("data-value");
+			var searchType = $("#dropdown-select").attr("data-value") == undefined ? "M" : $("#dropdown-select").attr("data-value");
 			$.ajax({
 				url : "/team/feedback/comment/write",
 				method : "post",
@@ -619,6 +471,66 @@
 				}
 			});
 		});
+		
+		// 피드백 상세보기 모달
+		$(document).on("click", ".feedback-contents", function() {
+			$("#feedbackDetailModal").modal();
+			
+			var data = $(this).parents(".post").attr("data-value");
+			var isPublic = data.split("opened=")[1].split(",")[0];
+			var r = data.split("Receiver");
+			
+			$("#detail-modal-content").text(data.split("content=")[1].split(",")[0]);
+			$("#detail-modal-writedate").text(data.split("writedate=")[1].split(",")[0]);
+			$("#detail-modal-sender").text(data.split("sender=")[1].split(",")[0]);
+			
+			if (isPublic == "true") {
+				$("#detail-modal-public").html(
+					"<i class='fas fa-lock-open'></i>" +
+					"<span>이 피드백은 모든 사람이 볼 수 있습니다.</span"
+				);
+			} else {
+				$("#detail-modal-public").html(
+					"<i class='fas fa-lock'></i>" +
+					"<span>이 피드백은 작성자와 받는 사람만 볼 수 있습니다.</span>"		
+				);
+			}
+
+			for (var i = 1; i < r.length; i++) {
+				$("#detail-modal-receivers").html($("#detail-modal-receivers").html() +
+					"<div class='float_left mem'>" +
+						"<img class='mem_img'></img>" +
+						"<div class='mem_name'>" + r[i].split("email=")[1].split(",")[0] + "</div>" +
+					"</div>"
+				);
+			}
+			
+			
+			// 여기 수정하기 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			if ("${loginuser.email}" != $("#detail-modal-sender").text()) {
+				$.ajax({
+					url : "check",
+					method : "post",
+					data : {"feedbackNo" : data.split("feedbackNo=")[1].split(",")[0]},
+					success : function(resp, status, xhr) {
+						toastr.info("피드백 &nbsp;&nbsp; " + textSubString($("#detail-modal-content").text()) + " 을 확인했습니다");
+						console.log(resp);
+					},
+					error : function(xhr, status, err) {
+						console.log(err);
+					}
+				});
+			}
+		});
+		
+		$("#feedbackDetailModal").click(function() {
+			$("#feedbackDetailModal").modal("hide");
+			
+			$("#detail-modal-sender").html("");
+			$("#detail-modal-receivers").html("");
+			$("#detail-modal-public").html("");
+		})
+		
 		
 		
 	});

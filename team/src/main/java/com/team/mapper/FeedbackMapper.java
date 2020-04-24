@@ -21,6 +21,7 @@ public interface FeedbackMapper {
 	
 	public int receivedFeedbackCount(String email);
 	
-	public void deleteFeedback(int feedbackNo);
+	public void deleteFeedback(HashMap<String, Object> params);
+	public void checkFeedback(HashMap<String, Object> params);
 	
 }

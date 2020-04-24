@@ -14,7 +14,8 @@ public interface FeedbackService {
 	
 	public List<Feedback> searchFeedback(HashMap<String, Object> params);
 	
-	public void deleteFeedback(int feedbackNo);
+	public void deleteFeedback(HashMap<String, Object> params);
+	public void checkFeedback(HashMap<String, Object> params);
 	
 	
 	////////////////////////////////////////////////////

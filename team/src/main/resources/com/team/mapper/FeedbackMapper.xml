@@ -4,8 +4,8 @@
 <mapper namespace="com.team.mapper.FeedbackMapper">
 
 	<insert id="insertFeedback" parameterType="Feedback">
-	INSERT INTO feedback(content, sender, workspace_no, is_public)
-	VALUES (#{content}, #{sender}, #{workspaceNo}, #{isPublic})
+	INSERT INTO feedback(content, sender, workspace_no, opened)
+	VALUES (#{content}, #{sender}, #{workspaceNo}, #{opened})
 		<selectKey keyProperty="feedbackNo" order="AFTER" resultType="int">
 			SELECT LAST_INSERT_ID();
 		</selectKey>
@@ -39,7 +39,7 @@
 				email = #{email} AND
 			</when>
 			<when test="searchType == 'A'.toString()">
-				is_public = '1' AND
+				email = #{email} AND opened = 1 AND
 			</when>
 			<when test="searchType == 'I'.toString()">
 			(sender LIKE CONCAT('%',#{key},'%') OR 
@@ -55,9 +55,14 @@
 	SELECT * FROM comments WHERE feedback_no = #{feedback_no}
 	</select>
 
-	<update id="deleteFeedback" parameterType="int">
-	UPDATE feedback_receiver SET deleted = '1'
+	<update id="deleteFeedback" parameterType="hashmap">
+	UPDATE feedback_receiver SET deleted = 1
 	WHERE feedback_no = #{feedbackNo}
+	</update>
+	
+	<update id="checkFeedback" parameterType="hashmap">
+	UPDATE feedback_receiver SET checked = 1
+	WHERE feedback_no = #{feedbackNo} AND email = #{email}
 	</update>
 	
 
@@ -67,7 +72,7 @@
 		<result column="writedate" property="writedate"/>
 		<result column="sender" property="sender"/>
 		<result column="workspace_no" property="workspaceNo"/>
-		<result column="is_public" property="isPublic"/>
+		<result column="opened" property="opened"/>
 		<result column="task_no" property="taskNo"/>
 		<collection property="receivers" column="feedback_no" resultMap="feedbackReceiverMap" />
 	</resultMap>
@@ -75,7 +80,7 @@
 	<resultMap type="FeedbackReceiver" id="feedbackReceiverMap">
 		<result column="feedback_no" property="feedbackNo"/>
 		<result column="email" property="email"/>
-		<result column="is_read" property="isRead"/>
+		<result column="checked" property="checked"/>
 		<result column="deleted" property="deleted"/>
 	</resultMap>
 	

@@ -30,7 +30,7 @@
 									<div style="padding: 5px;padding-left: 10px;cursor:pointer" class="img-circle img-bordered-sm user-count-img">+ ${feedback.receivers.size() - 1}</div>
 								</c:if>
 								<div class="username">
-									<a href="#" >${feedback.sender}</a> 
+									<a href="#" >${feedback.receivers.get(0).email}</a> 
 									<c:if test="${feedback.receivers.size() > 1}">
 										<span style="cursor:pointer" class="user-count-span">외 ${feedback.receivers.size() - 1} 명</span>
 										<div class="hover-user-block display-none">
@@ -45,7 +45,9 @@
 							<div>
 						</div>
 						<input type="hidden" value="${feedback.feedbackNo}" name="feedbackNo">
-						<a href="#" class="float-right btn-tool close-btn"><i class="fas fa-times"></i> </a>
+						<c:if test="${feedback.sender eq loginuser.email }">
+							<a href="#" class="float-right btn-tool close-btn"><i class="fas fa-times"></i> </a>
+						</c:if>
 						</div>
 						<p  class="feedback-contents">${feedback.content}</p>
 						<p>

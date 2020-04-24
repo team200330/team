@@ -22,6 +22,16 @@ public class LogServiceImpl implements LogService {
 	public List<Log> findLogByProjectNo(HashMap<String, Object> params) {
 		return logMapper.selectLogByProjectNo(params);
 	}
+
+	@Override
+	public void logCheckByReceiver(HashMap<String, Object> params) {
+		logMapper.updateCheckedByReceiver(params);
+	}
+
+	@Override
+	public void logDeleteByReceiver(HashMap<String, Object> params) {
+		logMapper.deleteLogByReceiver(params);
+	}
 	
 	
 }

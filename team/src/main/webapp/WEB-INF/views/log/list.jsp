@@ -17,6 +17,8 @@
 .log-table tr td:nth-child(3) {font-size:10pt;}
 .log-table span {font-weight:bold; margin:10px;}
 .log-table {font-size:11pt;}
+.checked-log {color:gray; background-color:#eeeeee;}
+.checked-log a {color:gray !important;}
 </style>
 
 <link rel="stylesheet" href="/team/resources/css/log-feedback.css">
@@ -64,79 +66,25 @@
                       	전체 보기
                     </button>
                     <div class="log dropdown-menu">
-                      <a class="dropdown-item" href="#">전체 보기</a>
-                      <a class="dropdown-item" href="#">읽지 않은 로그만 보기</a>
+                      <a class="dropdown-item" data-value="A" href="#">전체 보기</a>
+                      <a class="dropdown-item" data-value="C" href="#">읽지 않은 로그만 보기</a>
                     </div>
                   </div>
                   </div>
 				<!-- <h5 style="float:left">업데이트 사항을 모두 확인했습니다.</h5> -->
 				<div style="text-align:right">
-					<button class="btn btn-secondary btn-flat" style="height:35px;margin-right:10px;">모두 읽음 상태로 표시</button>
-					<button class="btn btn-info btn-flat" style="height:35px;">모두 지우기</button>
+					<input id="search-all" type="text" style="width:300px;height:35px;margin-right:10px;padding-left:12px;border:1px solid #cfcfcf;"placeholder="업무, 멤버, 키워드로 로그 검색">
+					<button id="all-check-btn" class="btn btn-secondary btn-flat" style="height:35px;margin-right:10px;">모두 읽음 상태로 표시</button>
+					<button id="all-delete-btn" class="btn btn-info btn-flat" style="height:35px;">모두 지우기</button>
 				</div>
 			</div>
 			<!-- Main content -->
 			
 			<section class="content">
 
-
-				<c:if test="${not empty logs}">
-					<c:forEach var="key" items="${keys}">
-						<div class="log-content col-md-9" style="max-width:100%;">
-							<div class="card" style="margin-left:50px;margin-right:50px;border-radius:unset">
-				              <div class="card-header">
-				                <h3 class="card-title">${key}</h3>						
-				                <div class="card-tools">
-				                  <div class="input-group input-group-sm" style="width: 150px;">
-				                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-				                    <div class="input-group-append">
-				                      <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-				                    </div>
-				                  </div>
-				                </div>
-				              </div>
-				              <!-- /.card-header -->
-				              <div class="card-body table-responsive p-0" style="max-height:500px;">
-				                <table class="log-table table table-head-fixed text-nowrap">
-				                  <tbody>
-				                  
-				                  	<c:forEach var="log" items="${logs[key]}">
-				                  	
-				                  	<%-- <c:choose>
-				                  		<c:when test="${log.receiver.isRead == false}"> --%>
-					                  	<tr>
-					                      <td>
-					                       
-					                      <img class="img-circle img-bordered-sm" src="" alt="user image">
-											<span class="username"> 
-												<a href="#">${log.email}</a>
-											</span>
-					                      </td>
-					                      <td>님이 (업무이름) 을 <span>${log.state}</span>했습니다</td>
-					                      	<td>
-											<div><fmt:formatDate value="${log.writedate}" pattern="yyyy-MM-dd hh:mm"/></div>
-											<input class="logWriteDate" type="hidden" value="<fmt:formatDate value="${log.writedate}" pattern="yyyy-MM-dd hh:mm"/>">
-											</td>
-					                    </tr>		
-				                  		<%-- </c:when>
-				                  		<c:otherwise>
-				                  			<tr>
-				                  				<td colspan="3">읽음 처리</td>
-				                  			</tr>
-				                  		</c:otherwise>
-				                  	</c:choose> --%>
-				                   
-				                    </c:forEach>
-				                    
-				                  </tbody>
-				                </table>
-				              </div>
-				              <!-- /.card-body -->
-				            </div>
-		            <!-- /.card -->
-						</div>
-					</c:forEach>
-				</c:if>
+				<div id="log-list-container">
+					<jsp:include page="modules/log-list.jsp"></jsp:include>
+				</div>
 				
 			</section>
 			<!-- /.content -->
@@ -162,40 +110,154 @@
 	
       
 	<%@include file="/WEB-INF/views/modules/common-js.jsp"%>
+	
+	<!-- css 관련 스크립트 -->
+	<script src="/team/resources/js/toast.js"></script>
+	<script src="/team/resources/js/log-css.js"></script>
 	<script type="text/javascript">
-	$(function() {
-		// CSS
+	$(function() {		
+		// 텍스트 자르고 ... 포함된 문자열 반환하는 함수
+		function textSubString(text) {
+			return ((text.length > 10) ? text.substring(0, 10) + "..." : text);
+		}
 		
-		// 상단 로그 / 피드백 메뉴  css
-		$(".f_link").click(function() {
-			$("#active").removeAttr("id");
-			$(this).attr("id", "active");
-		});
-		$(".f_link").hover(function() {
-			$(this).css("color", "#17a2b8");
-		}, function() {
-			if ($(this).attr("id") != "active")
-				$(this).css("color", "#464c59");
-		});
-		
-		// 로그 table css
-		$("tr").hover(function() {
-			$(this).css("background-color", "#efefef");
-			$(this).children(":nth-child(3)").children("div").html(
-				'읽은 상태로 표시<i class="far fa-check-square"></i>&nbsp;&nbsp;' +
-		        '삭제<i class="fas fa-times"></i>'
-			);
-		}, function() {
-			$(this).css("background-color", "white");
-			var date = $(this).children(":nth-child(3)").children("input").val();
-			$(this).children(":nth-child(3)").children("div").html(date);
-		});
-		
-		////////////////////////////////////////////////////
-		
-		// select box
+		// 로그 검색
 		$(".log .dropdown-item").click(function() {
-			$("#dropdown-select").text($(this).text());
+			var searchType = $(this).attr("data-value");
+			
+ 			$.ajax({
+				url : "list2",
+				method : "get",
+				success : function(resp, status, xhr) {
+					$("#log-list-container").load("/team/log/search?searchType=" + searchType + "&email=${loginuser.email}");
+				},
+				error : function(xhr, status, err) {
+					console.log(err);
+				}
+			}); 
+		});
+		
+		// 로그 검색
+		$("#search-all").keyup(function() {
+			var key = $(this).val();
+			
+			$.ajax({
+				url : "list",
+				method : "get",
+				success : function(resp, status, xhr) {
+					$("#log-list-container").load(
+						"/team/log/search?searchType=K&email=${loginuser.email}&key="+ key
+					);
+				},
+				error : function(xhr, status, err) {
+					console.log(err);
+				}
+			});
+		});
+		
+		// 로그 읽음 처리
+		$(document).on("click", ".log-check-btn", function() {
+			if (!confirm("로그를 읽음으로 표시할까요?")) return;
+			
+			var logNo = $(this).parents().attr("data-value");
+			var searchType = $("#dropdown-select").attr("data-value");
+
+			$.ajax({
+				url : "check",
+				method : "post", 
+				data : {"logNo": logNo},
+				success : function(resp, status, xhr) {
+					$("#log-list-container").load("/team/log/search?"+ searchType +"searchType=A&email=${loginuser.email}");
+					
+					var target = $(this).parents(".unchecked-log");
+					target.removeClass(".unchecked-log");
+					target.addClass(".checked-log");
+					
+					toastr.info("로그를 확인했습니다");
+				},
+				error : function(xhr, status, err) {
+					console.log(err);
+				}
+			});
+		});
+		
+		// 로그 삭제 
+		$(document).on("click", ".log-delete-btn", function() {
+			if (!confirm("로그를 삭제할까요?")) return;
+			
+			var logNo = $(this).parents().attr("data-value");
+			var searchType = $("#dropdown-select").attr("data-value") == undefined ? "A" : $("#dropdown-select").attr("data-value");
+			
+			console.log(searchType);
+			
+			$.ajax({
+				url : "delete",
+				method : "post", 
+				data : {"logNo": logNo},
+				success : function(resp, status, xhr) {
+					$("#log-list-container").load("/team/log/search?searchType="+ searchType +"&email=${loginuser.email}");
+					toastr.error("로그를 삭제했습니다");
+				},
+				error : function(xhr, status, err) {
+					console.log(err);
+				}
+			});
+		});
+		
+		// 로그 전체 읽음
+		$("#all-check-btn").click(function() {
+			var searchType = $("#dropdown-select").attr("data-value") == undefined ? "A" : $("#dropdown-select").attr("data-value");
+			var target = $("#log-list-container").find(".unchecked-log");
+			var logNo = new Array();
+			
+			if (target.length == 0) { alert("이미 모든 로그를 확인했습니다."); return; } 
+			if (!confirm("모든 로그를 읽음 처리할까요?")) return;
+
+			
+			for (var i = 0; i < target.length; i++) {
+				$.ajax({
+					url : "check",
+					method : "post", 
+					data : {"logNo": target[i].id},
+					success : function(resp, status, xhr) {
+						$("#log-list-container").load("/team/log/search?"+ searchType +"searchType=A&email=${loginuser.email}");
+						
+						var target = $(this).parents(".unchecked-log");
+						target.removeClass(".unchecked-log");
+						target.addClass(".checked-log");
+						
+						toastr.info("로그를 확인했습니다");
+					},
+					error : function(xhr, status, err) {
+						console.log(err);
+					}
+				});
+			}
+		});
+		
+		// 로그 전체 삭제
+		$("#all-delete-btn").click(function() {
+			var searchType = $("#dropdown-select").attr("data-value") == undefined ? "A" : $("#dropdown-select").attr("data-value");
+			var target = $("#log-list-container").find(".log-small");
+			var logNo = new Array();
+			
+			if (target.length == 0) { alert("삭제할 로그가 없습니다."); return; } 
+			if (!confirm("모든 로그를 삭제할까요?")) return;
+			
+			for (var i = 0; i < target.length; i++) {
+				$.ajax({
+					url : "delete",
+					method : "post", 
+					data : {"logNo": target[i].id},
+					success : function(resp, status, xhr) {
+						$("#log-list-container").load("/team/log/search?searchType="+ searchType +"&email=${loginuser.email}");
+						toastr.error("로그를 삭제했습니다");
+					},
+					error : function(xhr, status, err) {
+						console.log(err);
+					}
+				});
+			}
 		});
 		
 	})
