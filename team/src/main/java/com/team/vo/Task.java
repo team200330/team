@@ -10,7 +10,6 @@ import lombok.Data;
 public class Task {
 	private int taskNo;
 	private int listNo;
-	private String title;
 	private String content;
 	private Date startDate;
 	private Date endDate;

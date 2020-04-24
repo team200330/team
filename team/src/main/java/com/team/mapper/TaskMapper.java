@@ -10,4 +10,6 @@ public interface TaskMapper {
 
 	List<TaskList> selectTaskList();
 
+	void deleteTaskList(int listNo);
+
 }

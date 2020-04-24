@@ -33,7 +33,15 @@ public class TaskController {
 	}
 	
 	@GetMapping(path = {"/loadtask.action"})
-	public String loadTask() {
+	public String loadTask(Model model) {
+		model.addAttribute("taskLists",taskService.searchTaskList());
 		return "task/modules/task-list";
+	}
+	
+	@PostMapping(path = {"/deletelist.action"})
+	@ResponseBody
+	public String deleteList(int listNo) {
+		taskService.deleteTaskList(listNo);
+		return "success";
 	}
 }
