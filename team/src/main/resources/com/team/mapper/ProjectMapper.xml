@@ -39,6 +39,13 @@
 		WHERE project_no = #{ projectNo }
 	</update>
 	
+	<select id="selectProjectByNo" parameterType="int" resultMap="projectMap">
+		SELECT * FROM project
+		WHERE project_no = #{ projectNo }
+	</select>
+	
+	
+	
 
 	<sql id="searchCondition">
 		<trim suffix="AND">
@@ -85,65 +92,7 @@
 	</select>
 
 
-<!-- 	<resultMap type="project" id="projectMap">
-		<id column="project_no" property="projectNo" />
-		<result column="workspace_no" property="workspaceNo" />
-		<result column="project_name" property="projectName" />
-		<result column="regdate" property="regdate" />
-		<result column="content" property="content" />
-		<result column="manager_email" property="managerEmail" />
-		<result column="deleted" property="deleted" />
-		<result column="public" property="isPublic" />
-		<result column="template_no" property="templateNo" />
-	</resultMap> 
-	-->
-	<!-- 
-  SELECT ~~, ( @rownum:=@rownum+1 ) AS rownum FROM ( SELECT ~~ FROM TABLE ) AS a, ( SELECT @rownum:=0 ) AS b;
-		
-		
-초기화 후
-SET @rownum:=0; 
- 
-조회 
-SELECT
-@rownum:=@rownum+1, b.*
-FROM project b
 
-SELECT
-@rownum:=@rownum+1, b.*
-FROM project b, (SELECT @rownum:=0) TMP;
-
-select @rownum:=0 ;
-
-    
-SELECT *
-  FROM (
-        	 SELECT @rownum:=@rownum+1 as num,project_no,project_name, manager_email, startdate, deleted
-      	 FROM project
-          WHERE deleted = '0'
-          AND project_no < 10
-          ORDER BY project_no desc
-        ) project
- WHERE project_no BETWEEN project_no AND  5;
- 
-SELECT *
-FROM (
-		SELECT @rownum:=@rownum+1 rnum, A.*
-		FROM project A,
-			  (SELECT @rownum := 0 ) R
-		WHERE 1=1 AND deleted = '0'
-		ORDER BY project_no DESC
-		) list
-WHERE rnum >= 1 AND rnum <= 29;
- 
-SELECT *
-FROM (
-		  SELECT @rownum:=@rownum+1  rnum,  A.* 
-		  FROM project A, 
-		      (SELECT @ROWNUM := 0) R
-		  WHERE 1=1
-		) list
-WHERE rnum >= 1 AND rnum <=10 ; -->
 </mapper>
 
 

@@ -154,7 +154,7 @@
         
         </div>
       <!-- /.내가속한프로젝트 -->
-      
+
       <div class="modal fade" id="modal-lg">
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
@@ -165,19 +165,29 @@
         <!-- /.modal-dialog -->
       </div>
       <!-- /.modal -->
+      
+      <div class="modal fade" id="modal-detail">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+             <jsp:include page="prdetail.jsp" />
+		  </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
 
 
     </section>
     <!-- /.content -->
-    
+  <form id="detail-form" action="detail.action" method="get">
+  	<input type="hidden" id="projectNo" name="projectNo">
+<%--   	<input type="hidden" id="pageNo" name="pageNo" value="${ pager.pageNo }">
+  	<input type="hidden" id="searchType" name="searchType" value="${ param.searchType }">
+  	<input type="hidden" id="searchKey" name="searchKey" value="${ param.searchKey }"> --%>
+  </form>
   </div>
   <!-- /.content-wrapper -->
-  <form id="detail-form" action="detail.action" method="get">
-  	<input type="hidden" id="bno" name="bno">
-  	<input type="hidden" id="pageNo" name="pageNo" value="${ pager.pageNo }">
-  	<input type="hidden" id="searchType" name="searchType" value="${ param.searchType }">
-  	<input type="hidden" id="searchKey" name="searchKey" value="${ param.searchKey }">
-  </form>
   
   <!-- footer -->
   <%@include file="/WEB-INF/views/modules/footer.jsp" %>
@@ -189,10 +199,6 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
-<form id="detail-form" action="detail.action" method="get">
-	<input type="hidden" id="projectNo" />
-	<input type="hidden" id="pageNo" value="${pager.pageNo }"/>
-</form>
 
   <%@include file="/WEB-INF/views/modules/common-js.jsp" %>
 <script>
@@ -365,6 +371,41 @@ $(function() {
 	});
 	// -- write-form-submit 끝
 
+/* 	$('.to-detail').on('click', function(event) {
+		var projectNo = $(this).attr('data-projectNo');
+		console.log(projectNo);
+		//$('#detail-form #projectNo').val(projectNo);
+
+		//$('#detail-form').submit();
+
+		$.ajax({
+			"url":"/team/project/detail",
+			"method":"post",
+			"async" : true,
+			"data" : {
+				"projectNo" : projectNo,
+				"projectNaem" : projectName
+			},
+			"dataType" : "json", // dataType : 응답 컨텐츠의 종류 지정			
+			"success" : function(member, status, xhr) {
+				
+				$('#detail-form #projectNo').val(projectNo);
+
+				$('#detail-form').submit();
+				console.log(projectNo)
+				$('#modal-detail').modal('show');
+				
+				$('#de_projectName').val(project.projectName);
+				
+				
+			},
+			"error":function(xhr, status, err){
+				console.log(err)
+			}
+		});
+
+	}); */
+	
 	//////////////////// 페이징 처리
 
 	

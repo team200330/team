@@ -24,4 +24,8 @@ public interface ProjectMapper {
 	
 
 	List<Project> selectProjectByWorkspaceNo(int workspaceNo);
+
+	Project selectProjectByNo(int projectNo);
+
+
 }

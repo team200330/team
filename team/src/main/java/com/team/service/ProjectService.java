@@ -20,6 +20,9 @@ public interface ProjectService {
 
 	int projectListCount(HashMap<String, Object> params);
 
+	Project searchProjectByNo(int projectNo);
+
+
 
 
 
