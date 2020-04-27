@@ -1,7 +1,6 @@
 package com.team.vo;
 
 import java.sql.Date;
-import java.sql.Time;
 import java.util.List;
 
 import lombok.Data;

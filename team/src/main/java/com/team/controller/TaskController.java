@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.team.service.TaskService;
+import com.team.vo.Task;
 import com.team.vo.TaskList;
 
 @Controller
@@ -22,6 +23,7 @@ public class TaskController {
 	@GetMapping(path = {"/main"})
 	public String showTaskMain(Model model) {
 		model.addAttribute("taskLists",taskService.searchTaskList());
+		model.addAttribute("tasks",taskService.searchTask());
 		return "task/taskmain";
 	}
 	
@@ -32,9 +34,17 @@ public class TaskController {
 		return "success";
 	}
 	
+	@PostMapping(path = {"/addtask.action"})
+	@ResponseBody
+	public String addTask(Task task) {
+		taskService.addTask(task);
+		return "success";
+	}
+	
 	@GetMapping(path = {"/loadtask.action"})
 	public String loadTask(Model model) {
 		model.addAttribute("taskLists",taskService.searchTaskList());
+		model.addAttribute("tasks",taskService.searchTask());
 		return "task/modules/task-list";
 	}
 	

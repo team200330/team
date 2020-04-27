@@ -116,14 +116,6 @@ input::placeholder {
 					});
 				}
 			});
-			//업무 리스트의 + 누를시 업무 추가
-			$(document).on("click","#add-task",function(){
-				$("#task-add-div").show();
-			});
-
-			$(document).on("click","#cancel-task",function(){
-				$("#task-add-div").hide();
-			});
 
 			//업무 리스트 삭제
 			//$(".list-delete-btn").click(function(){
