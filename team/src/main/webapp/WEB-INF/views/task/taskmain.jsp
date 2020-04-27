@@ -24,6 +24,13 @@ input#add-task {
 	font-weight: 900;
 }
 
+.custom-control-input:checked~.custom-control-label::before {
+    color: #fff;
+    border-color: #4c5d6f;
+    background-color: #4c5d6f;
+    box-shadow: none;
+}
+
 input::placeholder {
 	font-size: 11pt;
 	font-style: inherit;
@@ -80,8 +87,54 @@ input::placeholder {
 	<%@include file="/WEB-INF/views/modules/common-js.jsp"%>
 	<script type="text/javascript">
 		$(function() {
+
+			//////
+			$(document).on('mousemove',$('#taskList-task-wrapper'),function(event){
+				event.stopPropagation();
+			});
+			////////////////////////가로 횡스크롤 드래그 ///////////////////////////			
+			//var slider = document.querySelector('#body-task');
+			var slider = $("#body-task");
+			let isDown = false;
+			let startX;
+			let scrollLeft;
+
+			$(document).on('mousedown',slider,function(e){
+				isDown = true;
+				//slider.classList.add('active');
+				slider.addClass('active');
+				//startX = e.pageX - slider.offsetLeft;
+				startX = e.pageX - slider.offset().left;
+				scrollLeft = slider.scrollLeft();
+			});
+
+			$(document).on('mouseleave',slider,function(){
+				isDown = false;
+				//slider.classList.remove('active');
+				slider.removeClass('active');
+			});
+
+			$(document).on('mouseup',slider,function(){
+				isDown = false;
+				//slider.classList.remove('active');
+				slider.removeClass('active');
+			});
+
+			$(document).on('mousemove',slider,function(e){
+				if(!isDown) return;
+				e.preventDefault();
+				//const x = e.pageX - slider.offsetLeft;
+				const x = e.pageX - slider.offset().left;
+				const walk = (x - startX) * 3; //scroll-fast
+				//slider.scrollLeft = scrollLeft - walk;
+				slider.scrollLeft(scrollLeft-walk);
+				//console.log(walk);
+			});
+			///////////////////////////////////////////////////////////////
+			
+			////////////////////////// 업무리스트 추가하기 /////////////////////////////
 			var flag = "false";
-			$(document).on("click","#add-task-div",function(event) {
+			$(document).on("click","#add-task-btn",function(event) {
 				if( flag == "true"){
 					flag = "false";
 					return;
@@ -94,21 +147,19 @@ input::placeholder {
 				flag = "true";
 				$("#add-task-textarea-div").hide();
 				$("#add-task-span").show();
-				//$("#add-task-div").css("cursor","pointer");
 			});
-			//엔터 submit 시 ajax로 task Add
-			//$("#add-task-textarea").keydown(function(key) {
+			///////////////////////////////////////////////////////////////////////
+			
+			///////////////  엔터 submit 시 ajax로 task Add
 			$(document).on("keydown","#add-task-textarea",function(key) {
 				if (key.keyCode == 13) {
-					//console.log("눌렀다");
-					//var taskList = $("#addTaskForm").serializeArray();
 					var taskList = {"listName":$("#add-task-textarea").val(),"projectNo":$("#add-task-projectNo").attr("value")};
 					$.ajax({
 						url : "/team/task/addlist.action",
 						method : "post",
 						data : taskList,
 						success : function(resp, status, xhr) {
-							$("#task-body").load("loadtask.action");
+							$("#task-body").load("loadtask.action", function() { slider = $('#body-task'); });
 						},
 						error : function(xhr, status, err) {
 							console.log(err);
@@ -118,7 +169,6 @@ input::placeholder {
 			});
 
 			//업무 리스트 삭제
-			//$(".list-delete-btn").click(function(){
 			$(document).on("click",".list-delete-btn",function(){
 				var listNo = $(this).parents().attr("id");
 				$.ajax({
@@ -126,7 +176,7 @@ input::placeholder {
 					method : "post",
 					data : {"listNo":listNo},
 					success : function(resp, status, xhr) {
-						$("#task-body").load("loadtask.action");
+						$("#task-body").load("loadtask.action", function() { slider = $('#body-task'); });
 					},
 					error : function(xhr, status, err) {
 						console.log(err);
@@ -138,6 +188,9 @@ input::placeholder {
 				$(this).height(this.scrollHeight);
 			});
 			$('.taskwrap').find('textarea').keyup();
+			////////////////////////////////////////////////
+
+			
 		});
 	</script>
 </body>
