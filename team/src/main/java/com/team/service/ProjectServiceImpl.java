@@ -50,6 +50,12 @@ public class ProjectServiceImpl implements ProjectService {
 		return projectMapper.selectProjectListCount(params);
 	}
 
+	@Override
+	public Project searchProjectByNo(int projectNo) {
+		// TODO Auto-generated method stub
+		return projectMapper.selectProjectByNo(projectNo);
+	}
+
 
 
 

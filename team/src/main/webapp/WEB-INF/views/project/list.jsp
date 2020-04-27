@@ -52,7 +52,10 @@
 			                		<option value="5" selected="selected">취소 </option>
 				                </c:if>
 		                	</select>
-		                	<a href="detail.action?bno=${ board.bno }&pageNo=${ pager.pageNo }&searchType=${ empty param.searchType ? '' : param.searchType }&searchKey=${ empty param.searchKey ? '' : param.searchKey }">
+		                			<button type="button" class="btn btn-block btn-outline-secondary btn-flat to-detail"  data-toggle="modal" data-target="#modal-detail">
+										<i class="fas fa-plus"></i> Add 
+									</button>
+		                	<a class="to-detail"href="javascript:" data-projectNo="${ project.projectNo }" >
 		                	<span style="float: right; margin:20px 0 0;"><i class="fas fa-cog"></i></span>
 		                	</a>
 		                	

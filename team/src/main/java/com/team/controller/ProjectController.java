@@ -37,7 +37,6 @@ public class ProjectController {
 		model.addAttribute("project2", projectList2);
 		
 		return "project/prlist";
-		
 	}
 	
 	@SuppressWarnings("unused")
@@ -90,6 +89,7 @@ public class ProjectController {
 		
 		return "project/list";
 	}
+	
 	@GetMapping(path = {"/list2"})
 	public String list2(Model model) {
 		
@@ -114,7 +114,24 @@ public class ProjectController {
 		
 		return "success";
 		
-	} 
+	}
+	
+	@GetMapping(path = {"/detail"})
+	@ResponseBody	
+	public String write(int projectNo) {
+		
+		Project project = projectService.searchProjectByNo(projectNo);
+		
+		return "success";
+		
+	}
+	/*
+	 * @GetMapping(path = {"/detail"}, produces = "application/json;charset=utf-8")
+	 * 
+	 * @ResponseBody public Project searchProject(int projectNo) { Project project =
+	 * projectService.searchProjectByNo(projectNo); if (project == null) { throw new
+	 * RuntimeException("이동 실패"); } else { return project; } }
+	 */
 	
 
 	
