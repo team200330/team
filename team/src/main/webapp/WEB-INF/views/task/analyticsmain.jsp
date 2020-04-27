@@ -52,9 +52,9 @@ input::placeholder {
 				</div>
 				<div class="header-center"
 					style="flex-basis: 33%; text-align: center; padding-top: 20px;">
-					<a id="active" class="f_link" href="/team/task/main">업무</a>&nbsp;&nbsp;
+					<a id="active3" class="f_link" href="/team/task/main">업무</a>&nbsp;&nbsp;
 					<a id="active2" class="f_link" href="#">타임라인</a>&nbsp;&nbsp;
-					<a id="active3" class="f_link" href="/team/task/analyticsmain">분석</a>
+					<a id="active" class="f_link" href="/team/task/analyticsmain">분석</a>
 				</div>
 				<div class="header-right"
 					style="flex-basis: 33%; padding-top: 20px;"></div>
@@ -62,7 +62,7 @@ input::placeholder {
 			<hr />
 			<!-- /.content-body -->
 			<div id="task-body">
-				<jsp:include page="modules/task-list.jsp"></jsp:include>
+				<jsp:include page="modules/analytics.jsp"></jsp:include>
 			</div>
 			<!-- /.card -->
 		</div>

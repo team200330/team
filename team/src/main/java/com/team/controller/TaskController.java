@@ -54,4 +54,10 @@ public class TaskController {
 		taskService.deleteTaskList(listNo);
 		return "success";
 	}
+	
+	@GetMapping(path = {"/analyticsmain"})
+	public String showanalyticsMain() {
+		return "task/analyticsmain";
+	}
+	
 }
