@@ -87,11 +87,14 @@ input::placeholder {
 	<%@include file="/WEB-INF/views/modules/common-js.jsp"%>
 	<script type="text/javascript">
 		$(function() {
-
-			//////
-			$(document).on('mousemove',$('#taskList-task-wrapper'),function(event){
+			var listNo = $(".taskList-task").id;
+			console.log(listNo);
+			////////여기 변경하기
+			/* 
+			$(document).on('mousemove',$('#taskList-task-wrapper-45'),function(event){
 				event.stopPropagation();
-			});
+			}); 
+			*/
 			////////////////////////가로 횡스크롤 드래그 ///////////////////////////			
 			//var slider = document.querySelector('#body-task');
 			var slider = $("#body-task");
@@ -159,7 +162,10 @@ input::placeholder {
 						method : "post",
 						data : taskList,
 						success : function(resp, status, xhr) {
-							$("#task-body").load("loadtask.action", function() { slider = $('#body-task'); });
+							$("#task-body").load("loadtask.action", function() { 
+								slider = $('#body-task');
+								$('.taskList-task').attr('onmousemove',"event.stopPropagation();");
+							});
 						},
 						error : function(xhr, status, err) {
 							console.log(err);
@@ -176,7 +182,10 @@ input::placeholder {
 					method : "post",
 					data : {"listNo":listNo},
 					success : function(resp, status, xhr) {
-						$("#task-body").load("loadtask.action", function() { slider = $('#body-task'); });
+						$("#task-body").load("loadtask.action", function() { 
+							slider = $('#body-task');
+							$('.taskList-task').attr('onmousemove',"event.stopPropagation();"); 
+						});
 					},
 					error : function(xhr, status, err) {
 						console.log(err);

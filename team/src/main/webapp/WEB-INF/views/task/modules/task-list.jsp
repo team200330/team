@@ -36,7 +36,7 @@
 		<div id="task-container">
 			<div style="display: flex; flex-wrap: nowrap; align-items: flex-start">
 				<c:forEach items="${ taskLists }" var="taskList">
-					<div id="taskList-task-wrapper" style="margin-bottom: 5px">
+					<div id="taskList-task-wrapper-${ taskList.listNo }" onmousemove="event.stopPropagation();" class="taskList-task" style="margin-bottom: 5px">
 						<div id="taskList-wrapper" class="btn btn-primary active" 
 						style="width:300px; margin-right: 5pt; padding: 0 0 0 0; border-radius: 0;">
 							<div id="taskList-div-${ taskList.listNo }" class="btn btn-primary active" style="display: flex" data-tno="${ taskList.listNo }" data-pno="${ taskList.projectNo }">
@@ -118,16 +118,16 @@
 </section>
 <script type="text/javascript">
 	function showAddTaskDiv(target) {
-		var listNo = (target.id).substring(22, 24);
+		var listNo = (target.id).substring(22);
 		$("#task-add-div-taskList-" + listNo).show();
 	}
 	function hideAddTaskDiv(target) {
-		var listNo = (target.id).substring(12, 14);
+		var listNo = (target.id).substring(12);
 		console.log(listNo);
 		$("#task-add-div-taskList-" + listNo).hide();
 	}
 	function insertTask(target) {
-		var listNo = (target.id).substring(12, 14);
+		var listNo = (target.id).substring(12);
 		var task = {
 			"listNo" : listNo,
 			"content" : $("#task-content-" + listNo).val(),
