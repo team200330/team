@@ -48,6 +48,11 @@
 		SET deleted = '1' 
 		WHERE list_no = #{ listNo }
 	</delete>
+	
+	<select id="selectTaskByTaskNo" parameterType="int" resultMap="taskMap">
+		SELECT * FROM task
+		WHERE task_no = #{taskNo}
+	</select>
 </mapper>
 
 

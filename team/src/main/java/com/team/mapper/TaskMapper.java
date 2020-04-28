@@ -16,5 +16,7 @@ public interface TaskMapper {
 	void insertTask(Task task);
 
 	List<Task> selectTask();
+	
+	Task selectTaskByTaskNo(int taskNo);
 
 }
