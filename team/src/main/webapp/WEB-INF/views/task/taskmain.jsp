@@ -114,30 +114,30 @@ input::placeholder {
 
 			$(document).on('mouseleave',slider,function(e){
 				if(e.which == 1){
-				isDown = false;
-				//slider.classList.remove('active');
-				slider.removeClass('active');
+					isDown = false;
+					//slider.classList.remove('active');
+					slider.removeClass('active');
 				}
 			});
 
 			$(document).on('mouseup',slider,function(e){
 				if(e.which == 1){
-				isDown = false;
-				//slider.classList.remove('active');
-				slider.removeClass('active');
+					isDown = false;
+					//slider.classList.remove('active');
+					slider.removeClass('active');
 				}
 			});
 
 			$(document).on('mousemove',slider,function(e){
 				if(e.which == 1){
-				if(!isDown) return;
-				e.preventDefault();
-				//const x = e.pageX - slider.offsetLeft;
-				const x = e.pageX - slider.offset().left;
-				const walk = (x - startX) * 3; //scroll-fast
-				//slider.scrollLeft = scrollLeft - walk;
-				slider.scrollLeft(scrollLeft-walk);
-				//console.log(walk);
+					if(!isDown) return;
+					e.preventDefault();
+					//const x = e.pageX - slider.offsetLeft;
+					const x = e.pageX - slider.offset().left;
+					const walk = (x - startX) * 3; //scroll-fast
+					//slider.scrollLeft = scrollLeft - walk;
+					slider.scrollLeft(scrollLeft-walk);
+					//console.log(walk);
 				}
 			});
 			///////////////////////////////////////////////////////////////
@@ -224,11 +224,13 @@ input::placeholder {
 			
 			/////
 			// 업무 추가 textarea 에 채워진 텍스트 만큼 height 늘어나게
-			$('.taskwrap').on('keyup', 'textarea', function(e) {
+			//$('.taskwrap').on('keyup', 'textarea', function(e) {
+			$(document).on('keyup', '.taskwrap textarea', function(e) {
 				$(this).css('height', 'auto');
 				$(this).height(this.scrollHeight-12);
 			});
-			$('.taskwrap').find('textarea').keyup();
+			//$('.taskwrap').find('textarea').keyup();
+			$(document).find('.taskwrap textarea').keyup();
 			////////////////////////////////////////////////
 
 			/////////////// 업무 추가 관련 event 들 ///////////////
