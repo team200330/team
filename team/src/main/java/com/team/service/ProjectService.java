@@ -24,6 +24,8 @@ public interface ProjectService {
 
 	Project selectDetail(int projectNo);
 
+	void updateProject(Project project);
+
 
 
 
