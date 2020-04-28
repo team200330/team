@@ -53,7 +53,7 @@ input::placeholder {
 				<div class="header-center"
 					style="flex-basis: 33%; text-align: center; padding-top: 20px;">
 					<a id="active3" class="f_link" href="/team/task/main">업무</a>&nbsp;&nbsp;
-					<a id="active2" class="f_link" href="/team/task/timeline">타임라인</a>&nbsp;&nbsp;
+					<a id="active2" class="f_link" href="#">타임라인</a>&nbsp;&nbsp;
 					<a id="active" class="f_link" href="/team/task/analyticsmain">분석</a>
 				</div>
 				<div class="header-right"
@@ -79,68 +79,7 @@ input::placeholder {
 
 	<!-- jQuery -->
 	<%@include file="/WEB-INF/views/modules/common-js.jsp"%>
-	<script type="text/javascript">
-		$(function() {
-			var flag = "false";
-			$(document).on("click","#add-task-div",function(event) {
-				if( flag == "true"){
-					flag = "false";
-					return;
-				}else{
-					$("#add-task-span").hide();
-					$("#add-task-textarea-div").show();
-				}
-			});
-			$(document).on("click","#cancel-add",function() {
-				flag = "true";
-				$("#add-task-textarea-div").hide();
-				$("#add-task-span").show();
-				//$("#add-task-div").css("cursor","pointer");
-			});
-			//엔터 submit 시 ajax로 task Add
-			//$("#add-task-textarea").keydown(function(key) {
-			$(document).on("keydown","#add-task-textarea",function(key) {
-				if (key.keyCode == 13) {
-					//console.log("눌렀다");
-					//var taskList = $("#addTaskForm").serializeArray();
-					var taskList = {"listName":$("#add-task-textarea").val(),"projectNo":$("#add-task-projectNo").attr("value")};
-					$.ajax({
-						url : "/team/task/addlist.action",
-						method : "post",
-						data : taskList,
-						success : function(resp, status, xhr) {
-							$("#task-body").load("loadtask.action");
-						},
-						error : function(xhr, status, err) {
-							console.log(err);
-						}
-					});
-				}
-			});
 
-			//업무 리스트 삭제
-			//$(".list-delete-btn").click(function(){
-			$(document).on("click",".list-delete-btn",function(){
-				var listNo = $(this).parents().attr("id");
-				$.ajax({
-					url : "/team/task/deletelist.action",
-					method : "post",
-					data : {"listNo":listNo},
-					success : function(resp, status, xhr) {
-						$("#task-body").load("loadtask.action");
-					},
-					error : function(xhr, status, err) {
-						console.log(err);
-					}
-				});
-			});
-			$('.taskwrap').on('keyup', 'textarea', function(e) {
-				$(this).css('height', 'auto');
-				$(this).height(this.scrollHeight);
-			});
-			$('.taskwrap').find('textarea').keyup();
-		});
-	</script>
 </body>
 
 </html>

@@ -8,12 +8,27 @@
 	<insert id="insertWorkspace" parameterType="com.team.vo.Workspace"
 			useGeneratedKeys="true" keyColumn="workspaceNo" keyProperty="workspaceNo">			
 		INSERT INTO workspace (
-			workspace_name, 
-			deleted, code
+			deleted,workspace_name
 		)
 		VALUES (
-			#{ workspaceName }, 
-			#{ deleted }, #{ code }
+			0,0
+		)
+	</insert>			
+		
+	<update id="updateWorkspace" parameterType="com.team.vo.Workspace">
+		UPDATE workspace
+		SET workspace_name = #{ workspaceName } and code = #{ code }
+		WHERE workspace_no = #{ workspaceNo } and workspace_name = 0
+	</update>
+	
+	<insert id="insertWorkspaceMember" parameterType="com.team.vo.WorkspaceMember">			
+		INSERT INTO workspace_member (
+			workspace_no, 
+			email, type_no
+		)
+		VALUES (
+			#{ workspaceNo }, 
+			#{ email }, 1
 		)
 	</insert>	
 		
@@ -53,6 +68,8 @@
 		<result column="email" property="email" />
 		<result column="type_no" property="typeNo" />
 	</resultMap> 
+	
+	
 	
 	<select id="selectWorkspaceByWorkspaceNo" parameterType="int" resultMap="workspaceMap">
 		SELECT * FROM workspace

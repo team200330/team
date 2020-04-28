@@ -70,5 +70,17 @@ public class WorkspaceServiceImpl implements WorkspaceService {
 		List <Member> members = workspaceMapper.WorkspaceMemberNameAndDepartmentSearch(member);
 		return members;
 	}
+
+	@Override
+	public void insertWorkspaceMember(WorkspaceMember workspaceMember) {
+		workspaceMapper.insertWorkspaceMember(workspaceMember);
+		
+	}
+
+	@Override
+	public void updateWorkspace(Workspace workspace) {
+		workspaceMapper.updateWorkspace(workspace);
+		
+	}
 	
 }

@@ -1,143 +1,337 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page pageEncoding="utf-8"%>
-<section class="section-body">
-	<div class="body-top">
-		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-			<i class="fas fa-search"></i>
-			<button class="navbar-toggler" type="button" data-toggle="collapse"
-				data-target="#navbarSupportedContent"
-				aria-controls="navbarSupportedContent" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
+  <!-- Content Wrapper. Contains page content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <!-- /.card-header -->
+              <!-- /.row -->              
+              <div class="card-body"> 
+                <div class="row">
+                  <div class="col-sm-2 col-6">
+                    <div class="description-block border-right">                    
+                      <span class="description-text">시작일</span><br>               
+                      <i class="fas fa-plus-square" style="font-size: 20px;"></i>       
+                    </div>
+                    <!-- /.description-block -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-sm-2 col-6">
+                    <div class="description-block border-right">                    
+                      <span class="description-text">마감일</span><br> 
+                      <i class="fas fa-plus-square" style="font-size: 20px;"></i>            
+                    </div>
+                    <!-- /.description-block -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-sm-2 col-6">
+                    <div class="description-block border-right">                    
+                      <span class="description-text">완료일</span><br>    
+                      <i class="fas fa-plus-square" style="font-size: 20px;"></i>              
+                    </div>
+                    <!-- /.description-block -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-sm-1 col-6">
+                    <div class="description-block">                    
+                      <span class="description-text">경과시간</span><br>                      
+                      <h5 class="description-header" style="display: inline;">12시간</h5>
+                    </div>
+                    <!-- /.description-block -->
+                  </div>
+                  <div class="col-sm-1 col-6">
+                    <div class="description-block">                    
+                      <span class="description-text">남은시간</span><br>                      
+                      <h5 class="description-header" style="display: inline;">12시간</h5>
+                    </div>
+                    <!-- /.description-block -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-sm-2 col-6">
+                    <div class="description-block border-right border-left">                    
+                      <span class="description-text">완료됨</span><br>                      
+                      <h5 class="description-header" style="display: inline;">4개 업무</h5>
+                      <span class="description-percentage text-success">(50%)</span>
+                    </div>
+                    <!-- /.description-block -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-sm-2 col-6">
+                    <div class="description-block">                    
+                      <span class="description-text">남은 업무</span><br>
+                      <h5 class="description-header" style="display: inline;">4개 업무</h5>
+                      <span class="description-percentage text-danger">(50%)</span>
+                    </div>
+                    <!-- /.description-block -->
+                  </div>
+                </div>
+                <!-- /.row --> 
+              </div>
+            </div>
+            <div class="card">
+            <!-- /.card-header -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <p class="text-center">
+                      <strong>Goal Completion</strong>
+                    </p>
+                    <!-- /.progress-group -->
+                    <div class="progress-group">
+                      Send Inquiries
+                      <span class="float-right"><b>250</b>/500</span>
+                      <div class="progress progress-sm">
+                        <div class="progress-bar bg-warning" style="width: 50%"></div>
+                      </div>
+                    </div>
+                    <!-- /.progress-group -->
+                  </div>
+                  <!-- /.col -->
+                </div>
+                <!-- /.row -->
+              </div>
+              <!-- ./card-body -->
+             </div>
+            <!-- /.card -->
+            <div class="card">
+              <div class="card-body">              
+                <div class="row">
+                  <div class="col-md-12">                    
+                    <div class="chart">
+                      <!-- Sales Chart Canvas -->
+                      <canvas id="salesChart" height="180" style="height: 180px;"></canvas>
+                    </div>
+                    <p class="text-center" style="font-size:12px;">전체 업무량 완료된 업무량</p>
+                    <p class="text-center" style="font-size:12px;">번 업(Burn Up) 차트는 프로젝트의 크기와 완료된 업무 총량를 비교합니다. 두 개의 선이 만날 때, 프로젝트는 완료됩니다. 기간: 프로젝트 생성일부터</p>
+                    <!-- /.chart-responsive -->
+                  </div>
+                </div>                                          
+              </div>
+            </div>
+            
+            <div class="card">
+              <div class="card-body">
+                <div class="chart">
+                  <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+              </div>
+            <!-- /.card -->
+            </div>
+            
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div><!--/. container-fluid -->
+    </section>
+    <!-- /.content -->
 
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav mr-auto">
-					<li class="nav-item dropdown"><a
-						class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
-						role="button" data-toggle="dropdown" aria-haspopup="true"
-						aria-expanded="false"> 전체 </a>
-						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href="#">나에게 배정된 업무</a> <a
-								class="dropdown-item" href="#">내가 생성한 업무</a> <a
-								class="dropdown-item" href="#">팔로우 중</a>
-						</div></li>
-				</ul>
-				<form class="form-inline my-2 my-lg-0">
-					<input class="form-control mr-sm-2" type="search"
-						placeholder="업무 검색" aria-label="Search">
-					<button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
-				</form>
-			</div>
-		</nav>
-	</div>
-	<div class="body-task" style="height: 73%;
-		 display: flex; flex-wrap: nowrap; white-space: nowrap; overflow-x: scroll; padding: 15 0 0 15;">
-		<div id="task-container">
-			<div style="display: flex; flex-wrap: nowrap; align-items: flex-start">
-				<c:forEach items="${ taskLists }" var="taskList">
-					<div style="margin-bottom: 5px">
-						<div id="taskList-wrapper" class="btn btn-primary active" 
-						style="width:300px; margin-right: 5pt; padding: 0 0 0 0; border-radius: 0;">
-							<div id="taskList-div-${ taskList.listNo }" class="btn btn-primary active" style="display: flex" data-tno="${ taskList.listNo }" data-pno="${ taskList.projectNo }">
-								<div id="listname" style="width:80%; text-align: left;">
-									<span>${ taskList.listName }</span>
-								</div>
-								<div id="settings" style="width:20%; display:flex; padding-top: 3pt">
-									<div id="icon-addtask-div" style="width:60%;">
-										<i id="icon-addtask-taskList-${ taskList.listNo }" onclick="showAddTaskDiv(this)" style="cursor: pointer" class="fas fa-plus"></i>
-									</div>
-									<div style="width:40%;">
-										<i id="task-setting" style="cursor: pointer" class="fas fa-ellipsis-v" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
-										<div id="${ taskList.listNo }" class="dropdown-menu" aria-labelledby="task-setting">
-										    <button class="dropdown-item list-delete-btn" type="button">리스트 삭제</button>
-										    <button class="dropdown-item" type="button">Another action</button>
-										    <button class="dropdown-item" type="button">Something else here</button>
-										</div>
-									</div>
-								</div>
-							</div>
-							<section id="task-add-div-taskList-${ taskList.listNo }" style="display: none;"  data-tno="${ taskList.listNo }" data-pno="${ taskList.projectNo }">
-								<div class="taskwrap" style="display:table; margin-left:auto; margin-right:auto;">
-									<textarea id="task-content-${ taskList.listNo }" class="form-control" placeholder="새 업무 만들기" style="width:290px; min-height:77px; overflow-y:hidden; resize: none;"></textarea>
-								</div>
-								<div style="display:flex; flex-wrap:nowrap; height:30px;  margin-top: 5px;  margin-bottom: 5px;">
-									<div style="padding-left:10px; padding-right:10px; width:50%; margin-top: 7px; text-align: left;">
-										<i class="fas fa-user-plus" style="padding-right:10px;"></i><i class="far fa-calendar-alt"></i>
-									</div>
-									<div style="float:right; width:50%; text-align: right; padding-right:5px;">
-										<button id="cancel-task-${ taskList.listNo }" onclick="hideAddTaskDiv(this)" type="button" class="btn btn-light" style="width:70px; height:30px; padding: 0 0 0 0; font-size:13px; font-weight:bold;">취소</button>
-										<button id="create-task-${ taskList.listNo }" onclick="insertTask(this)"type="button" class="btn btn-info" style="width:70px; height:30px; padding: 0 0 0 0; font-size:13px; font-weight:bold;">만들기</button>
-									</div>
-								</div>
-							</section>
-						</div>
-						<div id="taskarea">
-							<c:forEach items="${ tasks }" var="task">
-								<c:if test="${task.listNo eq taskList.listNo }">
-									<div>
-										<div class="btn btn-outline-dark" style="margin-top:3px; width:300px; height:38px; border-radius: 0;">
-											<span>${ task.content }</span>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
-						</div>
-					</div>
-				</c:forEach>
-			</div>
-		</div>
-		<div id="add-task-div" style="padding-right: 15px;">
-			<div class="btn btn-secondary" style="width:300px; height:40px; border-radius: 0; cursor: pointer;">
-				<div id="add-task-button-div" style="margin-top: 2px;">
-					<span id="add-task-span"> <i class="fas fa-plus"></i> 새 업무리스트만들기</span>
-				</div>
-				<div id="add-task-textarea-div" style="display: none;">
-					<div id="addTaskForm" style="margin: 0pt">
-						<input id="add-task-textarea" name="listName" type="text" value=""
-							placeholder="업무리스트 이름" style="width: 190pt; height: 18pt;">
-						<!-- 임시 프로젝트 번호 -->
-						<input id="add-task-projectNo" name="projectNo" type="hidden"
-							value="1"> <span id="cancel-add"
-							style="padding-left: 5pt; cursor: pointer;"> <i
-							class="fas fa-times"></i>
-						</span>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
-<script type="text/javascript">		
-function showAddTaskDiv(target) {
-	var listNo = (target.id).substring(22,24);
-	$("#task-add-div-taskList-"+listNo).show();
-}
-function hideAddTaskDiv(target) {
-	var listNo = (target.id).substring(12,14);
-	console.log(listNo);
-	$("#task-add-div-taskList-"+listNo).hide();
-}
-function insertTask(target) {
-	var listNo = (target.id).substring(12,14);
-	var task = {
-			"listNo":listNo,
-			"content":$("#task-content-"+listNo).val(),
-			"writer":"test",
-			"startDate": $.datepicker.formatDate('yy-mm-dd',new Date()),
-			"endDate": $.datepicker.formatDate('yy-mm-dd',new Date()),
-			"completedP":"test"
-			};
-	$.ajax({
-		url : "/team/task/addtask.action",
-		method : "post",
-		data : task,
-		success : function(resp, status, xhr) {
-			$("#task-body").load("loadtask.action");
-		},
-		error : function(xhr, status, err) {
-			console.log(err);
-		}
-	});
-}
+<!-- REQUIRED SCRIPTS -->
+<!-- jQuery -->
+<script src="/team/resources/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="/team/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- overlayScrollbars -->
+<script src="/team/resources/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/team/resources/dist/js/adminlte.js"></script>
+<!-- OPTIONAL SCRIPTS -->
+<script src="/team/resources/dist/js/demo.js"></script>
+<!-- PAGE PLUGINS -->
+<!-- jQuery Mapael -->
+<script src="/team/resources/plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
+<script src="/team/resources/plugins/raphael/raphael.min.js"></script>
+<script src="/team/resources/plugins/jquery-mapael/jquery.mapael.min.js"></script>
+<script src="/team/resources/plugins/jquery-mapael/maps/usa_states.min.js"></script>
+<!-- ChartJS -->
+<script src="/team/resources/plugins/chart.js/Chart.min.js"></script>
+<!-- PAGE SCRIPTS -->
+<script src="/team/resources/dist/js/pages/dashboard2.js"></script>
+<script>
+  $(function () {
+    /* ChartJS
+     * -------
+     * Here we will create a few charts using ChartJS
+     */
+
+    //--------------
+    //- AREA CHART -
+    //--------------
+
+    // Get context with jQuery - using jQuery's .get() method.
+    var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
+
+    var areaChartData = {
+      labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      datasets: [
+        {
+          label               : 'Digital Goods',
+          backgroundColor     : 'rgba(60,141,188,0.9)',
+          borderColor         : 'rgba(60,141,188,0.8)',
+          pointRadius          : false,
+          pointColor          : '#3b8bba',
+          pointStrokeColor    : 'rgba(60,141,188,1)',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(60,141,188,1)',
+          data                : [28, 48, 40, 19, 86, 27, 90]
+        },
+        {
+          label               : 'Electronics',
+          backgroundColor     : 'rgba(210, 214, 222, 1)',
+          borderColor         : 'rgba(210, 214, 222, 1)',
+          pointRadius         : false,
+          pointColor          : 'rgba(210, 214, 222, 1)',
+          pointStrokeColor    : '#c1c7d1',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(220,220,220,1)',
+          data                : [65, 59, 80, 81, 56, 55, 40]
+        },
+      ]
+    }
+
+    var areaChartOptions = {
+      maintainAspectRatio : false,
+      responsive : true,
+      legend: {
+        display: false
+      },
+      scales: {
+        xAxes: [{
+          gridLines : {
+            display : false,
+          }
+        }],
+        yAxes: [{
+          gridLines : {
+            display : false,
+          }
+        }]
+      }
+    }
+
+    // This will get the first returned node in the jQuery collection.
+    var areaChart       = new Chart(areaChartCanvas, { 
+      type: 'line',
+      data: areaChartData, 
+      options: areaChartOptions
+    })
+
+    //-------------
+    //- LINE CHART -
+    //--------------
+    var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
+    var lineChartOptions = jQuery.extend(true, {}, areaChartOptions)
+    var lineChartData = jQuery.extend(true, {}, areaChartData)
+    lineChartData.datasets[0].fill = false;
+    lineChartData.datasets[1].fill = false;
+    lineChartOptions.datasetFill = false
+
+    var lineChart = new Chart(lineChartCanvas, { 
+      type: 'line',
+      data: lineChartData, 
+      options: lineChartOptions
+    })
+
+    //-------------
+    //- DONUT CHART -
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
+    var donutData        = {
+      labels: [
+          'Chrome', 
+          'IE',
+          'FireFox', 
+          'Safari', 
+          'Opera', 
+          'Navigator', 
+      ],
+      datasets: [
+        {
+          data: [700,500,400,600,300,100],
+          backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+        }
+      ]
+    }
+    var donutOptions     = {
+      maintainAspectRatio : false,
+      responsive : true,
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    var donutChart = new Chart(donutChartCanvas, {
+      type: 'doughnut',
+      data: donutData,
+      options: donutOptions      
+    })
+
+    //-------------
+    //- PIE CHART -
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+    var pieData        = donutData;
+    var pieOptions     = {
+      maintainAspectRatio : false,
+      responsive : true,
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    var pieChart = new Chart(pieChartCanvas, {
+      type: 'pie',
+      data: pieData,
+      options: pieOptions      
+    })
+
+    //-------------
+    //- BAR CHART -
+    //-------------
+    var barChartCanvas = $('#barChart').get(0).getContext('2d')
+    var barChartData = jQuery.extend(true, {}, areaChartData)
+    var temp0 = areaChartData.datasets[0]
+    var temp1 = areaChartData.datasets[1]
+    barChartData.datasets[0] = temp1
+    barChartData.datasets[1] = temp0
+
+    var barChartOptions = {
+      responsive              : true,
+      maintainAspectRatio     : false,
+      datasetFill             : false
+    }
+
+    var barChart = new Chart(barChartCanvas, {
+      type: 'bar', 
+      data: barChartData,
+      options: barChartOptions
+    })
+
+    //---------------------
+    //- STACKED BAR CHART -
+    //---------------------
+    var stackedBarChartCanvas = $('#stackedBarChart').get(0).getContext('2d')
+    var stackedBarChartData = jQuery.extend(true, {}, barChartData)
+
+    var stackedBarChartOptions = {
+      responsive              : true,
+      maintainAspectRatio     : false,
+      scales: {
+        xAxes: [{
+          stacked: true,
+        }],
+        yAxes: [{
+          stacked: true
+        }]
+      }
+    }
+
+    var stackedBarChart = new Chart(stackedBarChartCanvas, {
+      type: 'bar', 
+      data: stackedBarChartData,
+      options: stackedBarChartOptions
+    })
+  })
 </script>
+</body>
+</html>

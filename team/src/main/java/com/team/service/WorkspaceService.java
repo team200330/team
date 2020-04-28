@@ -5,6 +5,7 @@ import java.util.List;
 import com.team.vo.Member;
 import com.team.vo.Project;
 import com.team.vo.Workspace;
+import com.team.vo.WorkspaceMember;
 
 public interface WorkspaceService {
 
@@ -23,4 +24,8 @@ public interface WorkspaceService {
 	Member selectMemberTypeNo1ByWorkspaceNo(int workspaceNo);
 
 	List<Member> WorkspaceMemberNameAndDepartmentSearch(Member member);
+
+	void insertWorkspaceMember(WorkspaceMember workspaceMember);
+
+	void updateWorkspace(Workspace workspace);
 }
