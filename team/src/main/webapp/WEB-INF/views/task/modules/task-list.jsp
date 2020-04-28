@@ -51,7 +51,7 @@
 										<i id="icon-addtask-taskList-${ taskList.listNo }" style="cursor: pointer" class="fas fa-plus icon-addtask"></i>
 									</div>
 									<div style="width:40%;">
-										<i id="task-setting" style="cursor: pointer" class="fas fa-ellipsis-v" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+										<i id="task-setting" style="cursor: pointer" class="fas fa-ellipsis-v menu-setting" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
 										<div id="${ taskList.listNo }" class="dropdown-menu" aria-labelledby="task-setting">
 										    <button class="dropdown-item list-delete-btn" type="button">리스트 삭제</button>
 										    <button class="dropdown-item" type="button">Another action</button>
@@ -84,8 +84,7 @@
 								<c:if test="${task.listNo eq taskList.listNo }">
 									<div class="dropright">
 										<div id="task-${task.taskNo}" class="btn btn-light task-field" 
-										style="margin-top:3px; width:300px; min-height:38px;height:auto; border-radius: 0; display:flex; flex-wrap:nowrap;"
-										data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										style="margin-top:3px; width:300px; min-height:38px;height:auto; border-radius: 0; display:flex; flex-wrap:nowrap;">
 											<div>
 												<div class="custom-control custom-checkbox">
 													<input type="checkbox" class="custom-control-input"	id="checkbox-${ task.taskNo }">
@@ -96,11 +95,20 @@
 												<span style="display:block; text-align:left; white-space: normal; word-break: break-all;">${ task.content }</span>
 											</div>
 										</div>
+										<!-- 
 										<div id="${ task.taskNo }" class="dropdown-menu" aria-labelledby="task-${task.taskNo}">
 										    <button class="dropdown-item task-delete-btn" type="button">업무 삭제</button>
 										    <button class="dropdown-item" type="button">Another action</button>
 										    <button class="dropdown-item" type="button">Something else here</button>
 										</div>
+										 -->
+										<ul id="menu-${ task.taskNo }" class="contextmenu">
+										  <li><a href="#">Simple link</a></li>
+										  <li><a href="#">Link to somewhere</a></li>
+										  <li><a href="#">Another link</a></li>
+										  <li><a href="#">Link to nowhere</a></li>
+										  <li><a href="#">Random link</a></li>
+										</ul>
 									</div>
 								</c:if>
 							</c:forEach>

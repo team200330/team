@@ -35,6 +35,43 @@ input::placeholder {
 	font-size: 11pt;
 	font-style: inherit;
 }
+.contextmenu {
+  display: none;
+  position: absolute;
+  width: 200px;
+  margin: 0;
+  padding: 0;
+  background: #FFFFFF;
+  border-radius: 5px;
+  list-style: none;
+  box-shadow:
+    0 15px 35px rgba(50,50,90,0.1),
+    0 5px 15px rgba(0,0,0,0.07);
+  overflow: hidden;
+  z-index: 999999;
+}
+
+.contextmenu li {
+  border-left: 3px solid transparent;
+  transition: ease .2s;
+}
+
+.contextmenu li a {
+  display: block;
+  padding: 10px;
+  color: #B0BEC5;
+  text-decoration: none;
+  transition: ease .2s;
+}
+
+.contextmenu li:hover {
+  background: #CE93D8;
+  border-left: 3px solid #9C27B0;
+}
+
+.contextmenu li:hover a {
+  color: #FFFFFF;
+}
 </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -272,6 +309,8 @@ input::placeholder {
 			////////////////////////////////////////////////////////
 
 			//// 업무에 오른쪽 마우스 Event 추가, 브라우져 기본 이벤트 제거
+			
+			/* 
 			$(document).on('contextmenu','.task-field', function() {
 				return false;
 			});
@@ -286,7 +325,8 @@ input::placeholder {
 			        /* 
 			        case 2:
 			            alert('Middle Mouse button pressed.');
-			            break; */
+			            break; 
+			        
 			        case 3:
 			            //alert('Right Mouse button pressed.');
 				        $("#task-"+taskNo).dropdown("toggle");
@@ -294,7 +334,65 @@ input::placeholder {
 			        default:
 			            return;
 			    }
-			}); 
+			});
+ 			*/
+			////////////////
+			$(document).on('contextmenu','.task-field', function(e) {
+				$(".contextmenu").hide();
+				var taskNo = $(this).attr("id").substring(5);
+				//console.log(e);
+				//Get window size:
+				var winWidth = $(this).width();
+				console.log("windWidth:"+winWidth);
+				var winHeight = $(this).height();
+				console.log("winHeight:"+winHeight);
+				//Get pointer position:
+				var posX = e.offsetX;
+				console.log("posX:"+posX);
+				var posY = e.offsetY;
+				console.log("posY:"+posY);
+				//Get contextmenu size:
+				var menuWidth = $(".contextmenu").width();
+				var menuHeight = $(".contextmenu").height();
+				//Security margin:
+				var secMargin = 10;
+				posLeft = posX + secMargin + "px";
+				posTop = posY + secMargin + "px";
+				//Prevent page overflow:
+				/*
+				if (posX + menuWidth + secMargin >= winWidth
+						&& posY + menuHeight + secMargin >= winHeight) {
+					//Case 1: right-bottom overflow:
+					posLeft = posX - menuWidth - secMargin + "px";
+					posTop = posY - menuHeight - secMargin + "px";
+				} else if (posX + menuWidth + secMargin >= winWidth) {
+					//Case 2: right overflow:
+					posLeft = posX - menuWidth - secMargin + "px";
+					posTop = posY + secMargin + "px";
+				} else if (posY + menuHeight + secMargin >= winHeight) {
+					//Case 3: bottom overflow:
+					posLeft = posX + secMargin + "px";
+					posTop = posY - menuHeight - secMargin + "px";
+				} else {
+					//Case 4: default values:
+					posLeft = posX + secMargin + "px";
+					posTop = posY + secMargin + "px";
+				};
+				*/
+				//Display contextmenu:
+				$("#menu-"+taskNo).css({
+					"left" : posLeft,
+					"top" : posTop
+				}).show();
+				//Prevent browser default contextmenu.
+				return false;
+			});
+
+ 			//Hide contextmenu:
+			$(document).on("click",function() {
+				$(".contextmenu").hide();
+			});
+			
 		});
 	</script>
 </body>
