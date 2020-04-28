@@ -49,15 +49,13 @@ public class AccountController {
 	
 	//로그인
 	@PostMapping(path = {"login.action"})
-	public String login(Member member, HttpSession session, Model model, RedirectAttributes attr) {
+	public String login(Member member, HttpSession session) {
 	
 		Member member2 = memberService.findMemberByEmailAndPassword(member);
 		if (member2 == null) {
-			attr.addFlashAttribute("loginFalse", member);
 			return "redirect:/account/login.action";
 		}else {
 			session.setAttribute("loginuser", member2);
-			model.addAttribute("member", member2);
 			return "redirect:/";
 		}
 	}
