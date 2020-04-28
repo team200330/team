@@ -89,6 +89,15 @@
         </div>
         
         <div class="input-group mb-3">
+          <input type="text" class="form-control" id="position" name="position" placeholder="position">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-user-tie"></span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="input-group mb-3">
           <input type="text" class="form-control" id="addressNo" name="addressNo" placeholder="Address">
           <div class="input-group-append">
             <div class="input-group-text">
@@ -154,6 +163,7 @@
 	<script type="text/javascript">
 	$(function(){
 
+		//우편번호 api
 		$("#addressNo, #roadAddr").attr({"readonly": "readonly" });
 
 		$("#btn").on("click", function(event) {
@@ -167,7 +177,7 @@
 			    }).open();
 		});
 
-
+		//프로필 이미지
 		$("#img").change(function(){
 			if(this.files && this.files[0]) {
 			var reader = new FileReader;

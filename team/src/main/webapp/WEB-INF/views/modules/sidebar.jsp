@@ -17,7 +17,6 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="info">
-        <ul>
 			<c:choose>
 			<c:when test="${ empty sessionScope.loginuser }">
 				<li><a href="/team/account/login.action">로그인</a></li>
@@ -28,7 +27,6 @@
 				<li><a href="/team/account/logout.action">로그아웃</a></li>
 			</c:otherwise>
 			</c:choose>
-			</ul>
         </div>
       </div>
 

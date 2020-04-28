@@ -70,4 +70,11 @@ public class TaskController {
 		return "task/analyticsmain";
 	}
 	
+	
+	///////////////////////////////////////////
+	@GetMapping(path= {"/timeline"})
+	public String showTaskTimeLine(Model model) {
+		return "task/timeline";
+	}
+	
 }
