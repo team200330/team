@@ -1,25 +1,35 @@
 package com.team.interceptor;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+import com.team.service.LogService;
+import com.team.vo.Log;
+import com.team.vo.Member;
+import com.team.vo.Task;
 
 //public class AuthInterceptor implements HandlerInterceptor {
 public class AuthInterceptor extends HandlerInterceptorAdapter {
 
+	@Autowired
+	@Qualifier("logService")
+	private LogService logService;
 
 	// Controller 실행 (호출) 전
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 				
 		String uri = request.getRequestURI();
-		//System.out.println("in interceptor : " + uri);
 		HttpSession session = request.getSession();
-		
+
 		System.out.println("URI : " + uri);
 		
 		if (uri.contains("/feedback/") || uri.contains("/log/")) { 
@@ -29,13 +39,28 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 			}
 		}
 		
+		
 		return true; // 컨트롤러로 요청을 전달하세요
 	}
 	
 	// Controller 실행 (호출) 후
 	@Override
-	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-			ModelAndView modelAndView) throws Exception {
+	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+
+		String uri = request.getRequestURI();
+		
+
+		if (uri.contains("/addtask.action")) {
+			Task task = (Task) request.getSession().getAttribute("task");
+			String email = ((Member)request.getSession().getAttribute("loginuser")).getEmail();
+			
+			// 임시 프로젝트 번호 : 1
+			Log log = new Log(email, new Date(), task.getTaskNo(), "생성", 1);
+			System.out.println(log.toString());
+			logService.writeLog(log);
+			
+		}
+		
 		
 	}
 	
