@@ -102,27 +102,34 @@ input::placeholder {
 			let scrollLeft;
 
 			$(document).on('mousedown',slider,function(e){
-				isDown = true;
-				//slider.classList.add('active');
-				slider.addClass('active');
-				//startX = e.pageX - slider.offsetLeft;
-				startX = e.pageX - slider.offset().left;
-				scrollLeft = slider.scrollLeft();
+				if(e.which == 1){
+					isDown = true;
+					//slider.classList.add('active');
+					slider.addClass('active');
+					//startX = e.pageX - slider.offsetLeft;
+					startX = e.pageX - slider.offset().left;
+					scrollLeft = slider.scrollLeft();
+				}
 			});
 
-			$(document).on('mouseleave',slider,function(){
+			$(document).on('mouseleave',slider,function(e){
+				if(e.which == 1){
 				isDown = false;
 				//slider.classList.remove('active');
 				slider.removeClass('active');
+				}
 			});
 
-			$(document).on('mouseup',slider,function(){
+			$(document).on('mouseup',slider,function(e){
+				if(e.which == 1){
 				isDown = false;
 				//slider.classList.remove('active');
 				slider.removeClass('active');
+				}
 			});
 
 			$(document).on('mousemove',slider,function(e){
+				if(e.which == 1){
 				if(!isDown) return;
 				e.preventDefault();
 				//const x = e.pageX - slider.offsetLeft;
@@ -131,6 +138,7 @@ input::placeholder {
 				//slider.scrollLeft = scrollLeft - walk;
 				slider.scrollLeft(scrollLeft-walk);
 				//console.log(walk);
+				}
 			});
 			///////////////////////////////////////////////////////////////
 			
@@ -194,15 +202,97 @@ input::placeholder {
 			});
 			///////////////////////////////////////////////////
 
+			//업무 삭제
+			$(document).on("click",".task-delete-btn",function(){
+				var taskNo = $(this).parents().attr("id");
+				$.ajax({
+					url : "/team/task/deletetask.action",
+					method : "post",
+					data : {"taskNo":taskNo},
+					success : function(resp, status, xhr) {
+						$("#task-body").load("loadtask.action", function() { 
+							slider = $('#body-task');
+							$('.taskList-task').attr('onmousemove',"event.stopPropagation();"); 
+						});
+					},
+					error : function(xhr, status, err) {
+						console.log(err);
+					}
+				});
+
+			});
+			
+			/////
 			// 업무 추가 textarea 에 채워진 텍스트 만큼 height 늘어나게
 			$('.taskwrap').on('keyup', 'textarea', function(e) {
 				$(this).css('height', 'auto');
-				$(this).height(this.scrollHeight);
+				$(this).height(this.scrollHeight-12);
 			});
 			$('.taskwrap').find('textarea').keyup();
 			////////////////////////////////////////////////
 
-			
+			/////////////// 업무 추가 관련 event 들 ///////////////
+			$(document).on("click",".cancel-task-btn", function(){
+				var listNo = $(this).attr("id").substring(12);
+				$("#task-add-div-taskList-" + listNo).hide();
+			});
+
+			$(document).on("click",".icon-addtask", function(){
+				var listNo = $(this).attr("id").substring(22);
+				$("#task-add-div-taskList-" + listNo).show();
+			});
+
+			$(document).on("click",".create-task-btn", function(){
+				var listNo = $(this).attr("id").substring(12);
+				var task = {
+					"listNo" : listNo,
+					"content" : $("#task-content-" + listNo).val(),
+					"writer" : "test",
+					"startDate" : $.datepicker.formatDate('yy-mm-dd', new Date()),
+					"endDate" : $.datepicker.formatDate('yy-mm-dd', new Date()),
+					"completedP" : "test"
+				};
+				$.ajax({
+					url : "/team/task/addtask.action",
+					method : "post",
+					data : task,
+					success : function(resp, status, xhr) {
+						$("#task-body").load("loadtask.action", function(){
+							slider = $('#body-task');
+							$('.taskList-task').attr('onmousemove',"event.stopPropagation();");
+						});
+					},
+					error : function(xhr, status, err) {
+						console.log(err);
+					}
+				});
+			});
+			////////////////////////////////////////////////////////
+
+			//// 업무에 오른쪽 마우스 Event 추가, 브라우져 기본 이벤트 제거
+			$(document).on('contextmenu','.task-field', function() {
+				return false;
+			});
+			$(document).on('mousedown','.task-field',function(event){
+				//var listNo = $(this).attr("id");
+				var taskNo = $(this).attr("id").substring(5);
+				//console.log("button type : " + event.which);
+			    switch (event.which) {
+			        case 1:
+			            event.stopPropagation();
+			            break;
+			        /* 
+			        case 2:
+			            alert('Middle Mouse button pressed.');
+			            break; */
+			        case 3:
+			            //alert('Right Mouse button pressed.');
+				        $("#task-"+taskNo).dropdown("toggle");
+			            break;
+			        default:
+			            return;
+			    }
+			}); 
 		});
 	</script>
 </body>

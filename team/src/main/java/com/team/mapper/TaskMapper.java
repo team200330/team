@@ -17,4 +17,6 @@ public interface TaskMapper {
 
 	List<Task> selectTask();
 
+	void deleteTask(int taskNo);
+
 }
