@@ -10,11 +10,13 @@ public class Project {
 	private int projectNo;
 	private int workspaceNo;
 	private String projectName;
-	private Date regdate;
+	private Date startdate; // 시작일
+	private Date deadline;  // 마감일
+	private Date enddate;   // 완료일
 	private String content;
 	private String managerEmail;
 	private boolean deleted;
-	private boolean isPublic;
+	private boolean proPublic;
 	private int templateNo;
 	private int proNo;
 	

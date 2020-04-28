@@ -1,5 +1,6 @@
 package com.team.vo;
 
+import java.util.Date;
 import java.util.List;
 
 import lombok.Data;
@@ -8,11 +9,11 @@ import lombok.Data;
 public class Feedback {
 	private int feedbackNo;
 	private String content;
-	private java.util.Date writedate;
+	private Date writedate;
 	private String sender;
 	private int workspaceNo;
 	private int projectNo;
-	private boolean isPublic;
+	private boolean opened;
 	
 	private List<FeedbackReceiver> receivers;
 	private List<Comments> comments;

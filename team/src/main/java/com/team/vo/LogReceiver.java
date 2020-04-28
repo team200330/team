@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class LogReceiver {
 	private int logNo;
-	private String email;
-	private boolean isRead;
+	private String receiver;
+	private boolean checked;
 	private boolean deleted;
 }

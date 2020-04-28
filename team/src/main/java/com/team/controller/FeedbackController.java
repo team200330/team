@@ -43,11 +43,8 @@ public class FeedbackController {
 		if ( workspaceMembers == null ) workspaceMembers = feedbackService.findWorkspaceMembers(workspaceNo);
 		model.addAttribute("workspaceMembers", workspaceMembers);
 		
-		Member loginuser = (Member) session.getAttribute("loginuser");
-		if (loginuser == null) return "redirect:/account/login.action";
-		
 		HashMap<String, Object> params = new HashMap<>();
-		params.put("email", loginuser.getEmail());
+		params.put("email", ((Member) session.getAttribute("loginuser")).getEmail());
 		params.put("searchType", "M");
 		params.put("workspaceNo", workspaceNo);
 		
@@ -77,7 +74,7 @@ public class FeedbackController {
 	@PostMapping("/write")
 	@ResponseBody
 	public String writeFeedback(Feedback feedback, String[] email, String isPublic) {
-		feedback.setPublic(isPublic.equals("true") ? true : false);
+		feedback.setOpened(isPublic.equals("true") ? true : false);
 		feedback.setWorkspaceNo(workspaceNo);
 		feedbackService.writeFeedback(feedback, email);
 	
@@ -86,8 +83,26 @@ public class FeedbackController {
 	
 	@PostMapping("/delete")
 	@ResponseBody
-	public String deleteFeedback(int feedbackNo) {
-		feedbackService.deleteFeedback(feedbackNo);
+	public String deleteFeedback(HttpSession session, int feedbackNo) {
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("feedbackNo", feedbackNo);
+		params.put("email", ((Member) session.getAttribute("loginuser")).getEmail());
+		
+		System.out.println(params.values());
+		feedbackService.deleteFeedback(params);
+		
+		return "success";
+	}
+	
+	@PostMapping("/check")
+	@ResponseBody
+	public String checkFeedback(HttpSession session, int feedbackNo) {
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("feedbackNo", feedbackNo);
+		params.put("email", ((Member) session.getAttribute("loginuser")).getEmail());
+		
+		System.out.println(params.values());
+		feedbackService.checkFeedback(params);
 		
 		return "success";
 	}

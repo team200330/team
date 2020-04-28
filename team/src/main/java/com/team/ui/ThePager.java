@@ -68,7 +68,7 @@ public class ThePager {
 				linkString.append(String.format("[%d]", i));
 			} else { 
 				linkString.append(String.format(
-					"<a href='%s?pageNo=%d&%s'>%d</a>", linkUrl, i, queryString, i));
+					"<li class='page-item'><a href='%s?pageNo=%d&%s'>%d</a></li>", linkUrl, i, queryString, i));
 			}
 			linkString.append("&nbsp;");
 		}

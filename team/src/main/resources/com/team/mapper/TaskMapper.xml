@@ -8,16 +8,43 @@
 		VALUES ( #{listName}, #{projectNo} )
 	</insert>
 	
+	<insert id="insertTask" parameterType="Task">
+		INSERT INTO task (list_no, content, writer)
+		VALUES ( #{listNo}, #{content}, #{writer})	
+	</insert>
+
 	<select id="selectTaskList" resultMap="taskListMap">
 		SELECT *
 		FROM task_list
+		WHERE deleted = '0'
 	</select>
+	
+	<select id="selectTask" resultMap="taskMap">
+		SELECT *
+		FROM task
+	</select>
+	
+	<resultMap type="Task" id="taskMap">
+		<id column="task_no" property="taskNo"/>
+		<result column="list_no" property="listNo"/>
+		<result column="content" property="content"/>
+		<result column="writer" property="writer"/>
+		<result column="start_date" property="startDate"/>
+		<result column="end_date" property="endDate"/>
+		<result column="completed_p" property="completedP"/>
+	</resultMap>
 	
 	<resultMap type="TaskList" id="taskListMap">
 		<id column="list_no" property="listNo"/>
 		<result column="project_no" property="projectNo"/>
 		<result column="list_name" property="listName"/>
 	</resultMap>
+	
+	<delete id="deleteTaskList" parameterType="int">
+		UPDATE task_list
+		SET deleted = '1' 
+		WHERE list_no = #{ listNo }
+	</delete>
 </mapper>
 
 

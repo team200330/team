@@ -61,8 +61,13 @@ public class FeedbackServiceImpl implements FeedbackService {
 	}
 	
 	@Override
-	public void deleteFeedback(int feedbackNo) {
-		feedbackMapper.deleteFeedback(feedbackNo);
+	public void deleteFeedback(HashMap<String, Object> params) {
+		feedbackMapper.deleteFeedback(params);
+	}
+	
+	@Override
+	public void checkFeedback(HashMap<String, Object> params) {
+		feedbackMapper.checkFeedback(params);
 	}
 	
 	
@@ -79,6 +84,8 @@ public class FeedbackServiceImpl implements FeedbackService {
 			
 		return members;
 	}
+
+	
 
 
 

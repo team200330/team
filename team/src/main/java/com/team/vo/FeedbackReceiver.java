@@ -7,7 +7,7 @@ public class FeedbackReceiver {
 	private int feedbackNo;
 	private String email;
 	private boolean deleted;
-	private boolean isRead;
+	private boolean checked;
 	
 	public FeedbackReceiver() {};
 	public FeedbackReceiver(int feedbackNo, String email) { 

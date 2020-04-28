@@ -31,12 +31,12 @@
 			</div>
 		</nav>
 	</div>
-	<div id="body-task" style="height: 73%;
+	<div class="body-task" style="height: 73%;
 		 display: flex; flex-wrap: nowrap; white-space: nowrap; overflow-x: scroll; padding: 15 0 0 15;">
 		<div id="task-container">
 			<div style="display: flex; flex-wrap: nowrap; align-items: flex-start">
 				<c:forEach items="${ taskLists }" var="taskList">
-					<div id="taskList-task-wrapper-${ taskList.listNo }" onmousemove="event.stopPropagation();" class="taskList-task" style="margin-bottom: 5px">
+					<div style="margin-bottom: 5px">
 						<div id="taskList-wrapper" class="btn btn-primary active" 
 						style="width:300px; margin-right: 5pt; padding: 0 0 0 0; border-radius: 0;">
 							<div id="taskList-div-${ taskList.listNo }" class="btn btn-primary active" style="display: flex" data-tno="${ taskList.listNo }" data-pno="${ taskList.projectNo }">
@@ -76,16 +76,8 @@
 							<c:forEach items="${ tasks }" var="task">
 								<c:if test="${task.listNo eq taskList.listNo }">
 									<div>
-										<div class="btn btn-light" style="margin-top:3px; width:300px; height:38px; border-radius: 0; display:flex; flex-wrap:nowrap;">
-											<div>
-												<div class="custom-control custom-checkbox">
-													<input type="checkbox" class="custom-control-input"	id="checkbox-${ task.taskNo }">
-													<label class="custom-control-label" for="checkbox-${ task.taskNo }"></label>
-												</div>
-											</div>
-											<div>
-												<span>${ task.content }</span>
-											</div>
+										<div class="btn btn-outline-dark" style="margin-top:3px; width:300px; height:38px; border-radius: 0;">
+											<span>${ task.content }</span>
 										</div>
 									</div>
 								</c:if>
@@ -96,7 +88,7 @@
 			</div>
 		</div>
 		<div id="add-task-div" style="padding-right: 15px;">
-			<div id="add-task-btn" class="btn btn-secondary" style="width:300px; height:40px; border-radius: 0; cursor: pointer;">
+			<div class="btn btn-secondary" style="width:300px; height:40px; border-radius: 0; cursor: pointer;">
 				<div id="add-task-button-div" style="margin-top: 2px;">
 					<span id="add-task-span"> <i class="fas fa-plus"></i> 새 업무리스트만들기</span>
 				</div>
@@ -116,36 +108,36 @@
 		</div>
 	</div>
 </section>
-<script type="text/javascript">
-	function showAddTaskDiv(target) {
-		var listNo = (target.id).substring(22);
-		$("#task-add-div-taskList-" + listNo).show();
-	}
-	function hideAddTaskDiv(target) {
-		var listNo = (target.id).substring(12);
-		console.log(listNo);
-		$("#task-add-div-taskList-" + listNo).hide();
-	}
-	function insertTask(target) {
-		var listNo = (target.id).substring(12);
-		var task = {
-			"listNo" : listNo,
-			"content" : $("#task-content-" + listNo).val(),
-			"writer" : "test",
-			"startDate" : $.datepicker.formatDate('yy-mm-dd', new Date()),
-			"endDate" : $.datepicker.formatDate('yy-mm-dd', new Date()),
-			"completedP" : "test"
-		};
-		$.ajax({
-			url : "/team/task/addtask.action",
-			method : "post",
-			data : task,
-			success : function(resp, status, xhr) {
-				$("#task-body").load("loadtask.action");
-			},
-			error : function(xhr, status, err) {
-				console.log(err);
-			}
-		});
-	}
+<script type="text/javascript">		
+function showAddTaskDiv(target) {
+	var listNo = (target.id).substring(22,24);
+	$("#task-add-div-taskList-"+listNo).show();
+}
+function hideAddTaskDiv(target) {
+	var listNo = (target.id).substring(12,14);
+	console.log(listNo);
+	$("#task-add-div-taskList-"+listNo).hide();
+}
+function insertTask(target) {
+	var listNo = (target.id).substring(12,14);
+	var task = {
+			"listNo":listNo,
+			"content":$("#task-content-"+listNo).val(),
+			"writer":"test",
+			"startDate": $.datepicker.formatDate('yy-mm-dd',new Date()),
+			"endDate": $.datepicker.formatDate('yy-mm-dd',new Date()),
+			"completedP":"test"
+			};
+	$.ajax({
+		url : "/team/task/addtask.action",
+		method : "post",
+		data : task,
+		success : function(resp, status, xhr) {
+			$("#task-body").load("loadtask.action");
+		},
+		error : function(xhr, status, err) {
+			console.log(err);
+		}
+	});
+}
 </script>

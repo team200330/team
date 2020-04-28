@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.team.mapper.TaskMapper;
+import com.team.vo.Task;
 import com.team.vo.TaskList;
 
 @Service("taskService")
@@ -24,6 +25,21 @@ public class TaskServiceImpl implements TaskService {
 	@Override
 	public List<TaskList> searchTaskList() {
 		return taskMapper.selectTaskList();
+	}
+
+	@Override
+	public void deleteTaskList(int listNo) {
+		taskMapper.deleteTaskList(listNo);
+	}
+
+	@Override
+	public void addTask(Task task) {
+		taskMapper.insertTask(task);
+	}
+
+	@Override
+	public List<Task> searchTask() {
+		return taskMapper.selectTask();
 	}
 	
 }

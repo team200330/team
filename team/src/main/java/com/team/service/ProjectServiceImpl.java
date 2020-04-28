@@ -6,7 +6,6 @@ import java.util.Map;
 
 import com.team.mapper.ProjectMapper;
 import com.team.vo.Project;
-import com.team.vo.Template;
 
 import lombok.Setter;
 
@@ -49,6 +48,12 @@ public class ProjectServiceImpl implements ProjectService {
 	public int projectListCount(HashMap<String, Object> params) {
 		// TODO Auto-generated method stub
 		return projectMapper.selectProjectListCount(params);
+	}
+
+	@Override
+	public Project searchProjectByNo(int projectNo) {
+		// TODO Auto-generated method stub
+		return projectMapper.selectProjectByNo(projectNo);
 	}
 
 

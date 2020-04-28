@@ -7,28 +7,28 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <form id="writeform" role="form" action="write.action" method="post">
+            <input type="hidden" id="projectNo" />
 	            <div class="modal-body">
 	                <div class="card-body">
 	                  <div class="form-group">
 	                    <label for="exampleInputEmail1">제목</label>
-	                    <input id="projectName" name="projectName" class="form-control" type="text" placeholder="제목을 입력해주세요">
+	                    <input id="de_projectName" name="projectName" class="form-control" type="text" placeholder="제목을 입력해주세요" value="">
 	                  </div>
 	                  <div class="form-group">
 	                    <label for="exampleInputPassword1">설명</label>
-	                    <input id="content" name="content" class="form-control" type="text" placeholder="선택사항">
+	                    <input id="de_content" name="content" class="form-control" type="text" placeholder="선택사항">
 	                  </div>
                       <!-- radio -->
                       <div class="form-group"  style="display: none;">
                         <div class="custom-control custom-radio float-left" style="width:50%;">
-                          <input id="publicRadio1" name="proPublic" value="false" class="custom-control-input" type="radio" checked>
-                          <label for="publicRadio1" class="custom-control-label">비공개
+                          <input id="de_publicRadio1" name="proPublic" value="false" class="custom-control-input" type="radio" checked>
+                          <label for="de_publicRadio1" class="custom-control-label">비공개
                           <br><p style="font-weight: 400; font-size: 0.9rem;">추가된 멤버만 엑세스 가능</p>
                           </label>
                         </div>
                         <div class="custom-control custom-radio float-left" style="width:50%;">
-                          <input id="publicRadio2" name="proPublic" value="true"  class="custom-control-input" type="radio">
-                          <label for="publicRadio2" class="custom-control-label">공개
+                          <input id="de_publicRadio2" name="proPublic" value="true"  class="custom-control-input" type="radio">
+                          <label for="de_publicRadio2" class="custom-control-label">공개
                           <br><p style="font-weight: 400; font-size: 0.9rem;" >워크스페이스의 모든 멤버 엑세스 가능</p>
                           </label>
                         </div>
@@ -87,29 +87,29 @@
                       </div>
 	                   <div class="form-group" style="display: none;">
 		                      <div class="custom-control custom-radio float-left" style="width:20%">
-		                        <input id="template1" name="templateNo" value="basics"  class="custom-control-input" type="radio" checked>
+		                        <input id="de_template1" name="templateNo" value="basics"  class="custom-control-input" type="radio" checked>
 		                         <label for="template1" class="custom-control-label">기본</label>
 		                      </div>
 		                      <div class="custom-control custom-radio float-left" style="width:20%">
-		                        <input id="template2" name="templateNo" value="weekday"  class="custom-control-input" type="radio">
+		                        <input id="de_template2" name="templateNo" value="weekday"  class="custom-control-input" type="radio">
 		                         <label for="template2" class="custom-control-label">평일</label>
 		                      </div>
 		                      <div class="custom-control custom-radio float-left" style="width:20%">
-		                        <input id="template3" name="templateNo" value="individual"  class="custom-control-input" type="radio">
+		                        <input id="de_template3" name="templateNo" value="individual"  class="custom-control-input" type="radio">
 		                         <label for="template3" class="custom-control-label">개인</label>
 		                      </div>
 		                      <div class="custom-control custom-radio float-left" style="width:20%">
-		                        <input id="template4" name="templateNo" value="department"  class="custom-control-input" type="radio">
+		                        <input id="de_template4" name="templateNo" value="department"  class="custom-control-input" type="radio">
 		                         <label for="template4" class="custom-control-label">부서</label>
 		                      </div>
 		                      <div class="custom-control custom-radio float-left" style="width:20%">
-		                        <input id="template5" name="templateNo" value="khanban"  class="custom-control-input" type="radio">
+		                        <input id="de_template5" name="templateNo" value="khanban"  class="custom-control-input" type="radio">
 		                         <label for="template5" class="custom-control-label">칸반(Kanban)</label>
 		                      </div>
 			            </div>
 					
 					  <div class="row">
-				 		<label for="template1" class="overflow-hidden display-none margin-right-10px">
+				 		<label for="de_template1" class="overflow-hidden display-none margin-right-10px">
 			            <div class="info-box">
 			              <span id="chklabel1" class="selected1 info-box-icon bg-info elevation-1 width-50px"><i   id="nametemplate" class="fas fa-border-none"></i></span>
 			              <div class="info-box-content">
@@ -121,7 +121,7 @@
 			            <!-- /.info-box -->
 			
 			
-				 		<label for="template2" class="overflow-hidden display-none margin-right-10px">
+				 		<label for="de_template2" class="overflow-hidden display-none margin-right-10px">
 			            <div class="info-box">
 			              <span id="chklabel1" class="info-box-icon bg-info elevation-1 width-50px"><i class="fas fa-calendar-alt"></i></span>
 			              <div class="info-box-content">
@@ -132,7 +132,7 @@
 			            </label>
 			            <!-- /.info-box -->
 			
-				 		<label for="template3" class="overflow-hidden display-none margin-right-10px">
+				 		<label for="de_template3" class="overflow-hidden display-none margin-right-10px">
 			            <div class="info-box">
 			              <span id="chklabel1" class="info-box-icon bg-info elevation-1 width-50px"><i class="fas fa-users"></i></span>
 			              <div class="info-box-content">
@@ -143,7 +143,7 @@
 			            </label>
 			            <!-- /.info-box -->
 			
-				 		<label for="template4" class="overflow-hidden display-none margin-right-10px">
+				 		<label for="de_template4" class="overflow-hidden display-none margin-right-10px">
 			            <div class="info-box">
 			              <span id="chklabel1" class="info-box-icon bg-info elevation-1 width-50px"><i class="fas fa-briefcase"></i></span>
 			              <div class="info-box-content">
@@ -154,7 +154,7 @@
 			            </label>
 			            <!-- /.info-box -->
 			
-				 		<label for="template5" class="overflow-hidden display-none margin-right-10px">
+				 		<label for="de_template5" class="overflow-hidden display-none margin-right-10px">
 			            <div class="info-box">
 			              <span id="chklabel1" class="info-box-icon bg-info elevation-1 width-50px"><i class="fas fa-chalkboard"></i></span>
 			              <div class="info-box-content">
@@ -176,7 +176,6 @@
 	              <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 	              <button type="button" class="btn btn-primary" id="saveSubmit">프로젝트 만들기</button>
 	            </div>
-            </form>
           
   
       <!-- 멤버 추가 모달 -->

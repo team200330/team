@@ -7,18 +7,18 @@
 		<id column="project_no" property="projectNo" />
 		<result column="workspace_no" property="workspaceNo" />
 		<result column="project_name" property="projectName" />
-		<result column="regdate" property="regdate" />
+		<result column="startdate" property="startdate" />
 		<result column="content" property="content" />
 		<result column="manager_email" property="managerEmail" />
 		<result column="deleted" property="deleted" />
-		<result column="public" property="isPublic" />
+		<result column="pro_public" property="proPublic" />
 		<result column="template_no" property="templateNo" />
 		<result column="pro_no" property="proNo" />
 	</resultMap>
 	
 	<insert id="insertProject">
-		INSERT INTO project ( project_name, content, manager_email, is_public, template_no, workspace_no)
-		VALUES ( #{projectName}, #{content}, "1@1", #{public}, #{templateNo}, "6" )
+		INSERT INTO project ( project_name, content, manager_email, pro_public, template_no, workspace_no)
+		VALUES ( #{projectName}, #{content}, "1@1", #{proPublic}, #{templateNo}, "6" )
 	</insert>
 	
 	<select id="selectProject" resultMap="projectMap">
@@ -26,7 +26,7 @@
 	</select>
 	
 	<select id="selectProject2" resultMap="projectMap">
-		<![CDATA[ SELECT * FROM project ORDER BY project_no DESC LIMIT 4 ]]>
+		<![CDATA[ SELECT * FROM project WHERE deleted = 0 ORDER BY project_no DESC LIMIT 4 ]]>
 	</select>
 	
 	<select id="selectProjectByWorkspaceNo" parameterType="int" resultMap="projectMap">
@@ -39,63 +39,61 @@
 		WHERE project_no = #{ projectNo }
 	</update>
 	
+	<select id="selectProjectByNo" parameterType="int" resultMap="projectMap">
+		SELECT * FROM project
+		WHERE project_no = #{ projectNo }
+	</select>
+	
+	
+	
+
+	<sql id="searchCondition">
+		<trim suffix="AND">
+	    	<choose>
+	    		<when test="searchType == 'T'.toString()">
+	    			project_name LIKE '%'||#{searchKey}||'%'
+	    		</when>
+	    		<when test="searchType == 'C'.toString()">
+	    			content LIKE '%'||#{searchKey}||'%'
+	    		</when>
+	    		<when test="searchType == 'TC'.toString()">
+	    			( project_name LIKE '%'||#{searchKey}||'%' OR content LIKE '%'||#{searchKey}||'%' )
+	    		</when>
+	    		<when test="searchType == 'P'.toString()">
+	    			pro_public LIKE '%'||#{searchKey}||'%'
+	    		</when>
+	    	</choose>
+		</trim>
+	</sql>
+	
 	<select id="selectPageing" parameterType="hashmap" resultMap="projectMap">
-		SELECT *
+<!-- 		SELECT *
 		FROM (
-			  SELECT row_number() over(order by project_no) rnum,project_no,project_name, manager_email, regdate, is_public, template_no, pro_no
+			  SELECT row_number() over(order by project_no) rnum,project_no,project_name, manager_email, startdate, pro_public, template_no, pro_no
 		      FROM project
-		      WHERE deleted = '0'
+		      WHERE <include refid="searchCondition" /> deleted = '0'
 		      AND <![CDATA[ project_no < #{ end } ]]>
 		      ORDER BY project_no desc
 		     ) project
-		WHERE project_no BETWEEN project_no AND  #{ beginningPageNo };
+		WHERE <![CDATA[ project_no >=  #{ beginningPageNo } ]]> -->
 		
-<!-- 		SELECT project_no, manager_email, regdate, deleted
+		<!-- SELECT *
 		FROM (
-					SELECT rownum idx, project_no, project_name, manager_email, regdate, deleted
-					FROM project
-					WHERE deleted = '0'
-					AND <![CDATA[ rownum < #{ end } ]]>
-					ORDER BY project_no desc
-				)
-		WHERE idx >= #{ beginningPageNo }; -->
+				SELECT <![CDATA[ @rownum:=@rownum+1 rnum, A.* ]]>
+				FROM project A,
+					  <![CDATA[ (SELECT @rownum := 0 ) R ]]>
+				WHERE 1=1 AND <include refid="searchCondition" /> deleted = '0'
+				ORDER BY project_no DESC
+				) list
+		WHERE <![CDATA[ rnum >= #{ beginningPageNo } AND rnum <= #{ end } ]]> -->
 	</select>
 	<select id="selectProjectListCount" parameterType="hashmap" resultType="int" >
-		<![CDATA[ SELECT COUNT(*) FROM project WHERE deleted = '0' ORDER BY project_no DESC ]]>
+		SELECT COUNT(*) FROM project WHERE <include refid="searchCondition" /> deleted = '0' ORDER BY project_no DESC
 	</select>
 
 
-<!-- 	<resultMap type="project" id="projectMap">
-		<id column="project_no" property="projectNo" />
-		<result column="workspace_no" property="workspaceNo" />
-		<result column="project_name" property="projectName" />
-		<result column="regdate" property="regdate" />
-		<result column="content" property="content" />
-		<result column="manager_email" property="managerEmail" />
-		<result column="deleted" property="deleted" />
-		<result column="public" property="isPublic" />
-		<result column="template_no" property="templateNo" />
-	</resultMap> -->
-	
+
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

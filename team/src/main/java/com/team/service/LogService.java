@@ -9,4 +9,8 @@ public interface LogService {
 
 	public List<Log> findLogByProjectNo(HashMap<String, Object> params);
 	
+	public void logCheckByReceiver(HashMap<String, Object> params);
+	
+	public void logDeleteByReceiver(HashMap<String, Object> params);
+	
 }

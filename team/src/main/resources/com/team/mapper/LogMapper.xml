@@ -6,10 +6,36 @@
 	<select id="selectLogByProjectNo" parameterType="hashmap" resultMap="logMap">
 	SELECT * FROM log l
 	INNER JOIN log_receiver r ON l.log_no = r.log_no 
-	WHERE project_no = #{projectNo}
-	AND r.email = #{email} AND deleted = 0
+	WHERE 
+		<trim suffix="AND">
+		<choose>
+			<when test="searchType == 'A'.toString()">
+			</when>
+			<when test="searchType == 'C'.toString()">
+			checked = 0
+			</when>
+			<when test="searchType == 'K'.toString()">
+			(
+			email LIKE CONCAT('%',#{key},'%') OR 
+			state LIKE CONCAT('%',#{key},'%') 
+			)
+			</when>
+		</choose>
+		</trim>
+	receiver = #{email} AND
+	project_no = #{projectNo} AND deleted = 0
 	ORDER BY l.log_no DESC
 	</select>
+	
+	<update id="updateCheckedByReceiver" parameterType="hashmap">
+	UPDATE log_receiver SET checked = 1
+	WHERE log_no = #{logNo} AND receiver = #{receiver}
+	</update>
+	
+	<update id="deleteLogByReceiver">
+	UPDATE log_receiver SET deleted = 1
+	WHERE log_no = #{logNo} AND receiver = #{receiver}
+	</update>
 
 	<resultMap type="Log" id="logMap">
 		<id column="log_no" property="logNo"/>
@@ -23,8 +49,8 @@
 	
 	<resultMap type="LogReceiver" id="logReceiverMap">
 		<result column="log_no" property="logNo"/>
-		<result column="email" property="email"/>
-		<result column="is_read" property="isRead"/>
+		<result column="receiver" property="receiver"/>
+		<result column="checked" property="checked"/>
 		<result column="deleted" property="deleted"/>
 	</resultMap>
 
