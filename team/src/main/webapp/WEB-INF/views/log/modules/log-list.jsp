@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page pageEncoding="utf-8"%>
 
 			<c:choose>
@@ -9,14 +10,6 @@
 							<div class="card" style="margin-left:50px;margin-right:50px;border-radius:unset">
 				              <div class="card-header">
 				                <h3 class="card-title">${key}</h3>						
-				                <div class="card-tools">
-				                  <%-- <div class="input-group input-group-sm" style="width: 150px;">
-				                    <input data-value="<fmt:formatDate value="${logs[key].get(0).writedate}" pattern="yyyy-MM-dd hh:mm"/>" type="text" name="table_search" class="search-log form-control float-right" placeholder="Search">
-				                    <div class="input-group-append">
-				                      <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-				                    </div>
-				                  </div> --%>
-				                </div>
 				              </div>
 				              <!-- /.card-header -->
 				              <div class="card-body table-responsive p-0" style="max-height:500px;">
@@ -33,9 +26,17 @@
 													<a href="#">${log.email}</a>
 												</span>
 						                      </td>
-						                      <td>님이 (업무이름) 을 <span>${log.state}</span>했습니다</td>
+						                      <td>님이 
+						                      		<span class="log-task-content">
+						                      			<c:choose>
+						                      			<c:when test="${log.task.content.length() > 15}">${fn:substring(log.task.content, 0, 15)} ... </c:when>
+						                      			<c:otherwise>${log.task.content}</c:otherwise>
+						                      			</c:choose>
+						                
+						                      		</span> 
+						                      		업무를 <span>${log.state}</span>했습니다</td>
 						                      	<td>
-												<div data-value="${log.logNo}"><fmt:formatDate value="${log.writedate}" pattern="yyyy-MM-dd hh:mm"/></div>
+												<div data-value="${log.logNo}" data-content="${log.task.content}"><fmt:formatDate value="${log.writedate}" pattern="yyyy-MM-dd hh:mm"/></div>
 												<input class="logWriteDate" type="hidden" value="<fmt:formatDate value="${log.writedate}" pattern="yyyy-MM-dd hh:mm"/>">
 												</td>
 						                    </tr>	
