@@ -377,7 +377,7 @@ $(function() {
 		$('#detail-form #projectNo').val(projectNo);
 		
 		console.log(projectNo);
-		$('#modal-detail').modal('show');
+		
 		//$('#detail-form #projectNo').val(projectNo);
 
 		//$('#detail-form').submit();
@@ -388,21 +388,21 @@ $(function() {
 			"async" : true,
 			"data" : {	"projectNo" : projectNo },
 			//"dataType" : "json", // dataType : 응답 컨텐츠의 종류 지정			
-			"success" : function(member, status, xhr) {
+			"success" : function(data, status, xhr) {
 
+				console.log(data.projectName)
 				//$('#detail-form').submit();
 				
-				$('#de_projectName').val(projectDetail.projectName);
-				$('#de_content').val(projectDetail.de_content);
-				$('#detail-form #projectNo').val(projectDetail.projectNo);
+				$('#de_projectName').val(data.projectName);
+				$('#de_content').val(data.content);
+				$('#detail-form #projectNo').val(data.projectNo);
 				
-				
-				
-				
+				$('#modal-detail').modal('show');
+
 			},
 			"error":function(xhr, status, err){
 				console.log(err)
-			}
+			}	
 		});
 
 	}); 
