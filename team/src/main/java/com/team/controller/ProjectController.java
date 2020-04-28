@@ -66,7 +66,7 @@ public class ProjectController {
 		ThePager pager = new ThePager(projectListCount, pageNo, pageSize, pagerSize, "prlist.action", req.getQueryString() );
 		model.addAttribute("pager", pager);
 		
-		System.out.println(pager);
+		
 		return "project/prlist";
 		
 	}
@@ -118,11 +118,16 @@ public class ProjectController {
 	
 	@GetMapping(path = {"/detail"})
 	@ResponseBody	
-	public String write(int projectNo) {
+	//public String write(int projectNo) {
+	public String write(int projectNo, Model model) {
 		
-		Project project = projectService.searchProjectByNo(projectNo);
+		Project projectDetail = projectService.selectDetail(projectNo);
+		model.addAttribute("projectDetail", projectDetail);
+		
+		System.out.println(projectDetail);
 		
 		return "success";
+		//return "project/detail";
 		
 	}
 	/*

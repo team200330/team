@@ -12,7 +12,7 @@
 	                <div class="card-body">
 	                  <div class="form-group">
 	                    <label for="exampleInputEmail1">제목</label>
-	                    <input id="de_projectName" name="projectName" class="form-control" type="text" placeholder="제목을 입력해주세요" value="">
+	                    <input id="de_projectName" name="projectName" class="form-control" type="text" placeholder="제목을 입력해주세요" value="${projectDetail.projectName}">${projectDetail.projectName}
 	                  </div>
 	                  <div class="form-group">
 	                    <label for="exampleInputPassword1">설명</label>

@@ -371,31 +371,32 @@ $(function() {
 	});
 	// -- write-form-submit 끝
 
-/* 	$('.to-detail').on('click', function(event) {
-		var projectNo = $(this).attr('data-projectNo');
+ 	$('.to-detail').on('click', function(event) {
+ 		
+ 		var projectNo = $(this).attr('data-projectNo');
+		$('#detail-form #projectNo').val(projectNo);
+		
 		console.log(projectNo);
+		$('#modal-detail').modal('show');
 		//$('#detail-form #projectNo').val(projectNo);
 
 		//$('#detail-form').submit();
 
 		$.ajax({
 			"url":"/team/project/detail",
-			"method":"post",
+			"method":"get",
 			"async" : true,
-			"data" : {
-				"projectNo" : projectNo,
-				"projectNaem" : projectName
-			},
-			"dataType" : "json", // dataType : 응답 컨텐츠의 종류 지정			
+			"data" : {	"projectNo" : projectNo },
+			//"dataType" : "json", // dataType : 응답 컨텐츠의 종류 지정			
 			"success" : function(member, status, xhr) {
-				
-				$('#detail-form #projectNo').val(projectNo);
 
-				$('#detail-form').submit();
-				console.log(projectNo)
-				$('#modal-detail').modal('show');
+				//$('#detail-form').submit();
 				
-				$('#de_projectName').val(project.projectName);
+				$('#de_projectName').val(projectDetail.projectName);
+				$('#de_content').val(projectDetail.de_content);
+				$('#detail-form #projectNo').val(projectDetail.projectNo);
+				
+				
 				
 				
 			},
@@ -404,7 +405,7 @@ $(function() {
 			}
 		});
 
-	}); */
+	}); 
 	
 	//////////////////// 페이징 처리
 

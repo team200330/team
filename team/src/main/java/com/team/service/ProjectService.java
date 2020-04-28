@@ -22,6 +22,8 @@ public interface ProjectService {
 
 	Project searchProjectByNo(int projectNo);
 
+	Project selectDetail(int projectNo);
+
 
 
 

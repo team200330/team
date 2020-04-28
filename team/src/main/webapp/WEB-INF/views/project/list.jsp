@@ -14,7 +14,7 @@
 		                <c:if test="${ project.content == null}"><span class="progress-description">&nbsp;&nbsp;&nbsp;</span></c:if>
 		                <c:if test="${ project.content eq project.content }"><span class="progress-description" style="height: 23px;">${ project.content }</span></c:if>
 						<span class="info-box-number">
-		                	<div style="display:none" id="${project.projectNo }" class="projectNo">${project.projectNo }</div>
+		                	<div style="display:none" id="${ project.projectNo }" class="projectNo">${project.projectNo }</div>
 		                	<select name="proNo" class="seletProNo btn btn-block btn-default" style="display: inline-block;" >
 			                	<c:if test="${project.proNo eq '1' }">
 				                	<option value="1" selected="selected">상태없음 </option>
@@ -52,10 +52,11 @@
 			                		<option value="5" selected="selected">취소 </option>
 				                </c:if>
 		                	</select>
-		                			<button type="button" class="btn btn-block btn-outline-secondary btn-flat to-detail"  data-toggle="modal" data-target="#modal-detail">
-										<i class="fas fa-plus"></i> Add 
-									</button>
-		                	<a class="to-detail"href="javascript:" data-projectNo="${ project.projectNo }" >
+                			<button type="button" class="btn btn-block btn-outline-secondary btn-flat to-detail"  data-toggle="modal" data-target="#modal-detail">
+								<i class="fas fa-plus"></i> Add 
+							</button>
+		                	<a class="to-detail" href="javascript:" data-projectNo="${ project.projectNo }" > 
+		                	
 		                	<span style="float: right; margin:20px 0 0;"><i class="fas fa-cog"></i></span>
 		                	</a>
 		                	
@@ -80,5 +81,6 @@
 		          </div>
 		          <!-- /.col -->
 			</c:forEach>
+
 
 
