@@ -16,4 +16,6 @@ public interface TaskService {
 	void addTask(Task task);
 
 	List<Task> searchTask();
+
+	void deleteTask(int taskNo);
 }

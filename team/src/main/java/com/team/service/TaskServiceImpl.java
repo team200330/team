@@ -41,5 +41,10 @@ public class TaskServiceImpl implements TaskService {
 	public List<Task> searchTask() {
 		return taskMapper.selectTask();
 	}
+
+	@Override
+	public void deleteTask(int taskNo) {
+		taskMapper.deleteTask(taskNo);
+	}
 	
 }

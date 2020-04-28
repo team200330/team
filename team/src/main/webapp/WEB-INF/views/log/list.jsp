@@ -145,9 +145,7 @@
 				url : "list",
 				method : "get",
 				success : function(resp, status, xhr) {
-					$("#log-list-container").load(
-						"/team/log/search?searchType=K&email=${loginuser.email}&key="+ key
-					);
+					$("#log-list-container").load("/team/log/search?searchType=K&email=${loginuser.email}&key="+ key);
 				},
 				error : function(xhr, status, err) {
 					console.log(err);
@@ -161,7 +159,8 @@
 			
 			var logNo = $(this).parents().attr("data-value");
 			var searchType = $("#dropdown-select").attr("data-value");
-
+			var text = $(this).parents().eq(0).attr("data-content");
+			
 			$.ajax({
 				url : "check",
 				method : "post", 
@@ -173,7 +172,7 @@
 					target.removeClass(".unchecked-log");
 					target.addClass(".checked-log");
 					
-					toastr.info("로그를 확인했습니다");
+					toastr.info(textSubString(text) +" 업무와 관련된 로그를 확인했습니다");
 				},
 				error : function(xhr, status, err) {
 					console.log(err);
@@ -186,17 +185,17 @@
 			if (!confirm("로그를 삭제할까요?")) return;
 			
 			var logNo = $(this).parents().attr("data-value");
-			var searchType = $("#dropdown-select").attr("data-value") == undefined ? "A" : $("#dropdown-select").attr("data-value");
-			
-			console.log(searchType);
-			
+			var searchType = $("#dropdown-select").attr("data-value") == undefined ? "A" : $("#dropdow-btnn-select").attr("data-value");
+			var text = $(this).parents().eq(0).attr("data-content");
+	
 			$.ajax({
 				url : "delete",
 				method : "post", 
 				data : {"logNo": logNo},
 				success : function(resp, status, xhr) {
 					$("#log-list-container").load("/team/log/search?searchType="+ searchType +"&email=${loginuser.email}");
-					toastr.error("로그를 삭제했습니다");
+				
+					toastr.error(textSubString(text) +" 업무와 관련된 로그를 삭제했습니다");
 				},
 				error : function(xhr, status, err) {
 					console.log(err);
@@ -212,7 +211,6 @@
 			
 			if (target.length == 0) { alert("이미 모든 로그를 확인했습니다."); return; } 
 			if (!confirm("모든 로그를 읽음 처리할까요?")) return;
-
 			
 			for (var i = 0; i < target.length; i++) {
 				$.ajax({
@@ -226,13 +224,14 @@
 						target.removeClass(".unchecked-log");
 						target.addClass(".checked-log");
 						
-						toastr.info("로그를 확인했습니다");
 					},
 					error : function(xhr, status, err) {
 						console.log(err);
 					}
 				});
 			}
+			
+			toastr.info("모든 로그를 확인했습니다");
 		});
 		
 		// 로그 전체 삭제
@@ -251,13 +250,13 @@
 					data : {"logNo": target[i].id},
 					success : function(resp, status, xhr) {
 						$("#log-list-container").load("/team/log/search?searchType="+ searchType +"&email=${loginuser.email}");
-						toastr.error("로그를 삭제했습니다");
 					},
 					error : function(xhr, status, err) {
 						console.log(err);
 					}
 				});
 			}
+			toastr.error("모든 로그를 삭제했습니다");
 		});
 		
 	})

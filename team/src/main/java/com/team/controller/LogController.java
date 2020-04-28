@@ -42,7 +42,7 @@ public class LogController {
 		params.put("projectNo", projectNo);
 		params.put("email", ((Member) session.getAttribute("loginuser")).getEmail());
 		params.put("searchType", "A");
-
+		
 		Map<String, List<Log>> logs = writedateSplit(logService.findLogByProjectNo(params));
 		
 		model.addAttribute("keys", reverseOrderMapkey(logs));
@@ -64,6 +64,7 @@ public class LogController {
 		params.put("projectNo", projectNo);
 		params.put("key", key);
 		params.put("writedate", date);
+		
 		
 		Map<String, List<Log>> logs = writedateSplit(logService.findLogByProjectNo(params));
 		

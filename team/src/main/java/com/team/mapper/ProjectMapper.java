@@ -8,7 +8,13 @@ import com.team.vo.Project;
 import com.team.vo.ProjectMember;
 
 public interface ProjectMapper {
-
+	
+	List<Project> selectProjectByWorkspaceNo(int workspaceNo);
+	
+	List<ProjectMember> selectMemberByProjectNo(int projectNo);
+	
+	///////////////////////////////////////////
+	
 	void insertProject(Project project);
 
 	List<Project> selectProject();
@@ -21,14 +27,13 @@ public interface ProjectMapper {
 
 	int selectProjectListCount(HashMap<String, Object> params);
 
-	List<Project> selectProjectByWorkspaceNo(int workspaceNo);
-
 	Project selectProjectByNo(int projectNo);
+
+	Project selectDetail(int projectNo);
 	
-	
-	///////////////////////////////////////////
-	
-	List<ProjectMember> selectMemberByProjectNo(int projectNo);
+
+
+
 
 
 }
