@@ -19,4 +19,6 @@ public interface TaskMapper {
 	
 	Task selectTaskByTaskNo(int taskNo);
 
+	void deleteTask(int taskNo);
+
 }

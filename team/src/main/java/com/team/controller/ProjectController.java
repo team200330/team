@@ -119,14 +119,15 @@ public class ProjectController {
 	@GetMapping(path = {"/detail"})
 	@ResponseBody	
 	//public String write(int projectNo) {
-	public String write(int projectNo, Model model) {
+	public Project write(int projectNo, Model model) {
 		
 		Project projectDetail = projectService.selectDetail(projectNo);
 		model.addAttribute("projectDetail", projectDetail);
 		
 		System.out.println(projectDetail);
-		
-		return "success";
+
+		return projectDetail;
+		//return "success";
 		//return "project/detail";
 		
 	}

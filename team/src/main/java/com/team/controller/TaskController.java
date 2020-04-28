@@ -62,6 +62,12 @@ public class TaskController {
 		taskService.deleteTaskList(listNo);
 		return "success";
 	}
+	@PostMapping(path = {"/deletetask.action"})
+	@ResponseBody
+	public String deleteTask(int taskNo) {
+		taskService.deleteTask(taskNo);
+		return "success";
+	}
 	
 	@GetMapping(path = {"/analyticsmain"})
 	public String showanalyticsMain() {
