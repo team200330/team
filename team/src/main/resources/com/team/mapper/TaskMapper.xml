@@ -11,6 +11,9 @@
 	<insert id="insertTask" parameterType="Task">
 		INSERT INTO task (list_no, content, writer)
 		VALUES ( #{listNo}, #{content}, #{writer})	
+		<selectKey keyProperty="taskNo" order="AFTER" resultType="int">
+		SELECT LAST_INSERT_ID();
+		</selectKey>
 	</insert>
 
 	<select id="selectTaskList" resultMap="taskListMap">

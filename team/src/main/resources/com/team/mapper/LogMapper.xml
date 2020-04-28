@@ -3,6 +3,22 @@
 
 <mapper namespace="com.team.mapper.LogMapper">
 
+	<insert id="insertLog" parameterType="Log">
+	INSERT INTO log(email, writedate, task_no, state, project_no)
+	VALUES(#{email}, #{writedate}, #{taskNo}, #{state}, #{projectNo})
+	<selectKey keyProperty="logNo" order="AFTER" resultType="int">
+		SELECT LAST_INSERT_ID();
+	</selectKey>
+	</insert>
+	
+	<insert id="insertLogReceiver" parameterType="java.util.List">
+	INSERT INTO log_receiver(log_no, receiver)
+	VALUES
+	<foreach collection="list" item="LogReceiver" index="index" separator=",">
+		(#{logNo}, #{receiver})
+	</foreach>
+	</insert>
+	
 	<select id="selectLogByProjectNo" parameterType="hashmap" resultMap="logMap">
 	SELECT * FROM log l
 	INNER JOIN log_receiver r ON l.log_no = r.log_no 
@@ -36,6 +52,13 @@
 	UPDATE log_receiver SET deleted = 1
 	WHERE log_no = #{logNo} AND receiver = #{receiver}
 	</update>
+	
+	
+	
+	
+	
+	
+	
 
 	<resultMap type="Log" id="logMap">
 		<id column="log_no" property="logNo"/>

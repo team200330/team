@@ -16,6 +16,11 @@
 		<result column="pro_no" property="proNo" />
 	</resultMap>
 	
+	<resultMap type="ProjectMember" id="projectMemberMap">
+		<result column="project_no" property="projectNo"/>
+		<result column="email" property="email"/>
+	</resultMap>
+	
 	<insert id="insertProject">
 		INSERT INTO project ( project_name, content, manager_email, pro_public, template_no, workspace_no)
 		VALUES ( #{projectName}, #{content}, "1@1", #{proPublic}, #{templateNo}, "6" )
@@ -44,7 +49,10 @@
 		WHERE project_no = #{ projectNo }
 	</select>
 	
-	
+	<select id="selectMemberByProjectNo" parameterType="int" resultMap="projectMemberMap">
+		SELECT * FROM project_member
+		WHERE project_no = #{ projectNo }
+	</select>
 	
 
 	<sql id="searchCondition">

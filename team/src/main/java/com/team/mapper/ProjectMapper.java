@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.team.vo.Project;
+import com.team.vo.ProjectMember;
 
 public interface ProjectMapper {
 
@@ -20,12 +21,14 @@ public interface ProjectMapper {
 
 	int selectProjectListCount(HashMap<String, Object> params);
 
-	
-	
-
 	List<Project> selectProjectByWorkspaceNo(int workspaceNo);
 
 	Project selectProjectByNo(int projectNo);
+	
+	
+	///////////////////////////////////////////
+	
+	List<ProjectMember> selectMemberByProjectNo(int projectNo);
 
 
 }
