@@ -1,5 +1,9 @@
 package com.team.controller;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +66,13 @@ public class TaskController {
 	@GetMapping(path = {"/analyticsmain"})
 	public String showanalyticsMain() {
 		return "task/analyticsmain";
+	}
+	
+	
+	///////////////////////////////////////////
+	@GetMapping(path= {"/timeline"})
+	public String showTaskTimeLine(Model model) {
+		return "task/timeline";
 	}
 	
 }
