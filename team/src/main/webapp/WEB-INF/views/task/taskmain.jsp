@@ -88,9 +88,7 @@ input::placeholder {
 	<%@include file="/WEB-INF/views/modules/common-js.jsp"%>
 	<script type="text/javascript">
 		$(function() {
-			var listNo = $(".taskList-task").id;
-			console.log(listNo);
-			////////여기 변경하기
+			////////////////// 횡 드래그 방지하는 것 jquery 로 하려다 실패 ////////////
 			/* 
 			$(document).on('mousemove',$('#taskList-task-wrapper-45'),function(event){
 				event.stopPropagation();
@@ -136,7 +134,7 @@ input::placeholder {
 			});
 			///////////////////////////////////////////////////////////////
 			
-			////////////////////////// 업무리스트 추가하기 /////////////////////////////
+			////////////////////////// 업무리스트 추가하는 메뉴 생성 /////////////////////////////
 			var flag = "false";
 			$(document).on("click","#add-task-btn",function(event) {
 				if( flag == "true"){
@@ -154,7 +152,7 @@ input::placeholder {
 			});
 			///////////////////////////////////////////////////////////////////////
 			
-			///////////////  엔터 submit 시 ajax로 task Add
+			// 엔터 submit 시 ajax로 tasklist Add
 			$(document).on("keydown","#add-task-textarea",function(key) {
 				if (key.keyCode == 13) {
 					var taskList = {"listName":$("#add-task-textarea").val(),"projectNo":$("#add-task-projectNo").attr("value")};
@@ -174,7 +172,8 @@ input::placeholder {
 					});
 				}
 			});
-
+			///////////////////////////////////////////////////////////////////////////
+			
 			//업무 리스트 삭제
 			$(document).on("click",".list-delete-btn",function(){
 				var listNo = $(this).parents().attr("id");
@@ -193,6 +192,9 @@ input::placeholder {
 					}
 				});
 			});
+			///////////////////////////////////////////////////
+
+			// 업무 추가 textarea 에 채워진 텍스트 만큼 height 늘어나게
 			$('.taskwrap').on('keyup', 'textarea', function(e) {
 				$(this).css('height', 'auto');
 				$(this).height(this.scrollHeight);

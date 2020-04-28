@@ -59,7 +59,7 @@
 							</div>
 							<section id="task-add-div-taskList-${ taskList.listNo }" style="display: none;"  data-tno="${ taskList.listNo }" data-pno="${ taskList.projectNo }">
 								<div class="taskwrap" style="display:table; margin-left:auto; margin-right:auto;">
-									<textarea id="task-content-${ taskList.listNo }" class="form-control" placeholder="새 업무 만들기" style="width:290px; min-height:77px; overflow-y:hidden; resize: none;"></textarea>
+									<textarea id="task-content-${ taskList.listNo }" class="form-control task-content" placeholder="새 업무 만들기" style="width:290px; min-height:77px; overflow-y:hidden; resize: none;"></textarea>
 								</div>
 								<div style="display:flex; flex-wrap:nowrap; height:30px;  margin-top: 5px;  margin-bottom: 5px;">
 									<div style="padding-left:10px; padding-right:10px; width:50%; margin-top: 7px; text-align: left;">
