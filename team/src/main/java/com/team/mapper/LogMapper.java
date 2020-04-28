@@ -10,6 +10,8 @@ import com.team.vo.Log;
 @Mapper
 public interface LogMapper {
 
+	public void insertLog(Log log);
+	
 	public List<Log> selectLogByProjectNo(HashMap<String, Object> params);
 	
 	public void updateCheckedByReceiver(HashMap<String, Object> params);

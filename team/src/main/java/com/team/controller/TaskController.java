@@ -1,5 +1,7 @@
 package com.team.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -36,7 +38,9 @@ public class TaskController {
 	
 	@PostMapping(path = {"/addtask.action"})
 	@ResponseBody
-	public String addTask(Task task) {
+	public String addTask(Task task, HttpSession session) {
+		session.setAttribute("task", task);
+		
 		taskService.addTask(task);
 		return "success";
 	}

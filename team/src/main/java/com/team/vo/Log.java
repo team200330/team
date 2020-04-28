@@ -15,4 +15,14 @@ public class Log {
 	
 	private LogReceiver receiver;
 	private Task task;
+	
+	public Log(String email, Date writedate, int taskNo, String state, int projectNo) {
+		this.email = email;
+		this.writedate = writedate;
+		this.state = state;
+		this.taskNo = taskNo;
+		this.projectNo = projectNo;
+	}
+	public Log() {};
+	
 }
