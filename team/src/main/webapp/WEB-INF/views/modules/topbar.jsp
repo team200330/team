@@ -170,7 +170,7 @@
               <div class="dropdown-divider"></div>
             <!-- Message End -->
                    
-          <a href="/team/workspace/create-workspace" class="dropdown-item dropdown-footer">새 워크스페이스 만들기</a>
+          <a href="/team/workspace/create-workspace?email=${ loginuser.email }" class="dropdown-item dropdown-footer">새 워크스페이스 만들기</a>
         </div>
       </li>
       <!-- WorkspaceList Dropdown Menu -->

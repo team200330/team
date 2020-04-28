@@ -2,6 +2,8 @@ package com.team.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -9,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.team.service.WorkspaceService;
 import com.team.vo.Member;
@@ -26,18 +27,28 @@ public class WorkspaceController {
 	private WorkspaceService workspaceService;
 	
 	
+	
 	@GetMapping(path = { "/create-workspace" })
-	public String showcreateworkspaceform(Model model) {		
+	public String showcreateworkspaceform(Workspace workspace,Model model,HttpSession session,Member member, String email) {	
+		workspaceService.insertWorkspace(workspace);
+		
+		int workspaceNo = (int)workspace.getWorkspaceNo();
+		model.addAttribute("workspaceNo", workspaceNo);
 		int code = (int)(Math.random()*1000+1);
 		model.addAttribute("code", code);
+		email = member.getEmail();
+		model.addAttribute("email", email);
 		
 	return "workspace/create-workspace"; 
 	}
 	
 	@PostMapping(path = { "/create-workspace" })
-	public String docreateworkspace(Workspace workspace) {		
-		   workspaceService.insertWorkspace(workspace);		   
-	return "workspace/setting-workspace"; //임시
+	public String docreateworkspace(WorkspaceMember workspaceMember,Workspace workspace) {		
+		   workspaceService.updateWorkspace(workspace);
+		  //워크스페이스 생성시 워크스페이스멤버에도 추가되는걸로 체크
+		   System.out.println(workspace);
+		   workspaceService.insertWorkspaceMember(workspaceMember);
+	return "/create-workspace";
 	}
 	
 	@GetMapping(path = { "/invite-workspace" })
@@ -53,7 +64,8 @@ public class WorkspaceController {
 	public String settingworkspaceform(int workspaceNo,Model model) {
 		Workspace workspace = workspaceService.selectWorkspaceByWorkspaceNo(workspaceNo);
 		model.addAttribute("workspace",workspace);
-	return "workspace/setting-workspace"; 
+		
+		return "workspace/setting-workspace";
 	}
 	
 	@PostMapping(path = { "/setting-workspace" })

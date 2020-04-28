@@ -23,5 +23,9 @@ public interface WorkspaceMapper {
 	Member selectMemberTypeNo1ByWorkspaceNo(int workspaceNo);
 
 	List<Member> WorkspaceMemberNameAndDepartmentSearch(Member member);
+
+	void insertWorkspaceMember(WorkspaceMember workspaceMember);
+
+	void updateWorkspace(Workspace workspace);
 	
 }
