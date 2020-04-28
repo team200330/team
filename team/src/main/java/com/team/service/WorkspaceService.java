@@ -5,12 +5,13 @@ import java.util.List;
 import com.team.vo.Member;
 import com.team.vo.Project;
 import com.team.vo.Workspace;
+import com.team.vo.WorkspaceMember;
 
 public interface WorkspaceService {
 
 	void insertWorkspace(Workspace workspace);
 
-	List<Member> selectMembersByWorkspaceNo(int workspaceNo);
+	List<Member> selectMembersByWorkspaceNo(WorkspaceMember workspaceMember);
 	
 	List<Project> selectProjectByWorkspaceNo(int workspaceNo);
 
@@ -20,7 +21,11 @@ public interface WorkspaceService {
 
 	void deleteWorkspace(Workspace workspace);
 
-	Member selectMemberTypeNo1ByWorkspaceNo(int workspaceNo);
+	Member selectMemberTypeNo1ByWorkspaceNo(WorkspaceMember workspaceMember);
 
 	List<Member> WorkspaceMemberNameAndDepartmentSearch(Member member);
+
+	void insertWorkspaceMember(WorkspaceMember workspaceMember);
+
+	void updateWorkspace(Workspace workspace);
 }

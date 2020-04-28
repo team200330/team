@@ -18,10 +18,14 @@ public interface WorkspaceMapper {
 
 	void deleteWorkspace(Workspace workspace);
 
-	List<Member> selectMembersByWorkspaceNo(int workspaceNo);
+	List<Member> selectMembersByWorkspaceNo(WorkspaceMember workspaceMember);
 
-	Member selectMemberTypeNo1ByWorkspaceNo(int workspaceNo);
+	Member selectMemberTypeNo1ByWorkspaceNo(WorkspaceMember workspaceMember);
 
 	List<Member> WorkspaceMemberNameAndDepartmentSearch(Member member);
+
+	void insertWorkspaceMember(WorkspaceMember workspaceMember);
+
+	void updateWorkspace(Workspace workspace);
 	
 }

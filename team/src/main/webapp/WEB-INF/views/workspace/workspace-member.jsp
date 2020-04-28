@@ -145,7 +145,7 @@
                     <div class="col-7">
                       <h2 class="lead"><b>${ member.name }</b><a data-toggle="dropdown" href="#"><i class="fas fa-cog ml-3" style="font-size: 18px; color: darkgray;"></i>
                       <div class="dropdown-menu">
-                            <button class="dropdown-item" onclick="location.href='/team/changeworkspacemembertype?workspaceNo=3&email=${ member.email }'">관리자 권한부여</button>
+                            <button class="dropdown-item" onclick="location.href='/team/changeworkspacemembertype?workspaceNo=3&email=${ member.email }&'">관리자 권한부여</button>
                         </div>
                       </a></h2>
                       <p class="text-muted text-sm"><b>부서 : </b>${ member.department }</p>

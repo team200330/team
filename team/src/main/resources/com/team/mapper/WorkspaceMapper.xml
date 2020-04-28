@@ -8,12 +8,27 @@
 	<insert id="insertWorkspace" parameterType="com.team.vo.Workspace"
 			useGeneratedKeys="true" keyColumn="workspaceNo" keyProperty="workspaceNo">			
 		INSERT INTO workspace (
-			workspace_name, 
-			deleted, code
+			deleted,workspace_name
 		)
 		VALUES (
-			#{ workspaceName }, 
-			#{ deleted }, #{ code }
+			0,0
+		)
+	</insert>			
+		
+	<update id="updateWorkspace" parameterType="com.team.vo.Workspace">
+		UPDATE workspace
+		SET workspace_name = #{ workspaceName } and code = #{ code }
+		WHERE workspace_no = #{ workspaceNo } and workspace_name = 0
+	</update>
+	
+	<insert id="insertWorkspaceMember" parameterType="com.team.vo.WorkspaceMember">			
+		INSERT INTO workspace_member (
+			workspace_no, 
+			email, type_no
+		)
+		VALUES (
+			#{ workspaceNo }, 
+			#{ email }, 1
 		)
 	</insert>	
 		
@@ -23,14 +38,15 @@
 		AND ( type_no = 1 OR type_no = 2 );
 	</select>
 	
-	<select id="selectMembersByWorkspaceNo" parameterType="int" resultMap="memberMap">
+	<select id="selectMembersByWorkspaceNo" parameterType="com.team.vo.WorkspaceMember" resultMap="workspaceMemberMap">
 		SELECT * FROM workspace_member wm
 		INNER JOIN member m
 		ON wm.email = m.email		
 		INNER JOIN workspace w
 		ON wm.workspace_no = w.workspace_no
-		WHERE w.workspace_no = #{ workspaceNo } 
-		AND type_no = 2;	
+		WHERE wm.email = #{ email } 
+		AND type_no = 2	
+		LIMIT 5;
 	</select>
 		
 	<resultMap type="Member" id="memberMap">
@@ -54,19 +70,22 @@
 		<result column="type_no" property="typeNo" />
 	</resultMap> 
 	
-	<select id="selectWorkspaceByWorkspaceNo" parameterType="int" resultMap="workspaceMap">
+	
+	
+	<select id="selectWorkspaceByWorkspaceNo" parameterType="com.team.vo.WorkspaceMember" resultMap="workspaceMap">
 		SELECT * FROM workspace
 		WHERE workspace_no = #{ workspaceNo } 
 	</select>
 	
-	<select id="selectMemberTypeNo1ByWorkspaceNo" parameterType="int" resultMap="memberMap">
+	<select id="selectMemberTypeNo1ByWorkspaceNo" parameterType="com.team.vo.WorkspaceMember" resultMap="workspaceMemberMap">
 		SELECT * FROM workspace_member wm
 		INNER JOIN member m
 		ON wm.email = m.email		
 		INNER JOIN workspace w
 		ON wm.workspace_no = w.workspace_no
-		WHERE w.workspace_no = #{ workspaceNo } 
-		AND type_no = 1;
+		WHERE wm.email = #{ email } 
+		AND type_no = 1
+		LIMIT 1;
 	</select>
 	
 	<select id="WorkspaceMemberNameAndDepartmentSearch" parameterType="com.team.vo.Member" resultMap="memberMap">
