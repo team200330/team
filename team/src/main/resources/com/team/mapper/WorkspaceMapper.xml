@@ -38,14 +38,15 @@
 		AND ( type_no = 1 OR type_no = 2 );
 	</select>
 	
-	<select id="selectMembersByWorkspaceNo" parameterType="int" resultMap="memberMap">
+	<select id="selectMembersByWorkspaceNo" parameterType="com.team.vo.WorkspaceMember" resultMap="workspaceMemberMap">
 		SELECT * FROM workspace_member wm
 		INNER JOIN member m
 		ON wm.email = m.email		
 		INNER JOIN workspace w
 		ON wm.workspace_no = w.workspace_no
-		WHERE w.workspace_no = #{ workspaceNo } 
-		AND type_no = 2;	
+		WHERE wm.email = #{ email } 
+		AND type_no = 2	
+		LIMIT 5;
 	</select>
 		
 	<resultMap type="Member" id="memberMap">
@@ -71,19 +72,20 @@
 	
 	
 	
-	<select id="selectWorkspaceByWorkspaceNo" parameterType="int" resultMap="workspaceMap">
+	<select id="selectWorkspaceByWorkspaceNo" parameterType="com.team.vo.WorkspaceMember" resultMap="workspaceMap">
 		SELECT * FROM workspace
 		WHERE workspace_no = #{ workspaceNo } 
 	</select>
 	
-	<select id="selectMemberTypeNo1ByWorkspaceNo" parameterType="int" resultMap="memberMap">
+	<select id="selectMemberTypeNo1ByWorkspaceNo" parameterType="com.team.vo.WorkspaceMember" resultMap="workspaceMemberMap">
 		SELECT * FROM workspace_member wm
 		INNER JOIN member m
 		ON wm.email = m.email		
 		INNER JOIN workspace w
 		ON wm.workspace_no = w.workspace_no
-		WHERE w.workspace_no = #{ workspaceNo } 
-		AND type_no = 1;
+		WHERE wm.email = #{ email } 
+		AND type_no = 1
+		LIMIT 1;
 	</select>
 	
 	<select id="WorkspaceMemberNameAndDepartmentSearch" parameterType="com.team.vo.Member" resultMap="memberMap">

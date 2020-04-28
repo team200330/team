@@ -76,7 +76,7 @@
                 <div class="row">
                   <div class="col-md-12">
                     <p class="text-center">
-                      <strong>Goal Completion</strong>
+                      <strong style="font-size:12px;">프로젝트 개요</strong>
                     </p>
                     <!-- /.progress-group -->
                     <div class="progress-group">

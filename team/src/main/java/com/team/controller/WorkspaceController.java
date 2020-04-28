@@ -25,9 +25,7 @@ public class WorkspaceController {
 	@Autowired
 	@Qualifier("workspaceService")
 	private WorkspaceService workspaceService;
-	
-	
-	
+		
 	@GetMapping(path = { "/create-workspace" })
 	public String showcreateworkspaceform(Workspace workspace,Model model,HttpSession session,Member member, String email) {	
 		workspaceService.insertWorkspace(workspace);
@@ -45,7 +43,7 @@ public class WorkspaceController {
 	@PostMapping(path = { "/create-workspace" })
 	public String docreateworkspace(WorkspaceMember workspaceMember,Workspace workspace) {		
 		   workspaceService.updateWorkspace(workspace);
-		  //워크스페이스 생성시 워크스페이스멤버에도 추가되는걸로 체크
+		  //워크스페이스 생성시 워크스페이스멤버에도 추가되는걸로 체크 updateWorkspace는 작업중
 		   System.out.println(workspace);
 		   workspaceService.insertWorkspaceMember(workspaceMember);
 	return "/create-workspace";
@@ -81,11 +79,14 @@ public class WorkspaceController {
 	}
 	
 	@GetMapping(path = { "/workspace-member" })
-	public String workspacemember(int workspaceNo,Model model) {
-		List <Member> members = workspaceService.selectMembersByWorkspaceNo(workspaceNo);
+	public String workspacemember(WorkspaceMember workspaceMember,Model model) {
+		List <Member> members = workspaceService.selectMembersByWorkspaceNo(workspaceMember);
 		model.addAttribute("members",members);
-		Member member = workspaceService.selectMemberTypeNo1ByWorkspaceNo(workspaceNo);
+		Member member = workspaceService.selectMemberTypeNo1ByWorkspaceNo(workspaceMember);
 		model.addAttribute("member",member);
+		//java.lang.ClassCastException: com.team.vo.WorkspaceMember cannot be cast to com.team.vo.Member
+		//작업중에있음
+		System.out.println(workspaceMember);
 	return "workspace/workspace-member"; 
 	}
 	
@@ -95,5 +96,14 @@ public class WorkspaceController {
 		model.addAttribute("members",members);
 	return "redirect:workspace/workspace-member"; 
 	}
-
+	
+	
+	@GetMapping(path = { "/changeworkspacemembertype" })
+	public String changeworkspacemembertype(WorkspaceMember workspaceMember,Model model) {
+		
+		//Member member = workspaceService.sd(workspaceMember);
+		//model.addAttribute("member",member);
+		
+	return "workspace/workspace-member"; 
+	}
 }
