@@ -56,6 +56,12 @@ public class ProjectServiceImpl implements ProjectService {
 		return projectMapper.selectProjectByNo(projectNo);
 	}
 
+	@Override
+	public Project selectDetail(int projectNo) {
+		// TODO Auto-generated method stub
+		return projectMapper.selectDetail(projectNo);
+	}
+
 
 
 

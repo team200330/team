@@ -49,16 +49,15 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 
 		String uri = request.getRequestURI();
 		
-
-		if (uri.contains("/addtask.action")) {
+		if (uri.contains("/addtask.action") || uri.contains("/deletetask.action")) {
 			Task task = (Task) request.getSession().getAttribute("task");
 			String email = ((Member)request.getSession().getAttribute("loginuser")).getEmail();
+			String state = uri.contains("add") ? "생성" : uri.contains("delete") ? "삭제" : "수정";
 			
 			// 임시 프로젝트 번호 : 1
-			Log log = new Log(email, new Date(), task.getTaskNo(), "생성", 1);
+			Log log = new Log(email, new Date(), task.getTaskNo(), state, 1);
 			System.out.println(log.toString());
 			logService.writeLog(log);
-			
 		}
 		
 		

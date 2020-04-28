@@ -11,12 +11,9 @@
 	</selectKey>
 	</insert>
 	
-	<insert id="insertLogReceiver" parameterType="java.util.List">
+	<insert id="insertLogReceiver" parameterType="LogReceiver">
 	INSERT INTO log_receiver(log_no, receiver)
-	VALUES
-	<foreach collection="list" item="LogReceiver" index="index" separator=",">
-		(#{logNo}, #{receiver})
-	</foreach>
+	VALUES (#{logNo}, #{receiver})
 	</insert>
 	
 	<select id="selectLogByProjectNo" parameterType="hashmap" resultMap="logMap">
@@ -25,8 +22,6 @@
 	WHERE 
 		<trim suffix="AND">
 		<choose>
-			<when test="searchType == 'A'.toString()">
-			</when>
 			<when test="searchType == 'C'.toString()">
 			checked = 0
 			</when>

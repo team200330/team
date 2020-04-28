@@ -49,56 +49,24 @@
 		WHERE project_no = #{ projectNo }
 	</select>
 	
+	<select id="selectPageing" parameterType="hashmap" resultMap="projectMap">
+
+	</select>
+	
+	<select id="selectProjectListCount" parameterType="hashmap" resultType="int" >
+		SELECT COUNT(*) FROM project WHERE deleted = '0' ORDER BY project_no DESC
+	</select>
+	
+	<select id="selectDetail" parameterType="int" resultMap="projectMap">
+		SELECT * FROM project
+		WHERE project_no = #{projectNo}	
+	</select>
+	
+	
 	<select id="selectMemberByProjectNo" parameterType="int" resultMap="projectMemberMap">
 		SELECT * FROM project_member
 		WHERE project_no = #{ projectNo }
 	</select>
-	
-
-	<sql id="searchCondition">
-		<trim suffix="AND">
-	    	<choose>
-	    		<when test="searchType == 'T'.toString()">
-	    			project_name LIKE '%'||#{searchKey}||'%'
-	    		</when>
-	    		<when test="searchType == 'C'.toString()">
-	    			content LIKE '%'||#{searchKey}||'%'
-	    		</when>
-	    		<when test="searchType == 'TC'.toString()">
-	    			( project_name LIKE '%'||#{searchKey}||'%' OR content LIKE '%'||#{searchKey}||'%' )
-	    		</when>
-	    		<when test="searchType == 'P'.toString()">
-	    			pro_public LIKE '%'||#{searchKey}||'%'
-	    		</when>
-	    	</choose>
-		</trim>
-	</sql>
-	
-	<select id="selectPageing" parameterType="hashmap" resultMap="projectMap">
-<!-- 		SELECT *
-		FROM (
-			  SELECT row_number() over(order by project_no) rnum,project_no,project_name, manager_email, startdate, pro_public, template_no, pro_no
-		      FROM project
-		      WHERE <include refid="searchCondition" /> deleted = '0'
-		      AND <![CDATA[ project_no < #{ end } ]]>
-		      ORDER BY project_no desc
-		     ) project
-		WHERE <![CDATA[ project_no >=  #{ beginningPageNo } ]]> -->
-		
-		<!-- SELECT *
-		FROM (
-				SELECT <![CDATA[ @rownum:=@rownum+1 rnum, A.* ]]>
-				FROM project A,
-					  <![CDATA[ (SELECT @rownum := 0 ) R ]]>
-				WHERE 1=1 AND <include refid="searchCondition" /> deleted = '0'
-				ORDER BY project_no DESC
-				) list
-		WHERE <![CDATA[ rnum >= #{ beginningPageNo } AND rnum <= #{ end } ]]> -->
-	</select>
-	<select id="selectProjectListCount" parameterType="hashmap" resultType="int" >
-		SELECT COUNT(*) FROM project WHERE <include refid="searchCondition" /> deleted = '0' ORDER BY project_no DESC
-	</select>
-
 
 
 </mapper>

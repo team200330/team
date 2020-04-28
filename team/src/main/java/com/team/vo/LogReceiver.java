@@ -8,4 +8,10 @@ public class LogReceiver {
 	private String receiver;
 	private boolean checked;
 	private boolean deleted;
+	
+	public LogReceiver(int logNo, String receiver) {
+		this.logNo = logNo;
+		this.receiver = receiver;
+	}
+	public LogReceiver() {}
 }
