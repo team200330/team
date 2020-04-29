@@ -14,12 +14,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.team.service.FeedbackService;
 import com.team.service.ProjectService;
-import com.team.ui.ThePager;
 import com.team.vo.Member;
 import com.team.vo.Project;
 
@@ -36,33 +33,32 @@ public class ProjectController {
 	
 	// 임시 워크스페이스번호
 	// 워크스페이스 번호 세션에 저장되면 바꿀거 : feedbackList, searchFeedback, writeFeedback
-	static final int workspaceNo = 15;
-	
-	// 로그인 한 유저의 정보를 가져온다 그 유저의 워크스페이스 번호를 가져온다 어떻게해?
-	
-	@GetMapping(path = { "/prlist2" })
-	public String showProjectList(Model model) {
-		
-		List<Project> projectList = projectService.findProject();
-		model.addAttribute("project", projectList);
-		List<Project> projectList2 = projectService.findProject2();
-		model.addAttribute("project2", projectList2);
-		
-		return "project/prlist";
-	}
+	static final int workspaceNo = 6;
+
 	
 	@SuppressWarnings("unused")
 	@GetMapping(path = { "/prlist" })
 //	public String showProjectList(@RequestParam(defaultValue = "1") int pageNo, @RequestParam(required = false) String searchType, 
 //												@RequestParam(required = false) String searchKey , HttpServletRequest req,Model model,
 //												 HttpSession session) {
-	public String showProjectList( HttpServletRequest req, Model model, HttpSession session) {		
+	public String showProjectList( Model model, HttpServletRequest request) {		
+		HttpSession session = request.getSession();
+        session.getAttribute("loginuser");
+        
+        // 임시 워크스페이스 번호 // 워크스페이스 속해있는 멤버 불러오기
+ 		if ( workspaceMembers == null ) workspaceMembers = projectService.findWorkspaceMembers(workspaceNo);
+ 		model.addAttribute("workspaceMembers", workspaceMembers);
+        
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("email", ((Member) session.getAttribute("loginuser")).getEmail());
+		params.put("workspaceNo", workspaceNo);
+		model.addAllAttributes(params);
+		System.out.println(params);
 		
-		
-		List<Project> projectList = projectService.findProject();
+		List<Project> projectList = projectService.findProject(params);
 		model.addAttribute("project", projectList);
 		
-		List<Project> projectList2 = projectService.findProject2();
+		List<Project> projectList2 = projectService.findProject2(params);
 		model.addAttribute("project2", projectList2);
 		
 //		int pageSize = 2;	// 전체게시글수
@@ -96,36 +92,56 @@ public class ProjectController {
 		
 	}
 	
-	
-	@PostMapping(path = {"/detailUpdate"})
-	@ResponseBody	
-	public String detailUpdate(Project project, String proPublic) {
-		project.setProPublic(proPublic.equals("true") ? true : false);
-		projectService.updateProject(project);
-		
-		return "success";
-		
-	}
-	
 	@GetMapping(path = {"/list"})
-	public String list(Model model) {
+	public String list(Model model, HttpServletRequest request) {
 		
-		List<Project> projectList = projectService.findProject();
+		HttpSession session = request.getSession();
+        session.getAttribute("loginuser");
+        
+        // 임시 워크스페이스 번호 // 워크스페이스 속해있는 멤버 불러오기
+ 		if ( workspaceMembers == null ) workspaceMembers = projectService.findWorkspaceMembers(workspaceNo);
+ 		model.addAttribute("workspaceMembers", workspaceMembers);
+        
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("email", ((Member) session.getAttribute("loginuser")).getEmail());
+		params.put("workspaceNo", workspaceNo);
+		model.addAllAttributes(params);
+		
+		List<Project> projectList = projectService.findProject(params);
 		model.addAttribute("project", projectList);
 		
 		return "project/list";
 	}
 	
 	@GetMapping(path = {"/list2"})
-	public String list2(Model model) {
+	public String list2(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+        session.getAttribute("loginuser");
+        
+        // 임시 워크스페이스 번호 // 워크스페이스 속해있는 멤버 불러오기
+ 		if ( workspaceMembers == null ) workspaceMembers = projectService.findWorkspaceMembers(workspaceNo);
+ 		model.addAttribute("workspaceMembers", workspaceMembers);
+        
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("email", ((Member) session.getAttribute("loginuser")).getEmail());
+		params.put("workspaceNo", workspaceNo);
+		model.addAllAttributes(params);
 		
-		List<Project> projectList2 = projectService.findProject2();
+		List<Project> projectList2 = projectService.findProject2(params);
 		model.addAttribute("project2", projectList2);
 		
 		return "project/list2";
 	}
 	
-
+	
+	@PostMapping(path = {"/detailUpdate"})
+	@ResponseBody	
+	public String detailUpdate(Project project, String proPublic, String projectNo) {
+		project.setProPublic(proPublic.equals("true") ? true : false);
+		projectService.updateProject(project);
+		return "success";
+	}
+	
 	@SuppressWarnings("unused")
 	@PostMapping(value="/projectByproNo")
 	@ResponseBody
