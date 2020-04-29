@@ -32,7 +32,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 
 		System.out.println("URI : " + uri);
 		
-		if (uri.contains("/feedback/") || uri.contains("/log/")) { 
+		if (uri.contains("/feedback/") || uri.contains("/log/") || uri.contains("/project/")) { 
 			if (session.getAttribute("loginuser") == null) {
 				response.sendRedirect("/team/account/login.action");
 				return false; // 컨트롤러로 요청을 전달하지 마세요

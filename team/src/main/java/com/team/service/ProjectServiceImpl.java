@@ -1,11 +1,20 @@
 package com.team.service;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+
+import com.team.mapper.MemberMapper;
 import com.team.mapper.ProjectMapper;
+import com.team.mapper.WorkspaceMapper;
+import com.team.vo.Member;
 import com.team.vo.Project;
+import com.team.vo.WorkspaceMember;
 
 import lombok.Setter;
 
@@ -14,21 +23,29 @@ public class ProjectServiceImpl implements ProjectService {
 	@Setter
 	private ProjectMapper projectMapper;
 	
+	@Autowired
+	@Qualifier("workspaceMapper")
+	private WorkspaceMapper workspaceMapper;
+	
+	@Autowired
+	@Qualifier("memberMapper")
+	private MemberMapper memberMapper;
+	
 	@Override
 	public void writeProject (Project project) {
 		projectMapper.insertProject(project);
 	}
 
 	@Override
-	public List<Project> findProject() {
+	public List<Project> findProject(HashMap<String, Object> params) {
 		
-		return projectMapper.selectProject();
+		return projectMapper.selectProject(params);
 	}
 
 	@Override
-	public List<Project> findProject2() {
+	public List<Project> findProject2(HashMap<String, Object> params) {
 		// TODO Auto-generated method stub
-		return projectMapper.selectProject2();
+		return projectMapper.selectProject2(params);
 	}
 	
 	@Override
@@ -65,6 +82,24 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public void updateProject(Project project) {
 		projectMapper.updateProject(project);
+	}
+
+	@Override
+	public List<Member> loginuserProjectMember(HashMap<String, Object> params) {
+		// TODO Auto-generated method stub
+		return projectMapper.selectLoginuserProjectMember(params);
+	}
+
+	@Override
+	public List<Member> findWorkspaceMembers(int workspaceNo) {
+		List<WorkspaceMember> workspaceMembers = workspaceMapper.selectWorkspaceMembers(workspaceNo);
+		List<Member> members = new ArrayList<>();
+			
+		for (WorkspaceMember m : workspaceMembers) 
+			members.add(memberMapper.selectMemberByEmail(m.getEmail()));
+		
+			
+		return members;
 	}
 
 

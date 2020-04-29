@@ -166,7 +166,7 @@
       </div>
       <!-- /.modal -->
       
-      <div class="modal fade" id="modal-detail">
+      <div class="modal fade" id="modal-detail2">
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
              <jsp:include page="prdetail.jsp" />
@@ -364,7 +364,7 @@ $(function() {
 
 
 	// 프로젝트 진행상황 구분 list에서 변경하기
-	$('.seletProNo').on('click', function(){
+	$(document).on('click', '.seletProNo', function(){
 		var projectNo = $(this).prev('.projectNo').attr('id');
 		console.log(projectNo)
 		var proNo = $(this).val();
@@ -377,7 +377,7 @@ $(function() {
 			"data":{"projectNo" : projectNo,
 				    "proNo":proNo },
 			"success":function(resp, status, xhr){
-				
+
 			},
 			"error" : function(xhr, status, err){
 				console.log(err);
@@ -458,7 +458,10 @@ $(function() {
 				var managerEmail = data.managerEmail;
 				var proPublic = data.proPublic;
 				var projectMembers = data.projectMembers;
-
+				var workspaceNo = data.workspaceNo;
+				var templateNo = data.templateNo;
+				var proNo = data.proNo;
+				
 				/////////// 시작 마감 완료
 				var startdate_t = data.startdate;
 				var startdate_t2 = new Date(startdate_t);
@@ -466,6 +469,8 @@ $(function() {
 				var deadline_t2 = new Date(deadline_t);
 				var enddate_t = data.enddate;
 				var enddate_t2 = new Date(enddate_t);
+
+
 				
 				function getFormatDate1(startdate_t2){
 				    var year = startdate_t2.getFullYear();              //yyyy
@@ -494,7 +499,7 @@ $(function() {
 				startdate_t2 = getFormatDate1(startdate_t2);
 				deadline_t2 = getFormatDate2(deadline_t2);
 				enddate_t2 = getFormatDate3(enddate_t2);
-				
+
 				var startdate = document.querySelector('#startdate');
 				var deadline = document.querySelector('#deadline');
 				var enddate = document.querySelector('#enddate');
@@ -510,14 +515,14 @@ $(function() {
               	if( proPublic == "0"){
 					$("#publicDiv").html(
 					'<div class="custom-control custom-radio float-left" style="width:50%;">'+
-		               '<input id="publicRadio1" name="proPublic" value="false" class="custom-control-input" type="radio" checked>'+
-		                '<label for="publicRadio1" class="custom-control-label">비공개'+
+		               '<input id="depublicRadio1" name="proPublic" value="false" class="custom-control-input" type="radio" checked>'+
+		                '<label for="depublicRadio1" class="custom-control-label">비공개'+
 		                '<br><p style="font-weight: 400; font-size: 0.9rem;">추가된 멤버만 엑세스 가능</p>'+
 		                '</label>'+
 		              '</div>'+
 		              '<div class="custom-control custom-radio float-left" style="width:50%;">'+
-		                '<input id="publicRadio2" name="proPublic" value="true"  class="custom-control-input" type="radio">'+
-		                '<label for="publicRadio2" class="custom-control-label">공개'+
+		                '<input id="depublicRadio2" name="proPublic" value="true"  class="custom-control-input" type="radio">'+
+		                '<label for="depublicRadio2" class="custom-control-label">공개'+
 		              '<br><p style="font-weight: 400; font-size: 0.9rem;" >워크스페이스의 모든 멤버 엑세스 가능</p>'+
 		                '</label>'+
 		              '</div>'
@@ -525,30 +530,53 @@ $(function() {
               	} else if( proPublic == "1"){
 					$("#publicDiv").html(
 					'<div class="custom-control custom-radio float-left" style="width:50%;">'+
-		               '<input id="publicRadio1" name="proPublic" value="false" class="custom-control-input" type="radio">'+
-		                '<label for="publicRadio1" class="custom-control-label">비공개'+
+		               '<input id="depublicRadio1" name="proPublic" value="false" class="custom-control-input" type="radio">'+
+		                '<label for="depublicRadio1" class="custom-control-label">비공개'+
 		                '<br><p style="font-weight: 400; font-size: 0.9rem;">추가된 멤버만 엑세스 가능</p>'+
 		                '</label>'+
 		              '</div>'+
 		              '<div class="custom-control custom-radio float-left" style="width:50%;">'+
-		                '<input id="publicRadio2" name="proPublic" value="true"  class="custom-control-input" type="radio" checked>'+
-		                '<label for="publicRadio2" class="custom-control-label">공개'+
+		                '<input id="depublicRadio2" name="proPublic" value="true"  class="custom-control-input" type="radio" checked>'+
+		                '<label for="depublicRadio2" class="custom-control-label">공개'+
 		              '<br><p style="font-weight: 400; font-size: 0.9rem;" >워크스페이스의 모든 멤버 엑세스 가능</p>'+
 		                '</label>'+
 		              '</div>'
 					);
               	}
-				
-				//$('#detail-form').submit();
+              	if (data.proPublic == "0"){ data.proPublic = "false";} else if (data.proPublic == "1"){ data.proPublic ="true";} 
 
+              	
+              	
+				//$('#detail-form').submit();
 				
-				$('#deadline').val(deadline);
-				$('#enddate').val(enddate);
 				$('#de_projectName').val(projectName);
 				$('#de_content').val(content);
-				$('#detail-form #projectNo').val(projectNo);
+				$('#de_projectNo').val(projectNo);
+				$('#de_workspaceNo').val(workspaceNo);
+				$('#de_templateNo').val(templateNo);
+				$('#de_proNo').val(proNo);
 				
-				$('#modal-detail').modal('show');
+				
+				$('#de_managerEmail').val(managerEmail);
+				//$('#de_projectMembers').val(projectMembers);
+				$('#modal-detail2').modal('show');
+				// 비공개 공개 선택
+				$('input[name=proPublic]').on('click', function(){
+					var input_id_check =  $(this).attr("id")
+					var label_for_check = $("label[for='"+ input_id_check+"']").attr("for")
+					var check_label = $($("label[for='"+ input_id_check + "']")).find( '#chklabel2' )
+
+					if( $(this).prop('checked') ){
+						if( check_label ){
+							$(".selected2").removeClass("selected2");
+							check_label.addClass("selected2");
+						}
+					}
+					
+				});
+				// -- 비공개 공개 선택
+				$('.list-container1').load('/team/project/list');
+				$('.list-container2').load('/team/project/list2');
 
 			},
 			"error":function(xhr, status, err){
@@ -556,15 +584,57 @@ $(function() {
 			}	
 		});
 
+		$('#saveSubmit2').on('click', function(event){
+
+			var values2 = $('#detail-form2').serializeArray();
+			
+			$.ajax({
+				"url": "/team/project/detailUpdate",
+				"method": "post",
+				"data": values2, // JSON Object -> JSON String
+				//"contentType": "application/json", // put method 처리를 위해 설정				
+				"success": function(data, status, xhr) {
+					$('#modal-detail2').modal('hide');
+					console.log(values2)
+					// list
+					$('.list-container1').load('/team/project/list');
+					$('.list-container2').load('/team/project/list2');
+				},
+				"error" : function(xhr, status, err){
+					console.log(err)
+				}
+			});
+		});
+
+		
+
 	}); 
 
+	
 	// detail-form2-submit 
-	$('#saveSubmit2').on('click', function(event){
+/* 	$('#saveSubmit2').on('click', function(event){
 
 		var values = $('#detail-form2').serializeArray();
 		
-		
 		//console.log(values); return;
+		$.ajax({
+			"url": "/team/project/detailUpdate",
+			"method": "post",
+			"data": values, // JSON Object -> JSON String
+			//"contentType": "application/json", // put method 처리를 위해 설정				
+			"success": function(result, status, xhr) {
+				
+				$('#modal-lg').modal('hide');
+				// list
+				$('.list-container1').load('/team/project/list');
+				$('.list-container2').load('/team/project/list2');
+			},
+		     error:function(request,status,error){
+		         alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		        }
+		}); */
+		
+/* 		//console.log(values); return;
 		$.ajax({
 			"url":"/team/project/detailUpdate",
 			"method":"post",
@@ -575,14 +645,15 @@ $(function() {
 				// list
 				$('.list-container1').load('/team/project/list');
 				$('.list-container2').load('/team/project/list2');
-				$('#detail-form2').submit();
+				
 
 			},
 			"error" : function(xhr, status, err){
 				console.log(err)
 			}
-		});
-	});
+		}); 
+		
+	});*/
 	// -- write-form-submit 끝
 	
 
