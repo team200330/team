@@ -7,6 +7,7 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
+            <form id="detail-form2" role="form" action="detail.action" method="post">
             <input type="hidden" id="projectNo" />
 	            <div class="modal-body">
 	                <div class="card-body">
@@ -19,38 +20,23 @@
 	                    <input id="de_content" name="content" class="form-control" type="text" placeholder="선택사항">
 	                  </div>
                       <!-- radio -->
-                      <c:if test="${ data.proPublic eq 'false'}">
-                      <div class="form-group" >
-                        <div class="custom-control custom-radio float-left" style="width:50%;">
-                          <input id="publicRadio1" name="proPublic" value="false" class="custom-control-input" type="radio" checked>
-                          <label for="publicRadio1" class="custom-control-label">비공개
-                          <br><p style="font-weight: 400; font-size: 0.9rem;">추가된 멤버만 엑세스 가능</p>
-                          </label>
-                        </div>
-                        <div class="custom-control custom-radio float-left" style="width:50%;">
-                          <input id="publicRadio2" name="proPublic" value="true"  class="custom-control-input" type="radio">
-                          <label for="publicRadio2" class="custom-control-label">공개
-                          <br><p style="font-weight: 400; font-size: 0.9rem;" >워크스페이스의 모든 멤버 엑세스 가능</p>
-                          </label>
-                        </div>
+                      
+                      <div class="form-group" id="publicDiv">
+                        
                       </div>
-                      </c:if>
-                      <c:if test="${ data.proPublic eq 'true'}">
-                      <div class="form-group" >
-                        <div class="custom-control custom-radio float-left" style="width:50%;">
-                          <input id="publicRadio1" name="proPublic" value="false" class="custom-control-input" type="radio">
-                          <label for="publicRadio1" class="custom-control-label">비공개
-                          <br><p style="font-weight: 400; font-size: 0.9rem;">추가된 멤버만 엑세스 가능</p>
-                          </label>
-                        </div>
-                        <div class="custom-control custom-radio float-left" style="width:50%;">
-                          <input id="publicRadio2" name="proPublic" value="true"  class="custom-control-input" type="radio" checked>
-                          <label for="publicRadio2" class="custom-control-label">공개
-                          <br><p style="font-weight: 400; font-size: 0.9rem;" >워크스페이스의 모든 멤버 엑세스 가능</p>
-                          </label>
-                        </div>
-                      </div>
-                      </c:if>
+                      <div class="form-group">
+	                    <label for="exampleInputPassword1">시작일</label>
+	                    <input id="startdate" name="startdate" class="form-control" type="date" >
+	                  </div>
+	                  <div class="form-group">
+	                    <label for="exampleInputPassword1">마감일</label>
+	                    <input id="deadline" name="deadline" class="form-control" type="date" >
+	                  </div>
+	                  <div class="form-group">
+	                    <label for="exampleInputPassword1">완료일</label>
+	                    <input id="enddate" name="enddate" class="form-control" type="date" >
+	                  </div>
+	                  
                       
                       <div>
                         <label for="exampleInputEmail1">프로젝트 멤버(선택사항)</label>
@@ -76,31 +62,6 @@
 			              </div>
                       </div>
                       
-                      <div>
-	                    <label for="exampleInputEmail1">템플릿 선택</label>
-                      </div>
-	                   <div class="form-group">
-		                      <div class="custom-control custom-radio float-left" style="width:20%">
-		                        <input id="de_template1" name="templateNo" value="basics"  class="custom-control-input" type="radio" checked>
-		                         <label for="template1" class="custom-control-label">기본</label>
-		                      </div>
-		                      <div class="custom-control custom-radio float-left" style="width:20%">
-		                        <input id="de_template2" name="templateNo" value="weekday"  class="custom-control-input" type="radio">
-		                         <label for="template2" class="custom-control-label">평일</label>
-		                      </div>
-		                      <div class="custom-control custom-radio float-left" style="width:20%">
-		                        <input id="de_template3" name="templateNo" value="individual"  class="custom-control-input" type="radio">
-		                         <label for="template3" class="custom-control-label">개인</label>
-		                      </div>
-		                      <div class="custom-control custom-radio float-left" style="width:20%">
-		                        <input id="de_template4" name="templateNo" value="department"  class="custom-control-input" type="radio">
-		                         <label for="template4" class="custom-control-label">부서</label>
-		                      </div>
-		                      <div class="custom-control custom-radio float-left" style="width:20%">
-		                        <input id="de_template5" name="templateNo" value="khanban"  class="custom-control-input" type="radio">
-		                         <label for="template5" class="custom-control-label">칸반(Kanban)</label>
-		                      </div>
-			            </div>
 
 	                </div>
 	                <!-- /.card-body -->
@@ -108,13 +69,14 @@
 
 	            <div class="modal-footer justify-content-between">
 	              <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-	              <button type="button" class="btn btn-primary" id="saveSubmit">수정</button>
+	              <button type="button" class="btn btn-primary" id="saveSubmit2">수정</button>
 	            </div>
+            </form>
           
   
       <!-- 멤버 추가 모달 -->
       <div class="modal fade" id="memberAddModal">
-        <div class="modal-dialog modal-sm" style="top:50%;left:0">
+        <div class="modal-dialog modal-sm" style="top:210;left:-195">
           <div class="modal-content">
             <div class="modal-header">
               <h6 class="modal-title" style="font-weight:bold">멤버</h6>
@@ -123,30 +85,26 @@
               </button>
             </div>
             <div class="modal-body" style="padding:10px;">
-              <input style="width:100%;height:30px;border:1px solid #17a2b8;border-radius:.20rem;padding:10px;margin-bottom:10px;"type="text" placeholder="이름 혹은 이메일로 찾기">
+              <input id="_mem_input" style="width:100%;height:30px;border:1px solid #17a2b8;padding:10px;margin-bottom:10px;"type="text" placeholder="이름 혹은 이메일로 찾기">
             
-            	<div style="margin-bottom:20px;">
-            	<div class="_mem">
-            		<div class="_mem_img">사진</div>
-            		<div class="_mem_name">멤버이름</div>
-            		<div class="_mem_icon">아이콘</div>
-            	</div>
-            	<div class="_mem">
-            		<div class="_mem_img">사진</div>
-            		<div class="_mem_name">멤버이름</div>
-            		<div class="_mem_icon">아이콘</div>
-            	</div>
-            	<div class="_mem">
-            		<div class="_mem_img">사진</div>
-            		<div class="_mem_name">멤버이름</div>
-            		<div class="_mem_icon">아이콘</div>
-            	</div>
+            	<div id="workspace_mem" style="margin-bottom:20px;">
+	            	<c:forEach var="m" items="${ workspaceMembers }">
+	            		<c:if test="${ m.email != loginuser.email }">
+	            		<div class="_mem" data-email="${ m.email }" data-name="${ m.name }">
+		            		<img class="_mem_img img-circle img-bordered-sm" src="" alt="user image">
+		            		<div class="_mem_name">${ m.email }<br/>${ m.name }</div>
+		            		<div class="_mem_icon _mem_icon_default" style="text-align:right" >
+		            			<i class="fas fa-check"></i>
+		            		</div>
+		            	</div>
+		            	</c:if>
+	            	</c:forEach>
             	</div>
             	
             </div>
             <div id="addFooter" class="modal-footer" style="border:none;color: white;background-color: #17a2b8;font-weight: bold;">
-              <img src="/dist/img/add-user-icon.png">
-              <div>멤버 초대하기</div>
+              <i class="fas fa-user-plus"></i>
+              <a href="/team/workspace/invite-workspace" style="color:white">멤버 초대하기</a>
             </div>
           </div>
           <!-- /.modal-content -->

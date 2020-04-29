@@ -211,7 +211,68 @@ $(function() {
 	// .prop( propertyName ) : 속성값 가져옴
 	// .prop( propertyName, value ) : 속성값 추가
 	// parent 상위요소
+	
+	///////////////////
 
+	// 멤버 추가 작은모달 이벤트
+	$(document).on("click", "._mem", function() {
+		var name = $(this).attr("data-name");
+		var email = $(this).attr("data-email");
+		
+		if ($(this).children().hasClass("_mem_icon_default")) {
+			$(this).children().removeClass("_mem_icon_default");
+			
+			$("#mem").html($("#mem").html() + 
+				'<div class="float_left mem" data-name="' + name +'" data-email="' + email + '">' +
+					'<img class="mem_img"></img>' +
+					'<div class="mem_name" >'+ name + '</div>' +
+					'<a href="#" class="mem_rm" aria-hidden="true">&times;</a>' +
+					'<input type="hidden" name="email" value="' + email + '"/>' + 
+				'</div>'	
+			);
+			
+		} else {
+			$(this).children("._mem_icon").addClass("_mem_icon_default");
+			$("#mem div[data-email='" + email + "']").remove();
+		}
+	});
+	
+	// 멤버 추가 츼소 큰모달 이벤트
+	$(document).on("click", ".mem_rm", function() {
+		var name = $(this).parent().attr("data-name");
+		var email = $(this).parent().attr("data-email");
+		
+		$(this).parent().remove();
+		$("#workspace_mem div[data-email='" + email +"']").children("._mem_icon").addClass("_mem_icon_default");
+	});
+	
+	
+	// 멤버 검색 작은모달 ajax
+	$("#_mem_input").keyup(function() {
+		
+		var selected = "";
+		for (i = 0; i < $(".mem").length; i++) 
+			selected += $(".mem:eq("+ i +")").attr("data-email") + ":";
+			
+		$.ajax({
+			url : "/team/project/getWorkspaceMembers",
+			method : "get",
+			data : {"str" : $(this).val(),
+					"selected" : selected,
+					"email" : "${loginuser.email}"
+			},
+			success : function(resp, status, xhr) {
+				$("#workspace_mem").html("");
+				$("#workspace_mem").html(resp);
+			},
+			error : function(xhr, status, err) {
+				console.log(err);
+			}
+		});
+	});
+
+
+	///////////////////
 	
 	$("#add_mem").click(function() {
 		$("#memberAddModal").modal();
@@ -370,8 +431,9 @@ $(function() {
 		});
 	});
 	// -- write-form-submit 끝
-
- 	$('.to-detail').on('click', function(event) {
+	
+	// detail
+ 	$(document).on("click", ".to-detail", function() { //$('.to-detail').on('click', function(event) {
  		
  		var projectNo = $(this).attr('data-projectNo');
 		$('#detail-form #projectNo').val(projectNo);
@@ -387,15 +449,104 @@ $(function() {
 			"method":"get",
 			"async" : true,
 			"data" : {	"projectNo" : projectNo },
-			//"dataType" : "json", // dataType : 응답 컨텐츠의 종류 지정			
+			"dataType" : "json", // dataType : 응답 컨텐츠의 종류 지정			
 			"success" : function(data, status, xhr) {
 
-				console.log(data.projectName)
-				//$('#detail-form').submit();
+				var projectName = data.projectName;
+				var content = data.content;
+				var projectNo = data.projectNo;
+				var managerEmail = data.managerEmail;
+				var proPublic = data.proPublic;
+				var projectMembers = data.projectMembers;
+
+				/////////// 시작 마감 완료
+				var startdate_t = data.startdate;
+				var startdate_t2 = new Date(startdate_t);
+				var deadline_t = data.deadline;
+				var deadline_t2 = new Date(deadline_t);
+				var enddate_t = data.enddate;
+				var enddate_t2 = new Date(enddate_t);
 				
-				$('#de_projectName').val(data.projectName);
-				$('#de_content').val(data.content);
-				$('#detail-form #projectNo').val(data.projectNo);
+				function getFormatDate1(startdate_t2){
+				    var year = startdate_t2.getFullYear();              //yyyy
+				    var month = (1 + startdate_t2.getMonth());          //M
+				   		 month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
+				    var day = startdate_t2.getDate();                   //d
+				    day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
+				    return  year + '-' + month + '-' + day;
+				}
+				function getFormatDate2(deadline_t2){
+				    var year = deadline_t2.getFullYear();              //yyyy
+				    var month = (1 + deadline_t2.getMonth());          //M
+				   		 month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
+				    var day = deadline_t2.getDate();                   //d
+				    day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
+				    return  year + '-' + month + '-' + day;
+				}
+				function getFormatDate3(enddate_t2){
+				    var year = enddate_t2.getFullYear();              //yyyy
+				    var month = (1 + enddate_t2.getMonth());          //M
+				   		 month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
+				    var day = enddate_t2.getDate();                   //d
+				    day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
+				    return  year + '-' + month + '-' + day;
+				}
+				startdate_t2 = getFormatDate1(startdate_t2);
+				deadline_t2 = getFormatDate2(deadline_t2);
+				enddate_t2 = getFormatDate3(enddate_t2);
+				
+				var startdate = document.querySelector('#startdate');
+				var deadline = document.querySelector('#deadline');
+				var enddate = document.querySelector('#enddate');
+				startdate.value = startdate_t2;
+				deadline.value = deadline_t2;
+				enddate.value = enddate_t2;
+
+
+
+				//console.log(proPublic)
+				if (proPublic == "false"){ proPublic.val('0')} else if (proPublic == "true"){ proPublic.val('1')} 
+				//console.log(proPublic)
+              	if( proPublic == "0"){
+					$("#publicDiv").html(
+					'<div class="custom-control custom-radio float-left" style="width:50%;">'+
+		               '<input id="publicRadio1" name="proPublic" value="false" class="custom-control-input" type="radio" checked>'+
+		                '<label for="publicRadio1" class="custom-control-label">비공개'+
+		                '<br><p style="font-weight: 400; font-size: 0.9rem;">추가된 멤버만 엑세스 가능</p>'+
+		                '</label>'+
+		              '</div>'+
+		              '<div class="custom-control custom-radio float-left" style="width:50%;">'+
+		                '<input id="publicRadio2" name="proPublic" value="true"  class="custom-control-input" type="radio">'+
+		                '<label for="publicRadio2" class="custom-control-label">공개'+
+		              '<br><p style="font-weight: 400; font-size: 0.9rem;" >워크스페이스의 모든 멤버 엑세스 가능</p>'+
+		                '</label>'+
+		              '</div>'
+					);
+              	} else if( proPublic == "1"){
+					$("#publicDiv").html(
+					'<div class="custom-control custom-radio float-left" style="width:50%;">'+
+		               '<input id="publicRadio1" name="proPublic" value="false" class="custom-control-input" type="radio">'+
+		                '<label for="publicRadio1" class="custom-control-label">비공개'+
+		                '<br><p style="font-weight: 400; font-size: 0.9rem;">추가된 멤버만 엑세스 가능</p>'+
+		                '</label>'+
+		              '</div>'+
+		              '<div class="custom-control custom-radio float-left" style="width:50%;">'+
+		                '<input id="publicRadio2" name="proPublic" value="true"  class="custom-control-input" type="radio" checked>'+
+		                '<label for="publicRadio2" class="custom-control-label">공개'+
+		              '<br><p style="font-weight: 400; font-size: 0.9rem;" >워크스페이스의 모든 멤버 엑세스 가능</p>'+
+		                '</label>'+
+		              '</div>'
+					);
+              	}
+				
+				//$('#detail-form').submit();
+
+				
+				$('#deadline').val(deadline);
+				$('#enddate').val(enddate);
+				$('#de_projectName').val(projectName);
+				$('#de_content').val(content);
+				$('#detail-form #projectNo').val(projectNo);
 				
 				$('#modal-detail').modal('show');
 
@@ -406,10 +557,35 @@ $(function() {
 		});
 
 	}); 
-	
-	//////////////////// 페이징 처리
 
+	// detail-form2-submit 
+	$('#saveSubmit2').on('click', function(event){
+
+		var values = $('#detail-form2').serializeArray();
+		
+		
+		//console.log(values); return;
+		$.ajax({
+			"url":"/team/project/detailUpdate",
+			"method":"post",
+			"data":values,
+			"success":function(data, status, xhr){
+				
+				$('#modal-lg').modal('hide');
+				// list
+				$('.list-container1').load('/team/project/list');
+				$('.list-container2').load('/team/project/list2');
+				$('#detail-form2').submit();
+
+			},
+			"error" : function(xhr, status, err){
+				console.log(err)
+			}
+		});
+	});
+	// -- write-form-submit 끝
 	
+
 
 	
 	

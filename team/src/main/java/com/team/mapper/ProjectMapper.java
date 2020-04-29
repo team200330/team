@@ -30,6 +30,8 @@ public interface ProjectMapper {
 	Project selectProjectByNo(int projectNo);
 
 	Project selectDetail(int projectNo);
+
+	void updateProject(Project project);
 	
 
 
