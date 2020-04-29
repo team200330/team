@@ -35,6 +35,13 @@ input::placeholder {
 	font-size: 11pt;
 	font-style: inherit;
 }
+
+.dropdown-item.warning:hover {
+	background-color: #e95e51;
+	color: #fff !important;
+}
+
+/* 
 .contextmenu {
   display: none;
   position: absolute;
@@ -71,7 +78,7 @@ input::placeholder {
 
 .contextmenu li:hover a {
   color: #FFFFFF;
-}
+} */
 </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -269,7 +276,7 @@ input::placeholder {
 			//$('.taskwrap').find('textarea').keyup();
 			$(document).find('.taskwrap textarea').keyup();
 			////////////////////////////////////////////////
-
+			
 			/////////////// 업무 추가 관련 event 들 ///////////////
 			$(document).on("click",".cancel-task-btn", function(){
 				var listNo = $(this).attr("id").substring(12);
@@ -336,9 +343,19 @@ input::placeholder {
 			    }
 			});
  			*/
-			////////////////
+
+ 			///여기 고쳐라
+ 			$(document).on('click','.menu-setting', function(){
+ 	 			if($(".contextmenu").css('display')=='block'){
+ 	 				$(".contextmenu").hide();
+ 	 	 		}else{
+	 	 	 	}
+ 	 		});
+ 			
+			//////////////// 업무 오른쪽 마우스 클릭 이벤트
 			$(document).on('contextmenu','.task-field', function(e) {
 				$(".contextmenu").hide();
+				$(".tl-setting").hide();
 				var taskNo = $(this).attr("id").substring(5);
 				//console.log(e);
 				//Get window size:
@@ -351,13 +368,20 @@ input::placeholder {
 				console.log("posX:"+posX);
 				var posY = e.offsetY;
 				console.log("posY:"+posY);
+
 				//Get contextmenu size:
-				var menuWidth = $(".contextmenu").width();
-				var menuHeight = $(".contextmenu").height();
+				//var menuWidth = $(".contextmenu").width();
+				//var menuHeight = $(".contextmenu").height();
+				
 				//Security margin:
 				var secMargin = 10;
-				posLeft = posX + secMargin + "px";
-				posTop = posY + secMargin + "px";
+				if($(e.target).is("span")){
+					posLeft = posX + 37 + secMargin + "px";
+					posTop = posY + 7 + secMargin + "px";
+				} else {
+					posLeft = posX + secMargin + "px";
+					posTop = posY + secMargin + "px";
+				}
 				//Prevent page overflow:
 				/*
 				if (posX + menuWidth + secMargin >= winWidth
@@ -391,6 +415,7 @@ input::placeholder {
  			//Hide contextmenu:
 			$(document).on("click",function() {
 				$(".contextmenu").hide();
+				
 			});
 			
 		});

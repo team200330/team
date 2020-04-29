@@ -45,17 +45,14 @@
 								</div>
 								<div id="settings" style="width:20%; display:flex; padding-top: 3pt">
 									<div id="icon-addtask-div" style="width:60%;">
-										<!-- 
-										<i id="icon-addtask-taskList-${ taskList.listNo }" onclick="showAddTaskDiv(this)" style="cursor: pointer" class="fas fa-plus"></i>
-										 -->
 										<i id="icon-addtask-taskList-${ taskList.listNo }" style="cursor: pointer" class="fas fa-plus icon-addtask"></i>
 									</div>
 									<div style="width:40%;">
 										<i id="task-setting" style="cursor: pointer" class="fas fa-ellipsis-v menu-setting" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
-										<div id="${ taskList.listNo }" class="dropdown-menu" aria-labelledby="task-setting">
-										    <button class="dropdown-item list-delete-btn" type="button">리스트 삭제</button>
+										<div id="tl-setting-${ taskList.listNo }" class="dropdown-menu tl-setting" aria-labelledby="task-setting">
 										    <button class="dropdown-item" type="button">Another action</button>
 										    <button class="dropdown-item" type="button">Something else here</button>
+										    <button class="dropdown-item warning list-delete-btn" style="color:red;" type="button">리스트 삭제</button>
 										</div>
 									</div>
 								</div>
@@ -102,13 +99,11 @@
 										    <button class="dropdown-item" type="button">Something else here</button>
 										</div>
 										 -->
-										<ul id="menu-${ task.taskNo }" class="contextmenu">
-										  <li><a href="#">Simple link</a></li>
-										  <li><a href="#">Link to somewhere</a></li>
-										  <li><a href="#">Another link</a></li>
-										  <li><a href="#">Link to nowhere</a></li>
-										  <li><a href="#">Random link</a></li>
-										</ul>
+										<div id="menu-${ task.taskNo }" class="contextmenu dropdown-menu">
+										  <button class="dropdown-item">기능1</button>
+										  <button class="dropdown-item">기능2</button>
+										  <button class="dropdown-item warning" style="color:red;">업무 삭제</button>
+										</div>
 									</div>
 								</c:if>
 							</c:forEach>
