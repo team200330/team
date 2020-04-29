@@ -47,12 +47,21 @@
 									<div id="icon-addtask-div" style="width:60%;">
 										<i id="icon-addtask-taskList-${ taskList.listNo }" style="cursor: pointer" class="fas fa-plus icon-addtask"></i>
 									</div>
-									<div style="width:40%;">
-										<i id="task-setting" style="cursor: pointer" class="fas fa-ellipsis-v menu-setting" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
-										<div id="tl-setting-${ taskList.listNo }" class="dropdown-menu tl-setting" aria-labelledby="task-setting">
-										    <button class="dropdown-item" type="button">Another action</button>
-										    <button class="dropdown-item" type="button">Something else here</button>
-										    <button class="dropdown-item warning list-delete-btn" style="color:red;" type="button">리스트 삭제</button>
+									<div id="tl-setting-wrap" style="width:40%;">
+										<!-- 
+										<i id="icon-setting-${ taskList.listNo }" style="cursor: pointer" class="fas fa-ellipsis-v menu-setting" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+										 -->
+										<i id="icon-setting-${ taskList.listNo }" style="cursor: pointer" class="fas fa-ellipsis-v menu-setting"></i>
+										<!-- 
+										<div id="tl-setting-${ taskList.listNo }" class="dropdown-menu tl-setting">
+										 -->
+										<div class="dropdown">
+											<div id="tl-setting-${ taskList.listNo }" class="dropdown-menu tl-settings">
+											    <button class="dropdown-item" type="button">Another action</button>
+											    <button class="dropdown-item" type="button">Something else here</button>
+											    <div class="dropdown-divider"></div>
+											    <button class="dropdown-item warning list-delete-btn" style="color:red;" type="button">리스트 삭제</button>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -81,7 +90,8 @@
 								<c:if test="${task.listNo eq taskList.listNo }">
 									<div class="dropright">
 										<div id="task-${task.taskNo}" class="btn btn-light task-field" 
-										style="margin-top:3px; width:300px; min-height:38px;height:auto; border-radius: 0; display:flex; flex-wrap:nowrap;">
+										style="margin-top:3px; width:300px; min-height:38px;height:auto; border-radius: 0; display:flex; flex-wrap:nowrap;"
+										data-tno="${ task.taskNo }" data-lno="${ taskList.listNo }">
 											<div>
 												<div class="custom-control custom-checkbox">
 													<input type="checkbox" class="custom-control-input"	id="checkbox-${ task.taskNo }">
@@ -102,7 +112,8 @@
 										<div id="menu-${ task.taskNo }" class="contextmenu dropdown-menu">
 										  <button class="dropdown-item">기능1</button>
 										  <button class="dropdown-item">기능2</button>
-										  <button class="dropdown-item warning" style="color:red;">업무 삭제</button>
+										  <div class="dropdown-divider"></div>
+										  <button class="dropdown-item warning task-delete-btn" style="color:red;">업무 삭제</button>
 										</div>
 									</div>
 								</c:if>
