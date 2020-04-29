@@ -8,17 +8,17 @@
 	<insert id="insertWorkspace" parameterType="com.team.vo.Workspace"
 			useGeneratedKeys="true" keyColumn="workspaceNo" keyProperty="workspaceNo">			
 		INSERT INTO workspace (
-			deleted,workspace_name
+			deleted,workspace_name, code
 		)
 		VALUES (
-			0,0
+			'0', #{ workspaceName }, #{ code }
 		)
 	</insert>			
 		
 	<update id="updateWorkspace" parameterType="com.team.vo.Workspace">
 		UPDATE workspace
-		SET workspace_name = #{ workspaceName } and code = #{ code }
-		WHERE workspace_no = #{ workspaceNo } and workspace_name = 0
+		SET workspace_name = #{ workspaceName }, code = #{ code }
+		WHERE workspace_no = #{ workspaceNo } and workspace_name = '0'
 	</update>
 	
 	<insert id="insertWorkspaceMember" parameterType="com.team.vo.WorkspaceMember">			

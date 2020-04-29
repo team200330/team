@@ -76,12 +76,12 @@
                 <div class="row">
                   <div class="col-md-12">
                     <p class="text-center">
-                      <strong style="font-size:12px;">프로젝트 개요</strong>
+                      <strong style="font-size:20px;">프로젝트 개요</strong>
                     </p>
                     <!-- /.progress-group -->
-                    <div class="progress-group">
-                      Send Inquiries
-                      <span class="float-right"><b>250</b>/500</span>
+                    <div class="progress-group text-right mb-3">
+                                 완료됨 50%  (4개 업무)     마감일 지남 0%  (0개 업무)     계획됨 0%  (0개 업무)     마감일 없음 50%  (4개 업무)
+                      <span class="float-right"></span>
                       <div class="progress progress-sm">
                         <div class="progress-bar bg-warning" style="width: 50%"></div>
                       </div>

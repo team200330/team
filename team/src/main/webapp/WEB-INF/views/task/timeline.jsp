@@ -8,34 +8,18 @@
 <link rel="stylesheet" href="/team/resources/css/log-feedback.css">
 <%@include file="/WEB-INF/views/modules/common-css.jsp"%>
 <style>
-section.section-header {
-	position: relative;
-	z-index: 1;
-	display: flex;
-	flex-wrap: nowrap;
-	justify-content: space-between;
-	align-items: center;
-	height: 50px;
+.col-md-3 {
+	min-width: 200px;
+    max-width: 20%;
+    height: 705px;
+    background-color: white;
+    padding: 0px;
 }
-
-input#add-task {
-	font-family: "Font Awesome 5 Free";
-	font-size: 1.0em;
-	font-weight: 900;
+.col-md-9 {
+	max-width: 80%;
+    background-color: white;
+    padding: 0px;
 }
-
-.custom-control-input:checked~.custom-control-label::before {
-    color: #fff;
-    border-color: #4c5d6f;
-    background-color: #4c5d6f;
-    box-shadow: none;
-}
-
-input::placeholder {
-	font-size: 11pt;
-	font-style: inherit;
-}
-
 #content-header div{display:inline-block; margin:10 5 10 5}
 #content-header div:last-child{margin-right:15px}
 #content-header {text-align:right}
@@ -44,7 +28,7 @@ input::placeholder {
     max-width: 250px;
     min-width: 200px;
 }
-.card {margin-bottom:0 !important;border-radius:0}
+.card {margin-bottom:0 !important;border-radius:0; box-shadow:none}
 .card-header {border-radius:0 !important}
 .card-content {display:inline-block}
 .card-nav {display:block}
@@ -61,6 +45,33 @@ input::placeholder {
 .input-group div {margin:10px; color:#3f3f3f; cursor:pointer}
 .hide-dropdown {display:none;}
 .show-dropdown {display:block;}
+
+#timeline-card::-webkit-scrollbar {
+    display: none;
+}
+tr:last-child {border:1px solid}
+#month td {border:1.5px solid gray;padding-left:5px}
+#month td:first-child {border:0}
+
+#date td {
+	border-right:1px solid;
+	padding:5 10 5 10;
+    min-width: 35px;
+    text-align: center;
+}
+td:nth-child(1) {
+	width:250px; 
+	min-width:250px;
+	border-right:1px solid; 
+	padding:10px;
+}
+.taskList { background-color:#cccccc; cursor:pointer;}
+.task td:nth-child(1) {padding:5 !important}
+.taskList td, .task td {border-right: 1px solid gray;}
+.startdate { background-color:red}
+.endDate {background-color:blue}
+.display-none {display:none !important}
+
 </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -89,16 +100,14 @@ input::placeholder {
 					<a id="active" class="f_link" href="/team/task/timeline">타임라인</a>&nbsp;&nbsp;
 					<a  class="f_link" href="/team/task/analyticsmain">분석</a>
 				</div>
-				<div class="header-right"
-					style="flex-basis: 33%; padding-top: 20px;"></div>
+				<div class="header-right" style="flex-basis: 33%; padding-top: 24px;"></div>
 			</section>
-			<hr />
 			<!-- /.content-body -->
 			
 			<!-- Main content -->
 		    <section class="content">
 		      <div class="row">
-		        <div class="col-md-3" style="max-width:250px;">
+		        <div class="col-md-3">
 		          <div class="card">
 		           
 		            <div class="card-body p-0">
@@ -167,7 +176,7 @@ input::placeholder {
 		        </div>
 		        <!-- /.col -->
 		        <div class="col-md-9">
-		          <div class="card" >
+		          <div class="card"  >
 		            <div class="card-header" style="background-color: #dbdbdb;border: 1px solid #c7c7c7;">
 		              <div class="card-tools">
 		                <div class="input-group input-group-sm">
@@ -178,89 +187,28 @@ input::placeholder {
 							    <button class="dropdown-item" type="button">dropdown 3</button>
 							</div>
 								
-		                   	<div><i class="fas fa-arrow-left"></i></div>
-		                   	<div style="margin-top:5px">현재 날짜로</div>
-		                   	<div><i class="fas fa-arrow-right"></i></div>
+		                   	<div><i class="left-btn fas fa-arrow-left"></i></div>
+		                   	<div class="now-btn" style="margin-top:5px">현재 날짜로</div>
+		                   	<div><i class="right-btn fas fa-arrow-right"></i></div>
 								
 		                </div>
 		              </div>
 		              <!-- /.card-tools -->
 		            </div>
-		    	
+		            </div>
+		    		
+		    		<div class="card" id="timeline-card" style="overflow-x: scroll;">
 					<div class="card-body" style="padding:0px;">
-						<div class="inner-nav">
-							<div class="card">
-				            <div class="card-header">
-				              <h3 class="card-title">tasklist 1</h3>
-				              <div class="card-tools">
-				                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-				                </button>
-				              </div>
-				            </div>
-				            <div class="card-body p-0">
-				              <ul class="nav nav-pills flex-column">
-				                <li class="nav-item active">
-				                  <a href="#" class="nav-link">task1</a>
-				                </li>
-				                <li class="nav-item">
-				                  <a href="#" class="nav-link">task2</a>
-				                </li>
-				                <li class="nav-item">
-				                  <a href="#" class="nav-link">task3</a>
-				                </li>
-				                <li class="nav-item">
-				                  <a href="#" class="nav-link">task4</a>
-				                </li>
-				                <li class="nav-item">
-				                  <a href="#" class="nav-link"></a>
-				                </li>
-				              </ul>
-				            </div>
-				            <div class="card">
-				            <div class="card-header">
-				              <h3 class="card-title">tasklist 1</h3>
-				              <div class="card-tools">
-				                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-				                </button>
-				              </div>
-				            </div>
-				            <div class="card-body p-0">
-				              <ul class="nav nav-pills flex-column">
-				                <li class="nav-item active">
-				                  <a href="#" class="nav-link">task1</a>
-				                </li>
-				                <li class="nav-item">
-				                  <a href="#" class="nav-link">task2</a>
-				                </li>
-				                <li class="nav-item">
-				                  <a href="#" class="nav-link">task3</a>
-				                </li>
-				                <li class="nav-item">
-				                  <a href="#" class="nav-link">task4</a>
-				                </li>
-				                <li class="nav-item">
-				                  <a href="#" class="nav-link"></a>
-				                </li>
-				              </ul>
-				            </div>
-		         		 	</div>
-				        </div>
-				        </div>
-				          
-				        <div class="card-content" id="body-task">
-				            <div id="month">
-				          	달
-				          	</div>
-				          	
-				          	<div id="date">
-				          	날짜
-				          	</div>
-				       
-				        </div>
-					
-					
-					
-				</div>
+						<c:choose>
+							<c:when test="${not empty table}">
+								<table id="timeline-table">${table}</table>	
+							</c:when>
+							<c:otherwise>
+								업무없ㄷ음
+							</c:otherwise>
+						</c:choose>
+						
+					</div>
 				</div>
 		       
 		  
@@ -289,37 +237,9 @@ input::placeholder {
 	<%@include file="/WEB-INF/views/modules/common-js.jsp"%>
 	<script type="text/javascript">
 	$(function() {
-		////////////////////////가로 횡스크롤 드래그 ///////////////////////////			
-		var slider = $("#body-task");
-		let isDown = false;
-		let startX;
-		let scrollLeft;
-	
-		$(document).on('mousedown',slider,function(e){
-			isDown = true;
-			slider.addClass('active');
-			startX = e.pageX - slider.offset().left;
-			scrollLeft = slider.scrollLeft();
-		});
-	
-		$(document).on('mouseleave',slider,function(){
-			isDown = false;
-			slider.removeClass('active');
-		});
-	
-		$(document).on('mouseup',slider,function(){
-			isDown = false;
-			slider.removeClass('active');
-		});
-	
-		$(document).on('mousemove',slider,function(e){
-			if(!isDown) return;
-			e.preventDefault();
-			const x = e.pageX - slider.offset().left;
-			const walk = (x - startX) * 3; //scroll-fast
-			slider.scrollLeft(scrollLeft-walk);
-		});
-		///////////////////////////////////////////////////////////////
+
+		//$("#timeline-table tr:last-child").height(705 - $("#timeline-table").height() - $("#timeline-table tr:last-child").height() - 15);
+
 		
 		
 		$(".filter-btn").click(function() {
@@ -333,6 +253,34 @@ input::placeholder {
 				target.addClass("hide-dropdown");	
 			}
 		});
+		
+		$(document).on("click", ".taskList", function() {
+			var target = $("." + $(this).attr("id"));
+			
+			if (target.hasClass("display-none")) target.removeClass("display-none");
+			else target.addClass("display-none");
+		});
+		
+		
+		// 횡스크롤 마우스휠 
+		$("#timeline-card").on('mousewheel',function(e){
+			var wheelDelta = e.originalEvent.wheelDelta;
+
+			if(wheelDelta > 0) $(this).scrollLeft(-wheelDelta + $(this).scrollLeft());
+			else $(this).scrollLeft(-wheelDelta + $(this).scrollLeft());
+		});
+		
+		// 버튼클릭시 옆으로 스코롤
+		$(".right-btn").click(function() {
+			$("#timeline-card").animate({scrollLeft : $("#timeline-card").scrollLeft() + 500}, 500);
+		});
+		$(".left-btn").click(function() {
+			$("#timeline-card").animate({scrollLeft : $("#timeline-card").scrollLeft() - 500}, 500);
+		});
+		
+		
+	
+
 	});
 	</script>
 </body>
