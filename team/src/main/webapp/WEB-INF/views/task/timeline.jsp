@@ -8,7 +8,15 @@
 <link rel="stylesheet" href="/team/resources/css/log-feedback.css">
 <%@include file="/WEB-INF/views/modules/common-css.jsp"%>
 <style>
-
+section.section-header {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-items: center;
+	height: 50px;
+}
     
 .card {margin-bottom:0 !important;border-radius:0; box-shadow:none}
 .card-header {border-radius:0 !important}
@@ -65,8 +73,6 @@ td:not(:first-child) {border-right: 2px solid #e5e5e5;}
     font-weight: bold;
 }
 
-
-
 .startdate {border-top-left-radius:.50rem;border-bottom-left-radius:.50rem}
 .enddate {border-top-right-radius:.50rem;border-bottom-right-radius:.50rem}
 
@@ -94,13 +100,14 @@ td:not(:first-child) {border-right: 2px solid #e5e5e5;}
 				</div>
 				<div class="header-center"
 					style="flex-basis: 33%; text-align: center; padding-top: 20px;">
-					<a class="f_link" href="/team/task/main">업무</a>&nbsp;&nbsp;
-					<a id="active" class="f_link" href="/team/task/timeline" style="position: relative;z-index: 1;">타임라인</a>&nbsp;&nbsp;
-					<a  class="f_link" href="/team/task/analyticsmain">분석</a>
+					<a id="active2" class="f_link" href="/team/task/main">업무</a>&nbsp;&nbsp;
+					<a id="active" class="f_link" href="/team/task/timeline">타임라인</a>&nbsp;&nbsp;
+					<a id="active3" class="f_link" href="/team/task/analyticsmain">분석</a>
 				</div>
-				<div class="header-right" style="flex-basis: 33%; padding-top: 19px;"></div>
+				<div class="header-right"
+					style="flex-basis: 33%; padding-top: 20px;"></div>
 			</section>
-
+			<hr />
 			<!-- Main content -->
 		    <section class="content">
 		      <div class="row">
@@ -191,7 +198,6 @@ td:not(:first-child) {border-right: 2px solid #e5e5e5;}
 		var bgColorIdx = 0;
 		$(".task").each(function() {
 			var taskNo = $(this).attr("class").split("task ")[1].split("list")[0];
-			
 			var sdateIdx = null;
 			var edateIdx = null;
 			
@@ -287,6 +293,7 @@ td:not(:first-child) {border-right: 2px solid #e5e5e5;}
 		
 		
 		
+		// 여기 고치기 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		// 마우스 드래그앤 드롭
 		var dragTarget = null;
 		

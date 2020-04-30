@@ -1,5 +1,6 @@
 package com.team.service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,6 +14,9 @@ public interface FeedbackService {
 	public void writeComment(Comments comment);
 	
 	public List<Feedback> searchFeedback(HashMap<String, Object> params);
+	
+	public int uncheckedFeedbackCount(HashMap<String, Object> params);
+	public Date findLatestWritedate(HashMap<String, Object> params);
 	
 	public void deleteFeedback(HashMap<String, Object> params);
 	public void checkFeedback(HashMap<String, Object> params);

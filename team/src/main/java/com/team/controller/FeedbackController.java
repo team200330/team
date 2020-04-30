@@ -1,5 +1,6 @@
 package com.team.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -50,6 +51,7 @@ public class FeedbackController {
 		
 		model.addAttribute(feedbackService.searchFeedback(params));
 		
+		System.out.println();
 		return "/feedback/list";
 	}
 	
@@ -71,6 +73,18 @@ public class FeedbackController {
 		return "/feedback/modules/feedback-list";
 	}
 	
+	@GetMapping("/count")
+	@ResponseBody
+	public String uncheckedFeedbackCount(HttpSession session) {
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("email", ((Member) session.getAttribute("loginuser")).getEmail());
+		params.put("workspaceNo", workspaceNo);
+		
+		session.setAttribute("feedbackCount", feedbackService.uncheckedFeedbackCount(params));
+		session.setAttribute("latestFeedbackDate", feedbackService.findLatestWritedate(params));
+		return "success";
+	}
+	
 	@PostMapping("/write")
 	@ResponseBody
 	public String writeFeedback(Feedback feedback, String[] email, String isPublic) {
@@ -88,7 +102,6 @@ public class FeedbackController {
 		params.put("feedbackNo", feedbackNo);
 		params.put("email", ((Member) session.getAttribute("loginuser")).getEmail());
 		
-		System.out.println(params.values());
 		feedbackService.deleteFeedback(params);
 		
 		return "success";
@@ -101,7 +114,6 @@ public class FeedbackController {
 		params.put("feedbackNo", feedbackNo);
 		params.put("email", ((Member) session.getAttribute("loginuser")).getEmail());
 		
-		System.out.println(params.values());
 		feedbackService.checkFeedback(params);
 		
 		return "success";
@@ -116,6 +128,11 @@ public class FeedbackController {
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////
+	
+	@GetMapping("/getNotifications")
+	public String getNotifications(Model model) {
+		return "/modules/topbar-notifications";
+	}
 	
 	@GetMapping("/getWorkspaceMembers")
 	@ResponseBody

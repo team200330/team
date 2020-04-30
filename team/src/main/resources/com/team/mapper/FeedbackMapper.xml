@@ -54,6 +54,21 @@
 	<select id="selectComments" parameterType="int" resultMap="commentMap">
 	SELECT * FROM comments WHERE feedback_no = #{feedback_no}
 	</select>
+	
+	<select id="countFeedback" parameterType="hashmap" resultType="int">
+	SELECT COUNT(*) FROM feedback_receiver r
+	INNER JOIN feedback f
+	ON f.feedback_no = r.feedback_no
+	WHERE email = #{email} AND checked = 0 AND workspace_no = #{workspaceNo}
+	</select>
+	
+	<select id="selectLatestWritedate" parameterType="hashmap" resultType="java.util.Date">
+	SELECT writedate FROM feedback
+	WHERE feedback_no = (
+		SELECT MAX(feedback_no) FROM feedback_receiver
+		WHERE email = #{email} AND checked = 0 AND workspace_no = #{workspaceNo}
+	)
+	</select>
 
 	<update id="deleteFeedback" parameterType="hashmap">
 	UPDATE feedback_receiver SET deleted = 1

@@ -64,11 +64,22 @@
 </div>
 <!-- ./wrapper -->
 
-
-<script>
-  $.widget.bridge('uibutton', $.ui.button)
-</script>
   <%@include file="/WEB-INF/views/modules/common-js.jsp" %>
+
+<script type="text/javascript">
+ // $.widget.bridge('uibutton', $.ui.button)
+ $(function() {
+	 if (${not empty loginuser}) 
+	 $.ajax({
+		url : "/team/feedback/count",
+		method : "get",
+		success : function(data, status, xhr) {
+			$(document).load("/team/feedback/getNotifications");
+		}
+	}); 
+ });
+</script>
+
 
 </body>
 
