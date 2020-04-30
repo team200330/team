@@ -31,8 +31,8 @@ public class WorkspaceServiceImpl implements WorkspaceService {
 	}
 
 	@Override
-	public List<Member> selectMembersByWorkspaceNo(int workspaceNo) {
-		List <Member> members = workspaceMapper.selectMembersByWorkspaceNo(workspaceNo);
+	public List<Member> selectMembersByWorkspaceNo(WorkspaceMember workspaceMember) {
+		List <Member> members = workspaceMapper.selectMembersByWorkspaceNo(workspaceMember);
 		return members;
 	}
 	
@@ -60,8 +60,8 @@ public class WorkspaceServiceImpl implements WorkspaceService {
 	}
 
 	@Override
-	public Member selectMemberTypeNo1ByWorkspaceNo(int workspaceNo) {
-		Member member1 = workspaceMapper.selectMemberTypeNo1ByWorkspaceNo(workspaceNo);
+	public Member selectMemberTypeNo1ByWorkspaceNo(WorkspaceMember workspaceMember) {
+		Member member1 = workspaceMapper.selectMemberTypeNo1ByWorkspaceNo(workspaceMember);
 		return member1;
 	}
 

@@ -72,8 +72,8 @@
           </li>
           
           <li class="nav-item">
-            <a href="/team/workspace/workspace-member?workspaceNo=3" class="nav-link">
-              <i class="nav-icon fas fa-users""></i>
+            <a href="/team/workspace/workspace-member?email=${ loginuser.email }" class="nav-link">
+              <i class="nav-icon fas fa-users"></i>
               <p>
                         워크스페이스 멤버
                 <!-- <span class="right badge badge-danger">New</span> -->

@@ -32,13 +32,17 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 
 		System.out.println("URI : " + uri);
 		
-		if (uri.contains("/feedback/") || uri.contains("/log/")) { 
+		if (uri.contains("/feedback/") || uri.contains("/log/") || uri.contains("/project/")) { 
+			if (session.getAttribute("loginuser") == null) {
+				response.sendRedirect("/team/account/login.action");
+				return false; // 컨트롤러로 요청을 전달하지 마세요
+			}
+		} else if (uri.contains("/workspace/")) { // 조승연 팀원 작업 영역
 			if (session.getAttribute("loginuser") == null) {
 				response.sendRedirect("/team/account/login.action");
 				return false; // 컨트롤러로 요청을 전달하지 마세요
 			}
 		}
-		
 		
 		return true; // 컨트롤러로 요청을 전달하세요
 	}

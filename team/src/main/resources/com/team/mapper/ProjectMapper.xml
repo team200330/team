@@ -21,17 +21,37 @@
 		<result column="email" property="email"/>
 	</resultMap>
 	
+	<resultMap type="WorkspaceMember" id="workspaceMemberMap">
+		<id column="workspace_no" property="workspaceNo" />
+		<result column="email" property="email" />
+		<result column="type_no" property="typeNo" />
+	</resultMap> 
+	
 	<insert id="insertProject">
 		INSERT INTO project ( project_name, content, manager_email, pro_public, template_no, workspace_no)
 		VALUES ( #{projectName}, #{content}, "1@1", #{proPublic}, #{templateNo}, "6" )
 	</insert>
 	
-	<select id="selectProject" resultMap="projectMap">
-		<![CDATA[ SELECT * FROM project WHERE deleted = 0 ORDER BY project_no DESC ]]>
+	<select id="selectProject" resultMap="projectMap" parameterType="hashmap" >
+		<![CDATA[
+		SELECT *
+		FROM project p
+		WHERE p.workspace_no = #{workspaceNo}
+		ORDER BY project_no DESC
+		]]>
+		<!-- <![CDATA[ SELECT * FROM project WHERE deleted = 0 AND workspace_no = 6 ORDER BY project_no DESC ]]>
+		<![CDATA[ SELECT * FROM project WHERE deleted = 0 AND workspace_no = #{workspace_no} ORDER BY project_no DESC; ]]> -->
 	</select>
 	
-	<select id="selectProject2" resultMap="projectMap">
-		<![CDATA[ SELECT * FROM project WHERE deleted = 0 ORDER BY project_no DESC LIMIT 4 ]]>
+	<select id="selectProject2" resultMap="projectMap" parameterType="hashmap" >
+		<![CDATA[ 
+		SELECT *
+		FROM project p
+		WHERE p.workspace_no = #{workspaceNo}
+		ORDER BY project_no DESC 
+		LIMIT 4 
+		]]>
+		<!--  <![CDATA[ SELECT * FROM project WHERE deleted = 0 AND workspace_no = #{workspace_no} ORDER BY project_no DESC LIMIT 4 ]]> -->
 	</select>
 	
 	<select id="selectProjectByWorkspaceNo" parameterType="int" resultMap="projectMap">
@@ -42,6 +62,11 @@
 	<update id="updateProjectNo" parameterType="hashmap">
 		UPDATE project SET pro_no=#{ proNo } 
 		WHERE project_no = #{ projectNo }
+	</update>
+	
+	<update id="updateProject">
+		UPDATE project SET project_name = #{projectName}, content = #{content}, pro_public = #{proPublic}, startdate = #{startdate}, deadline = #{deadline}, enddate = #{enddate}
+		WHERE project_no = #{projectNo}
 	</update>
 	
 	<select id="selectProjectByNo" parameterType="int" resultMap="projectMap">
@@ -60,6 +85,17 @@
 	<select id="selectDetail" parameterType="int" resultMap="projectMap">
 		SELECT * FROM project
 		WHERE project_no = #{projectNo}	
+	</select>
+
+	<select id="selectLoginuserProjectMember" parameterType="hashmap" resultMap="projectMap">
+	<![CDATA[
+	SELECT * 
+	FROM project p
+	INNER JOIN project_member pm 
+	ON p.project_no = pm.project_no
+	WHERE deleted = '0' AND p.workspace_no = "6"
+	ORDER BY p.project_no DESC
+	]]>
 	</select>
 	
 	

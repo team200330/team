@@ -1,5 +1,11 @@
 package com.team.controller;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.team.service.TaskService;
+import com.team.ui.TimelineTable;
 import com.team.vo.Task;
 import com.team.vo.TaskList;
 
@@ -74,6 +81,22 @@ public class TaskController {
 	///////////////////////////////////////////
 	@GetMapping(path= {"/timeline"})
 	public String showTaskTimeLine(Model model) {
+		
+		List<TaskList> newList = new ArrayList<>();
+		List<TaskList> lists = taskService.searchTaskList();
+		List<Task> tasks = taskService.searchTask();
+		
+		for (TaskList l : lists) {
+			List<Task> ts = new ArrayList<>();
+			for (Task t : tasks) if (t.getListNo() == l.getListNo()) ts.add(t);
+
+			l.setTasks(ts);
+			newList.add(l);
+		}
+		
+		if (lists != null) model.addAttribute("table", new TimelineTable(newList).toString());
+		
+		
 		return "task/timeline";
 	}
 	

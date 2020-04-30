@@ -181,7 +181,7 @@
   
       <!-- 멤버 추가 모달 -->
       <div class="modal fade" id="memberAddModal">
-        <div class="modal-dialog modal-sm" style="top:50%;left:0">
+        <div class="modal-dialog modal-sm" style="top:210;left:-195">
           <div class="modal-content">
             <div class="modal-header">
               <h6 class="modal-title" style="font-weight:bold">멤버</h6>
@@ -190,30 +190,26 @@
               </button>
             </div>
             <div class="modal-body" style="padding:10px;">
-              <input style="width:100%;height:30px;border:1px solid #17a2b8;border-radius:.20rem;padding:10px;margin-bottom:10px;"type="text" placeholder="이름 혹은 이메일로 찾기">
+              <input id="_mem_input" style="width:100%;height:30px;border:1px solid #17a2b8;padding:10px;margin-bottom:10px;"type="text" placeholder="이름 혹은 이메일로 찾기">
             
-            	<div style="margin-bottom:20px;">
-            	<div class="_mem">
-            		<div class="_mem_img">사진</div>
-            		<div class="_mem_name">멤버이름</div>
-            		<div class="_mem_icon">아이콘</div>
-            	</div>
-            	<div class="_mem">
-            		<div class="_mem_img">사진</div>
-            		<div class="_mem_name">멤버이름</div>
-            		<div class="_mem_icon">아이콘</div>
-            	</div>
-            	<div class="_mem">
-            		<div class="_mem_img">사진</div>
-            		<div class="_mem_name">멤버이름</div>
-            		<div class="_mem_icon">아이콘</div>
-            	</div>
+            	<div id="workspace_mem" style="margin-bottom:20px;">
+	            	<c:forEach var="m" items="${ workspaceMembers }">
+	            		<c:if test="${ m.email != loginuser.email }">
+	            		<div class="_mem" data-email="${ m.email }" data-name="${ m.name }">
+		            		<img class="_mem_img img-circle img-bordered-sm" src="" alt="user image">
+		            		<div class="_mem_name">${ m.email }<br/>${ m.name }</div>
+		            		<div class="_mem_icon _mem_icon_default" style="text-align:right" >
+		            			<i class="fas fa-check"></i>
+		            		</div>
+		            	</div>
+		            	</c:if>
+	            	</c:forEach>
             	</div>
             	
             </div>
             <div id="addFooter" class="modal-footer" style="border:none;color: white;background-color: #17a2b8;font-weight: bold;">
-              <img src="/dist/img/add-user-icon.png">
-              <div>멤버 초대하기</div>
+              <i class="fas fa-user-plus"></i>
+              <a href="/team/workspace/invite-workspace" style="color:white">멤버 초대하기</a>
             </div>
           </div>
           <!-- /.modal-content -->

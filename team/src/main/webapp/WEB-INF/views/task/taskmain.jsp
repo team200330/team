@@ -35,6 +35,17 @@ input::placeholder {
 	font-size: 11pt;
 	font-style: inherit;
 }
+
+.dropdown-item.warning:hover {
+	background-color: #e95e51;
+	color: #fff !important;
+}
+
+.dropdown-menu {
+	display: none;
+}
+
+/* 
 .contextmenu {
   display: none;
   position: absolute;
@@ -71,7 +82,7 @@ input::placeholder {
 
 .contextmenu li:hover a {
   color: #FFFFFF;
-}
+} */
 </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -221,7 +232,7 @@ input::placeholder {
 			
 			//업무 리스트 삭제
 			$(document).on("click",".list-delete-btn",function(){
-				var listNo = $(this).parents().attr("id");
+				var listNo = $(this).parents().attr("id").substring(11);
 				$.ajax({
 					url : "/team/task/deletelist.action",
 					method : "post",
@@ -241,7 +252,7 @@ input::placeholder {
 
 			//업무 삭제
 			$(document).on("click",".task-delete-btn",function(){
-				var taskNo = $(this).parents().attr("id");
+				var taskNo = $(this).parents().attr("id").substring(5);
 				$.ajax({
 					url : "/team/task/deletetask.action",
 					method : "post",
@@ -269,7 +280,7 @@ input::placeholder {
 			//$('.taskwrap').find('textarea').keyup();
 			$(document).find('.taskwrap textarea').keyup();
 			////////////////////////////////////////////////
-
+			
 			/////////////// 업무 추가 관련 event 들 ///////////////
 			$(document).on("click",".cancel-task-btn", function(){
 				var listNo = $(this).attr("id").substring(12);
@@ -308,56 +319,52 @@ input::placeholder {
 			});
 			////////////////////////////////////////////////////////
 
-			//// 업무에 오른쪽 마우스 Event 추가, 브라우져 기본 이벤트 제거
-			
-			/* 
-			$(document).on('contextmenu','.task-field', function() {
-				return false;
-			});
-			$(document).on('mousedown','.task-field',function(event){
-				//var listNo = $(this).attr("id");
-				var taskNo = $(this).attr("id").substring(5);
-				//console.log("button type : " + event.which);
-			    switch (event.which) {
-			        case 1:
-			            event.stopPropagation();
-			            break;
-			        /* 
-			        case 2:
-			            alert('Middle Mouse button pressed.');
-			            break; 
-			        
-			        case 3:
-			            //alert('Right Mouse button pressed.');
-				        $("#task-"+taskNo).dropdown("toggle");
-			            break;
-			        default:
-			            return;
-			    }
-			});
- 			*/
-			////////////////
+ 			// 설정 누르면 contextmenu 사라지는 event
+ 			$(document).on('click','.menu-setting', function(e){
+ 				var listNo = $(e.target).attr("id").substring(13);
+ 				target = "#tl-setting-"+listNo;
+				if($(target).hasClass('show')){
+					$(target).removeClass('show');
+				} else {
+					$(".tl-settings").each(function(){
+						$(this).removeClass('show');
+					});
+					$(target).addClass('show');
+				}
+ 	 			if($(".contextmenu").css('display')=='block'){
+ 	 				$(".contextmenu").hide();
+ 	 	 		}
+ 	 		});
+			//////////////// 업무 오른쪽 마우스 클릭 이벤트
 			$(document).on('contextmenu','.task-field', function(e) {
 				$(".contextmenu").hide();
-				var taskNo = $(this).attr("id").substring(5);
-				//console.log(e);
+				$(".tl-settings").each(function(){
+					$(this).removeClass('show');
+				});
 				//Get window size:
 				var winWidth = $(this).width();
-				console.log("windWidth:"+winWidth);
+				//console.log("windWidth:"+winWidth);
 				var winHeight = $(this).height();
-				console.log("winHeight:"+winHeight);
+				//console.log("winHeight:"+winHeight);
 				//Get pointer position:
 				var posX = e.offsetX;
-				console.log("posX:"+posX);
+				//console.log("posX:"+posX);
 				var posY = e.offsetY;
-				console.log("posY:"+posY);
+				//console.log("posY:"+posY);
+
 				//Get contextmenu size:
-				var menuWidth = $(".contextmenu").width();
-				var menuHeight = $(".contextmenu").height();
+				//var menuWidth = $(".contextmenu").width();
+				//var menuHeight = $(".contextmenu").height();
+				
 				//Security margin:
 				var secMargin = 10;
-				posLeft = posX + secMargin + "px";
-				posTop = posY + secMargin + "px";
+				if($(e.target).is("span")){
+					posLeft = posX + 37 + secMargin + "px";
+					posTop = posY + 7 + secMargin + "px";
+				} else {
+					posLeft = posX + secMargin + "px";
+					posTop = posY + secMargin + "px";
+				}
 				//Prevent page overflow:
 				/*
 				if (posX + menuWidth + secMargin >= winWidth
@@ -380,6 +387,7 @@ input::placeholder {
 				};
 				*/
 				//Display contextmenu:
+				var taskNo = $(this).attr("id").substring(5);
 				$("#menu-"+taskNo).css({
 					"left" : posLeft,
 					"top" : posTop
@@ -389,10 +397,15 @@ input::placeholder {
 			});
 
  			//Hide contextmenu:
-			$(document).on("click",function() {
+			$(document).on("click",function(e) {
+				if($(e.target).is(".menu-setting") === false){
+					$(".tl-settings").each(function(){
+						//console.log(this);
+						$(this).removeClass('show');
+					});
+				}
 				$(".contextmenu").hide();
 			});
-			
 		});
 	</script>
 </body>
