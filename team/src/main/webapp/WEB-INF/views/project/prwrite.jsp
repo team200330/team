@@ -63,21 +63,7 @@
 	                  	  <div class="form-group">			              
 			              <div class="row" style="padding:10px">
 			              	<div id="add_mem" class="btn btn-secondary float_left" style="width:37px;">+</div>
-			              	<div class="float_left mem">
-			              		<div class="mem_img">사진</div>
-			              		<div class="mem_name">멤버1</div>
-			              		<div class="mem_rm" aria-hidden="true">&times;</div>
-			              	</div>
-			              	<div class="float_left mem">
-			              		<div class="mem_img">사진</div>
-			              		<div class="mem_name">멤버1</div>
-			              		<div class="mem_rm" aria-hidden="true">&times;</div>
-			              	</div>
-			              	<div class="float_left mem">
-			              		<div class="mem_img">사진</div>
-			              		<div class="mem_name">멤버1</div>
-			              		<div class="mem_rm" aria-hidden="true">&times;</div>
-			              	</div>
+			              	<div id="mem"></div>
 			              </div>
 			              </div>
                       </div>

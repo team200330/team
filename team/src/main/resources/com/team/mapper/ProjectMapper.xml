@@ -27,10 +27,18 @@
 		<result column="type_no" property="typeNo" />
 	</resultMap> 
 	
-	<insert id="insertProject">
+ 	<insert id="insertProject">
 		INSERT INTO project ( project_name, content, manager_email, pro_public, template_no, workspace_no)
-		VALUES ( #{projectName}, #{content}, "1@1", #{proPublic}, #{templateNo}, "6" )
+		VALUES ( #{projectName}, #{content}, #{email}, #{proPublic}, #{templateNo}, #{workspaceNo} )
 	</insert>
+	
+<!-- 	<insert id="insertProjectMember" parameterType="java.util.List">
+		INSERT INTO project_member(project_no, email) VALUES
+		<foreach collection="list" item="feedbackReceiver" index="index" separator=",">
+			(#{projectMember.projectNo}, #{projectMember.email})
+			 <if test="index != list.size - 1"> , </if> 
+		</foreach>
+	</insert> -->
 	
 	<select id="selectProject" resultMap="projectMap" parameterType="hashmap" >
 		<![CDATA[
@@ -93,16 +101,56 @@
 	FROM project p
 	INNER JOIN project_member pm 
 	ON p.project_no = pm.project_no
-	WHERE deleted = '0' AND p.workspace_no = "6"
+	WHERE deleted = '0' AND p.workspace_no = #{workspaceNo}
 	ORDER BY p.project_no DESC
 	]]>
 	</select>
+	
+	<insert id="insertProjectMember">
+		INSERT INTO project_member (project_no, email)
+		VALUES ( #{projectNo}, #{email} )
+	</insert>
 	
 	
 	<select id="selectMemberByProjectNo" parameterType="int" resultMap="projectMemberMap">
 		SELECT * FROM project_member
 		WHERE project_no = #{ projectNo }
 	</select>
+	
+<!-- 	<select id="selectProjectMember" parameterType="hashmap" resultMap="feedbackMap">
+		SELECT DISTINCT wm.email FROM workspace_member wm
+		INNER JOIN project p 
+		ON p.workspace_no = wm.workspace_no
+		WHERE 
+			p.manager_email = 
+			<choose>
+				<when test="searchType == 'M'.toString()">
+					(sender = #{email} OR email = #{email}) AND
+				</when>
+				<when test="searchType == 'S'.toString()">
+					sender = #{email} AND
+				</when>
+				<when test="searchType == 'R'.toString()">
+					email = #{email} AND
+				</when>
+				<when test="searchType == 'A'.toString()">
+					email = #{email} AND opened = 1 AND
+				</when>
+				<when test="searchType == 'I'.toString()">
+				(sender LIKE CONCAT('%',#{key},'%') OR 
+				email LIKE CONCAT('%',#{key},'%') OR 
+				f.content LIKE CONCAT('%',#{key},'%') ) AND
+				</when>
+			</choose>
+		AND 
+			deleted = '0' 
+		AND 
+			wm.workspace_no = 6
+		ORDER BY p.project_no DESC;
+			
+		deleted = '0' AND workspace_no = #{workspaceNo}
+		ORDER BY f.feedback_no DESC
+	</select> -->
 
 
 </mapper>

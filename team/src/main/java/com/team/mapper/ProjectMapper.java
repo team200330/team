@@ -18,7 +18,9 @@ public interface ProjectMapper {
 	///////////////////////////////////////////
 	
 	void insertProject(Project project);
-
+	
+	List<ProjectMember> insertProjectMember(List<ProjectMember> projectMember);
+	
 	List<Project> selectProject(HashMap<String, Object> params);
 	
 	List<Project> selectProject2(HashMap<String, Object> params);
@@ -36,6 +38,12 @@ public interface ProjectMapper {
 	void updateProject(Project project);
 
 	List<Member> selectLoginuserProjectMember(HashMap<String, Object> params);
+
+
+
+
+	
+	
 	
 
 

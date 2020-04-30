@@ -7,11 +7,13 @@ import java.util.Map;
 
 import com.team.vo.Member;
 import com.team.vo.Project;
+import com.team.vo.ProjectMember;
 
 public interface ProjectService {
 
-	void writeProject(Project project);
-
+	void writeProject(Project project, String[] email);
+	void insertProjectMember(ProjectMember projectMember);
+	
 	List<Project> findProject(HashMap<String, Object> params);
 	
 	List<Project> findProject2(HashMap<String, Object> params);
@@ -31,6 +33,8 @@ public interface ProjectService {
 	List<Member> loginuserProjectMember(HashMap<String, Object> params);
 
 	List<Member> findWorkspaceMembers(int workspaceNo);
+
+
 
 
 
