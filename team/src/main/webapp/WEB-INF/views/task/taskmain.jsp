@@ -24,11 +24,11 @@ input#add-task {
 	font-weight: 900;
 }
 
-.custom-control-input:checked~.custom-control-label::before {
-    color: #fff;
-    border-color: #4c5d6f;
-    background-color: #4c5d6f;
-    box-shadow: none;
+.custom-control-input:checked ~.custom-control-label::before {
+	color: #fff;
+	border-color: #4c5d6f;
+	background-color: #4c5d6f;
+	box-shadow: none;
 }
 
 input::placeholder {
@@ -45,44 +45,6 @@ input::placeholder {
 	display: none;
 }
 
-/* 
-.contextmenu {
-  display: none;
-  position: absolute;
-  width: 200px;
-  margin: 0;
-  padding: 0;
-  background: #FFFFFF;
-  border-radius: 5px;
-  list-style: none;
-  box-shadow:
-    0 15px 35px rgba(50,50,90,0.1),
-    0 5px 15px rgba(0,0,0,0.07);
-  overflow: hidden;
-  z-index: 999999;
-}
-
-.contextmenu li {
-  border-left: 3px solid transparent;
-  transition: ease .2s;
-}
-
-.contextmenu li a {
-  display: block;
-  padding: 10px;
-  color: #B0BEC5;
-  text-decoration: none;
-  transition: ease .2s;
-}
-
-.contextmenu li:hover {
-  background: #CE93D8;
-  border-left: 3px solid #9C27B0;
-}
-
-.contextmenu li:hover a {
-  color: #FFFFFF;
-} */
 </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -90,7 +52,7 @@ input::placeholder {
 	<%@include file="/WEB-INF/views/modules/topbar.jsp"%>
 	<!-- /.navbar -->
 
-	<div class="wrapper" style="min-height:auto;">
+	<div class="wrapper" style="min-height: auto;">
 		<!-- Main Sidebar Container -->
 		<%@include file="/WEB-INF/views/modules/sidebar.jsp"%>
 
@@ -405,6 +367,54 @@ input::placeholder {
 					});
 				}
 				$(".contextmenu").hide();
+			});
+
+			//업무 checkbox 변동시 처리
+			$(document).on("click",".task-chbox",function(e){
+					if($(e.target).is(":checked") == true){
+						var taskNo = $(e.target).attr("id").substring(9);
+						//var curDate = $.datepicker.formatDate('yy년 mm월 dd일 HH시',new Date());
+						//var curTime = new Date().getHours()+"시 "+ new Date().getMinutes()+"분";
+						var now = new Date();
+						$(e.target).addClass("selected");
+						console.log(taskNo);
+						console.log(now);
+						//console.log(curDate+" "+curTime);
+						//console.log($(this).attr("id")+"체크됨");
+						$.ajax({
+							url : "/team/task/chstatus.action",
+							method : "post",
+							data : {"taskNo":taskNo,"completed":"1","completedDate":now},
+							success : function(resp, status, xhr) {
+								$("#task-body").load("loadtask.action", function(){
+									slider = $('#body-task');
+									$('.taskList-task').attr('onmousemove',"event.stopPropagation();");
+								});
+							},
+							error : function(xhr, status, err) {
+								console.log(err);
+							}
+						});
+						
+					}else{
+						//console.log($(this).attr("id")+"해제됨");
+						var taskNo = $(e.target).attr("id").substring(9);
+						$(e.target).removeClass("selected");
+						$.ajax({
+							url : "/team/task/chstatus.action",
+							method : "post",
+							data : {"taskNo":taskNo,"completed":"0"},
+							success : function(resp, status, xhr) {
+								$("#task-body").load("loadtask.action", function(){
+									slider = $('#body-task');
+									$('.taskList-task').attr('onmousemove',"event.stopPropagation();");
+								});
+							},
+							error : function(xhr, status, err) {
+								console.log(err);
+							}
+						});
+					}
 			});
 		});
 	</script>

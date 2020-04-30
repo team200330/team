@@ -1,7 +1,7 @@
 <%@ page language="java" 
 		 contentType="text/html; charset=utf-8"
     	 pageEncoding="utf-8" %>
-<%--@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
   
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -130,13 +130,14 @@
       </li>
       
       <!-- WorkspaceList Dropdown Menu -->
+      <c:if test="${ not empty loginuser }">
       <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#" style="letter-spacing:-1px;">워크스페이스 이름</a>
+        <a class="nav-link" data-toggle="dropdown" href="#">${ workspace.workspaceName }</a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           
           <div class="dropdown-divider"></div>
-          <a href="/team/workspace/setting-workspace?workspaceNo=3" class="dropdown-item">
-            <p class="text-sm">워크스페이스이름<br>워크스페이스 설정, 결제 그 외 더보기...</p>
+          <a href="/team/workspace/setting-workspace?workspaceNo=${ workspace.workspaceNo }" class="dropdown-item">
+            <p class="text-sm">${ workspace.workspaceName }<br>워크스페이스 설정, 결제 그 외 더보기...</p>
           </a>
           <div class="dropdown-divider"></div>
             <!-- Message Start -->
@@ -154,25 +155,19 @@
                 </div>
               </div>                
             </div> 
-  
-              <div class="dropdown-divider"></div>          
-          	  <a href="#" class="dropdown-item">
-              <p class="text-sm">팀플랜 - 프로젝트 진행 내용 작성 될곳 테스트는 다른곳에서</p>
-              </a>                 
-              <div class="dropdown-divider"></div>
-              <a href="#" class="dropdown-item">
-              <p class="text-sm">팀플랜 - 프로젝트 진행 내용 작성 될곳 테스트는 다른곳에서</p>
-              </a> 
-              <div class="dropdown-divider"></div>
-              <a href="#" class="dropdown-item">
-              <p class="text-sm">팀플랜 - 프로젝트 진행 내용 작성 될곳 테스트는 다른곳에서</p>
-              </a> 
+  			  <c:forEach var="workspace" items="${ workspaces }">
+	              <div class="dropdown-divider"></div>          
+	          	  <a href="#" class="dropdown-item">
+	              <p class="text-sm">${ workspace.workspaceName }</p>
+	              </a>  
+              </c:forEach>
               <div class="dropdown-divider"></div>
             <!-- Message End -->
                    
           <a href="/team/workspace/create-workspace?email=${ loginuser.email }" class="dropdown-item dropdown-footer">새 워크스페이스 만들기</a>
         </div>
       </li>
+      </c:if>
       <!-- WorkspaceList Dropdown Menu -->
       
       <!-- 필요한사람이 살리세요  -->

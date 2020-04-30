@@ -12,8 +12,6 @@ public interface WorkspaceMapper {
 	
 	List<WorkspaceMember> selectWorkspaceMembers(int workspaceNo);
 
-	Workspace selectWorkspaceByWorkspaceNo(int workspaceNo);
-
 	void updateWorkspaceName(Workspace workspace);
 
 	void deleteWorkspace(Workspace workspace);
@@ -27,5 +25,13 @@ public interface WorkspaceMapper {
 	void insertWorkspaceMember(WorkspaceMember workspaceMember);
 
 	void updateWorkspace(Workspace workspace);
+
+	WorkspaceMember selectWorkspaceByEmail(String email);
 	
+	Workspace selectWorkspaceByWorkspaceNo(int workspaceNo);
+
+	List<Workspace> selectWorkspacesByWorkspaceNo(int workspaceNo);
+
+	List<Workspace> selectWorkspaceNameByEmail(String email);
+
 }
