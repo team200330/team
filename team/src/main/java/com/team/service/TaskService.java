@@ -1,5 +1,6 @@
 package com.team.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.team.vo.Task;
@@ -18,4 +19,6 @@ public interface TaskService {
 	List<Task> searchTask();
 
 	void deleteTask(int taskNo);
+
+	void updateCompleted(HashMap<String, Object> params);
 }

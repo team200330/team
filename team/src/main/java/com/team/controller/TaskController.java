@@ -1,9 +1,8 @@
 package com.team.controller;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -57,6 +56,18 @@ public class TaskController {
 		model.addAttribute("taskLists",taskService.searchTaskList());
 		model.addAttribute("tasks",taskService.searchTask());
 		return "task/modules/task-list";
+	}
+	
+	@PostMapping(path = {"/chstatus.action"})
+	@ResponseBody
+	public String updateTaskStatus(int taskNo, int completed, Date completedDate) {
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("taskNo", taskNo);
+		params.put("completed", completed);
+		params.put("completedDate", completedDate);
+		System.out.println(taskNo+"//"+completed);
+		taskService.updateCompleted(params);
+		return "success";
 	}
 	
 	@PostMapping(path = {"/deletelist.action"})

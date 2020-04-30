@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ page pageEncoding="utf-8"%>
 <section class="section-body">
 	<div class="body-top">
@@ -38,8 +39,8 @@
 				<c:forEach items="${ taskLists }" var="taskList">
 					<div id="taskList-task-wrapper-${ taskList.listNo }" onmousemove="event.stopPropagation();" class="taskList-task" style="margin-bottom: 5px">
 						<div id="taskList-wrapper" class="btn btn-primary active" 
-						style="width:300px; margin-right: 5pt; padding: 0 0 0 0; border-radius: 0;">
-							<div id="taskList-div-${ taskList.listNo }" class="btn btn-primary active" style="display: flex" data-tno="${ taskList.listNo }" data-pno="${ taskList.projectNo }">
+						style="width:300px; margin-right: 5pt; padding: 0 0 0 0; border-radius: 0; background-color:#308eb7; border-color:#308eb7;">
+							<div id="taskList-div-${ taskList.listNo }" class="btn btn-primary active" style="display: flex; background-color:#308eb7; border-color:#308eb7;" data-tno="${ taskList.listNo }" data-pno="${ taskList.projectNo }">
 								<div id="listname" style="width:80%; text-align: left;">
 									<span>${ taskList.listName }</span>
 								</div>
@@ -89,18 +90,44 @@
 							<c:forEach items="${ tasks }" var="task">
 								<c:if test="${task.listNo eq taskList.listNo }">
 									<div class="dropright">
-										<div id="task-${task.taskNo}" class="btn btn-light task-field" 
-										style="margin-top:3px; width:300px; min-height:38px;height:auto; border-radius: 0; display:flex; flex-wrap:nowrap;"
-										data-tno="${ task.taskNo }" data-lno="${ taskList.listNo }">
-											<div>
+									<c:choose>
+										<c:when test="${ task.completed eq false }">
+											<div id="task-${task.taskNo}" class="btn btn-light task-field" 
+											style="margin-top:3px; width:300px; min-height:38px;height:auto; border-radius: 0;"
+											data-tno="${ task.taskNo }" data-lno="${ taskList.listNo }">
+										</c:when>
+										<c:otherwise>
+											<div id="task-${task.taskNo}" class="btn btn-light task-field" 
+											style="margin-top:3px; width:300px; min-height:38px;height:auto; border-radius: 0; background-color: #e2e2e2; border-color:#e2e2e2;"
+											data-tno="${ task.taskNo }" data-lno="${ taskList.listNo }">
+										</c:otherwise>
+									</c:choose>
+											<div id="cbox-content-wrap" style="display:flex; flex-wrap:nowrap;">
+											<div id="checkbox-div">
 												<div class="custom-control custom-checkbox">
-													<input type="checkbox" class="custom-control-input"	id="checkbox-${ task.taskNo }">
+													<c:choose>
+														<c:when test="${ task.completed eq false }">
+															<input id="checkbox-${ task.taskNo }" type="checkbox" class="custom-control-input task-chbox">
+														</c:when>
+														<c:otherwise>
+															<input id="checkbox-${ task.taskNo }" type="checkbox" class="custom-control-input task-chbox" checked="checked">
+														</c:otherwise>
+													</c:choose>
 													<label class="custom-control-label" for="checkbox-${ task.taskNo }"></label>
 												</div>
 											</div>
-											<div>
+											<div id="content-div">
 												<span style="display:block; text-align:left; white-space: normal; word-break: break-all;">${ task.content }</span>
 											</div>
+											</div>
+											<c:if test="${ task.completed eq true }">
+											<div class="dropdown-divider"></div>
+											<div style="text-align:left; font-size:8pt">
+												<span>
+													<fmt:formatDate value="${task.completedDate}" pattern="yyyy-MM-dd E요일  HH:mm"/> 에 완료
+												</span>
+											</div>
+											</c:if>
 										</div>
 										<!-- 
 										<div id="${ task.taskNo }" class="dropdown-menu" aria-labelledby="task-${task.taskNo}">
