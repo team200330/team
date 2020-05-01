@@ -34,7 +34,7 @@
 	.mem {	border: 1px #dedede;   background-color: #dedede;   border-radius: 30rem;   width: 115px; height: 32px;    text-align: center;   margin-left: 2px; display: inline-table;}
 	.mem_img {	width: 30%; height:32px;	border-radius: 30rem;	border: 1px solid;}
 	.mem_name {width: 50%;}
-	.mem_rm {width: 20%;}
+	.mem_rm {width: 50%;height: 100%;}
 	.mem *, ._mem *, .t * {display:inline-block;float:left;}
 	._mem { height:50px;border:1px solid white;border-radius:.20rem;padding:5px; }
 	._mem_img {width:20%;}
@@ -225,7 +225,7 @@ $(function() {
 				
 				$("#mem").html($("#mem").html() + 
 					'<div class="float_left mem" data-name="' + name +'" data-email="' + email + '">' +
-						'<img class="mem_img"></img>' +
+						//'<img class="mem_img"></img>' +
 						'<div class="mem_name" >'+ name + '</div>' +
 						'<a href="#" class="mem_rm" aria-hidden="true">&times;</a>' +
 						'<input type="hidden" name="email" value="' + email + '"/>' + 
@@ -424,7 +424,7 @@ $(function() {
 					$(".selected1").removeClass("selected1");
 					p_check_label.addClass("selected1");
 				}
-				$('#mem .mem').remove();
+				$(".mem2").parent().remove();
 				
 				// list
 				$('.list-container1').load('/team/project/list');
@@ -584,12 +584,21 @@ $(function() {
 					$("#memberAddModal2").modal();
 				});
 
+				// 멤버 추가 츼소 큰모달 이벤트
+				$(document).on("click", ".mem_rm2", function() {
+					var name = $(this).parent().attr("data-name");
+					var email = $(this).parent().attr("data-email");
+					
+					$(this).parent().remove();
+					$("#workspace_mem2 div[data-email='" + email +"']").children("._mem_icon2").addClass("_mem_icon_default2");
+				});
+
 				// 멤버 검색 작은모달 ajax
 				$("#_mem_input2").keyup(function() {
 					
 					var selected = "";
-					for (i = 0; i < $(".mem").length; i++) 
-						selected += $(".mem:eq("+ i +")").attr("data-email") + ":";
+					for (i = 0; i < $(".mem2").length; i++) 
+						selected += $(".mem2:eq("+ i +")").attr("data-email") + ":";
 						
 					$.ajax({
 						url : "/team/project/getProjectMember",
@@ -613,8 +622,8 @@ $(function() {
 					var name = $(this).attr("data-name");
 					var email = $(this).attr("data-email");
 					
-					if ($(this).children().hasClass("_mem_icon_default")) {
-						$(this).children().removeClass("_mem_icon_default");
+					if ($(this).children().hasClass("_mem_icon_default2")) {
+						$(this).children().removeClass("_mem_icon_default2");
 						
 						$("#mem2").html($("#mem2").html() + 
 							'<div class="float_left mem2" data-name="' + name +'" data-email="' + email + '">' +
@@ -625,18 +634,18 @@ $(function() {
 						);
 						
 					} else {
-						$(this).children("._mem_icon2").addClass("_mem_icon_default");
+						$(this).children("._mem_icon2").addClass("_mem_icon_default2");
 						$("#mem2 div[data-email='" + email + "']").remove();
 					}
 				});
 
-				$("._mem2, .task").hover(function() {
+				$("._mem2, .task2").hover(function() {
 					$(this).css({"background-color" : "#dedede", "border" : "1px solid #dedede"});
 				}, function() {
 					$(this).css({"background-color" : "white", "border" : "1px solid white"});
 				});
 				
-				$("#addFooter").hover(function() {
+				$("#addFooter2").hover(function() {
 					$(this).css("background-color", "#148192");
 				}, function() {
 					$(this).css("background-color", "#17a2b8");
