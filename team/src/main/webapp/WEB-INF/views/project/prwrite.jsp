@@ -182,7 +182,7 @@
 	            	<c:forEach var="m" items="${ workspaceMembers }">
 	            		<c:if test="${ m.email != loginuser.email }">
 	            		<div class="_mem" data-email="${ m.email }" data-name="${ m.name }">
-		            		<img class="_mem_img img-circle img-bordered-sm" src="" alt="user image">
+		            		<!-- <img class="_mem_img img-circle img-bordered-sm" src="" alt="user image"> -->
 		            		<div class="_mem_name">${ m.email }<br/>${ m.name }</div>
 		            		<div class="_mem_icon _mem_icon_default" style="text-align:right" >
 		            			<i class="fas fa-check"></i>

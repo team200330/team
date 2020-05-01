@@ -78,16 +78,17 @@ public class WorkspaceController {
 	}
 	
 	@GetMapping(path = { "/workspace-member" })
-	public String workspacemember(WorkspaceMember workspaceMember,Model model) {		
+	public String workspacemember(String email,WorkspaceMember workspaceMember,Model model) {
+		
 		List <Member> members = workspaceService.selectMembersByWorkspaceNo(workspaceMember);
 		model.addAttribute("members",members);
-		System.out.println(members);
+		
 		Member member = workspaceService.selectMemberTypeNo1ByWorkspaceNo(workspaceMember);
 		model.addAttribute("member",member);
-		System.out.println(member);
+		
 		//java.lang.ClassCastException: com.team.vo.WorkspaceMember cannot be cast to com.team.vo.Member
 		//작업중에있음
-		System.out.println(workspaceMember);
+		
 	return "workspace/workspace-member"; 
 	}
 	

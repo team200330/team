@@ -4,11 +4,11 @@
 	.mem2 {	border: 1px #dedede;   background-color: #dedede;   border-radius: 30rem;   width: 115px; height: 32px;    text-align: center;   margin-left: 2px; display: inline-table;}
 	.mem_img2 {	width: 30%; height:32px;	border-radius: 30rem;	border: 1px solid;}
 	.mem_name2 {width: 50%;}
-	.mem_rm2 {width: 20%;}
+	.mem_rm2 {width: 50%;height: 100%;}
 	.mem2 *, ._mem2 *, .t2 * {display:inline-block;float:left;}
-	._mem { height:50px;border:1px solid white;border-radius:.20rem;padding:5px; }
+	._mem2 { height:50px;border:1px solid white;border-radius:.20rem;padding:5px; }
 	/*._mem_img {width:20%;}*/
-	._mem_name2 {width:100%;}
+	._mem_name2 {width:90%;}
 	/*._mem_icon {width:20%;}*/
 </style>
             <div class="modal-header">
@@ -75,7 +75,7 @@
 				            		<c:if test="${ m.email != loginuser.email }">
 				            		<div class="_mem2" data-email="${ m.email }" data-name="${ m.name }">
 					            		<div class="_mem_name2">${ m.email }<br/>${ m.name }</div>
-					            		<div class="_mem_icon2 _mem_icon_default" style="text-align:right" >
+					            		<div class="_mem_icon2 _mem_icon_default2" style="text-align:right" >
 					            			<i class="fas fa-check"></i>
 					            		</div>
 					            	</div>

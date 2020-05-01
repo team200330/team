@@ -9,13 +9,11 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.team.service.ProjectService;
@@ -215,15 +213,15 @@ public class ProjectController {
 		System.out.println(selected);
 		
 		for (Member m : workspaceMembers) {
-			String className = "_mem_icon_default";
+			String className = "_mem_icon_default2";
 			for (String s : selectedMems) if (s.equals(m.getEmail())) { className = ""; break; }
 			
 			if ( (m.getEmail().contains(str) || m.getName().contains(str)) && !m.getEmail().equals(email) ) 
 				result += 
-					"<div class='_mem' data-email='" + m.getEmail() + "' data-name='" + m.getName() + "'>" +
+					"<div class='_mem2' data-email='" + m.getEmail() + "' data-name='" + m.getName() + "'>" +
 						//"<img class='_mem_img img-circle img-bordered-sm' src='' alt='user image'>" +
-			        	"<div class='_mem_name'> " + m.getEmail() + "<br/>" + m.getName() + "</div>" +
-			        	"<div class='_mem_icon "+ className +"' style='text-align:right' >" +
+			        	"<div class='_mem_name2'> " + m.getEmail() + "<br/>" + m.getName() + "</div>" +
+			        	"<div class='_mem_icon2 "+ className +"' style='text-align:right' >" +
 			        		"<i class='fas fa-check'></i>" +
 			        	"</div>" +
 			        "</div>";
