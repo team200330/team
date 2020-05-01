@@ -30,3 +30,6 @@
   <link rel="stylesheet" href="/team/resources/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
   <!-- Toastr -->
   <link rel="stylesheet" href="/team/resources/plugins/toastr/toastr.min.css">
+  <!-- Task Properties -->
+  <link rel="stylesheet" href="/team/resources/css/task-properties-side.css">
+  
