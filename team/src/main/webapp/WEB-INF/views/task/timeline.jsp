@@ -8,7 +8,15 @@
 <link rel="stylesheet" href="/team/resources/css/log-feedback.css">
 <%@include file="/WEB-INF/views/modules/common-css.jsp"%>
 <style>
-
+section.section-header {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-items: center;
+	height: 50px;
+}
     
 .card {margin-bottom:0 !important;border-radius:0; box-shadow:none}
 .card-header {border-radius:0 !important}
@@ -65,11 +73,9 @@ td:not(:first-child) {border-right: 2px solid #e5e5e5;}
     font-weight: bold;
 }
 
-
-
-.startdate {border-top-left-radius:.50rem;border-bottom-left-radius:.50rem}
-.enddate {border-top-right-radius:.50rem;border-bottom-right-radius:.50rem}
-
+.startdate {border-top-left-radius:.50rem;border-bottom-left-radius:.50rem; cursor:col-resize}
+.enddate {border-top-right-radius:.50rem;border-bottom-right-radius:.50rem; cursor:col-resize}
+.term {border-right:0 !important;}
 </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -94,13 +100,14 @@ td:not(:first-child) {border-right: 2px solid #e5e5e5;}
 				</div>
 				<div class="header-center"
 					style="flex-basis: 33%; text-align: center; padding-top: 20px;">
-					<a class="f_link" href="/team/task/main">업무</a>&nbsp;&nbsp;
-					<a id="active" class="f_link" href="/team/task/timeline" style="position: relative;z-index: 1;">타임라인</a>&nbsp;&nbsp;
-					<a  class="f_link" href="/team/task/analyticsmain">분석</a>
+					<a id="active2" class="f_link" href="/team/task/main">업무</a>&nbsp;&nbsp;
+					<a id="active" class="f_link" href="/team/task/timeline">타임라인</a>&nbsp;&nbsp;
+					<a id="active3" class="f_link" href="/team/task/analyticsmain">분석</a>
 				</div>
-				<div class="header-right" style="flex-basis: 33%; padding-top: 19px;"></div>
+				<div class="header-right"
+					style="flex-basis: 33%; padding-top: 20px;"></div>
 			</section>
-
+			<hr />
 			<!-- Main content -->
 		    <section class="content">
 		      <div class="row">
@@ -191,7 +198,6 @@ td:not(:first-child) {border-right: 2px solid #e5e5e5;}
 		var bgColorIdx = 0;
 		$(".task").each(function() {
 			var taskNo = $(this).attr("class").split("task ")[1].split("list")[0];
-			
 			var sdateIdx = null;
 			var edateIdx = null;
 			
@@ -203,7 +209,7 @@ td:not(:first-child) {border-right: 2px solid #e5e5e5;}
 			if (sdateIdx != null || edateIdx != null) {
 				edateIdx = (edateIdx == null) ? sdateIdx : edateIdx;
 				for (var i = sdateIdx; i <= edateIdx; i++) {
-					$("." + taskNo).eq(i).css({"background-color" : bgColor[bgColorIdx], "border-right" : "0", "cursor" : "pointer"});
+					$("." + taskNo).eq(i).css({"background-color" : bgColor[bgColorIdx]});
 					$("." + taskNo).eq(i).addClass("term");
 				}
 			}
@@ -287,35 +293,86 @@ td:not(:first-child) {border-right: 2px solid #e5e5e5;}
 		
 		
 		
+		// 여기 고치기 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		// 마우스 드래그앤 드롭
-		var dragTarget = null;
-		
+		var taskNo = null;
+		var pageX = null;
 		// 마우스 누르고 있을때
 		$(document).on("mousedown", ".enddate", function(e) { 
-			console.log($(this).attr("class"))
-			dragTarget = "task-" + $(this).attr("class").split("task-")[1].split("list")[0];
-			console.log(dragTarget);
+			taskNo = "task-" + $(this).attr("class").split("task-")[1].split(" list")[0];
+			pageX = e.pageX;
+			console.log("pageX : " + pageX);
+			$(this).removeClass("enddate");
 		});
 		
 		// 마우스 뗐을때
 		$(document).on("mouseup", "td", function(e) {	 
-			if (dragTarget == null) return;
-			console.log("mouseup");
-			dragTarget = null;
+			if (taskNo != null && $(this).hasClass(taskNo)) {
+				console.log($(this));
+				
+				$(this).css("background-color", $("." + taskNo).find(".startdate").css("background-color"));
+				
+				taskNo = null;	
+				pageX = null;		
+			}
 		});
 		
 		// 마우스 움직일때
-		$(document).on("mousemove", "td", function(e) { 	 
-			if (dragTarget == null) return;
-			console.log($(this).attr("class"));
-			console.log("dragtarget : "+ dragTarget);
-			console.log($(this).hasClass(dragTarget));
+		$(document).on("mousemove", "td", function(e) { 	
+			if (taskNo != null && $(this).hasClass(taskNo)) {
+				if (e.pageX > pageX) {
+					pageX = e.pageX;
+					console.log("moveRight");
+					$(this).css("background-color", $("." + taskNo).find(".startdate").css("background-color"));
+					$(this).addClass("term");
+				}
+				else {
+					pageX = e.pageX;
+					console.log("moveLeft");
+					
+					$(this).css("background-color", "white");
+					$(this).removeClass("term");
+				}
+				
+				$("." + taskNo).find(".enddate").removeClass("enddate");
+				$(this).addClass("enddate");
+			}
+		}); 
+		
+		
+	
+		/* var row, pageX, startOrEnd, bgColor = null;
+
+		// 마우스 처음 눌를때
+		$(document).on("mousedown", ".startdate, .enddate", function(e) {
+			row = "task-" + $(this).attr("class").split("task-")[1].split(" list")[0]; // 행마다 부여되는 taskNo 클래스
+			pageX = e.pageX;
+			bgColor = $(this).css("background-color");
 			
-			if ($(this).hasClass(dragTarget)) console.log("move");
+			if ($(this).hasClass("startdate")) {
+				$(this).removeClass("startdate"); startOrEnd = "start";
+			} 
+			else {
+				$(this).removeClass("enddate"); startOrEnd = "end";
+			}
 		});
-		
-		
-		
+		// 마우스 뗐을때
+		$(document).on("mouseup", "#timeline-table td", function(e) {	 
+			if (row == null) return;
+			
+			var target = $(this);
+			
+			if (!$(this).hasClass(row)) { // 마우스 뗀곳이 마우스 누른 행이 아닐때
+				var tds = $(this).parents("tr").children("td");
+				tds.each(function(i) {
+					if ($(this) == tds.eq(i)) { target = $("." + rows).eq(i); return false; }
+				});
+			}
+			
+			console.log(target);
+			target.css("background-color", bgColor);
+			row, pageX, startOrEnd, bgColor = null;
+		}); */
 		
 		
 		

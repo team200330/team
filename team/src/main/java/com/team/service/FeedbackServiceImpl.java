@@ -1,6 +1,7 @@
 package com.team.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,6 +62,16 @@ public class FeedbackServiceImpl implements FeedbackService {
 	}
 	
 	@Override
+	public int uncheckedFeedbackCount(HashMap<String, Object> params) {
+		return feedbackMapper.countFeedback(params);
+	}
+	
+	@Override
+	public Date findLatestWritedate(HashMap<String, Object> params) {
+		return feedbackMapper.selectLatestWritedate(params);
+	}
+	
+	@Override
 	public void deleteFeedback(HashMap<String, Object> params) {
 		feedbackMapper.deleteFeedback(params);
 	}
@@ -84,6 +95,10 @@ public class FeedbackServiceImpl implements FeedbackService {
 			
 		return members;
 	}
+
+	
+
+
 
 	
 

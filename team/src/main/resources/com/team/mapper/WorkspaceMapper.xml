@@ -38,7 +38,7 @@
 		AND ( type_no = 1 OR type_no = 2 );
 	</select>
 	
-	<select id="selectMembersByWorkspaceNo" parameterType="com.team.vo.WorkspaceMember" resultMap="workspaceMemberMap">
+	<select id="selectMembersByWorkspaceNo" parameterType="com.team.vo.WorkspaceMember" resultType="com.team.vo.Member">
 		SELECT * FROM workspace_member wm
 		INNER JOIN member m
 		ON wm.email = m.email		
@@ -69,15 +69,19 @@
 		<result column="email" property="email" />
 		<result column="type_no" property="typeNo" />
 	</resultMap> 
-	
-	
-	
+		
 	<select id="selectWorkspaceByWorkspaceNo" parameterType="com.team.vo.WorkspaceMember" resultMap="workspaceMap">
+		SELECT * FROM workspace
+		WHERE workspace_no = #{ workspaceNo } 
+		LIMIT 1;
+	</select>
+	
+	<select id="selectWorkspacesByWorkspaceNo" parameterType="com.team.vo.WorkspaceMember" resultMap="workspaceMap">
 		SELECT * FROM workspace
 		WHERE workspace_no = #{ workspaceNo } 
 	</select>
 	
-	<select id="selectMemberTypeNo1ByWorkspaceNo" parameterType="com.team.vo.WorkspaceMember" resultMap="workspaceMemberMap">
+	<select id="selectMemberTypeNo1ByWorkspaceNo" parameterType="com.team.vo.WorkspaceMember" resultType="com.team.vo.Member">
 		SELECT * FROM workspace_member wm
 		INNER JOIN member m
 		ON wm.email = m.email		
@@ -116,11 +120,24 @@
 		UPDATE workspace
 		SET deleted = '1'
 		WHERE workspace_no = #{ workspaceNo } 
-	</update>
+	</update>		
 	
-	<!-- update
-		 set type_no = 1
-		 where email = user2@example.com
-	 -->
+	<select id="selectWorkspaceByEmail" parameterType="com.team.vo.WorkspaceMember" resultType="com.team.vo.WorkspaceMember">
+		SELECT workspace_no workspaceNo, email, type_no typeNo
+		FROM workspace_member
+		WHERE email = #{ email } 
+		LIMIT 1;
+	</select>
 	
+	
+	<select id="selectWorkspaceNameByEmail" parameterType="com.team.vo.Workspace" resultType="com.team.vo.Workspace">
+		select workspace_name
+		from workspace
+		where workspace_no = any(
+		select workspace_no
+		from workspace_member
+		where email = #{ email } 
+		)
+	</select>
+		
 </mapper>

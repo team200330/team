@@ -63,21 +63,7 @@
 	                  	  <div class="form-group">			              
 			              <div class="row" style="padding:10px">
 			              	<div id="add_mem" class="btn btn-secondary float_left" style="width:37px;">+</div>
-			              	<div class="float_left mem">
-			              		<div class="mem_img">사진</div>
-			              		<div class="mem_name">멤버1</div>
-			              		<div class="mem_rm" aria-hidden="true">&times;</div>
-			              	</div>
-			              	<div class="float_left mem">
-			              		<div class="mem_img">사진</div>
-			              		<div class="mem_name">멤버1</div>
-			              		<div class="mem_rm" aria-hidden="true">&times;</div>
-			              	</div>
-			              	<div class="float_left mem">
-			              		<div class="mem_img">사진</div>
-			              		<div class="mem_name">멤버1</div>
-			              		<div class="mem_rm" aria-hidden="true">&times;</div>
-			              	</div>
+			              	<div id="mem"></div>
 			              </div>
 			              </div>
                       </div>
@@ -196,7 +182,7 @@
 	            	<c:forEach var="m" items="${ workspaceMembers }">
 	            		<c:if test="${ m.email != loginuser.email }">
 	            		<div class="_mem" data-email="${ m.email }" data-name="${ m.name }">
-		            		<img class="_mem_img img-circle img-bordered-sm" src="" alt="user image">
+		            		<!-- <img class="_mem_img img-circle img-bordered-sm" src="" alt="user image"> -->
 		            		<div class="_mem_name">${ m.email }<br/>${ m.name }</div>
 		            		<div class="_mem_icon _mem_icon_default" style="text-align:right" >
 		            			<i class="fas fa-check"></i>

@@ -1,5 +1,6 @@
 package com.team.mapper;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,6 +19,8 @@ public interface FeedbackMapper {
 	
 	public List<Feedback> selectFeedback(HashMap<String, Object> params);
 	public List<Comments> selectComments(int feedbackNo);
+	public int countFeedback(HashMap<String, Object> params);
+	public Date selectLatestWritedate(HashMap<String, Object> params);
 	
 	public int receivedFeedbackCount(String email);
 	

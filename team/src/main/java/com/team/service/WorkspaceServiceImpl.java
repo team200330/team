@@ -43,11 +43,6 @@ public class WorkspaceServiceImpl implements WorkspaceService {
 	}
 
 	@Override
-	public Workspace selectWorkspaceByWorkspaceNo(int workspaceNo) {
-		return workspaceMapper.selectWorkspaceByWorkspaceNo(workspaceNo);
-	}
-
-	@Override
 	public void updateWorkspaceName(Workspace workspace) {
 		workspaceMapper.updateWorkspaceName(workspace);
 		
@@ -81,6 +76,27 @@ public class WorkspaceServiceImpl implements WorkspaceService {
 	public void updateWorkspace(Workspace workspace) {
 		workspaceMapper.updateWorkspace(workspace);
 		
+	}	
+
+	@Override
+	public Workspace selectWorkspaceByWorkspaceNo(int workspaceNo) {
+		return workspaceMapper.selectWorkspaceByWorkspaceNo(workspaceNo);
+	}
+
+	@Override
+	public List<Workspace> selectWorkspacesByWorkspaceNo(int workspaceNo) {
+		return workspaceMapper.selectWorkspacesByWorkspaceNo(workspaceNo);
+	}
+	
+	@Override
+	public WorkspaceMember selectWorkspaceByEmail(String email) {
+		WorkspaceMember workspaceMember = workspaceMapper.selectWorkspaceByEmail(email);
+		return workspaceMember;
+	}
+
+	@Override
+	public List<Workspace> selectWorkspaceNameByEmail(String email) {
+		return workspaceMapper.selectWorkspaceNameByEmail(email);
 	}
 	
 }

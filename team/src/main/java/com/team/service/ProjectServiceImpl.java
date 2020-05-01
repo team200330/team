@@ -1,7 +1,6 @@
 package com.team.service;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +13,7 @@ import com.team.mapper.ProjectMapper;
 import com.team.mapper.WorkspaceMapper;
 import com.team.vo.Member;
 import com.team.vo.Project;
+import com.team.vo.ProjectMember;
 import com.team.vo.WorkspaceMember;
 
 import lombok.Setter;
@@ -32,8 +32,14 @@ public class ProjectServiceImpl implements ProjectService {
 	private MemberMapper memberMapper;
 	
 	@Override
-	public void writeProject (Project project) {
+	public void writeProject (Project project , String[] email) {
+		
 		projectMapper.insertProject(project);
+		int key = project.getProjectNo();
+		
+		List<ProjectMember> projectMember = new ArrayList<>();
+		for (String s : email) projectMember.add(new ProjectMember(key, s));
+		projectMapper.insertProjectMember(projectMember);
 	}
 
 	@Override
@@ -101,6 +107,13 @@ public class ProjectServiceImpl implements ProjectService {
 			
 		return members;
 	}
+
+	@Override
+	public void insertProjectMember(ProjectMember projectMember) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 
 

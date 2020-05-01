@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.team.service.ProjectService;
 import com.team.vo.Member;
 import com.team.vo.Project;
+import com.team.vo.ProjectMember;
 
 @Controller
 @RequestMapping(path = {"/project"})
@@ -84,9 +85,11 @@ public class ProjectController {
 	
 	@PostMapping(path = {"/write"})
 	@ResponseBody	
-	public String write(Project project, String proPublic) {
+	public String write(Project project, String proPublic, String[] email) {
+		
 		project.setProPublic(proPublic.equals("true") ? true : false);
-		projectService.writeProject(project);
+		project.setWorkspaceNo(workspaceNo);
+		projectService.writeProject(project, email);
 		
 		return "success";
 		
@@ -174,10 +177,66 @@ public class ProjectController {
 		
 	}
 
-	/*
-	 * 현재 워크스페이스 번호 가져와야함 워크스페이스의 멤버를 가져와야함 워크스페이스릐 멤버만 나오도록 해야함 워크스페이스의 번호에 따라
-	 * 프로젝트가 보여야함
-	 */
+	///////////////////
+	
+	@GetMapping("/getProjectMember")
+	@ResponseBody
+	public String getWorkspaceMembers(String str, String selected, String email) {
+		String result = "";
+		String selectedMems[] = selected.split(":");
+		
+		System.out.println(selected);
+		
+		for (Member m : workspaceMembers) {
+			String className = "_mem_icon_default";
+			for (String s : selectedMems) if (s.equals(m.getEmail())) { className = ""; break; }
+			
+			if ( (m.getEmail().contains(str) || m.getName().contains(str)) && !m.getEmail().equals(email) ) 
+				result += 
+					"<div class='_mem' data-email='" + m.getEmail() + "' data-name='" + m.getName() + "'>" +
+						//"<img class='_mem_img img-circle img-bordered-sm' src='' alt='user image'>" +
+			        	"<div class='_mem_name'> " + m.getEmail() + "<br/>" + m.getName() + "</div>" +
+			        	"<div class='_mem_icon "+ className +"' style='text-align:right' >" +
+			        		"<i class='fas fa-check'></i>" +
+			        	"</div>" +
+			        "</div>";
+		}
+		return result;
+	}
+	
+	@GetMapping("/getProjectMember2")
+	@ResponseBody
+	public String getWorkspaceMembers2(String str, String selected, String email) {
+		String result = "";
+		String selectedMems[] = selected.split(":");
+		
+		System.out.println(selected);
+		
+		for (Member m : workspaceMembers) {
+			String className = "_mem_icon_default2";
+			for (String s : selectedMems) if (s.equals(m.getEmail())) { className = ""; break; }
+			
+			if ( (m.getEmail().contains(str) || m.getName().contains(str)) && !m.getEmail().equals(email) ) 
+				result += 
+					"<div class='_mem2' data-email='" + m.getEmail() + "' data-name='" + m.getName() + "'>" +
+						//"<img class='_mem_img img-circle img-bordered-sm' src='' alt='user image'>" +
+			        	"<div class='_mem_name2'> " + m.getEmail() + "<br/>" + m.getName() + "</div>" +
+			        	"<div class='_mem_icon2 "+ className +"' style='text-align:right' >" +
+			        		"<i class='fas fa-check'></i>" +
+			        	"</div>" +
+			        "</div>";
+		}
+		return result;
+	}
+	
+	@PostMapping("/postProjectMember")
+	@ResponseBody
+	public String postProjectMember(ProjectMember projectMember) {
+		
+		projectService.insertProjectMember(projectMember);
+		return "success";
+	}
+	
 
 	
 }
