@@ -59,6 +59,17 @@ public class TaskController {
 		return "task/modules/task-list";
 	}
 	
+	
+	@GetMapping(path = {"/properties"})
+	public String loadProperties(int taskNo, Model model) {
+		for(Task task : taskService.searchTask()) {
+			if(task.getTaskNo() == taskNo) {
+				model.addAttribute("selectedTask", task);
+			}
+		}
+		return "task/modules/task-properties";
+	}
+	
 	@PostMapping(path = {"/chstatus.action"})
 	@ResponseBody
 	public String updateTaskStatus(int taskNo, int completed, Date completedDate) {

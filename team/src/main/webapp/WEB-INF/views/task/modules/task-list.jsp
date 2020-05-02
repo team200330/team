@@ -3,7 +3,8 @@
 <%@ page pageEncoding="utf-8"%>
 <section class="section-body">
 	<div class="body-top">
-		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<div class="bg-dark">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="width:400px">
 			<i class="fas fa-search"></i>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarSupportedContent"
@@ -31,8 +32,9 @@
 				</form>
 			</div>
 		</nav>
+		</div>
 	</div>
-	<div id="body-task" style="height: 73%;
+	<div id="body-task" style="height: 79%;
 		 display: flex; flex-wrap: nowrap; white-space: nowrap; overflow-x: scroll; padding: 15 0 0 15;">
 		<div id="task-container">
 			<div style="display: flex; flex-wrap: nowrap; align-items: flex-start">
@@ -169,5 +171,10 @@
 				</div>
 			</div>
 		</div>
+		<!-- 
+		<div>
+			<jsp:include page="task-properties.jsp"></jsp:include>
+		</div>
+		 -->
 	</div>
 </section>
