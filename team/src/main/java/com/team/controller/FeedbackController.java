@@ -1,6 +1,5 @@
 package com.team.controller;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,9 +17,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.team.service.FeedbackService;
+import com.team.service.ProjectService;
 import com.team.vo.Comments;
 import com.team.vo.Feedback;
 import com.team.vo.Member;
+import com.team.vo.Project;
+import com.team.vo.Task;
+import com.team.vo.TaskList;
 
 @Controller
 @RequestMapping("/feedback")
@@ -29,7 +32,14 @@ public class FeedbackController {
 	@Autowired
 	@Qualifier("feedbackService")
 	private FeedbackService feedbackService;
+	
+	@Autowired
+	@Qualifier("projectService")
+	private ProjectService projectService;
 
+	// 프로젝트 리스트 (워크스페이스의 모든 업무 가져오기 위해)
+	private List<Project> projects = null;
+	
 	// 워크스페이스 멤버 리스트
 	private List<Member> workspaceMembers = null;
 	
@@ -40,9 +50,17 @@ public class FeedbackController {
 
 	@GetMapping("/list")
 	public String feedbackList(Model model, HttpSession session) {
-		// 임시 워크스페이스 번호
 		if ( workspaceMembers == null ) workspaceMembers = feedbackService.findWorkspaceMembers(workspaceNo);
 		model.addAttribute("workspaceMembers", workspaceMembers);
+		if ( projects == null ) projects = projectService.findProjectAndTasklist(workspaceNo);
+		model.addAttribute("projects", projects);
+		
+		// tasklist 프로젝트 번호로 가져오기기능 있으면 고치기
+//		for (Project p : projects) {
+//			for (TaskList l : p.getTaskLists()) {
+//				for (Task t : l.getTasks()) System.out.println(t.toString());
+//			}
+//		}
 		
 		HashMap<String, Object> params = new HashMap<>();
 		params.put("email", ((Member) session.getAttribute("loginuser")).getEmail());

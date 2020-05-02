@@ -53,6 +53,9 @@ $(document).on({
 $("#writeFeedbackBtn").click(function() {
 	$("#writeFeedbackModal").modal();
 });
+$("#writeFeedbackModal").on("hidden", function() {
+	
+});
 $("#add_mem").click(function() {
 	$("#memberAddModal").modal();
 });

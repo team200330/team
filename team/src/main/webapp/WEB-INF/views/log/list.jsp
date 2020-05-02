@@ -112,7 +112,6 @@
 	<%@include file="/WEB-INF/views/modules/common-js.jsp"%>
 	
 	<!-- css 관련 스크립트 -->
-	<script src="/team/resources/js/toast.js"></script>
 	<script src="/team/resources/js/log-css.js"></script>
 	<script type="text/javascript">
 	$(function() {		

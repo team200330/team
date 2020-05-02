@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ page pageEncoding="utf-8"%>
 <html>
 
@@ -6,6 +7,7 @@
 <meta charset="utf-8">
 <title>feedback</title>
 <link rel="stylesheet" href="/team/resources/css/log-feedback.css">
+
 <%@include file="/WEB-INF/views/modules/common-css.jsp"%>
 
 <style>
@@ -211,31 +213,57 @@
               </button>
             </div>
             <div class="modal-body" style="padding:10px;">
-              <input style="width:100%;height:30px;border:1px solid #17a2b8;border-radius:.20rem;padding:10px;margin-bottom:10px;"type="text" placeholder="업무 검색">
-            
-            	<div style="margin-bottom:20px;">
-            	<div class="task">
-            		<div class="t_t">업무명</div>
-            		<div class="t">
-            			<div>프로젝트 이름&nbsp;</div> 
-            			<div>> 업무 작성자 이름</div>
-            		</div>
-            	</div>
-            	<div class="task">
-            		<div class="t_t">업무명</div>
-            		<div class="t">
-            			<div>프로젝트 이름&nbsp;</div> 
-            			<div>> 업무 작성자 이름</div>
-            		</div>
-            	</div>
-            	<div class="task">
-            		<div class="t_t">업무명</div>
-            		<div class="t">
-            			<div>프로젝트 이름&nbsp;</div> 
-            			<div>> 업무 작성자 이름</div>
-            		</div>
-            	</div>
-            	</div>
+            	<c:choose>
+            			<c:when test="${projects.size() > 0}">	
+              				<input style="width:100%;height:30px;border:1px solid #17a2b8;border-radius:.20rem;padding:10px;margin-bottom:10px;"type="text" placeholder="업무 검색">
+            				<div style="margin-bottom:20px; max-height:200px;overflow-y:scroll">
+            				
+	            			<c:forEach var="project" items="${projects}">
+	            				<c:forEach var="list" items="${project.taskLists}">
+	            					<c:choose>
+	            						<c:when test="${list.size() > 0}">
+	            							<c:forEach var="task" items="${list.tasks}">
+		           								<c:if test="${task.deleted == false}">
+			            							<div class="task">
+									            		<div class="t_t">
+									            			${task.content}
+									            			<c:choose>
+									            				<c:when test="${task.content.length() > 10}">
+									            					<c:out value="${fn:substring(task.content, 0, 10)} ..." />
+									            				</c:when>
+									            				<c:otherwise>${task.content}</c:otherwise>
+									            			</c:choose>
+									            		</div>
+									            		<div class="t">
+									            			<div>${project.projectName}&nbsp;</div> 
+									            			<div>> ${task.writer}</div>
+									            		</div>
+									            	</div>
+			            						</c:if>
+	            							</c:forEach>
+	            							
+	            						</c:when>
+	            						
+	            						<c:otherwise>
+	            							<div class="task">
+	            								등록된 업무가 없습니다.
+	            							</div>
+	            						</c:otherwise>
+	            						
+	            					</c:choose>
+	            				</c:forEach>
+
+		            		</c:forEach>
+				            	</div>
+            			</c:when>
+            			<c:otherwise>
+            				<div>
+	            				등록된 업무가 없습니다.
+	            			</div>
+            			</c:otherwise>
+            		</c:choose>
+            		
+            	
             	
             </div>
           </div>
@@ -294,10 +322,12 @@
       
 	<%@include file="/WEB-INF/views/modules/common-js.jsp"%>
 	
-	<script src="/team/resources/js/toast.js"></script>
+	
 	<script src="/team/resources/js/feedback-css.js"></script>
 	<script type="text/javascript">
 	$(function() {
+		
+
 		// 텍스트 자르고 ... 포함된 문자열 반환하는 함수
 		function textSubString(text) {
 			return ((text.length > 10) ? text.substring(0, 10) + "..." : text);
@@ -505,7 +535,6 @@
 				);
 			}
 			
-			// 여기 수정하기 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			if ("${loginuser.email}" != $("#detail-modal-sender").text()) {
 				$.ajax({
 					url : "check",
@@ -513,11 +542,8 @@
 					data : {"feedbackNo" : data.split("feedbackNo=")[1].split(",")[0]},
 					success : function(resp, status, xhr) {
 						toastr.info("피드백 &nbsp;&nbsp; " + textSubString($("#detail-modal-content").text()) + " 을 확인했습니다");
-						console.log(resp);
 					},
-					error : function(xhr, status, err) {
-						console.log(err);
-					}
+					error : function(xhr, status, err) { console.log(err); }
 				});
 			}
 		});

@@ -59,7 +59,8 @@
 	SELECT COUNT(*) FROM feedback_receiver r
 	INNER JOIN feedback f
 	ON f.feedback_no = r.feedback_no
-	WHERE email = #{email} AND checked = 0 AND workspace_no = #{workspaceNo}
+	WHERE email = #{email} AND workspace_no = #{workspaceNo}
+	AND checked = 0 AND deleted = 0
 	</select>
 	
 	<select id="selectLatestWritedate" parameterType="hashmap" resultType="java.util.Date">

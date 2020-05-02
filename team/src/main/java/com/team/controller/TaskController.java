@@ -107,6 +107,19 @@ public class TaskController {
 	///////////////////////////////////////////
 	@GetMapping("/timeline-table")
 	public String showTimelineTable(Model model) {
+		List<TaskList> newList = new ArrayList<>();
+		List<TaskList> lists = taskService.searchTaskList();
+		List<Task> tasks = taskService.searchTask();
+		
+		for (TaskList l : lists) {
+			List<Task> ts = new ArrayList<>();
+			for (Task t : tasks) if (t.getListNo() == l.getListNo()) ts.add(t);
+
+			l.setTasks(ts);
+			newList.add(l);
+		}
+		
+		if (lists != null) model.addAttribute("table", new TimelineTable(newList).toString());
 		return "task/modules/timeline-table";
 	}
 	
@@ -114,8 +127,8 @@ public class TaskController {
 	@ResponseBody
 	public String updateDate(int taskNo, String date, String dateType) {
 		Calendar c = Calendar.getInstance();
-		
 		HashMap<String, Object> params = new HashMap<>();
+		
 		params.put("taskNo", taskNo);
 		params.put("date", c.get(c.YEAR) + date.split("date")[1]);
 		params.put("dateType", dateType);

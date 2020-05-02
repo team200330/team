@@ -34,7 +34,9 @@ public interface ProjectService {
 	List<Member> findWorkspaceMembers(int workspaceNo);
 
 
-
+	///////////////////////////////////////////////////
+	
+	List<Project> findProjectAndTasklist(int workspaceNo);
 
 
 

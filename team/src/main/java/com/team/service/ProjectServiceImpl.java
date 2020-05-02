@@ -10,10 +10,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.team.mapper.MemberMapper;
 import com.team.mapper.ProjectMapper;
+import com.team.mapper.TaskMapper;
 import com.team.mapper.WorkspaceMapper;
 import com.team.vo.Member;
 import com.team.vo.Project;
 import com.team.vo.ProjectMember;
+import com.team.vo.TaskList;
 import com.team.vo.WorkspaceMember;
 
 import lombok.Setter;
@@ -30,6 +32,10 @@ public class ProjectServiceImpl implements ProjectService {
 	@Autowired
 	@Qualifier("memberMapper")
 	private MemberMapper memberMapper;
+	
+	@Autowired
+	@Qualifier("taskMapper")
+	private TaskMapper taskMapper;
 	
 	@Override
 	public void writeProject (Project project , String[] email) {
@@ -112,6 +118,25 @@ public class ProjectServiceImpl implements ProjectService {
 	public void insertProjectMember(ProjectMember projectMember) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	
+	
+	
+	
+	
+	//////////////////////////////////////////////////////////////////////////////
+	
+	@Override
+	public List<Project> findProjectAndTasklist(int workspaceNo) {
+		List<Project> projects = projectMapper.selectProjectByWorkspaceNo(workspaceNo);
+		
+		// tasklist project번호로 가져오기 기능 생겨야 할수있음
+		for(Project p : projects) {
+			
+		}
+		
+		return projects;
 	}
 
 
