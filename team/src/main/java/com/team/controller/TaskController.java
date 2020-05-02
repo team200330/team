@@ -1,6 +1,7 @@
 package com.team.controller;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -89,7 +90,29 @@ public class TaskController {
 	}
 	
 	
+	
+	
+	
 	///////////////////////////////////////////
+	@GetMapping("/timeline-table")
+	public String showTimelineTable(Model model) {
+		return "task/modules/timeline-table";
+	}
+	
+	@PostMapping("/timeline-date-update")
+	@ResponseBody
+	public String updateDate(int taskNo, String date, String dateType) {
+		Calendar c = Calendar.getInstance();
+		
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("taskNo", taskNo);
+		params.put("date", c.get(c.YEAR) + date.split("date")[1]);
+		params.put("dateType", dateType);
+		taskService.updateDate(params);
+		
+		return "success";
+	}
+	
 	@GetMapping(path= {"/timeline"})
 	public String showTaskTimeLine(Model model) {
 		

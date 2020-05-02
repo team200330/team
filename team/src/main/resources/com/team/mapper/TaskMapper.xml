@@ -68,6 +68,17 @@
 		SET completed = #{ completed }, completed_date = #{ completedDate }
 		WHERE task_no = #{ taskNo } 
 	</update>
+	
+	<update id="updateDate" parameterType="hashmap">
+		UPDATE task
+		SET 
+			<choose>
+				<when test="dateType == 'start'">start_date</when>
+				<otherwise>end_date</otherwise>
+			</choose>
+		= #{ date }
+		WHERE task_no = #{ taskNo }
+	</update>
 </mapper>
 
 

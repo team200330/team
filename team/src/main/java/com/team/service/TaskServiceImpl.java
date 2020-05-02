@@ -52,5 +52,10 @@ public class TaskServiceImpl implements TaskService {
 	public void updateCompleted(HashMap<String, Object> params) {
 		taskMapper.updateCompleted(params);
 	}
+
+	@Override
+	public void updateDate(HashMap<String, Object> params) {
+		taskMapper.updateDate(params);
+	}
 	
 }

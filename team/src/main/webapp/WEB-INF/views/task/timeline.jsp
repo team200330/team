@@ -134,17 +134,9 @@ td:not(:first-child) {border-right: 2px solid #e5e5e5;}
 		            </div>
 		    		
 		    		<div class="card" id="timeline-card" style="overflow-x: scroll;">
-					<div class="card-body" style="padding:0px;">
-						<c:choose>
-							<c:when test="${not empty table}">
-								<table id="timeline-table">${table}</table>	
-							</c:when>
-							<c:otherwise>
-								업무없ㄷ음
-							</c:otherwise>
-						</c:choose>
+					
+						<jsp:include page="modules/timeline-table.jsp"></jsp:include>
 						
-					</div>
 				</div>
 		       
 		  
@@ -174,6 +166,8 @@ td:not(:first-child) {border-right: 2px solid #e5e5e5;}
 
 	<!-- jQuery -->
 	<%@include file="/WEB-INF/views/modules/common-js.jsp"%>
+	
+	<script src="/team/resources/js/toast.js"></script>
 	<script type="text/javascript">
 	$(function() {
 		// 오늘 날짜 표시
@@ -291,90 +285,75 @@ td:not(:first-child) {border-right: 2px solid #e5e5e5;}
 		
 		
 		
-		
-		
-		// 여기 고치기 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		// 마우스 드래그앤 드롭
-		var taskNo = null;
-		var pageX = null;
-		// 마우스 누르고 있을때
-		$(document).on("mousedown", ".enddate", function(e) { 
-			taskNo = "task-" + $(this).attr("class").split("task-")[1].split(" list")[0];
-			pageX = e.pageX;
-			console.log("pageX : " + pageX);
-			$(this).removeClass("enddate");
-		});
-		
-		// 마우스 뗐을때
-		$(document).on("mouseup", "td", function(e) {	 
-			if (taskNo != null && $(this).hasClass(taskNo)) {
-				console.log($(this));
-				
-				$(this).css("background-color", $("." + taskNo).find(".startdate").css("background-color"));
-				
-				taskNo = null;	
-				pageX = null;		
-			}
-		});
-		
-		// 마우스 움직일때
-		$(document).on("mousemove", "td", function(e) { 	
-			if (taskNo != null && $(this).hasClass(taskNo)) {
-				if (e.pageX > pageX) {
-					pageX = e.pageX;
-					console.log("moveRight");
-					$(this).css("background-color", $("." + taskNo).find(".startdate").css("background-color"));
-					$(this).addClass("term");
-				}
-				else {
-					pageX = e.pageX;
-					console.log("moveLeft");
-					
-					$(this).css("background-color", "white");
-					$(this).removeClass("term");
-				}
-				
-				$("." + taskNo).find(".enddate").removeClass("enddate");
-				$(this).addClass("enddate");
-			}
-		}); 
-		
-		
 	
-		/* var row, pageX, startOrEnd, bgColor = null;
-
+		
+		
+		// 날짜 변경 마우스 드래그앤 드롭
+		var row, pageX, startOrEnd, bgColor = null;
+		
 		// 마우스 처음 눌를때
 		$(document).on("mousedown", ".startdate, .enddate", function(e) {
 			row = "task-" + $(this).attr("class").split("task-")[1].split(" list")[0]; // 행마다 부여되는 taskNo 클래스
 			pageX = e.pageX;
 			bgColor = $(this).css("background-color");
 			
-			if ($(this).hasClass("startdate")) {
-				$(this).removeClass("startdate"); startOrEnd = "start";
-			} 
-			else {
-				$(this).removeClass("enddate"); startOrEnd = "end";
-			}
+			if ($(this).hasClass("startdate")) { $(this).removeClass("startdate"); startOrEnd = "start"; } 
+			else { $(this).removeClass("enddate"); startOrEnd = "end"; }
+			
+			console.log(row);
 		});
+		
+		// 마우스 움직일때
+		$(document).on("mousemove", "#timeline-table td", function(e) {
+			if (row == null) return;
+		
+			var target = $(this);
+			if (!$(this).hasClass(row)) target = $("." + row).eq($(this).index()); // 마우스 뗀곳이 마우스 누른 행이 아닐때
+			
+			if (startOrEnd == "start") { // 시작날짜 조정
+				if (e.pageX < pageX) { target.addClass("term"); target.css("background-color", bgColor); } 	// 왼쪽으로
+				else { target.removeClass("term"); target.css("background-color", "white"); }				// 오른쪽으로
+			
+				$("." + row).parents("tr").children(".startdate").removeClass("startdate");
+				$(this).addClass("startdate");
+			} 
+			else { 						 // 끝날짜 조정
+				if (e.pageX < pageX) { target.removeClass("term"); target.css("background-color", "white"); }// 왼쪽으로
+				else { target.addClass("term"); target.css("background-color", bgColor); }				  	 // 오른쪽으로
+			
+				$("." + row).parents("tr").children(".enddate").removeClass("enddate");
+				$(this).addClass("enddate");
+			}
+			
+			pageX = e.pageX;
+		});
+		
 		// 마우스 뗐을때
 		$(document).on("mouseup", "#timeline-table td", function(e) {	 
 			if (row == null) return;
 			
 			var target = $(this);
-			
-			if (!$(this).hasClass(row)) { // 마우스 뗀곳이 마우스 누른 행이 아닐때
-				var tds = $(this).parents("tr").children("td");
-				tds.each(function(i) {
-					if ($(this) == tds.eq(i)) { target = $("." + rows).eq(i); return false; }
-				});
-			}
-			
-			console.log(target);
-			target.css("background-color", bgColor);
-			row, pageX, startOrEnd, bgColor = null;
-		}); */
-		
-		
+			if (!$(this).hasClass(row)) target = $("." + row).eq($(this).index()); // 마우스 뗀곳이 마우스 누른 행이 아닐때
+
+			$.ajax({
+				url : "/team/task/timeline-date-update",
+				method : "post",
+				data : {
+					"taskNo" : row.split("task-")[1],
+					"dateType" : startOrEnd == "start" ? "start" : "end",
+					"date" : target.attr("data-date")
+				},
+				success : function(data, status, xhr) {
+					var taskContent = $("." + row).parents("tr").children("td").eq(0).text();
+					toastr.info("업무  " + taskContent + " 의 " + ((startOrEnd == "start") ? "시작일자" : "마감일자") +" 를 변경했습니다");
+					
+					target.css("background-color", bgColor); 
+					if (startOrEnd == "start") target.addClass("term");
+					row = null; pageX = null;
+				},
+				error : function(xhr, status, err) { console.log(err); }
+			});			
+		});
 		
 	});
 	</script>
