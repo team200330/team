@@ -28,7 +28,7 @@ section.section-header {
 
 
 .card {margin-bottom:0 !important;border-radius:0; box-shadow:none}
-.card-header {border-radius:0 !important}
+.card-header {border-radius:0 !important; color:#4e4e4e}
 .card-content {display:inline-block}
 .card-nav {display:block}
 .card-body .card {margin-bottom:0px;}
@@ -81,19 +81,24 @@ td:not(:first-child) {border-right: 2px solid #e5e5e5;}
     text-align: center;
     font-weight: bold;
 }
+#task-label {
+	position: absolute; 
+	background: #000;
+	width:auto; padding:15;
+	opacity: 0.6; 
+	border-radius:.30rem;
+	color:white;
+}
 
 .startdate {border-top-left-radius:.50rem;border-bottom-left-radius:.50rem; cursor:col-resize}
 .enddate {border-top-right-radius:.50rem;border-bottom-right-radius:.50rem; cursor:col-resize}
 .term {border-right:0 !important;}
 
-#task-label {
-	position: absolute; 
-	background: #000; 
-	opacity: 0.6; 
-	border-radius: .30rem; 
-	color:white;
-	padding:10px;
+
+.modal-body-inner {
+    margin: 35px 80px 35px 80px;
 }
+
 </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -132,6 +137,9 @@ td:not(:first-child) {border-right: 2px solid #e5e5e5;}
 		        <div style="width:100%">
 		          <div class="card"  >
 		            <div class="card-header" style="background-color: #dbdbdb;border:2px solid #cecece;">
+		            	<span id="timeline-info" style="font-weight:bold; cursor:pointer">
+		            		<i class="fas fa-question-circle" style="margin:10px"></i>타임라인에 대해서
+		            	</span>
 		              <div class="card-tools">
 		                <div class="input-group input-group-sm">
 		            		<div class="dropdown-btn"><i class="fas fa-ellipsis-v"></i></div>
@@ -160,10 +168,10 @@ td:not(:first-child) {border-right: 2px solid #e5e5e5;}
 					
 						<jsp:include page="modules/timeline-table.jsp"></jsp:include>
 						
-				</div>
+					</div>
 		       	
-		       	<!-- 마우스 따라다니는 라벨 -->
-		       	<div id="task-label"></div>
+			       	<!-- 마우스 따라다니는 라벨 -->
+					<div id="task-label"> </div>
 
 		       </div>
 		       </div>
@@ -176,6 +184,39 @@ td:not(:first-child) {border-right: 2px solid #e5e5e5;}
 			<!-- /.card -->
 		</div>
 		</div>
+		
+		
+		 <!-- 타임라인 설명 모달 -->
+      <div id="timelineInfoModal" class="modal fade">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content" style="cursor:pointer">
+            <div class="modal-header" style="border:none; padding:10px;">
+            </div>
+            <div style="text-align:center;padding:30px">
+            	<h4 style="display:inline-block; font-weight:bold;">타임라인에 대해서</h4>
+            </div>
+            <div class="modal-body" style="margin-bottom:20px;padding:0px;">
+            	<div class="modal-body-inner">
+            		타임라인은 프로젝트의 진행 상황을 시각화할 수있는 완벽한 도구이며 문제가 발생하기 전에 문제를 예측할 수 있습니다.
+            		더 궁금한 사항이 있다면 문의해주세요.
+            	</div>
+            	<div class="modal-body-inner">
+            		<h6 style="text-align:center">타임라인 사용법</h6>
+            		<div>
+            			<img src="/team/resources/img/timeline.PNG" style="max-width:350;border: 1.5px solid #cccccc;">
+            			<div>
+            				색깔 바 : 해당 업무의 시작일과 마감일이 지정된 경우에 표시됩니다. <br>
+            				
+            			</div>
+            		</div>
+            	</div>
+             
+             </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.modal-dialog -->
+    
 		       
 
 		<!-- /.content-wrapper -->
@@ -333,22 +374,27 @@ td:not(:first-child) {border-right: 2px solid #e5e5e5;}
 		
 		
 		// 마우스 따라다니는 업무 이름
-		$(document).on("mousemove", "#timeline-table td", function(e){ 
+		$(document).on("mousemove", "#timeline-table td", function(e) { 
+			
 			var className = $(this).attr("class");
+			
 			if (className == null || !className.includes("task-")) { $("#task-label").hide(); return; }
 			
+			console.log(className)
 			var row = ".task-" + className.split("task-")[1].split(" list")[0];
 			
 		    $("#task-label").show(); 
 		    $("#task-label").css("left", e.pageX + "px"); 
 		    $("#task-label").css("top", (e.pageY - 30) +"px"); 
 		    $("#task-label").text($(row).parents("tr").children("td").eq(0).text());
-
     	}); 
 		
 		
 		
-		
+		// 타임라인 설명
+		$("#timeline-info").click(function() {
+			$("#timelineInfoModal").modal();
+		});
 		
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -468,5 +514,4 @@ td:not(:first-child) {border-right: 2px solid #e5e5e5;}
 	});
 	</script>
 </body>
-
 </html>
