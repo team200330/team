@@ -469,14 +469,18 @@
 				alert("코멘트 내용을 입력하세요."); return;
 			}
 			
+			var feedbackNo = $(this).parents(".post").attr("id");
 			var comment = $(this).parents(".comment-form").serializeArray();
 			var searchType = $("#dropdown-select").attr("data-value") == undefined ? "M" : $("#dropdown-select").attr("data-value");
+			
 			$.ajax({
 				url : "/team/feedback/comment/write",
 				method : "post",
 				data : comment,
 				success : function(resp, status, xhr) {
-					$("#feedback-list-container").load("/team/feedback/search?searchType=" + searchType + "&email=${loginuser.email}");
+					$("#feedback-list-container").load("/team/feedback/search?searchType=" + searchType + "&email=${loginuser.email}", function() {
+						closeOrOpen($(this).find(".post[id="+feedbackNo+"]").children(".comments"));
+					});
 					toastr.info("코멘트&nbsp;&nbsp; " + textSubString(content) + " 을 작성했습니다");
 				},
 				error : function(xhr, status, err) {

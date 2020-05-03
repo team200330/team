@@ -22,5 +22,5 @@ public interface TaskService {
 
 	void updateCompleted(HashMap<String, Object> params);
 	
-	void updateDate(HashMap<String, Object> params);
+
 }

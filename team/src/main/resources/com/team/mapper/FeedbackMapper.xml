@@ -53,6 +53,7 @@
 	
 	<select id="selectComments" parameterType="int" resultMap="commentMap">
 	SELECT * FROM comments WHERE feedback_no = #{feedback_no}
+	ORDER BY comment_no DESC
 	</select>
 	
 	<select id="countFeedback" parameterType="hashmap" resultType="int">
