@@ -12,6 +12,7 @@ import com.team.mapper.MemberMapper;
 import com.team.mapper.ProjectMapper;
 import com.team.mapper.TaskMapper;
 import com.team.mapper.WorkspaceMapper;
+import com.team.vo.FeedbackReceiver;
 import com.team.vo.Member;
 import com.team.vo.Project;
 import com.team.vo.ProjectMember;
@@ -38,15 +39,35 @@ public class ProjectServiceImpl implements ProjectService {
 	private TaskMapper taskMapper;
 	
 	@Override
-	public void writeProject (Project project , String[] email) {
+	public void writeProject (Project project , String[] email ) {
 		
 		projectMapper.insertProject(project);
-		int key = project.getProjectNo();
 		
-		List<ProjectMember> projectMember = new ArrayList<>();
-		for (String s : email) projectMember.add(new ProjectMember(key, s));
-		projectMapper.insertProjectMember(projectMember);
+		int projectNo = project.getProjectNo();
+		
+		//System.out.println(projectNo+"값:"+ ( (String[])email )[0] + ( (String[])email )[1] + ( (String[])email )[2] ) ;
+		
+		//List<ProjectMember> projectMember = new ArrayList<>();
+	
+		for(int i = 0; i < email.length; i++) {
+			List<ProjectMember> projectMember = new ArrayList<>();
+			projectMember.add(new ProjectMember(projectNo, email[i]));
+			projectMapper.insertProjectMember(projectMember);
+			System.out.println(projectNo + "["+ i + "]" +"값:"+ ( (String[])email )[i]) ;
+			
+		}
+		//for (String s : email) projectMember.add(new ProjectMember(projectNo, s));
+		//System.out.println(projectNo+"값:"+ projectMember) ;
+		//projectMapper.insertProjectMember(ProjectMember);
+		
+		
 	}
+//	@Override
+//	public void insertProjectMember(List<ProjectMember> projectMember) {
+//		projectMapper.insertProjectMember(projectMember);
+//		
+//	}
+
 
 	@Override
 	public List<Project> findProject(HashMap<String, Object> params) {
@@ -113,14 +134,6 @@ public class ProjectServiceImpl implements ProjectService {
 			
 		return members;
 	}
-
-	@Override
-	public void insertProjectMember(ProjectMember projectMember) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
 	
 	
 	
@@ -138,7 +151,6 @@ public class ProjectServiceImpl implements ProjectService {
 		
 		return projects;
 	}
-
 
 
 

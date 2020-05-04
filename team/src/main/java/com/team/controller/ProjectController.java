@@ -1,5 +1,6 @@
 package com.team.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -85,11 +86,22 @@ public class ProjectController {
 	
 	@PostMapping(path = {"/write"})
 	@ResponseBody	
-	public String write(Project project, String proPublic, String[] email) {
-		
+	public String write(Project project, String proPublic, String[] email, HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+        session.getAttribute("loginuser");
+
+		String managerEmail = ((Member) session.getAttribute("loginuser")).getEmail();
+		project.setManagerEmail(managerEmail);
 		project.setProPublic(proPublic.equals("true") ? true : false);
-		project.setWorkspaceNo(workspaceNo);
+		project.setWorkspaceNo(workspaceNo); 
+		System.out.println(project.getProjectNo());
+		//projectService.writeProject(projectMember);
+		//projectService.writeProject(project, email, projectMember);
 		projectService.writeProject(project, email);
+
+		//System.out.println(email);
+		
+		
 		
 		return "success";
 		
@@ -227,14 +239,6 @@ public class ProjectController {
 			        "</div>";
 		}
 		return result;
-	}
-	
-	@PostMapping("/postProjectMember")
-	@ResponseBody
-	public String postProjectMember(ProjectMember projectMember) {
-		
-		projectService.insertProjectMember(projectMember);
-		return "success";
 	}
 	
 

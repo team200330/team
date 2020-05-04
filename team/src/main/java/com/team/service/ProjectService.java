@@ -11,7 +11,7 @@ import com.team.vo.ProjectMember;
 public interface ProjectService {
 
 	void writeProject(Project project, String[] email);
-	void insertProjectMember(ProjectMember projectMember);
+	//void writeProject(Project project, String[] email, List<ProjectMember> projectMember);
 	
 	List<Project> findProject(HashMap<String, Object> params);
 	

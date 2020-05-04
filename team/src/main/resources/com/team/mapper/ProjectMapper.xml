@@ -27,17 +27,24 @@
 		<result column="type_no" property="typeNo" />
 	</resultMap> 
 	
- 	<insert id="insertProject">
+ 	<insert id="insertProject" parameterType="project">
 		INSERT INTO project ( project_name, content, manager_email, pro_public, template_no, workspace_no)
-		VALUES ( #{projectName}, #{content}, #{email}, #{proPublic}, #{templateNo}, #{workspaceNo} )
+		VALUES ( #{projectName}, #{content}, #{managerEmail}, #{proPublic}, #{templateNo}, #{workspaceNo} )
+		<selectKey keyProperty="projectNo" order="AFTER" resultType="int">
+			SELECT LAST_INSERT_ID();
+		</selectKey>
 	</insert>
 	
-<!-- 	<insert id="insertProjectMember" parameterType="java.util.List">
+<!--    	<insert id="insertProjectMember" parameterType="java.util.List">
 		INSERT INTO project_member(project_no, email) VALUES
-		<foreach collection="list" item="feedbackReceiver" index="index" separator=",">
+		<foreach collection="list" item="projectMember" index="index" separator=",">
 			(#{projectMember.projectNo}, #{projectMember.email})
-			 <if test="index != list.size - 1"> , </if> 
+			 
 		</foreach>
+	</insert> -->
+<!-- 	<insert id="insertProjectMember" parameterType="java.util.List">
+		INSERT INTO project_member(project_no, email) 
+		VALUES (#{projectMember.projectNo}, #{projectMember.email})
 	</insert> -->
 	
 	<select id="selectProject" resultMap="projectMap" parameterType="hashmap" >
