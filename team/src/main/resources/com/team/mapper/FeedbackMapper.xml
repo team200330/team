@@ -4,8 +4,8 @@
 <mapper namespace="com.team.mapper.FeedbackMapper">
 
 	<insert id="insertFeedback" parameterType="Feedback">
-	INSERT INTO feedback(content, sender, workspace_no, opened)
-	VALUES (#{content}, #{sender}, #{workspaceNo}, #{opened})
+	INSERT INTO feedback(content, sender, workspace_no, opened, task_no)
+	VALUES (#{content}, #{sender}, #{workspaceNo}, #{opened}, #{taskNo})
 		<selectKey keyProperty="feedbackNo" order="AFTER" resultType="int">
 			SELECT LAST_INSERT_ID();
 		</selectKey>
@@ -47,7 +47,7 @@
 			f.content LIKE CONCAT('%',#{key},'%') ) AND
 			</when>
 		</choose>
-	deleted = '0' AND workspace_no = #{workspaceNo}
+	r.deleted = '0' AND workspace_no = #{workspaceNo}
 	ORDER BY f.feedback_no DESC
 	</select>
 	
@@ -108,6 +108,7 @@
 		<result column="content" property="content"/>
 		<result column="writedate" property="writedate"/>
 	</resultMap>
+	
 </mapper>
 
 

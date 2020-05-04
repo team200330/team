@@ -53,12 +53,23 @@ $(document).on({
 $("#writeFeedbackBtn").click(function() {
 	$("#writeFeedbackModal").modal();
 });
-$("#writeFeedbackModal").on("hidden", function() {
-	
+// 모달 닫히면 폼초기화
+$("#writeFeedbackModal").on("hidden.bs.modal" , function() {
+	$("#writeFeedbackModal #selectTask").html("");
+	$("#writeFeedbackModal textarea").val("");
+	$("#writeFeedbackModal #mem").html("");
+	$("#memberAddModal ._mem_icon").each(function() {
+		if (!$(this).hasClass("_mem_icon_default")) $(this).addClass("_mem_icon_default");
+	});
 });
+
 $("#add_mem").click(function() {
 	$("#memberAddModal").modal();
 });
+$("#memberAddModal").on("hidden.bs.modal", function() {
+	$("#_mem_input").val("");
+});
+
 $("#add_task").click(function() {
 	$("#taskAddModal").modal();
 });

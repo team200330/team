@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
 <%-- <fmt:formatDate value="${ logs.get(0).writedate }" pattern="yyyy-MM-dd hh:mm"/> --%>
 <%@ page pageEncoding="utf-8"%>
 <html>

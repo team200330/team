@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<% request.setCharacterEncoding("utf-8"); %>
 <%@ page pageEncoding="utf-8"%>
 <html>
 
@@ -11,6 +12,9 @@
 <%@include file="/WEB-INF/views/modules/common-css.jsp"%>
 
 <style>
+.task, ._mem {cursor : default}
+
+
 .dropdown-item:active {background-color:white;}
 .modal-body-inner {margin:35px 50px 35px 50px;}
 #feedbackDetailModal .modal-footer {
@@ -79,7 +83,7 @@
                   </div>
                   </div>
 				<div style="text-align:right">
-					<input id="search-all" type="text" style="width:300px;height:35px;margin-right:10px;padding-left:12px;border:1px solid #cfcfcf;"placeholder="업무, 멤버, 내용으로 피드백 검색">
+					<input id="search-all" type="text" style="width:300px;height:35px;margin-right:10px;padding-left:12px;border:1px solid #cfcfcf;"placeholder="이메일, 피드백 내용으로 피드백 검색">
 					<button id="writeFeedbackBtn" class="btn btn-info btn-flat" style="height:35px;">피드백 주기</button>
 				</div>
 			</div>
@@ -138,7 +142,8 @@
               <div>
               	<h6 style="margin-top:50px">관련된 업무</h6>
               	<div id="add_task" class="btn btn-secondary float_left" style="width:37px;">+</div>
-              	<div>업무1</div>
+              	<div id="selectTask"style="padding-left: 55px;padding-top: 7;"></div>
+              	<input type="hidden" name="taskNo">
               </div>
               <br/><br/>
               <div id="textarea">
@@ -179,7 +184,7 @@
 	            	<c:forEach var="m" items="${ workspaceMembers }">
 	            		<c:if test="${ m.email != loginuser.email }">
 	            		<div class="_mem" data-email="${ m.email }" data-name="${ m.name }">
-		            		<img class="_mem_img img-circle img-bordered-sm" src="" alt="user image">
+		            		<img class="_mem_img img-circle img-bordered-sm" src="${ not empty m.img ? m.img : '/team/resources/img/profile-default.jpg' }" alt="user image">
 		            		<div class="_mem_name">${ m.email }<br/>${ m.name }</div>
 		            		<div class="_mem_icon _mem_icon_default" style="text-align:right" >
 		            			<i class="fas fa-check"></i>
@@ -205,7 +210,7 @@
        <!-- 업무 선택  모달 -->
       <div class="modal fade" id="taskAddModal">
         <div class="modal-dialog modal-sm" style="top:310;left:-195">
-          <div class="modal-content">
+          <div class="modal-content" style="width:350">
             <div class="modal-header">
               <h6 class="modal-title" style="font-weight:bold">업무 선택하기</h6>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -213,58 +218,28 @@
               </button>
             </div>
             <div class="modal-body" style="padding:10px;">
-            	<c:choose>
-            			<c:when test="${projects.size() > 0}">	
-              				<input style="width:100%;height:30px;border:1px solid #17a2b8;border-radius:.20rem;padding:10px;margin-bottom:10px;"type="text" placeholder="업무 검색">
-            				<div style="margin-bottom:20px; max-height:200px;overflow-y:scroll">
-            				
-	            			<c:forEach var="project" items="${projects}">
-	            				<c:forEach var="list" items="${project.taskLists}">
-	            					<c:choose>
-	            						<c:when test="${list.size() > 0}">
-	            							<c:forEach var="task" items="${list.tasks}">
-		           								<c:if test="${task.deleted == false}">
-			            							<div class="task">
-									            		<div class="t_t">
-									            			${task.content}
-									            			<c:choose>
-									            				<c:when test="${task.content.length() > 10}">
-									            					<c:out value="${fn:substring(task.content, 0, 10)} ..." />
-									            				</c:when>
-									            				<c:otherwise>${task.content}</c:otherwise>
-									            			</c:choose>
-									            		</div>
-									            		<div class="t">
-									            			<div>${project.projectName}&nbsp;</div> 
-									            			<div>> ${task.writer}</div>
-									            		</div>
-									            	</div>
-			            						</c:if>
-	            							</c:forEach>
-	            							
-	            						</c:when>
-	            						
-	            						<c:otherwise>
-	            							<div class="task">
-	            								등록된 업무가 없습니다.
-	            							</div>
-	            						</c:otherwise>
-	            						
-	            					</c:choose>
-	            				</c:forEach>
-
-		            		</c:forEach>
+        		<input id="task_input" style="width:100%;height:30px;border:1px solid #17a2b8;padding:10px;margin-bottom:10px;"type="text" placeholder="작성자, 프로젝트명, 업무 내용으로 검색">
+      			<div id="task_list"style="margin-bottom:20px; max-height:200px;overflow-y:scroll">
+      				
+      				<c:forEach var="project" items="${projects}">
+      					<c:forEach var="list" items="${project.taskLists}">
+      						<c:forEach var="task" items="${list.tasks}">
+      							<div class="task" data-value="${task.taskNo}">
+				            		<div class="t_t">
+				            			<%-- ${task.content.length() > 15 ? fn:substring(task.content,0,15) : task.content} --%>
+				            			${task.content}
+				            		</div>
+				            		<div class="t">
+				            			<div>${project.projectName}&nbsp;</div> 
+				            			<div>> ${task.writer}</div>
+				            		</div>
 				            	</div>
-            			</c:when>
-            			<c:otherwise>
-            				<div>
-	            				등록된 업무가 없습니다.
-	            			</div>
-            			</c:otherwise>
-            		</c:choose>
-            		
-            	
-            	
+      						</c:forEach>
+      					</c:forEach>
+      				</c:forEach>
+   		
+          		</div>
+
             </div>
           </div>
           <!-- /.modal-content -->
@@ -356,7 +331,7 @@
 			}
 		});
 		
-		// 멤버 추가 츼소 큰모달 이벤트
+		// 멤버 추가 취소 큰모달 이벤트
 		$(document).on("click", ".mem_rm", function() {
 			var name = $(this).parent().attr("data-name");
 			var email = $(this).parent().attr("data-email");
@@ -386,6 +361,27 @@
 				},
 				error : function(xhr, status, err) {
 					console.log(err);
+				}
+			});
+		});
+		
+		// 업무 추가
+		$(document).on("click", ".task", function() {
+			$("#selectTask").html('<i class="fas fa-clipboard-list" style="margin-right:10px"></i>' + $(this).find(".t_t").text());
+			$("#selectTask").next().attr("value", $(this).attr("data-value"));
+		});
+	
+		// 업무 검색
+		$("#task_input").keyup(function(e) {
+			console.log($(this).val());
+			
+			$.ajax({
+				url : "/team/feedback/getTasks",
+				method : "get",
+				data : {"str" : $(this).val()},
+				success : function(data, status, xhr) {
+					$("#task_list").html("");
+					$("#task_list").html(data);
 				}
 			});
 		});
