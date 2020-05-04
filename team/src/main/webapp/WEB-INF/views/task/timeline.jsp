@@ -189,24 +189,25 @@ td:not(:first-child) {border-right: 2px solid #e5e5e5;}
 		 <!-- 타임라인 설명 모달 -->
       <div id="timelineInfoModal" class="modal fade">
         <div class="modal-dialog modal-lg">
-          <div class="modal-content" style="cursor:pointer">
+          <div class="modal-content" style="cursor:default">
             <div class="modal-header" style="border:none; padding:10px;">
             </div>
             <div style="text-align:center;padding:30px">
             	<h4 style="display:inline-block; font-weight:bold;">타임라인에 대해서</h4>
             </div>
-            <div class="modal-body" style="margin-bottom:20px;padding:0px;">
+            <div class="modal-body" style="margin-bottom:60px;padding:0px;">
             	<div class="modal-body-inner">
             		타임라인은 프로젝트의 진행 상황을 시각화할 수있는 완벽한 도구이며 문제가 발생하기 전에 문제를 예측할 수 있습니다.
             		더 궁금한 사항이 있다면 문의해주세요.
             	</div>
             	<div class="modal-body-inner">
-            		<h6 style="text-align:center">타임라인 사용법</h6>
+            		<h6 style="text-align:center;margin-bottom:20px">타임라인 사용법</h6>
             		<div>
-            			<img src="/team/resources/img/timeline.PNG" style="max-width:350;border: 1.5px solid #cccccc;">
-            			<div>
-            				색깔 바 : 해당 업무의 시작일과 마감일이 지정된 경우에 표시됩니다. <br>
-            				
+            			<img src="/team/resources/img/timeline.PNG" style="max-width:350;border: 1.5px solid #cccccc;margin-right: 20px;margin-bottom:20px;float: left;">
+            			<div style="font-size:11pt">
+            				<span style="font-weight:bold">색깔 바</span> : 해당 업무의 시작일과 마감일이 지정된 경우에 표시됩니다. <br>
+            				색깔 바의 양 끝을 드래그하여 업무의 시작일과 마감일을 수정할 수 있습니다. <br><br>
+            				<i class="fas fa-ellipsis-v" style="margin-right:7px"></i> 버튼을 클릭하여 업무를 필터링할 수 있습니다.
             			</div>
             		</div>
             	</div>
@@ -274,6 +275,12 @@ td:not(:first-child) {border-right: 2px solid #e5e5e5;}
 		
 		// 업무 필터 적용
 		var searchType = "";
+		function getSearchType() {
+			$(".search-task").find("input[checked='checked']").each(function() {
+				searchType += $(this).attr("value");
+			});
+		}
+		
 		$(".t-dropdown-item").click(function(e) {
 			e.stopPropagation(); // 드롭다운 닫히는거 막기
 			
@@ -281,9 +288,7 @@ td:not(:first-child) {border-right: 2px solid #e5e5e5;}
 			if (t.attr("checked") == "checked") t.removeAttr("checked");
 			else t.attr("checked", "checked");
 			
-			$(".search-task").find("input[checked='checked']").each(function() {
-				searchType += $(this).attr("value");
-			});
+			getSearchType();
 			
 			$.ajax({
 				url : "/team/task/timeline2", 
@@ -461,8 +466,11 @@ td:not(:first-child) {border-right: 2px solid #e5e5e5;}
 					var taskContent = $("." + row).parents("tr").children("td").eq(0).text();
 					toastr.info("업무  " + taskContent + " 의 " + ((startOrEnd == "start") ? "시작일자" : "마감일자") +" 를 변경했습니다");
 					
+					getSearchType();
 					// ajax load 후 css 먹히게할려면 뒤에 인자로 함수 주면 가능함.
-					$("#timeline-card").load("/team/task/timeline/getTable?searchType=" + searchType, function() { setupTable(); });
+					$("#timeline-card").load("/team/task/timeline/getTable?searchType=" + searchType, function() { 
+						setupTable();  
+					});
 						
 					row = null; pageX = null;
 				}, 

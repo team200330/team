@@ -1,4 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page pageEncoding="utf-8"%>
 
 <div class="col-md-9" style="max-width: 100%; padding-bottom: 50px">
@@ -18,14 +20,14 @@
 					<div class="post" data-value="${feedback}" id="post${feedback.feedbackNo}">
 						<div style="display:flex;max-height:70px;">
 							<div class="user-block" data-value="${feedback.sender}"style="width:auto">
-								<img class="img-circle img-bordered-sm" src="" alt="user image">
+								<img class="img-circle img-bordered-sm" src="${not empty loginuser.img ? loginuser.img : '/team/resources/img/profile-default.jpg'}" alt="user image">
 								<span class="username"> 
 									<a href="#">${feedback.sender}</a> 
 								</span> <span class="description">${feedback.writedate}</span>
 							</div>
 							<i style="padding:10px; padding-top:12px;"class="fas fa-chevron-right"></i>
 							<div class="user-block">
-								<img style="position:relative;z-index:2" class="img-circle img-bordered-sm" src="" alt="user image">
+								<img style="position:relative;z-index:2" class="img-circle img-bordered-sm" src="${not empty feedback.receivers.get(0).member.img? feedback.receivers.get(0).member.img : '/team/resources/img/profile-default.jpg'}" alt="user image">
 								<c:if test="${feedback.receivers.size() > 1}">
 									<div style="padding: 5px;padding-left: 10px;cursor:pointer" class="img-circle img-bordered-sm user-count-img">+ ${feedback.receivers.size() - 1}</div>
 								</c:if>
@@ -50,9 +52,30 @@
 						</c:if>
 						</div>
 						<p  class="feedback-contents">${feedback.content}</p>
-						<p>
-							<a class="link-black text-sm mr-2" style="font-weight:bold"> <i
-								class="fas fa-share mr-1"></i> 관련 업무 제목
+						
+							<c:choose>
+								<c:when test="${not empty feedback.task}">
+									<p>
+										<a class="link-black text-sm mr-2" style="font-weight:bold"> 
+										<i class="fas fa-share mr-1"></i> 
+											<c:choose>
+												<c:when test="${feedback.task.deleted == true}">
+													삭제된 업무입니다
+												</c:when>
+												<c:otherwise>
+													<c:choose>
+						                      			<c:when test="${feedback.task.content.length() > 15}">${fn:substring(feedback.task.content, 0, 15)} ... </c:when>
+						                      			<c:otherwise>${feedback.task.content}</c:otherwise>
+						                      		</c:choose>	
+												</c:otherwise>
+											</c:choose>
+								</c:when>
+								<c:otherwise>
+									<p style="margin-bottom:50px">
+										<a class="link-black text-sm mr-2" style="font-weight:bold"> 
+								</c:otherwise>
+							</c:choose>
+								
 							</a> <span class="float-right"> 
 								<a style="cursor:pointer" class="link-black text-sm comment-btn"> <i
 									class="far fa-comments mr-1"></i> Comments (

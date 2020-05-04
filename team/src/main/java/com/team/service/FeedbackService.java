@@ -7,6 +7,7 @@ import java.util.List;
 import com.team.vo.Comments;
 import com.team.vo.Feedback;
 import com.team.vo.Member;
+import com.team.vo.Project;
 
 public interface FeedbackService {
 	
@@ -25,4 +26,5 @@ public interface FeedbackService {
 	////////////////////////////////////////////////////
 	
 	public List<Member> findWorkspaceMembers(int workspaceNo);
+	public List<Project> findTasksByWorkspaceNo(int workspaceNo);
 }

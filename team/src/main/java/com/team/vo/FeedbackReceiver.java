@@ -9,6 +9,8 @@ public class FeedbackReceiver {
 	private boolean deleted;
 	private boolean checked;
 	
+	private Member member;
+	
 	public FeedbackReceiver() {};
 	public FeedbackReceiver(int feedbackNo, String email) { 
 		this.feedbackNo = feedbackNo; 

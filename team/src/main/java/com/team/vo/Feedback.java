@@ -12,9 +12,10 @@ public class Feedback {
 	private Date writedate;
 	private String sender;
 	private int workspaceNo;
-	private int projectNo;
+	private int taskNo;
 	private boolean opened;
 	
+	private Task task;
 	private List<FeedbackReceiver> receivers;
 	private List<Comments> comments;
 }

@@ -21,7 +21,7 @@
 					                      	<c:otherwise><tr class="checked-log log-small" id="${log.logNo}"></c:otherwise>
 					                      </c:choose>
 					                      		<td>
-						                         <img class="img-circle img-bordered-sm" src="" alt="user image">
+						                         <img class="img-circle img-bordered-sm" src="${not empty log.receiver.member.img? log.receiver.member.img : '/team/resources/img/profile-default.jpg'}" alt="user image">
 												<span class="username"> 
 													<a href="#">${log.email}</a>
 												</span>

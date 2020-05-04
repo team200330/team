@@ -26,5 +26,6 @@ public interface FeedbackMapper {
 	
 	public void deleteFeedback(HashMap<String, Object> params);
 	public void checkFeedback(HashMap<String, Object> params);
+
 	
 }
