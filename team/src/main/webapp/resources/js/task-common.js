@@ -302,9 +302,6 @@ $(function() {
 							function() {
 								slider = $('#body-task');
 								$('.taskList-task').attr('onmousemove',"event.stopPropagation();");
-								if (location.hash == "#open") {
-									$("#task-menu, .task-page_cover, .task-close-btn, html").addClass("open");
-								}
 							});
 				},
 				error : function(xhr, status, err) {
@@ -329,9 +326,6 @@ $(function() {
 							function() {
 								slider = $('#body-task');
 								$('.taskList-task').attr('onmousemove',"event.stopPropagation();");
-								if (location.hash == "#open") {
-									$("#task-menu, .task-page_cover, .task-close-btn, html").addClass("open");
-								}
 							});
 				},
 				error : function(xhr, status, err) {

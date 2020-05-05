@@ -99,8 +99,8 @@
 											data-tno="${ task.taskNo }" data-lno="${ taskList.listNo }">
 										</c:when>
 										<c:otherwise>
-											<div id="task-${task.taskNo}" class="btn btn-light task-field" 
-											style="margin-top:3px; width:300px; min-height:38px;height:auto; border-radius: 0; background-color: #e2e2e2; border-color:#e2e2e2;"
+											<div id="task-${task.taskNo}" class="btn btn-light task-field completed" 
+											style="margin-top:3px; width:300px; min-height:38px;height:auto; border-radius: 0;"
 											data-tno="${ task.taskNo }" data-lno="${ taskList.listNo }">
 										</c:otherwise>
 									</c:choose>

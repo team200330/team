@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <div id="task-menu-wrap">
 	<div id="task-menu">
-		<div class="task-close-btn" style="padding-top:18px;">
+		<div id="task-close-btn" class="menu-component" style="padding-top:18px;">
 			<i onclick="history.back();" style="cursor:pointer;" class="fas fa-times"></i>
 		</div>
 		<div id="task-menu-top" class="" style="height:53px; width:100%">
