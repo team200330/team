@@ -1,10 +1,12 @@
 package com.team.controller;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.View;
 
+import com.team.common.ConvertJsontoCSV;
+import com.team.common.DownloadView;
 import com.team.service.FeedbackService;
 import com.team.service.ProjectService;
 import com.team.service.TimelineService;
@@ -56,7 +61,9 @@ public class FeedbackController {
 	
 
 	@GetMapping("/list")
-	public String feedbackList(Model model, HttpSession session) {
+	public String feedbackList(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		
 		// 처음 들어올때 워크스페이스 멤버랑 업무들 가져오기
 		if ( workspaceMembers == null ) workspaceMembers = feedbackService.findWorkspaceMembers(workspaceNo);
 		model.addAttribute("workspaceMembers", workspaceMembers);
@@ -71,6 +78,7 @@ public class FeedbackController {
 		params.put("workspaceNo", workspaceNo);
 		
 		model.addAttribute(feedbackService.searchFeedback(params));
+
 		return "/feedback/list";
 	}
 	

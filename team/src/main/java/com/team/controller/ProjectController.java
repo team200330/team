@@ -1,5 +1,6 @@
 package com.team.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,11 +17,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.team.common.ConvertJsontoCSV;
+import com.team.common.DownloadView;
 import com.team.service.ProjectService;
+import com.team.service.TimelineService;
 import com.team.vo.Member;
 import com.team.vo.Project;
 import com.team.vo.ProjectMember;
+import com.team.vo.Task;
+import com.team.vo.TaskList;
 
 @Controller
 @RequestMapping(path = {"/project"})
@@ -241,4 +249,51 @@ public class ProjectController {
 	
 
 	
+	
+	
+	
+	
+	
+	
+	// 프로젝트 CSV 로 내보내기
+	@Autowired
+	@Qualifier("timelineService")
+	private TimelineService timelineService;
+	
+	private List<TaskList> downloadList;
+	
+	@GetMapping("/download")
+	public View downloadCSV() {
+		ConvertJsontoCSV c = new ConvertJsontoCSV();
+		List<Task> lists = new ArrayList<>();
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+		
+		for (TaskList l : downloadList) {
+			for (Task t : l.getTasks()) { 
+				if (t.getStartDate() != null) t.setS_startDate(f.format(t.getStartDate()));
+				if (t.getEndDate() != null) t.setS_endDate(f.format(t.getEndDate()));
+				if (t.getCompletedDate() != null) t.setS_completedDate(f.format(t.getCompletedDate()));
+				lists.add(t);
+			}
+		}
+		
+		c.convert(lists);
+		
+		DownloadView dv = new DownloadView();
+		return dv;
+	}
+
+	@GetMapping("/download-check")
+	@ResponseBody
+	public String downloadCheck(int projectNo) {
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("searchType", "A");
+		params.put("projectNo", projectNo);
+		
+		List<TaskList> lists = timelineService.searchTasks(params);
+		if (lists == null || lists.size() == 0) return "error";
+		
+		downloadList = lists;
+		return "success";
+	}
 }

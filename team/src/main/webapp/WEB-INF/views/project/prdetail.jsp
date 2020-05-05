@@ -88,11 +88,23 @@
 			              <button type="button" class="btn btn-primary" id="saveSubmit4">프로젝트에 멤버 추가하기</button>
 			            </div>
 			            
+			            
+			            
 		              <br/>
 		             </form>
 		             </div>
+		             
+		             
+		             
+		             
+		             <!-- 수정한 부분 -->
+		              <div class="form-group">
+		              	<label>CSV 파일로 내보내기</label> <br>
+		              	<form id="download" method="get" action="/team/project/download"></form>
+		              	<a id="projectDownloadBtn" class="btn btn-default" style="cursor:pointer">프로젝트 CSV 파일로 내보내기</a>
+		              </div>
 		           </div>
-
+					<!-- -------- -->
 
 
 
