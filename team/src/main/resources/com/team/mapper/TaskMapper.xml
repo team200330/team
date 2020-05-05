@@ -68,6 +68,7 @@
 		SET completed = #{ completed }, completed_date = #{ completedDate }
 		WHERE task_no = #{ taskNo } 
 	</update>
+	
 </mapper>
 
 

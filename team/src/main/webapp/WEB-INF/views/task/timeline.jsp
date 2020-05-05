@@ -18,8 +18,17 @@ section.section-header {
 	height: 50px;
 }
     
+.t-dropdown-item {
+	white-space: nowrap;
+    background-color: transparent;
+    font-weight: 400;
+    color: #212529;
+    padding: .25rem 1rem;
+}
+
+
 .card {margin-bottom:0 !important;border-radius:0; box-shadow:none}
-.card-header {border-radius:0 !important}
+.card-header {border-radius:0 !important; color:#4e4e4e}
 .card-content {display:inline-block}
 .card-nav {display:block}
 .card-body .card {margin-bottom:0px;}
@@ -72,10 +81,24 @@ td:not(:first-child) {border-right: 2px solid #e5e5e5;}
     text-align: center;
     font-weight: bold;
 }
+#task-label {
+	position: absolute; 
+	background: #000;
+	width:auto; padding:15;
+	opacity: 0.6; 
+	border-radius:.30rem;
+	color:white;
+}
 
 .startdate {border-top-left-radius:.50rem;border-bottom-left-radius:.50rem; cursor:col-resize}
 .enddate {border-top-right-radius:.50rem;border-bottom-right-radius:.50rem; cursor:col-resize}
 .term {border-right:0 !important;}
+
+
+.modal-body-inner {
+    margin: 35px 80px 35px 80px;
+}
+
 </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -114,13 +137,21 @@ td:not(:first-child) {border-right: 2px solid #e5e5e5;}
 		        <div style="width:100%">
 		          <div class="card"  >
 		            <div class="card-header" style="background-color: #dbdbdb;border:2px solid #cecece;">
+		            	<span id="timeline-info" style="font-weight:bold; cursor:pointer">
+		            		<i class="fas fa-question-circle" style="margin:10px"></i>타임라인에 대해서
+		            	</span>
 		              <div class="card-tools">
 		                <div class="input-group input-group-sm">
 		            		<div class="dropdown-btn"><i class="fas fa-ellipsis-v"></i></div>
-		            		<div class="dropdown-menu hide-dropdown">
-							    <button class="dropdown-item" type="button">dropdown 1</button>
-							    <button class="dropdown-item" type="button">dropdown 2</button>
-							    <button class="dropdown-item" type="button">dropdown 3</button>
+		            		<div class="search-task dropdown-menu hide-dropdown" style="width:200px">
+							    <div class="t-dropdown-item">
+							    	<input class="checkbox" type="checkbox" value="M">
+							    	내가 등록한 업무
+							    </div>
+							    <div class="t-dropdown-item">
+							    	<input class="checkbox" type="checkbox" value="C">
+							   		 완료되지 않은 업무
+							    </div>
 							</div>
 								
 		                   	<div><i class="left-btn fas fa-arrow-left"></i></div>
@@ -134,20 +165,14 @@ td:not(:first-child) {border-right: 2px solid #e5e5e5;}
 		            </div>
 		    		
 		    		<div class="card" id="timeline-card" style="overflow-x: scroll;">
-					<div class="card-body" style="padding:0px;">
-						<c:choose>
-							<c:when test="${not empty table}">
-								<table id="timeline-table">${table}</table>	
-							</c:when>
-							<c:otherwise>
-								업무없ㄷ음
-							</c:otherwise>
-						</c:choose>
+					
+						<jsp:include page="modules/timeline-table.jsp"></jsp:include>
 						
 					</div>
-				</div>
-		       
-		  
+		       	
+			       	<!-- 마우스 따라다니는 라벨 -->
+					<div id="task-label"> </div>
+
 		       </div>
 		       </div>
 
@@ -159,6 +184,40 @@ td:not(:first-child) {border-right: 2px solid #e5e5e5;}
 			<!-- /.card -->
 		</div>
 		</div>
+		
+		
+		 <!-- 타임라인 설명 모달 -->
+      <div id="timelineInfoModal" class="modal fade">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content" style="cursor:default">
+            <div class="modal-header" style="border:none; padding:10px;">
+            </div>
+            <div style="text-align:center;padding:30px">
+            	<h4 style="display:inline-block; font-weight:bold;">타임라인에 대해서</h4>
+            </div>
+            <div class="modal-body" style="margin-bottom:60px;padding:0px;">
+            	<div class="modal-body-inner">
+            		타임라인은 프로젝트의 진행 상황을 시각화할 수있는 완벽한 도구이며 문제가 발생하기 전에 문제를 예측할 수 있습니다.
+            		더 궁금한 사항이 있다면 문의해주세요.
+            	</div>
+            	<div class="modal-body-inner">
+            		<h6 style="text-align:center;margin-bottom:20px">타임라인 사용법</h6>
+            		<div>
+            			<img src="/team/resources/img/timeline.PNG" style="max-width:350;border: 1.5px solid #cccccc;margin-right: 20px;margin-bottom:20px;float: left;">
+            			<div style="font-size:11pt">
+            				<span style="font-weight:bold">색깔 바</span> : 해당 업무의 시작일과 마감일이 지정된 경우에 표시됩니다. <br>
+            				색깔 바의 양 끝을 드래그하여 업무의 시작일과 마감일을 수정할 수 있습니다. <br><br>
+            				<i class="fas fa-ellipsis-v" style="margin-right:7px"></i> 버튼을 클릭하여 업무를 필터링할 수 있습니다.
+            			</div>
+            		</div>
+            	</div>
+             
+             </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.modal-dialog -->
+    
 		       
 
 		<!-- /.content-wrapper -->
@@ -176,46 +235,74 @@ td:not(:first-child) {border-right: 2px solid #e5e5e5;}
 	<%@include file="/WEB-INF/views/modules/common-js.jsp"%>
 	<script type="text/javascript">
 	$(function() {
-		// 오늘 날짜 표시
-		var m = new Date().getMonth() + 1;
-		var d = new Date().getDate();
-		$("td[data-date='date-"+m+"-"+d+"']").addClass("today");
-		$(".today").eq(0).attr("id", "today-label");
-		$(".today").eq(0).html("오늘");
-		
-		// 현재 날짜로 버튼
-		const tLeft = $("#today-label").offset().left;
-		$(".now-btn").click(function() {
-			var target = $("#timeline-card").scrollLeft();
-			$("#timeline-card").animate({scrollLeft : target + (tLeft - target - 300)}, 500);
-		});
-		
-		// 마지막행 높이설정
-		$("tr:last-child").height($(".content-wrapper").height() - $(".content").height() - $(".section-header").height() + $("tr:last-child").height());
-		
-		// 시작일자와 끝일자 표시하기
-		var bgColor = ["#88d2d0", "#259ed2", "#4ab7d3"]; // 배경색은 여기 변경!!!
-		var bgColorIdx = 0;
-		$(".task").each(function() {
-			var taskNo = $(this).attr("class").split("task ")[1].split("list")[0];
-			var sdateIdx = null;
-			var edateIdx = null;
+		// 페이지 로드되면 테이블 설정
+		function setupTable() {
+			// 오늘 날짜 표시
+			var m = new Date().getMonth() + 1;
+			var d = new Date().getDate();
+			$("td[data-date='date-"+m+"-"+d+"']").addClass("today");
+			$(".today").eq(0).attr("id", "today-label");
+			$(".today").eq(0).html("오늘");
 			
-			$("." + taskNo).each(function(i) {
-				if ($(this).hasClass("startdate")) sdateIdx = i;
-				if ($(this).hasClass("enddate")) edateIdx = i;
-			});
-			
-			if (sdateIdx != null || edateIdx != null) {
-				edateIdx = (edateIdx == null) ? sdateIdx : edateIdx;
-				for (var i = sdateIdx; i <= edateIdx; i++) {
-					$("." + taskNo).eq(i).css({"background-color" : bgColor[bgColorIdx]});
-					$("." + taskNo).eq(i).addClass("term");
+			// 마지막행 높이설정
+			$("tr:last-child").height($(".content-wrapper").height() - $(".content").height() - $(".section-header").height() + $("tr:last-child").height());
+		
+			// 시작일자와 끝일자 표시하기
+			var bgColor = ["#88d2d0", "#259ed2", "#4ab7d3"]; // 배경색은 여기 변경!!!
+			var bgColorIdx = 0;
+			$(".task").each(function() {
+				var taskNo = $(this).attr("class").split("task ")[1].split("list")[0];
+				var sdateIdx = null;
+				var edateIdx = null;
+				
+				$("." + taskNo).each(function(i) {
+					if ($(this).hasClass("startdate")) sdateIdx = i;
+					if ($(this).hasClass("enddate")) edateIdx = i;
+				});
+				
+				if (sdateIdx != null || edateIdx != null) {
+					edateIdx = (edateIdx == null) ? sdateIdx : edateIdx;
+					for (var i = sdateIdx; i <= edateIdx; i++) {
+						$("." + taskNo).eq(i).css({"background-color" : bgColor[bgColorIdx]});
+						$("." + taskNo).eq(i).addClass("term");
+					}
 				}
-			}
-			bgColorIdx++;
-			if (bgColorIdx > bgColor.length - 1) bgColorIdx = 0;
-		});
+				bgColorIdx++;
+				if (bgColorIdx > bgColor.length - 1) bgColorIdx = 0;
+			});
+		} setupTable();
+		
+		
+		// 업무 필터 적용
+		var searchType = "";
+		function getSearchType() {
+			$(".search-task").find("input[checked='checked']").each(function() {
+				searchType += $(this).attr("value");
+			});
+		}
+		
+		$(".t-dropdown-item").click(function(e) {
+			e.stopPropagation(); // 드롭다운 닫히는거 막기
+			
+			var t = $(this).find("input");
+			if (t.attr("checked") == "checked") t.removeAttr("checked");
+			else t.attr("checked", "checked");
+			
+			getSearchType();
+			
+			$.ajax({
+				url : "/team/task/timeline2", 
+				success : function(data, status, xhr) {
+					$("#timeline-card").load("/team/task/timeline/getTable?searchType=" + searchType, function() { 
+						setupTable(); 
+						$("#timeline-card").animate({scrollLeft : 0}, 300);
+						searchType = "";
+					});
+				}
+			});
+		})
+		
+		
 		
 		// 업무리스트 열고 닫기
 		$(document).on("click", ".taskList", function() {
@@ -262,12 +349,19 @@ td:not(:first-child) {border-right: 2px solid #e5e5e5;}
 			e.stopPropagation();
 		}); 
 		
+		// 현재 날짜로 버튼
+		const tLeft = $("#today-label").offset().left;
+		$(".now-btn").click(function() {
+			var target = $("#timeline-card").scrollLeft();
+			$("#timeline-card").animate({scrollLeft : target + (tLeft - target - 300)}, 500);
+		});
+		
 		// 버튼클릭시 옆으로 스크롤
 		$(".right-btn").click(function() {
-			$("#timeline-card").animate({scrollLeft : $("#timeline-card").scrollLeft() + 500}, 500);
+			$("#timeline-card").animate({scrollLeft : $("#timeline-card").scrollLeft() + 1150}, 300);
 		});
 		$(".left-btn").click(function() {
-			$("#timeline-card").animate({scrollLeft : $("#timeline-card").scrollLeft() - 500}, 500);
+			$("#timeline-card").animate({scrollLeft : $("#timeline-card").scrollLeft() - 1150}, 300);
 		});
 		
 		// 업무이름 클릭시 시작일자로 이동
@@ -284,100 +378,148 @@ td:not(:first-child) {border-right: 2px solid #e5e5e5;}
 		
 		
 		
+		// 마우스 따라다니는 업무 이름
+		$(document).on("mousemove", "#timeline-table td", function(e) { 
+			
+			var className = $(this).attr("class");
+			
+			if (className == null || !className.includes("task-")) { $("#task-label").hide(); return; }
+			
+			console.log(className)
+			var row = ".task-" + className.split("task-")[1].split(" list")[0];
+			
+		    $("#task-label").show(); 
+		    $("#task-label").css("left", e.pageX + "px"); 
+		    $("#task-label").css("top", (e.pageY - 30) +"px"); 
+		    $("#task-label").text($(row).parents("tr").children("td").eq(0).text());
+    	}); 
 		
 		
 		
-		
-		
-		
-		
-		
-		
-		// 여기 고치기 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		// 마우스 드래그앤 드롭
-		var taskNo = null;
-		var pageX = null;
-		// 마우스 누르고 있을때
-		$(document).on("mousedown", ".enddate", function(e) { 
-			taskNo = "task-" + $(this).attr("class").split("task-")[1].split(" list")[0];
-			pageX = e.pageX;
-			console.log("pageX : " + pageX);
-			$(this).removeClass("enddate");
+		// 타임라인 설명
+		$("#timeline-info").click(function() {
+			$("#timelineInfoModal").modal();
 		});
 		
-		// 마우스 뗐을때
-		$(document).on("mouseup", "td", function(e) {	 
-			if (taskNo != null && $(this).hasClass(taskNo)) {
-				console.log($(this));
-				
-				$(this).css("background-color", $("." + taskNo).find(".startdate").css("background-color"));
-				
-				taskNo = null;	
-				pageX = null;		
-			}
-		});
 		
-		// 마우스 움직일때
-		$(document).on("mousemove", "td", function(e) { 	
-			if (taskNo != null && $(this).hasClass(taskNo)) {
-				if (e.pageX > pageX) {
-					pageX = e.pageX;
-					console.log("moveRight");
-					$(this).css("background-color", $("." + taskNo).find(".startdate").css("background-color"));
-					$(this).addClass("term");
-				}
-				else {
-					pageX = e.pageX;
-					console.log("moveLeft");
-					
-					$(this).css("background-color", "white");
-					$(this).removeClass("term");
-				}
-				
-				$("." + taskNo).find(".enddate").removeClass("enddate");
-				$(this).addClass("enddate");
-			}
-		}); 
+		////////////////////////////////////////////////////////////////////////////////////////////////////////
+		// 시작일 / 마감일 설정 관련
 		
+		// 날짜 변경 마우스 드래그앤 드롭
+		var row, pageX, startOrEnd, bgColor = null;
 		
-	
-		/* var row, pageX, startOrEnd, bgColor = null;
-
 		// 마우스 처음 눌를때
 		$(document).on("mousedown", ".startdate, .enddate", function(e) {
 			row = "task-" + $(this).attr("class").split("task-")[1].split(" list")[0]; // 행마다 부여되는 taskNo 클래스
 			pageX = e.pageX;
 			bgColor = $(this).css("background-color");
 			
-			if ($(this).hasClass("startdate")) {
-				$(this).removeClass("startdate"); startOrEnd = "start";
-			} 
-			else {
-				$(this).removeClass("enddate"); startOrEnd = "end";
-			}
+			if ($(this).hasClass("startdate")) { $(this).removeClass("startdate"); startOrEnd = "start"; } 
+			else { $(this).removeClass("enddate"); startOrEnd = "end"; }
+			
+			console.log(row);
 		});
+		
+		// 마우스 움직일때
+		$(document).on("mousemove", "#timeline-table td", function(e) {
+			if (row == null) return;
+		
+			var target = $(this);
+			if (!$(this).hasClass(row)) target = $("." + row).eq($(this).index()); // 마우스 뗀곳이 마우스 누른 행이 아닐때
+			
+			if (startOrEnd == "start") { // 시작날짜 조정
+				if (e.pageX < pageX) { target.addClass("term"); target.css("background-color", bgColor); } 	// 왼쪽으로
+				else { target.removeClass("term"); target.css("background-color", "white"); }				// 오른쪽으로
+			
+				$("." + row).parents("tr").children(".startdate").removeClass("startdate");
+				$(this).addClass("startdate");
+			} 
+			else { 						 // 끝날짜 조정
+				if (e.pageX < pageX) { target.removeClass("term"); target.css("background-color", "white"); }// 왼쪽으로
+				else { target.addClass("term"); target.css("background-color", bgColor); }				  	 // 오른쪽으로
+			
+				$("." + row).parents("tr").children(".enddate").removeClass("enddate");
+				$(this).addClass("enddate");
+			}
+			
+			pageX = e.pageX;
+		});
+		
 		// 마우스 뗐을때
 		$(document).on("mouseup", "#timeline-table td", function(e) {	 
 			if (row == null) return;
 			
 			var target = $(this);
-			
-			if (!$(this).hasClass(row)) { // 마우스 뗀곳이 마우스 누른 행이 아닐때
-				var tds = $(this).parents("tr").children("td");
-				tds.each(function(i) {
-					if ($(this) == tds.eq(i)) { target = $("." + rows).eq(i); return false; }
-				});
+			if (!$(this).hasClass(row)) {
+				$(this).removeClass("startdate"); $(this).removeClass("enddate"); 
+				target = $("." + row).eq($(this).index()); // 마우스 뗀곳이 마우스 누른 행이 아닐때
 			}
+			$.ajax({
+				url : "/team/task/timeline/dateUpdate",
+				method : "post",
+				data : {
+					"taskNo" : row.split("task-")[1],
+					"dateType" : startOrEnd == "start" ? "start" : "end",
+					"date" : target.attr("data-date")
+				},
+				success : function(data, status, xhr) {
+					var taskContent = $("." + row).parents("tr").children("td").eq(0).text();
+					toastr.info("업무  " + taskContent + " 의 " + ((startOrEnd == "start") ? "시작일자" : "마감일자") +" 를 변경했습니다");
+					
+					getSearchType();
+					// ajax load 후 css 먹히게할려면 뒤에 인자로 함수 주면 가능함.
+					$("#timeline-card").load("/team/task/timeline/getTable?searchType=" + searchType, function() { 
+						setupTable();  
+					});
+						
+					row = null; pageX = null;
+				}, 
+				error : function(xhr, status, err) { console.log(err); }
+			});	
 			
-			console.log(target);
-			target.css("background-color", bgColor);
-			row, pageX, startOrEnd, bgColor = null;
-		}); */
+		});
 		
-		
+		// 시작일 없는 업무에 시작일 등록
+		$(document).on("click", "#timeline-table td", function(e) {
+			var className = $(this).attr("class");
+			if (className == null || !className.includes("task-")) return;
+			
+			var row = ".task-" + className.split("task-")[1].split(" list")[0];
+			if (!$(row).parents("tr").children(".startdate").length == 0) return;
+			if (!confirm("시작일이 없는 업무입니다. \n해당 날짜를 시작일로 지정할까요?")) return;
+			
+			var target = $(this);
+			target.addClass("startdate"); target.addClass("term");
+			target.next().addClass("enddate");
+			setupTable();
+			
+			$.ajax({
+				url : "/team/task/timeline/dateUpdate", // 시작일 등록
+				method : "post",
+				data : {
+					"taskNo" : row.split("task-")[1],
+					"dateType" : "start",
+					"date" : target.attr("data-date")
+				}, 
+				success : function(data, status, xhr) {	 // 마감일 등록
+					$.ajax({
+						url : "/team/task/timeline/dateUpdate",
+						method : "post",
+						data : {
+							"taskNo" : row.split("task-")[1],
+							"dateType" : "end",
+							"date" : target.next().attr("data-date")
+						}, 
+						success : function(data, status, xhr) {
+							var taskContent = $(row).parents("tr").children("td").eq(0).text();
+							toastr.info("업무  " + taskContent + " 의 시작일자와 마감일자 를 지정했습니다");
+						}
+					});
+				}
+			});
+		});
 		
 	});
 	</script>
 </body>
-
 </html>

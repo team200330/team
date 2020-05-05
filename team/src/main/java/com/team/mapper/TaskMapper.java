@@ -24,4 +24,5 @@ public interface TaskMapper {
 
 	void updateCompleted(HashMap<String, Object> params);
 
+	
 }

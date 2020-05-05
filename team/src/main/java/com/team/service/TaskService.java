@@ -21,4 +21,6 @@ public interface TaskService {
 	void deleteTask(int taskNo);
 
 	void updateCompleted(HashMap<String, Object> params);
+	
+
 }

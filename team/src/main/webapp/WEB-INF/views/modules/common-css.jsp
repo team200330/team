@@ -33,3 +33,5 @@
   <!-- Task Properties -->
   <link rel="stylesheet" href="/team/resources/css/task-properties-side.css">
   
+ <!-- pace -->
+ <link rel="stylesheet" href="/team/resources/css/pace.css">

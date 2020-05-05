@@ -1,5 +1,6 @@
 package com.team.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,11 +16,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.team.common.ConvertJsontoCSV;
+import com.team.common.DownloadView;
 import com.team.service.ProjectService;
+import com.team.service.TimelineService;
 import com.team.vo.Member;
 import com.team.vo.Project;
 import com.team.vo.ProjectMember;
+import com.team.vo.Task;
+import com.team.vo.TaskList;
 
 @Controller
 @RequestMapping(path = {"/project"})
@@ -85,11 +93,22 @@ public class ProjectController {
 	
 	@PostMapping(path = {"/write"})
 	@ResponseBody	
-	public String write(Project project, String proPublic, String[] email) {
-		
+	public String write(Project project, String proPublic, String[] email, HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+        session.getAttribute("loginuser");
+
+		String managerEmail = ((Member) session.getAttribute("loginuser")).getEmail();
+		project.setManagerEmail(managerEmail);
 		project.setProPublic(proPublic.equals("true") ? true : false);
-		project.setWorkspaceNo(workspaceNo);
+		project.setWorkspaceNo(workspaceNo); 
+		System.out.println(project.getProjectNo());
+		//projectService.writeProject(projectMember);
+		//projectService.writeProject(project, email, projectMember);
 		projectService.writeProject(project, email);
+
+		//System.out.println(email);
+		
+		
 		
 		return "success";
 		
@@ -229,14 +248,47 @@ public class ProjectController {
 		return result;
 	}
 	
-	@PostMapping("/postProjectMember")
-	@ResponseBody
-	public String postProjectMember(ProjectMember projectMember) {
-		
-		projectService.insertProjectMember(projectMember);
-		return "success";
-	}
-	
 
 	
+	
+	
+	
+	
+	
+	
+	// 프로젝트 CSV 로 내보내기
+	@Autowired
+	@Qualifier("timelineService")
+	private TimelineService timelineService;
+	
+	private List<TaskList> downloadList;
+	
+	@GetMapping("/download")
+	public View downloadCSV() {
+		ConvertJsontoCSV c = new ConvertJsontoCSV();
+		List<Task> lists = new ArrayList<>();
+		
+		for (TaskList l : downloadList)
+		for (Task t : l.getTasks())
+		lists.add(t);
+		
+		c.convert(lists);
+		
+		DownloadView dv = new DownloadView();
+		return dv;
+	}
+
+	@GetMapping("/download-check")
+	@ResponseBody
+	public String downloadCheck(int projectNo) {
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("searchType", "A");
+		params.put("projectNo", projectNo);
+		
+		List<TaskList> lists = timelineService.searchTasks(params);
+		if (lists == null || lists.size() == 0) return "error";
+		
+		downloadList = lists;
+		return "success";
+	}
 }

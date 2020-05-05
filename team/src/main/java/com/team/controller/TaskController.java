@@ -1,9 +1,8 @@
 package com.team.controller;
 
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -17,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.team.service.TaskService;
+import com.team.service.TimelineService;
 import com.team.ui.TimelineTable;
+import com.team.vo.Member;
 import com.team.vo.Task;
 import com.team.vo.TaskList;
 
@@ -100,25 +101,59 @@ public class TaskController {
 	}
 	
 	
+	
+	
+	
+	
+	
 	///////////////////////////////////////////
+	@Autowired
+	@Qualifier("timelineService")
+	private TimelineService timelineService;
+	
+	static final int projectNo = 1;
+	
+	@GetMapping("/timeline/getTable")
+	public String showTimelineTable(HttpSession s, Model model, String searchType) {
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("searchType", (searchType.length() == 0 || searchType == null) ? "A" : searchType);
+		params.put("email", ((Member)s.getAttribute("loginuser")).getEmail());
+		params.put("projectNo", projectNo);
+		
+		model.addAttribute("table",  // 세션에 프로젝트번호 저장되면 바꾸기 (프로젝트 생성한 달, 프로젝트 마감달)
+			new TimelineTable(timelineService.searchTasks(params), 5, 12).toString());
+		
+		return "task/modules/timeline-table";
+	}
+	
+	@PostMapping("/timeline/dateUpdate")
+	@ResponseBody
+	public String updateDate(int taskNo, String date, String dateType) {
+		Calendar c = Calendar.getInstance();
+		HashMap<String, Object> params = new HashMap<>();
+		
+		params.put("taskNo", taskNo);
+		params.put("date", c.get(c.YEAR) + date.split("date")[1]);
+		params.put("dateType", dateType);
+		timelineService.updateDate(params);
+		
+		return "success";
+	}
+	
 	@GetMapping(path= {"/timeline"})
-	public String showTaskTimeLine(Model model) {
+	public String showTaskTimeLine(HttpSession s, Model model) {
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("searchType", "A");
+		params.put("email", ((Member)s.getAttribute("loginuser")).getEmail());
+		params.put("projectNo", projectNo);
 		
-		List<TaskList> newList = new ArrayList<>();
-		List<TaskList> lists = taskService.searchTaskList();
-		List<Task> tasks = taskService.searchTask();
+		model.addAttribute("table", 
+			new TimelineTable(timelineService.searchTasks(params), 5, 12).toString());
 		
-		for (TaskList l : lists) {
-			List<Task> ts = new ArrayList<>();
-			for (Task t : tasks) if (t.getListNo() == l.getListNo()) ts.add(t);
-
-			l.setTasks(ts);
-			newList.add(l);
-		}
-		
-		if (lists != null) model.addAttribute("table", new TimelineTable(newList).toString());
-		
-		
+		return "task/timeline";
+	}
+	@GetMapping("/timeline2")
+	public String showTaskTimeLine() {
 		return "task/timeline";
 	}
 	

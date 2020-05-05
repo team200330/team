@@ -10,13 +10,15 @@ import lombok.Data;
 
 @Data
 public class TimelineTable {
-	private int startMonth = 4;
-	private int endMonth = 7;
+	private int startMonth;
+	private int endMonth;
 	private List<TaskList> taskLists;
 	
 	public TimelineTable() {}
-	public TimelineTable(List<TaskList> taskLists) {
+	public TimelineTable(List<TaskList> taskLists, int startMonth, int endMonth) {
 		this.taskLists = taskLists; 
+		this.startMonth = startMonth;
+		this.endMonth = endMonth;
 	} 
 	
 	public String toString() {
@@ -62,7 +64,7 @@ public class TimelineTable {
 						for (int j = 1; j < endDate[i] + 1; j++) {
 							if (sDate != null && eDate != null) {
 								if (sDate.getMonth() == i && sDate.getDate() == j) table.append("<td class='startdate ");	// 업무 시작날짜
-								else if (eDate.getMonth() == i && eDate.getDate() == j) table.append("<td class='enddate ");	// 업무 끝날짜
+								else if (sDate.getMonth() >= i && eDate.getMonth() == i && eDate.getDate() == j) table.append("<td class='enddate ");	// 업무 끝날짜
 								else table.append("<td class='");															// 날짜설정 안되있을때
 							} else table.append("<td class='");									
 							

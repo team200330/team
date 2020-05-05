@@ -1,9 +1,12 @@
 package com.team.controller;
 
-import java.util.Date;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +19,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.View;
 
+import com.team.common.ConvertJsontoCSV;
+import com.team.common.DownloadView;
 import com.team.service.FeedbackService;
+import com.team.service.ProjectService;
+import com.team.service.TimelineService;
 import com.team.vo.Comments;
 import com.team.vo.Feedback;
 import com.team.vo.Member;
+import com.team.vo.Project;
+import com.team.vo.Task;
+import com.team.vo.TaskList;
 
 @Controller
 @RequestMapping("/feedback")
@@ -29,7 +40,18 @@ public class FeedbackController {
 	@Autowired
 	@Qualifier("feedbackService")
 	private FeedbackService feedbackService;
+	
+	@Autowired
+	@Qualifier("projectService")
+	private ProjectService projectService;
+	
+	@Autowired
+	@Qualifier("timelineService")
+	private TimelineService timelineService;
 
+	// 프로젝트 리스트 (워크스페이스의 모든 업무 가져오기 위해)
+	private List<Project> projects = null;
+	
 	// 워크스페이스 멤버 리스트
 	private List<Member> workspaceMembers = null;
 	
@@ -39,10 +61,16 @@ public class FeedbackController {
 	
 
 	@GetMapping("/list")
-	public String feedbackList(Model model, HttpSession session) {
-		// 임시 워크스페이스 번호
+	public String feedbackList(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		
+		// 처음 들어올때 워크스페이스 멤버랑 업무들 가져오기
 		if ( workspaceMembers == null ) workspaceMembers = feedbackService.findWorkspaceMembers(workspaceNo);
 		model.addAttribute("workspaceMembers", workspaceMembers);
+		
+		if ( projects == null ) projects = feedbackService.findTasksByWorkspaceNo(workspaceNo);
+		model.addAttribute("projects", projects);
+		///////////////////////////////////
 		
 		HashMap<String, Object> params = new HashMap<>();
 		params.put("email", ((Member) session.getAttribute("loginuser")).getEmail());
@@ -50,8 +78,7 @@ public class FeedbackController {
 		params.put("workspaceNo", workspaceNo);
 		
 		model.addAttribute(feedbackService.searchFeedback(params));
-		
-		System.out.println();
+
 		return "/feedback/list";
 	}
 	
@@ -144,12 +171,15 @@ public class FeedbackController {
 		
 		for (Member m : workspaceMembers) {
 			String className = "_mem_icon_default";
+			String img = m.getImg() != null ? m.getImg() : "/team/resources/img/profile-default.jpg";
+			System.out.println(img);
+			
 			for (String s : selectedMems) if (s.equals(m.getEmail())) { className = ""; break; }
 			
 			if ( (m.getEmail().contains(str) || m.getName().contains(str)) && !m.getEmail().equals(email) ) 
 				result += 
 					"<div class='_mem' data-email='" + m.getEmail() + "' data-name='" + m.getName() + "'>" +
-						"<img class='_mem_img img-circle img-bordered-sm' src='' alt='user image'>" +
+						"<img class='_mem_img img-circle img-bordered-sm' alt='user image' src='" + img + "'>" +
 			        	"<div class='_mem_name'> " + m.getEmail() + "<br/>" + m.getName() + "</div>" +
 			        	"<div class='_mem_icon "+ className +"' style='text-align:right' >" +
 			        		"<i class='fas fa-check'></i>" +
@@ -158,4 +188,31 @@ public class FeedbackController {
 		}
 		return result;
 	}
+	
+	@RequestMapping(value = "/getTasks", produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String getTasks(String str) throws UnsupportedEncodingException {
+		//URLDecoder.decode(str, "UTF-8");
+		String result = "";
+		
+		for (Project p : projects) {
+			for (TaskList l : p.getTaskLists()) {
+				for (Task t : l.getTasks()) {
+					if (t.getContent().contains(str) || t.getWriter().contains(str) || p.getProjectName().contains(str)) {
+						result += 
+							"<div class='task' data-value="+ t.getTaskNo() +">" +
+								"<div class='t_t'>" + t.getContent() +"</div>" +
+								"<div class='t'>" +
+		            				"<div>"+ p.getProjectName() + "&nbsp;</div>" + 
+		            				"<div> > "+ t.getWriter() +"</div>" +
+		            			"</div>" +
+		            		"</div>";
+					}
+				}
+			}
+		}
+		
+		return result;
+	}
+
 }
