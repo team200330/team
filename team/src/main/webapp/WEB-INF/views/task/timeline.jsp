@@ -380,12 +380,9 @@ td:not(:first-child) {border-right: 2px solid #e5e5e5;}
 		
 		// 마우스 따라다니는 업무 이름
 		$(document).on("mousemove", "#timeline-table td", function(e) { 
-			
 			var className = $(this).attr("class");
-			
 			if (className == null || !className.includes("task-")) { $("#task-label").hide(); return; }
 			
-			console.log(className)
 			var row = ".task-" + className.split("task-")[1].split(" list")[0];
 			
 		    $("#task-label").show(); 
@@ -416,8 +413,6 @@ td:not(:first-child) {border-right: 2px solid #e5e5e5;}
 			
 			if ($(this).hasClass("startdate")) { $(this).removeClass("startdate"); startOrEnd = "start"; } 
 			else { $(this).removeClass("enddate"); startOrEnd = "end"; }
-			
-			console.log(row);
 		});
 		
 		// 마우스 움직일때

@@ -68,16 +68,6 @@
 
 <script type="text/javascript">
  // $.widget.bridge('uibutton', $.ui.button)
- $(function() {
-	 if (${not empty loginuser}) 
-	 $.ajax({
-		url : "/team/feedback/count",
-		method : "get",
-		success : function(data, status, xhr) {
-			$(document).load("/team/feedback/getNotifications");
-		}
-	}); 
- });
 </script>
 
 

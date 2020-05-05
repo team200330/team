@@ -1,8 +1,11 @@
 package com.team.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,6 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.team.service.TaskService;
 import com.team.service.TimelineService;
 import com.team.ui.TimelineTable;
@@ -90,7 +95,9 @@ public class TaskController {
 	}
 	@PostMapping(path = {"/deletetask.action"})
 	@ResponseBody
-	public String deleteTask(int taskNo) {
+	public String deleteTask(int taskNo, HttpSession session) {
+		session.setAttribute("taskNo", taskNo);
+		
 		taskService.deleteTask(taskNo);
 		return "success";
 	}
@@ -99,6 +106,11 @@ public class TaskController {
 	public String showanalyticsMain() {
 		return "task/analyticsmain";
 	}
+	
+	
+	
+	
+	
 	
 	
 	
@@ -156,5 +168,57 @@ public class TaskController {
 	public String showTaskTimeLine() {
 		return "task/timeline";
 	}
+	
+	
+	
+	
+	
+	/////////////////////////////////////////////////////////////////
+	
+//	@GetMapping("/calender")
+//	public String calender(Model model) throws JsonProcessingException {
+//		HashMap<String, Object> params = new HashMap<>();
+//		params.put("searchType", "A");
+//		params.put("projectNo", projectNo);
+//
+//		// json 타입으로 뷰에 전송시 날짜 이상하게 나오기때문에 simpledateformat 으로 고침
+//		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+//		
+//		List<Task> tasks = new ArrayList<>();
+//		for (TaskList l : timelineService.searchTasks(params)) {
+//			for (Task t : l.getTasks()) { 
+//				if (t.getStartDate() != null) t.setS_startDate(f.format(t.getStartDate()));
+//				if (t.getEndDate() != null) t.setS_endDate(f.format(t.getEndDate()));
+//				if (t.getCompletedDate() != null) t.setS_completedDate(f.format(t.getCompletedDate()));
+//				tasks.add(t);
+//			}
+//		}
+//		
+//		ObjectMapper mapper = new ObjectMapper();
+//		String jsonText = mapper.writeValueAsString(tasks);
+//		model.addAttribute( "tasks", jsonText );
+//		return "/calender";
+//	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

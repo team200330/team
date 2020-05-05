@@ -1,5 +1,6 @@
 package com.team.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -267,10 +268,16 @@ public class ProjectController {
 	public View downloadCSV() {
 		ConvertJsontoCSV c = new ConvertJsontoCSV();
 		List<Task> lists = new ArrayList<>();
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
 		
-		for (TaskList l : downloadList)
-		for (Task t : l.getTasks())
-		lists.add(t);
+		for (TaskList l : downloadList) {
+			for (Task t : l.getTasks()) { 
+				if (t.getStartDate() != null) t.setS_startDate(f.format(t.getStartDate()));
+				if (t.getEndDate() != null) t.setS_endDate(f.format(t.getEndDate()));
+				if (t.getCompletedDate() != null) t.setS_completedDate(f.format(t.getCompletedDate()));
+				lists.add(t);
+			}
+		}
 		
 		c.convert(lists);
 		
