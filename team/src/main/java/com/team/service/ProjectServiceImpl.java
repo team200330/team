@@ -40,75 +40,51 @@ public class ProjectServiceImpl implements ProjectService {
 	
 	@Override
 	public void writeProject (Project project , String[] email ) {
-		
 		projectMapper.insertProject(project);
 		
 		int projectNo = project.getProjectNo();
-		
-		//System.out.println(projectNo+"값:"+ ( (String[])email )[0] + ( (String[])email )[1] + ( (String[])email )[2] ) ;
-		
-		//List<ProjectMember> projectMember = new ArrayList<>();
-	
-		for(int i = 0; i < email.length; i++) {
-			List<ProjectMember> projectMember = new ArrayList<>();
-			projectMember.add(new ProjectMember(projectNo, email[i]));
-			projectMapper.insertProjectMember(projectMember);
-			System.out.println(projectNo + "["+ i + "]" +"값:"+ ( (String[])email )[i]) ;
-			
+		for(String s : email) {
+			ProjectMember m = new ProjectMember(projectNo, s);
+			projectMapper.insertProjectMember(m);
 		}
-		//for (String s : email) projectMember.add(new ProjectMember(projectNo, s));
-		//System.out.println(projectNo+"값:"+ projectMember) ;
-		//projectMapper.insertProjectMember(ProjectMember);
-		
-		
 	}
-//	@Override
-//	public void insertProjectMember(List<ProjectMember> projectMember) {
-//		projectMapper.insertProjectMember(projectMember);
-//		
-//	}
 
 
 	@Override
 	public List<Project> findProject(HashMap<String, Object> params) {
-		
 		return projectMapper.selectProject(params);
 	}
 
 	@Override
 	public List<Project> findProject2(HashMap<String, Object> params) {
-		// TODO Auto-generated method stub
 		return projectMapper.selectProject2(params);
 	}
 	
 	@Override
 	public void updateProjectNo(Map<String, String> arrMap) {
-
 		projectMapper.updateProjectNo(arrMap);
 		
 	}
 
 	@Override
 	public List<Project> findPageing(HashMap<String, Object> params) {
-		// TODO Auto-generated method stub
 		return projectMapper.selectPageing(params);
 	}
 
 	@Override
 	public int projectListCount(HashMap<String, Object> params) {
-		// TODO Auto-generated method stub
 		return projectMapper.selectProjectListCount(params);
 	}
 
 	@Override
 	public Project searchProjectByNo(int projectNo) {
-		// TODO Auto-generated method stub
 		return projectMapper.selectProjectByNo(projectNo);
 	}
 
 	@Override
 	public Project selectDetail(int projectNo) {
-		// TODO Auto-generated method stub
+		
+		
 		return projectMapper.selectDetail(projectNo);
 	}
 
@@ -119,7 +95,6 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public List<Member> loginuserProjectMember(HashMap<String, Object> params) {
-		// TODO Auto-generated method stub
 		return projectMapper.selectLoginuserProjectMember(params);
 	}
 

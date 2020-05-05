@@ -89,20 +89,15 @@ public class ProjectController {
 	public String write(Project project, String proPublic, String[] email, HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
         session.getAttribute("loginuser");
-
+ 
 		String managerEmail = ((Member) session.getAttribute("loginuser")).getEmail();
 		project.setManagerEmail(managerEmail);
-		project.setProPublic(proPublic.equals("true") ? true : false);
+		project.setProPublic(proPublic.equals("true") ? true : false); 
 		project.setWorkspaceNo(workspaceNo); 
-		System.out.println(project.getProjectNo());
-		//projectService.writeProject(projectMember);
-		//projectService.writeProject(project, email, projectMember);
+
 		projectService.writeProject(project, email);
 
-		//System.out.println(email);
-		
-		
-		
+
 		return "success";
 		
 	}
@@ -181,8 +176,11 @@ public class ProjectController {
 		Project projectDetail = projectService.selectDetail(projectNo);
 		model.addAttribute("projectDetail", projectDetail);
 		
-		System.out.println(projectDetail);
+		System.out.println("detail projectDetail 값" + projectDetail);
 
+		System.out.println(projectDetail.getProjectMembers());
+
+		
 		return projectDetail;
 		//return "success";
 		//return "project/detail";

@@ -18,7 +18,7 @@ public interface ProjectMapper {
 	
 	void insertProject(Project project);
 	
-	List<ProjectMember> insertProjectMember(List<ProjectMember> projectMember);
+	void insertProjectMember(ProjectMember projectMember);
 	
 	List<Project> selectProject(HashMap<String, Object> params);
 	
