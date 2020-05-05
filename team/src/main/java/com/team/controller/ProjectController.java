@@ -270,10 +270,10 @@ public class ProjectController {
 		
 		for (TaskList l : downloadList) {
 			for (Task t : l.getTasks()) { 
-				if (t.getStartDate() != null) t.setS_startDate(f.format(t.getStartDate()));
-				if (t.getEndDate() != null) t.setS_endDate(f.format(t.getEndDate()));
-				if (t.getCompletedDate() != null) t.setS_completedDate(f.format(t.getCompletedDate()));
-				lists.add(t);
+//				if (t.getStartDate() != null) t.setS_startDate(f.format(t.getStartDate()));
+//				if (t.getEndDate() != null) t.setS_endDate(f.format(t.getEndDate()));
+//				if (t.getCompletedDate() != null) t.setS_completedDate(f.format(t.getCompletedDate()));
+//				lists.add(t);
 			}
 		}
 		
