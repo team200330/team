@@ -737,6 +737,32 @@ $(function() {
 
 	
 	
+	
+	
+	// 프로젝트 CSV 파일로 내보내기
+	var checked = false;
+	var download = false;
+	$("#projectDownloadBtn").click(function() {
+		var target = $(this);
+		if (checked == false) {
+			$.ajax({
+				url : "/team/project/download-check",
+				data : {"projectNo" : $("#de_projectNo").val()},
+				success : function(data, status, xhr) {
+					if (data == "success") download = true;
+					else download = false;
+					checked = true;
+					target.click();
+				}
+			});
+		}
+		else {
+			if (download) $("#download").submit();
+			else alert("프로젝트에 업무가 등록되어 있지 않습니다.");
+			checked = false;
+		}
+	});
+
 });
 </script>
 </body>
