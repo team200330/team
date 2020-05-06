@@ -47,8 +47,8 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/team/workspace/workspace-member?email=${ loginuser.email }" class="nav-link">
+              <li class="nav-item" id="workspace_member_li">
+                <a href="#" class="nav-link">
                   
                   <p>워크스페이스 멤버</p>
                   <script type="text/javascript">

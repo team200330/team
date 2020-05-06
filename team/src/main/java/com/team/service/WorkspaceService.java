@@ -36,6 +36,13 @@ public interface WorkspaceService {
 	List<Workspace> selectWorkspaceNameByEmail(String email);
 	
 	List<Workspace> selectWorkspacesByEmail(String email);
-	
+
+	void changeWorkspaceMemberType(WorkspaceMember workspaceMember);
+
+	WorkspaceMember selectWorkspaceMemberTypeByWorkspaceMember(WorkspaceMember workspaceMember);
+
+	void changeLoginuserType(WorkspaceMember workspaceMember);
+
+	void deleteWorkspaceMemberType(WorkspaceMember workspaceMember);
 
 }

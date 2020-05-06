@@ -136,7 +136,7 @@
 					<span class="dropdown-item dropdown-header">워크스페이스 목록</span>
 					<div class="dropdown-divider">워크스페이스 없음</div>					
 					</c:if>
-					<a href="#" class="dropdown-item dropdown-footer">워크스페이스 등록</a>
+					<a href="/team/workspace/create-workspace" class="dropdown-item dropdown-footer">워크스페이스 등록</a>
 				</div>
 			</li>
 		</c:if>
