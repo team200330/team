@@ -20,4 +20,10 @@ public class Task {
 	
 	private List<TaskMember> taskMembers;
 	private List<File> files;
+	
+	////////////////////////////
+	// string date
+	private String s_startDate;
+	private String s_endDate;
+	private String s_completedDate;
 }
