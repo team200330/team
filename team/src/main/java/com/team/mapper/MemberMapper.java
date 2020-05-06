@@ -13,5 +13,7 @@ public interface MemberMapper {
 	void updatePassword(Member member);
 	
 	void updateImg(Member member);
+	
+	void updateMember(Member member);
 
 }

@@ -134,42 +134,40 @@ public class AccountController {
 	@PostMapping("/updateProfile")
 	@ResponseBody
 	public String updateProfile(Member member) {
-		
+		memberService.updateMember(member);
 		return "success";
 	}
 	
-	@PostMapping("/updateImg")
-	public String updateImg(@RequestParam("img")MultipartFile[] files, HttpServletRequest req, String email) {		
-		
-		ServletContext application = req.getServletContext();
-		String path = application.getRealPath("/resources/img/profile");
-		System.out.println(path);
-	
-		for (MultipartFile file : files) {
-			
-			String fileName = file.getOriginalFilename();
-			System.out.println(fileName);
-			
-			Member member = new Member();
-			member.setEmail(email);
-			member.setImg(fileName);
-			memberService.updateImg(member);
-			
-			try {
-				File f = new File(path, fileName);
-				file.transferTo( f ); //파일 저장
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-		}
-		
-		
-		
-		return "redirect:/account/mypage";
+	@GetMapping("/mypageContent")
+	public String mypageContentPage(HttpSession session, String email) {
+		session.removeAttribute("loginuser");
+		session.setAttribute("loginuser", memberService.findMemberByEmail(email));
+		return "/account/modules/mypage-content";
 	}
 	
-	
-	
+	@PostMapping("/updateImg")
+	@ResponseBody
+	public String updateImg(@RequestParam("img")MultipartFile file, HttpServletRequest req, String email) {		
+		ServletContext application = req.getServletContext();
+		String path = application.getRealPath("/resources/img/profile");
+		String fileName = file.getOriginalFilename();
+		
+		try {
+			File f = new File(path, fileName);
+			file.transferTo( f ); //파일 저장
+		} 
+		catch (Exception ex) { ex.printStackTrace(); }
+		
+		Member member = new Member();
+		member.setEmail(email);
+		member.setImg(fileName);
+		memberService.updateImg(member);
+			
+		
+
+		return "redirect:/account/mypage";
+	}
+
 	
 	
 	

@@ -14,4 +14,5 @@ public interface MemberService {
 	
 	void updateImg(Member member);
 
+	void updateMember(Member member);
 }

@@ -50,6 +50,11 @@ public class MemberServiceImpl implements MemberService {
 		memberMapper.updateImg(member);
 	}
 
+	@Override
+	public void updateMember(Member member) {
+		memberMapper.updateMember(member);
+	}
+
 	
 
 }

@@ -115,7 +115,7 @@ button {
 
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper"
-			style="background-color: #ececec; min-height: inherit;">
+			style="background-color: #ececec; min-height:1100px;">
 			<!-- Content Header (Page header) -->
 			
 				<div style="height: 50px; text-align: center; padding-top: 20px;">
@@ -141,177 +141,8 @@ button {
 			<!-- /.content-header -->
 
 			<!-- Main content -->
-			<section class="content" style="height:100%">
-				<!-- Default box -->
-				<div class="card" style="margin: 30px 70px 10px 70px;">
-
-					<!-- ./row -->
-
-					<div class="card card-secondary card-tabs" style="margin-bottom: 0;background-color: #f5f5f5">
-						<div class="card-header p-0 pt-1">
-							<ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
-								<li class="nav-item"><a class="nav-link active"
-									id="custom-tabs-one-home-tab" data-toggle="pill"
-									href="#custom-tabs-one-home" role="tab"
-									aria-controls="custom-tabs-one-home" aria-selected="true">내 프로필</a>
-								</li>
-								<li class="nav-item"><a class="nav-link"
-									id="custom-tabs-one-profile-tab" data-toggle="pill"
-									href="#custom-tabs-one-profile" role="tab"
-									aria-controls="custom-tabs-one-profile" aria-selected="false">
-										설정</a></li>
-								
-
-							</ul>
-						</div>
-						<div class="card-body">
-						
-							<!-- 내 프로필 -->
-							<div class="tab-content" id="custom-tabs-one-tabContent">
-								<div class="tab-pane fade show active" id="custom-tabs-one-home"
-									role="tabpanel" aria-labelledby="custom-tabs-one-home-tab">
-
-									<div class="card">
-										<div class="card-body" style="padding:50px; display:flex">
-											<div>
-												<c:choose>
-													<c:when test="${not empty loginuser.img}">
-														<img id="profileImg" src="/team/resources/img/profile/${loginuser.img}" style="padding:2px;border:1px solid #adb5bd; width:120px; height:120px;">
-												
-													</c:when>
-													<c:otherwise>
-														<img id="profileImg" src="/team/resources/img/profile-default.jpg" style="padding:2px;border:1px solid #adb5bd; width:120px; height:120px;">
-												
-													</c:otherwise>
-												</c:choose>
-												<div id="img-update-btn">
-													<i class="fas fa-camera"></i>
-													사진 업데이트
-												</div>
-												<form id="img-form" action="/team/account/updateImg" method="post" enctype="multipart/form-data">
-													<input type="file" name="img" id="img-select" style="display:none">
-													<input type="hidden" name="email" value="${loginuser.email }">
-												</form>
-												
-											</div>
-											<div style="padding-left: 40px;" class="profile-update">
-												<form id="profile-form" method="post" action="/team/account/updateProfile">
-													<div>
-													<h6>이름</h6>
-													<input type="text" name="name" value="${loginuser.name}"><br>
-													<span class="check-text">팀원들이 본인을 알아볼 수 있도록 도와주세요.</span>
-													</div>
-													
-													<div>
-													<h6>부서</h6>
-													<input type="text" name="department" value="${loginuser.department}"><br>
-													<span class="check-text">부서명으로 본인을 찾을 수 있도록 도와주세요. 예) 디자인팀</span>
-													</div>
-													
-													<div>
-													<h6>직함</h6>
-													<input type="text" name="position" value="${loginuser.position}"><br>
-													<span class="check-text">자신이 무엇을 하는지 팀원들에게 알려주세요. 예) 웹디자이너</span>
-													</div>
-													
-													<div>
-													<h6>전화번호</h6>
-													<input type="text" name="phone" value="${loginuser.phone}"><br>
-													<span class="check-text">팀원들이 본인에게 연락할 수 있도록 도와주세요</span>
-													</div>
-													
-													<div>
-													<h6>주소</h6>
-													<input type="text"><br>
-													<span class="check-text">팀원들이 본인을 지도에서 찾을 수 있도록 도와주세요!</span>
-													</div>
-													
-													<button class="submit-btn active-submit-btn">변경사항 저장</button>
-												</form>
-											</div>
-										</div>
-										<!-- /.card-body -->
-									</div>
-									<!-- /.card -->
-								
-								</div>
-								
-								<!-- 설정 -->
-								<div class="tab-pane fade" id="custom-tabs-one-profile"
-									role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab">
-
-									<!-- Default box -->
-									<div class="card">
-										<div class="card-header">
-											<h5 class="card-title">비밀번호 변경</h5>
-
-											<div class="card-tools">
-												<button type="button" class="btn btn-tool card-open-btn">
-													<i class="fas fa-minus"></i>
-												</button>
-											</div>
-										</div>
-										<div class="card-body" style="display:none">
-											<div class="password-update">
-												<div>
-												<h6>현재 비밀번호</h6>
-												<input type="password" class="pw"> <a class="pw-show-btn">보이기</a><br>
-												<span class="check-text"></span>
-												</div>
-												
-												<div>
-												<h6>새 비밀번호</h6>
-												<input type="password" class="new-pw"> <a class="pw-show-btn">보이기</a><br>
-												<span class="check-text"></span>
-												</div>
-												
-												<div>
-												<h6>새 비밀번호 확인</h6>
-												<input type="password" class="pw-check"> <a class="pw-show-btn">보이기</a><br>
-												<span class="check-text"></span>
-												</div>
-
-												<button class="submit-btn disabled-submit-btn" disabled="disabled">비밀번호 업데이트</button>
-											</div>
-										</div>
-										<!-- /.card-body -->
-									</div>
-									<!-- /.card -->
-								
-								<!-- Default box -->
-									<div class="card">
-										<div class="card-header">
-											<h5 class="card-title">계정 삭제</h5>
-
-											<div class="card-tools">
-												<button type="button" class="btn btn-tool card-open-btn">
-													<i class="fas fa-minus"></i>
-												</button>
-											</div>
-										</div>
-										<div class="card-body" style="display:none">
-											<div style="font-size:10.5pt; margin-bottom:15px;">
-											한 번 삭제된 계정은 다시 복구할 수 없습니다. 계정이 삭제되면 현재 계정에서 생성된 모든 데이터에 더이상 엑세스할 수 없습니다. 
-											삭제 후 Taskworld를 다시 이용하고자 한다면, 새로 가입해주셔야 합니다.
-											</div>
-											<button class="submit-btn" style="background-color:#e95e51; color:white !important; width: 170;">계정 삭제하기</button>
-										</div>
-										<!-- /.card-body -->
-									</div>
-									<!-- /.card -->
-
-								</div>
-								
-							
-							</div>
-						</div>
-						<!-- /.card -->
-					</div>
-
-				</div>
-
-
-
+			<section id="mypage-content" class="content" style="height:100%">
+				<jsp:include page="modules/mypage-content.jsp"></jsp:include>
 			</section>
 			<!-- /.content -->
 		</div>
@@ -335,10 +166,26 @@ button {
 
 	<%@include file="/WEB-INF/views/modules/common-js.jsp"%>
 
+	<!-- 다음 API -->
+	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script type="text/javascript">
 	$(function() {
+		// 다음api 주소
+		$(document).on("click", "#addr-btn", function(event) {
+			 new daum.Postcode({
+		        oncomplete: function(data) {
+
+		        // postcode (우편번호) 2020년 3월부터 받아올수 없음. 도로명 번호 받아오기
+				//$("#postcode").val(data.postcode);
+				$("#roadAddress").val(data.roadAddress);
+				$("#jibunAddress").val(data.jibunAddress);
+                   	
+		        }
+			 }).open();
+		});
+		
 		// 비번 보이기 / 숨기기
-		$(".pw-show-btn").click(function() {
+		$(document).on("click", ".pw-show-btn", function() {
 			if ($(this).text() == "보이기") {
 				$(this).prev().attr("type", "text");
 				$(this).text("숨기기");
@@ -363,7 +210,7 @@ button {
 			}
 		}
 
-		$(".pw").keyup(function() {
+		$(document).on("keyup", ".pw", function() {
 			var target = $(this);
 			
 			$.ajax({
@@ -384,7 +231,7 @@ button {
 				}
 			});
 		});
-		$(".new-pw").keyup(function() {
+		$(document).on("keyup", ".new-pw", function() {
 			// 숫자, 문자 포함한 6 ~ 12자리의 비밀번호
 			var pwRule = /^[A-Za-z0-9]{6,12}$/;
 			if (pwRule.test($(this).val())) {
@@ -396,7 +243,7 @@ button {
 				newPw = false;
 			}
 		});
-		$(".pw-check").keyup(function() {
+		$(document).on("keyup", ".pw-check", function() {
 			if ($(this).val() != $(".new-pw").val()) {
 				$(this).parents("div").children(".check-text").text("비밀번호가 일치하지 않습니다");
 				pwCheck = false;
@@ -407,7 +254,8 @@ button {
 			}
 		});
 		
-		$(document).on("click", ".active-submit-btn", function() {
+		// 비번 변겅
+		$(document).on("click", ".password-update .active-submit-btn", function() {
 			$.ajax({
 				url : "/team/account/updatePw",
 				method : "post",
@@ -428,27 +276,54 @@ button {
 			});
 		});	
 		
-		
-		$(".card-open-btn").click(function() {
+		// 설정 카드열기 / 닫기
+		$(document).on("click", ".card-open-btn", function() {
 			var target = $(this).parents(".card").children(".card-body").eq(0);
 			if (target.css("display") == "block") target.css("display", "none");
 			else target.css("display", "block");
 		});
 		
-		$("#img-update-btn").click(function() {
-			$("#img-select").click();
+		// 프사 변경버튼
+		$(document).on("click", "#img-update-btn", function() { $("#img-select").click(); });
+		
+		// 프사 변경
+		$(document).on("change", "#img-select", function() {
+			// multipartFile data ajax 로 보내기
+			var formData = new FormData($('#img-form')[0]);
+			
+			$.ajax({
+				url : "/team/account/updateImg",
+				method : "post",
+				enctype: 'multipart/form-data',
+				processData: false,
+				contentType: false,
+				data : formData,
+				success : function(data, status, xhr) {
+					$("#mypage-content").load("/team/account/mypageContent?email=" + "${loginuser.email}");
+					alert("프로필 사진을 변경했습니다.");
+				}
+			});
 		});
 		
-		// >>>>>>>>>>>>>>>>>>>>>> 여기 비동기로 바꾸기
-		$("#img-select").change(function() {
-			console.log($(this).val())
-			
-			$("#img-form").submit();
-			alert("이미지 변경완료");
-			
-			
+		// 프로필 정보 변경
+		$(document).on("change", "#profile-form input", function() {
+			$(".profile-update .submit-btn").removeClass("dlsabled-submit-btn");
+			$(".profile-update .submit-btn").addClass("active-submit-btn");
 		});
 		
+		$(document).on("click", ".profile-update .active-submit-btn", function() {
+			var form = $("#profile-form").serialize();
+			
+			$.ajax({
+				url : "/team/account/updateProfile",
+				method : "post",
+				data : form,
+				success : function(data, status, xhr) {
+					$("#mypage-content").load("/team/account/mypageContent?email=" + "${loginuser.email}");
+					alert("회원 정보를 변경했습니다.");
+				}
+			});
+		});
 	});
 	</script>
 

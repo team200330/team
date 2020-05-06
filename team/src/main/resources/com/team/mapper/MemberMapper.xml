@@ -29,6 +29,13 @@
 		WHERE email = #{ email }
 	</update>
 	
+	<update id="updateMember" parameterType="Member">
+		UPDATE member SET
+		name = #{ name }, phone = #{ phone }, department = #{ department }, position = #{ position },
+		roadname_addr = #{ roadnameAddr }, detail_addr = #{ detailAddr }
+		WHERE email = #{ email }
+	</update>
+	
 	
 	<resultMap type="Member" id="memberMap">
 		<id column="email" property="email"/>
