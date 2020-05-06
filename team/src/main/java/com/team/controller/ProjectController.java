@@ -1,5 +1,6 @@
 package com.team.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -96,20 +97,15 @@ public class ProjectController {
 	public String write(Project project, String proPublic, String[] email, HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
         session.getAttribute("loginuser");
-
+ 
 		String managerEmail = ((Member) session.getAttribute("loginuser")).getEmail();
 		project.setManagerEmail(managerEmail);
-		project.setProPublic(proPublic.equals("true") ? true : false);
+		project.setProPublic(proPublic.equals("true") ? true : false); 
 		project.setWorkspaceNo(workspaceNo); 
-		System.out.println(project.getProjectNo());
-		//projectService.writeProject(projectMember);
-		//projectService.writeProject(project, email, projectMember);
+
 		projectService.writeProject(project, email);
 
-		//System.out.println(email);
-		
-		
-		
+
 		return "success";
 		
 	}
@@ -188,8 +184,11 @@ public class ProjectController {
 		Project projectDetail = projectService.selectDetail(projectNo);
 		model.addAttribute("projectDetail", projectDetail);
 		
-		System.out.println(projectDetail);
+		System.out.println("detail projectDetail 값" + projectDetail);
 
+		System.out.println(projectDetail.getProjectMembers());
+
+		
 		return projectDetail;
 		//return "success";
 		//return "project/detail";
@@ -267,10 +266,16 @@ public class ProjectController {
 	public View downloadCSV() {
 		ConvertJsontoCSV c = new ConvertJsontoCSV();
 		List<Task> lists = new ArrayList<>();
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
 		
-		for (TaskList l : downloadList)
-		for (Task t : l.getTasks())
-		lists.add(t);
+		for (TaskList l : downloadList) {
+			for (Task t : l.getTasks()) { 
+//				if (t.getStartDate() != null) t.setS_startDate(f.format(t.getStartDate()));
+//				if (t.getEndDate() != null) t.setS_endDate(f.format(t.getEndDate()));
+//				if (t.getCompletedDate() != null) t.setS_completedDate(f.format(t.getCompletedDate()));
+//				lists.add(t);
+			}
+		}
 		
 		c.convert(lists);
 		

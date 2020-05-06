@@ -14,10 +14,11 @@
 		<result column="pro_public" property="proPublic" />
 		<result column="template_no" property="templateNo" />
 		<result column="pro_no" property="proNo" />
+		<collection property="projectMembers" column="project_no" resultMap="projectMemberMap" />
 	</resultMap>
 	
 	<resultMap type="ProjectMember" id="projectMemberMap">
-		<result column="project_no" property="projectNo"/>
+		<id column="project_no" property="projectNo"/>
 		<result column="email" property="email"/>
 	</resultMap>
 	
@@ -35,17 +36,10 @@
 		</selectKey>
 	</insert>
 	
-<!--    	<insert id="insertProjectMember" parameterType="java.util.List">
-		INSERT INTO project_member(project_no, email) VALUES
-		<foreach collection="list" item="projectMember" index="index" separator=",">
-			(#{projectMember.projectNo}, #{projectMember.email})
-			 
-		</foreach>
-	</insert> -->
-<!-- 	<insert id="insertProjectMember" parameterType="java.util.List">
+ 	<insert id="insertProjectMember" parameterType="projectMember">
 		INSERT INTO project_member(project_no, email) 
-		VALUES (#{projectMember.projectNo}, #{projectMember.email})
-	</insert> -->
+		VALUES (#{projectNo}, #{email})
+	</insert>
 	
 	<select id="selectProject" resultMap="projectMap" parameterType="hashmap" >
 		<![CDATA[
@@ -98,9 +92,23 @@
 	</select>
 	
 	<select id="selectDetail" parameterType="int" resultMap="projectMap">
-		SELECT * FROM project
-		WHERE project_no = #{projectNo}	
+<!-- 	<![CDATA[
+	SELECT *, IFNULL(MAX(pm.email), '추가된 프로젝트  멤버가 없습니다.') AS email
+	FROM project p
+	LEFT OUTER JOIN project_member pm
+	ON p.project_no = pm.project_no 
+	WHERE pm.project_no =  #{projectNo };
+	]]> -->
+	<![CDATA[
+	SELECT *
+	FROM project p
+	INNER JOIN project_member pm
+	ON p.project_no = pm.project_no 
+	WHERE p.project_no = #{projectNo}
+	]]>
 	</select>
+	
+	
 
 	<select id="selectLoginuserProjectMember" parameterType="hashmap" resultMap="projectMap">
 	<![CDATA[
@@ -111,17 +119,13 @@
 	WHERE deleted = '0' AND p.workspace_no = #{workspaceNo}
 	ORDER BY p.project_no DESC
 	]]>
+	
+
 	</select>
-	
-	<insert id="insertProjectMember">
-		INSERT INTO project_member (project_no, email)
-		VALUES ( #{projectNo}, #{email} )
-	</insert>
-	
 	
 	<select id="selectMemberByProjectNo" parameterType="int" resultMap="projectMemberMap">
 		SELECT * FROM project_member
-		WHERE project_no = #{ projectNo }
+		WHERE project_no = #{ projectNo}
 	</select>
 	
 <!-- 	<select id="selectProjectMember" parameterType="hashmap" resultMap="feedbackMap">
