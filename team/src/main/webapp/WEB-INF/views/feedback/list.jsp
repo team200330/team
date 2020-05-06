@@ -549,6 +549,8 @@
 					data : {"feedbackNo" : data.split("feedbackNo=")[1].split(",")[0]},
 					success : function(resp, status, xhr) {
 						toastr.info("피드백 &nbsp;&nbsp; " + textSubString($("#detail-modal-content").text()) + " 을 확인했습니다");
+						// 읽음처리 한후 탑바 업데이트
+						$("#topbar-notifications").load("/team/feedback/getNotifications");
 					},
 					error : function(xhr, status, err) { console.log(err); }
 				});

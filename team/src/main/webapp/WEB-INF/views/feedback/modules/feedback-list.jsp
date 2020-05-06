@@ -21,20 +21,15 @@
 						<div style="display:flex;max-height:70px;">
 							<div class="user-block" data-value="${feedback.sender}"style="width:auto">
 							
-							
-							
-								<!-- 여기 수정 !!!!!! 로그인유저가 아니라 sender 정보가져와서 프사 -->
 								<c:choose>
-									<c:when test="${not empty loginuser.img}">
-										<img class="img-circle img-bordered-sm" src="/team/resources/img/profile/${loginuser.img}">
+									<c:when test="${not empty feedback.feedbackSender.img}">
+										<img class="img-circle img-bordered-sm" src="/team/resources/img/profile/${feedback.feedbackSender.img}">
 									</c:when>
 									<c:otherwise>
 										<img class="img-circle img-bordered-sm" src="/team/resources/img/profile-default.jpg">
 									</c:otherwise>
 								</c:choose>
-								
-								
-								
+				
 								<span class="username"> 
 									<a href="#">${feedback.sender}</a> 
 								</span> <span class="description">${feedback.writedate}</span>

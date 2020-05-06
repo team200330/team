@@ -15,7 +15,7 @@ public class Feedback {
 	private int taskNo;
 	private boolean opened;
 	
-	private Member m_sender;
+	private Member feedbackSender;
 	private Task task;
 	private List<FeedbackReceiver> receivers;
 	private List<Comments> comments;

@@ -5,6 +5,7 @@ import java.io.File;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -22,6 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.team.common.Util;
+import com.team.service.FeedbackService;
+import com.team.service.LogService;
 import com.team.service.MemberService;
 import com.team.service.WorkspaceService;
 import com.team.vo.Member;
@@ -38,6 +41,14 @@ public class AccountController {
 	@Autowired
 	@Qualifier("workspaceService")
 	private WorkspaceService workspaceService;
+	
+	@Autowired
+	@Qualifier("feedbackService")
+	private FeedbackService feedbackService;
+	
+	@Autowired
+	@Qualifier("logService")
+	private LogService logService;
 	
 	//회원가입 페이지 이동
 	@GetMapping(path = {"/register.action"})
@@ -77,6 +88,20 @@ public class AccountController {
 			
 			List<Workspace> workspaces = workspaceService.selectWorkspacesByEmail(member2.getEmail());
 			session.setAttribute("workspaces",workspaces);
+			
+			
+			// 로그인시 읽지않은 피드백개수 가져오기 (탑바)
+			HashMap<String, Object> params = new HashMap<>();
+			params.put("email", member2.getEmail());
+			params.put("workspaceNo", 15); // 15 == 임시 워크스페이스 번호
+			session.setAttribute("feedbackCount", feedbackService.uncheckedFeedbackCount(params));
+			session.setAttribute("latestFeedbackDate", feedbackService.findLatestWritedate(params));
+			
+			// 로그인시 읽지않은 로그개수 가져오기 (탑바)
+			params.put("projectNo", 1); // 1 == 임시 프로젝트 번호
+			session.setAttribute("logCount", logService.uncheckedLogCount(params));
+			session.setAttribute("latestLogDate", logService.findLatestWriteDate(params));
+			
 			
 			return "redirect:/";
 		}

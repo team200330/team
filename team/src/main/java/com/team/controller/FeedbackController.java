@@ -62,8 +62,7 @@ public class FeedbackController {
 
 	@GetMapping("/list")
 	public String feedbackList(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
-		
+
 		// 처음 들어올때 워크스페이스 멤버랑 업무들 가져오기
 		if ( workspaceMembers == null ) workspaceMembers = feedbackService.findWorkspaceMembers(workspaceNo);
 		model.addAttribute("workspaceMembers", workspaceMembers);
@@ -142,6 +141,12 @@ public class FeedbackController {
 		params.put("email", ((Member) session.getAttribute("loginuser")).getEmail());
 		
 		feedbackService.checkFeedback(params);
+		
+		// 읽음처리 한다음에 탑바 읽지않은 피드백 개수 업데이트
+		params.put("workspaceNo", workspaceNo);
+		session.setAttribute("feedbackCount", feedbackService.uncheckedFeedbackCount(params));
+		// 최신 피드백날짜 업데이트
+		session.setAttribute("latestFeedbackDate", feedbackService.findLatestWritedate(params));
 		
 		return "success";
 	}

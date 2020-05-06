@@ -82,6 +82,12 @@ public class LogController {
 		params.put("receiver", ((Member)session.getAttribute("loginuser")).getEmail() );
 		
 		logService.logCheckByReceiver(params);
+		
+		// 로그 읽었을때 탑바 안읽은로그 개수 업데이트
+		params.put("projectNo", projectNo);
+		session.setAttribute("logCount", logService.uncheckedLogCount(params));
+		session.setAttribute("latestLogDate", logService.findLatestWriteDate(params));
+		
 		return "success";
 	}
 	

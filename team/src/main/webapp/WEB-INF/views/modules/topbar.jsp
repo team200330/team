@@ -106,7 +106,9 @@
       
       <!-- Notifications Dropdown Menu -->
       <c:if test="${ not empty loginuser }">
+      <div id="topbar-notifications">
       	<jsp:include page="/WEB-INF/views/modules/topbar-notifications.jsp"/>
+      </div>
       </c:if>
 
 

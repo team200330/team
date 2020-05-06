@@ -12,12 +12,12 @@
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <span class="dropdown-item dropdown-header">15 Notifications</span>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
+          <a href="#" class="dropdown-item notice-text">
             <i class="fas fa-envelope mr-2" style="margin-right:4px"></i> 4 new messages
             <span class="float-right text-muted text-sm">3 mins</span>
           </a>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
+          <a href="/team/feedback/list" class="dropdown-item notice-text">
             <i class="fas fa-users mr-2"></i> 
             	<c:choose>
             		<c:when test="${feedbackCount > 0}">
@@ -33,9 +33,19 @@
             
           </a>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-file mr-2"></i> 3 new task logs
-            <span class="float-right text-muted text-sm">2 days</span>
+          <a href="/team/log/list" class="dropdown-item notice-text">
+            <i class="fas fa-file mr-2"></i>
+           		<c:choose>
+            		<c:when test="${logCount > 0}">
+            			${logCount} 개의 새로운 활동 로그
+            			<span class="float-right text-muted text-sm">
+            				<fmt:formatDate value="${latestLogDate}" pattern="dd일 HH:mm"/>
+            			</span>
+            		</c:when>
+            		<c:otherwise>
+            			활동 로그를 모두 확인했습니다
+            		</c:otherwise>
+            	</c:choose>
           </a>
           <div class="dropdown-divider"></div>
           <a href="/team/feedback/list" class="dropdown-item dropdown-footer">See All Notifications</a>

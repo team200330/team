@@ -9,8 +9,6 @@ public class LogReceiver {
 	private boolean checked;
 	private boolean deleted;
 	
-	private Member member;
-	
 	public LogReceiver(int logNo, String receiver) {
 		this.logNo = logNo;
 		this.receiver = receiver;
