@@ -24,31 +24,31 @@ public class AccountController {
 	private MemberService memberService;
 	
 	//회원가입 페이지 이동
-	@GetMapping(path = {"/register.action"})
+	@GetMapping("/register")
 	public String toRegister() {
 		
 		return "account/register";
 	}
 	
 	//회원가입
-	@PostMapping(path = {"/register.action"})
+	@PostMapping("/register")
 	public String register(Member member, RedirectAttributes attr) {
 		
 		memberService.registerMember(member);
 		System.out.println(member.toString());
 		attr.addFlashAttribute("newEmail", member.getEmail());
 		
-		return "redirect:login.action";
+		return "account/login";
 	}
 	
 	//로그인 페이지 이동
-	@GetMapping(path = {"/login.action"})
+	@GetMapping("/login")
 	public String toLogin() {
 		return "account/login";
 	}
 	
 	//로그인
-	@PostMapping(path = {"login.action"})
+	@PostMapping("/login")
 	public String login(Member member, HttpSession session) {
 	
 		Member member2 = memberService.findMemberByEmailAndPassword(member);
@@ -56,12 +56,12 @@ public class AccountController {
 			return "redirect:/account/login.action";
 		}else {
 			session.setAttribute("loginuser", member2);
-			return "redirect:/";
+			return "account/login";
 		}
 	}
 	
 	//이메일 중복체크
-	@GetMapping("/checkEmail.action")
+	@GetMapping("/checkEmail")
 	@ResponseBody
 	public String checkEmail(String email) {
 		Member member = memberService.findMemberByEmail(email);
@@ -70,7 +70,7 @@ public class AccountController {
 	}
 	
 	//로그아웃 
-	@GetMapping(path = {"/logout.action"})
+	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		
 		session.removeAttribute("loginuser");

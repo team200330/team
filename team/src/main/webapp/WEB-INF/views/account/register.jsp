@@ -29,7 +29,7 @@
     <div class="card-body register-card-body">
       <p class="login-box-msg">Register a new membership</p>
 
-      <form id="register-form" action="register.action" method="post">
+      <form id="register-form" action="/team/account/register" method="post">
         <div class="input-group mb-3">
           <input type="text" class="form-control" id="name" name="name" placeholder="Full name">
           <div class="input-group-append">
@@ -71,7 +71,7 @@
         </div>
         
         <div class="input-group mb-3">
-          <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone : ex)000-0000-0000">
+          <input type="text" class="form-control" id="phone" name="phone" placeholder="'-'없이 숫자만 입력">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-phone-alt"></span>
@@ -140,7 +140,7 @@
       </form>
 
 
-      <a href="login.action" class="text-center">I already have a membership</a>
+      <a href="/team/account/login" class="text-center">I already have a membership</a>
     </div>
     <!-- /.form-box -->
   </div><!-- /.card -->
@@ -226,7 +226,7 @@
 		$("#email-check").on("click", function(event) {
 			
 			$.ajax({
-				"url" : "checkEmail.action",
+				"url" : "/checkEmail",
 				"method" : "get",
 				"data" : { "email" : $("#email").val() },
 				"success" : function(result, status, xhr) {

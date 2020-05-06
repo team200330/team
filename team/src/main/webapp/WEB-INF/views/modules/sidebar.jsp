@@ -19,12 +19,12 @@
         <div class="info">
 			<c:choose>
 			<c:when test="${ empty sessionScope.loginuser }">
-				<li><a href="/team/account/login.action">로그인</a></li>
-				<li><a href="/team/account/register.action">회원가입</a></li>
+				<li><a href="/team/account/login">로그인</a></li>
+				<li><a href="/team/account/register">회원가입</a></li>
 			</c:when>
 			<c:otherwise>
 				<li style="color:white">${ loginuser.name }님 환영합니다</li>
-				<li><a href="/team/account/logout.action">로그아웃</a></li>
+				<li><a href="/team/account/logout">로그아웃</a></li>
 			</c:otherwise>
 			</c:choose>
         </div>
@@ -73,7 +73,7 @@
           
           <li class="nav-item">
             <a href="/team/workspace/workspace-member?workspaceNo=3" class="nav-link">
-              <i class="nav-icon fas fa-users""></i>
+              <i class="nav-icon fas fa-users"></i>
               <p>
                         워크스페이스 멤버
                 <!-- <span class="right badge badge-danger">New</span> -->
@@ -142,6 +142,13 @@
                 </a>
               </li>
             </ul>
+          </li>
+          
+          <li class="nav-item">
+            <a href="/team/chatting/chat" class="nav-link">
+              <i class="nav-icon fas fa-comment"></i>
+              <p>채팅</p>
+            </a>
           </li>
 
         </ul>
