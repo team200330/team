@@ -89,9 +89,7 @@ input::placeholder {
 				<jsp:include page="modules/task-list.jsp"></jsp:include>
 			</div>
 			
-			<div id="task-properties" class="menu-component">
-				<jsp:include page="modules/task-properties.jsp"></jsp:include>
-			</div>
+			
 			
 			<!-- /.card -->
 		</div>

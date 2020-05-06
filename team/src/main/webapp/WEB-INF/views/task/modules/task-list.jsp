@@ -171,6 +171,9 @@
 				</div>
 			</div>
 		</div>
+		<div id="task-properties" class="menu-component">
+			<jsp:include page="task-properties.jsp"></jsp:include>
+		</div>
 		<!-- 
 		<div>
 			<jsp:include page="task-properties.jsp"></jsp:include>
