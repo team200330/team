@@ -27,8 +27,8 @@
 		<div class="content-wrapper" style="background-color:#ececec">
 			<!-- Content Header (Page header) -->
 			<div style="height: 50px; text-align: center; padding-top: 20px;">
-				<a id="active" class="f_link" href="/team/workspace/workspace-member">멤버</a>&nbsp;&nbsp; <a class="f_link"
-					href="/team/account/mypage">내 프로필</a>
+				<a id="active" class="f_link" href="/team/workspace/workspace-member">멤버</a>&nbsp;&nbsp;
+				<a class="f_link" href="/team/account/mypage">내 프로필</a>
 			</div>
 
 			<hr />
@@ -79,7 +79,7 @@
                         </select>
                   </div>
                   <div class="form-group col-12 col-sm-6 col-md-3">
-                    <a href="invite-workspace?workspaceNo=3" class="form-control btn btn-sm btn-success">
+                    <a href="invite-workspace?workspaceNo=${ workspace.workspaceNo }" class="form-control btn btn-sm btn-success">
                       <i class="fas fa-user" style="margin-top: 7px;"></i> 멤버 초대하기
                     </a>
                   </div>
@@ -112,13 +112,16 @@
                 </div>
                 <div class="card-footer">                
                   <div class="text-right">
-                                      
+                  
+                    <c:if test="${ workspacemember ne null }">
                     <a href="#" class="btn btn-sm bg-danger" data-toggle="dropdown" style="padding-top: 7px; height: 30px;">
                     <i class="fas fa-trash-alt"></i>
                     	<div class="dropdown-menu">
                             <button class="dropdown-item" >워크스페이스에서 삭제</button>
                         </div>
                     </a>
+                    </c:if>
+                    
                     <a href="#" class="btn btn-sm bg-teal">
                       <i class="fas fa-comments"></i> 대화
                     </a>
@@ -143,11 +146,17 @@
                 <div class="card-body pt-0">
                   <div class="row">
                     <div class="col-7">
-                      <h2 class="lead"><b>${ member.name }</b><a data-toggle="dropdown" href="#"><i class="fas fa-cog ml-3" style="font-size: 18px; color: darkgray;"></i>
-                      <div class="dropdown-menu">
-                            <button class="dropdown-item" onclick="location.href='/team/changeworkspacemembertype?workspaceNo=3&email=${ member.email }&'">관리자 권한부여</button>
-                        </div>
-                      </a></h2>
+                      <h2 class="lead">
+                      	<b>${ member.name }</b>
+                      	<c:if test="${ workspacemember ne null }">
+                      		<a data-toggle="dropdown" href="#">
+                      		<i class="fas fa-cog ml-3" style="font-size: 18px; color: darkgray;"></i>
+                      		<div class="dropdown-menu">
+                        	<button class="dropdown-item" id="changeworkspacemembertype" onclick="location.href='/team/workspace/changeworkspacemembertype?email=${ member.email }&workspaceNo=${ workspaceNo }'">관리자 권한부여</button>
+                        	</div>
+                       	</c:if>                        
+                      		</a>
+                      </h2>
                       <p class="text-muted text-sm"><b>부서 : </b>${ member.department }</p>
                       <ul class="mb-0 text-muted" style="list-style-type: none; padding:0;">
                       	<li class="small">연락처 : ${ member.phone }</li>
@@ -162,13 +171,14 @@
                 </div>
                 <div class="card-footer">                
                   <div class="text-right">
-                                      
-                    <a href="#" class="btn btn-sm bg-danger" data-toggle="dropdown" style="padding-top: 7px; height: 30px;">
-                    <i class="fas fa-trash-alt"></i>
+                    	<c:if test="${ workspacemember ne null }">
+                    	<a href="#" class="btn btn-sm bg-danger" data-toggle="dropdown" style="padding-top: 7px; height: 30px;">
+                    	<i class="fas fa-trash-alt"></i>
                     	<div class="dropdown-menu">
-                            <button class="dropdown-item" onclick="location.href='/team/deleteworkspacemember?workspaceNo=3&email=${ member.email }'">워크스페이스에서 삭제</button>
+                            <button class="dropdown-item" id="deleteworkspacemember" onclick="location.href='/team/workspace/deleteworkspacemember?email=${ member.email }&workspaceNo=${ workspaceNo }'">워크스페이스에서 삭제</button>
                         </div>
-                    </a>
+                        </c:if>
+                    	</a>
                     <a href="#" class="btn btn-sm bg-teal">
                       <i class="fas fa-comments"></i> 대화
                     </a>
@@ -223,3 +233,27 @@
 </body>
 
 </html>
+
+<script type="text/javascript">
+			window.addEventListener('load', function(event) {
+			var changeworkspacemembertype = document.querySelector('#changeworkspacemembertype');
+			changeworkspacemembertype.addEventListener('click', function(event) {
+				if (current_workspace_no) {
+					location.href = "/team/workspace/changeworkspacemembertype?email=${ member.email }&workspaceNo=${ workspaceNo }";
+				} else {
+					event.preventDefault();
+					alert('선택된 워크스페이스가 없습니다.');
+				}
+			});
+			
+			var deleteworkspacemember = document.querySelector('#deleteworkspacemember');
+			deleteworkspacemember.addEventListener('click', function(event) {
+				if (current_workspace_no) {
+					location.href = "/team/workspace/deleteworkspacemember?email=${ member.email }&workspaceNo=${ workspaceNo }";
+				} else {
+					event.preventDefault();
+					alert('선택된 워크스페이스가 없습니다.');
+				}
+			});
+		});
+</script>

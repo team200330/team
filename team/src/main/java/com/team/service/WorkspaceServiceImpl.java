@@ -103,5 +103,26 @@ public class WorkspaceServiceImpl implements WorkspaceService {
 	public List<Workspace> selectWorkspacesByEmail(String email) {
 		return workspaceMapper.selectWorkspacesByEmail(email);
 	}
-	
+
+	@Override
+	public void changeWorkspaceMemberType(WorkspaceMember workspaceMember) {
+		workspaceMapper.changeWorkspaceMemberType(workspaceMember);
+	}
+
+	@Override
+	public WorkspaceMember selectWorkspaceMemberTypeByWorkspaceMember(WorkspaceMember workspaceMember) {
+		return workspaceMapper.selectWorkspaceMemberTypeByWorkspaceMember(workspaceMember);
+	}
+
+	@Override
+	public void changeLoginuserType(WorkspaceMember workspaceMember) {
+		workspaceMapper.changeLoginuserType(workspaceMember);
+		
+	}
+
+	@Override
+	public void deleteWorkspaceMemberType(WorkspaceMember workspaceMember) {
+		workspaceMapper.deleteWorkspaceMemberType(workspaceMember);		
+	}
+
 }

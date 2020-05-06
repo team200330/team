@@ -43,10 +43,9 @@
 		INNER JOIN member m
 		ON wm.email = m.email		
 		INNER JOIN workspace w
-		ON wm.workspace_no = #{ workspaceNo } 
-		WHERE wm.email
-		AND type_no = 2	
-		LIMIT 5;
+		ON wm.workspace_no = w.workspace_no
+		WHERE w.workspace_no = #{ workspaceNo } 
+		AND wm.type_no = 2	
 	</select>
 		
 	<resultMap type="Member" id="memberMap">
@@ -94,10 +93,9 @@
 		INNER JOIN member m
 		ON wm.email = m.email		
 		INNER JOIN workspace w
-		ON wm.workspace_no = #{ workspaceNo } 
-		WHERE wm.email
-		AND type_no = 1
-		LIMIT 1;
+		ON wm.workspace_no = w.workspace_no
+		WHERE w.workspace_no = #{ workspaceNo } 
+		AND wm.type_no = 1	
 	</select>
 	
 	<select id="WorkspaceMemberNameAndDepartmentSearch" parameterType="com.team.vo.Member" resultMap="memberMap">
@@ -148,5 +146,33 @@
 		on w.workspace_no = wm.workspace_no
 		where wm.email = #{ email }
 	</select>
-		
+	
+	<select id="selectWorkspaceMemberTypeByWorkspaceMember" parameterType="com.team.vo.WorkspaceMember" resultType="com.team.vo.WorkspaceMember">
+		select w.workspace_no, w.workspace_name, w.deleted, w.code, wm.email, wm.type_no
+		from workspace w
+		inner join workspace_member wm
+		on w.workspace_no = wm.workspace_no
+		where wm.email = #{ email } and wm.workspace_no = #{ workspaceNo } and wm.type_no = 1	
+	</select>
+	
+	<update id="changeLoginuserType" parameterType="com.team.vo.WorkspaceMember">
+		UPDATE workspace_member
+		SET type_no = '2'
+		WHERE workspace_no = #{ workspaceNo } 
+		AND email = #{ email }
+	</update>
+	
+	<update id="changeWorkspaceMemberType" parameterType="com.team.vo.WorkspaceMember">
+		UPDATE workspace_member
+		SET type_no = '1'
+		WHERE workspace_no = #{ workspaceNo } 
+		AND email = #{ email }
+	</update>
+	
+	<delete id="deleteWorkspaceMemberType" parameterType="com.team.vo.WorkspaceMember">
+		DELETE FROM workspace_member
+		WHERE workspace_no = #{ workspaceNo } 
+		AND email = #{ email }
+	</delete>
+	
 </mapper>
