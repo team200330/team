@@ -39,6 +39,17 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.selectMemberByEmail(email);
 	}
 
+	@Override
+	public void updatePassword(Member member) {
+		member.setPassword(Util.getHashedString(member.getPassword(), "SHA-256"));
+		memberMapper.updatePassword(member);
+	}
+
+	@Override
+	public void updateImg(Member member) {
+		memberMapper.updateImg(member);
+	}
+
 	
 
 }
