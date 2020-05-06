@@ -10,6 +10,7 @@ public class Task {
 	private int taskNo;
 	private int listNo;
 	private String content;
+	private Date createDate;
 	private Date startDate;
 	private Date endDate;
 	private Date completedDate;
