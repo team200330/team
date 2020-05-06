@@ -114,7 +114,7 @@
 
 		<!-- WorkspaceList Dropdown Menu -->
 		<c:if test="${ not empty loginuser }">
-			<li class="nav-item dropdown">
+			<li class="nav-item dropdown" id="workspace_list_li">
 			
 				<a class="nav-link" data-toggle="dropdown" href="#"> 
 					<i class="far fa-bell"></i>
@@ -122,8 +122,8 @@
 				</a>
 				
 				<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-					<c:if test="${ not empty workspaces }">
-					<span class="dropdown-item dropdown-header">15 Notifications</span>
+					<c:if test="${ not empty sessionScope.workspaces }">
+					<span class="dropdown-item dropdown-header">워크스페이스 목록</span>
 					<div class="dropdown-divider"></div>
 					<c:forEach var="workspace" items="${ workspaces }">
 					<a href="#" class="dropdown-item workspace_in_dropdown" data-workspaceNo="${ workspace.workspaceNo }">
@@ -132,7 +132,11 @@
 					<div class="dropdown-divider"></div>
 					</c:forEach>
 					</c:if>
-					<a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+					<c:if test="${ empty workspaces }">
+					<span class="dropdown-item dropdown-header">워크스페이스 목록</span>
+					<div class="dropdown-divider">워크스페이스 없음</div>					
+					</c:if>
+					<a href="#" class="dropdown-item dropdown-footer">워크스페이스 등록</a>
 				</div>
 			</li>
 		</c:if>
@@ -170,5 +174,16 @@
             current_workspace_no = item.attributes[2].value;
         });
     }
+
+	/* var workspace_list_li = document.querySelector('#workspace_list_li > a');
+	workspace_list_li.addEventListener('click', function(event) {
+		if (current_workspace_no) {
+			location.href = "/team/workspace/workspace-member?email=${ loginuser.email }&workspaceNo=" + current_workspace_no;
+		} else {
+			event.preventDefault();
+			alert('선택된 워크스페이스가 없습니다.');
+		}
+	}); */
 		
+	
 </script>

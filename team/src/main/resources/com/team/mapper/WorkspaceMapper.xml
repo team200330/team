@@ -38,13 +38,13 @@
 		AND ( type_no = 1 OR type_no = 2 );
 	</select>
 	
-	<select id="selectMembersByWorkspaceNo" parameterType="com.team.vo.WorkspaceMember" resultType="com.team.vo.Member">
+	<select id="selectMembersByWorkspaceNo" parameterType="com.team.vo.WorkspaceMember" resultMap="memberMap">
 		SELECT * FROM workspace_member wm
 		INNER JOIN member m
 		ON wm.email = m.email		
 		INNER JOIN workspace w
-		ON wm.workspace_no = w.workspace_no
-		WHERE wm.email = #{ email } 
+		ON wm.workspace_no = #{ workspaceNo } 
+		WHERE wm.email
 		AND type_no = 2	
 		LIMIT 5;
 	</select>
@@ -89,13 +89,13 @@
 		WHERE workspace_no = #{ workspaceNo } 
 	</select>
 	
-	<select id="selectMemberTypeNo1ByWorkspaceNo" parameterType="com.team.vo.WorkspaceMember" resultType="com.team.vo.Member">
+	<select id="selectMemberTypeNo1ByWorkspaceNo" parameterType="com.team.vo.WorkspaceMember" resultMap="memberMap">
 		SELECT * FROM workspace_member wm
 		INNER JOIN member m
 		ON wm.email = m.email		
 		INNER JOIN workspace w
-		ON wm.workspace_no = w.workspace_no
-		WHERE wm.email = #{ email } 
+		ON wm.workspace_no = #{ workspaceNo } 
+		WHERE wm.email
 		AND type_no = 1
 		LIMIT 1;
 	</select>

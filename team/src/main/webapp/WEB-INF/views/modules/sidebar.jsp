@@ -84,7 +84,7 @@
 				var workspace_member_link = document.querySelector('#workspace_member_li > a');
 				workspace_member_link.addEventListener('click', function(event) {
 					if (current_workspace_no) {
-						location.href = "/team/workspace/workspace-member?workspaceNo=" + current_workspace_no;
+						location.href = "/team/workspace/workspace-member?email=${ loginuser.email }&workspaceNo=" + current_workspace_no;
 					} else {
 						event.preventDefault();
 						alert('선택된 워크스페이스가 없습니다.');

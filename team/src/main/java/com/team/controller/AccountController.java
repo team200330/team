@@ -1,5 +1,7 @@
 package com.team.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.team.service.MemberService;
+import com.team.service.WorkspaceService;
 import com.team.vo.Member;
+import com.team.vo.Workspace;
 
 @Controller
 @RequestMapping(path = {"/account/"})
@@ -22,6 +26,10 @@ public class AccountController {
 	@Autowired
 	@Qualifier("memberService")
 	private MemberService memberService;
+	
+	@Autowired
+	@Qualifier("workspaceService")
+	private WorkspaceService workspaceService;
 	
 	//회원가입 페이지 이동
 	@GetMapping(path = {"/register.action"})
@@ -58,6 +66,10 @@ public class AccountController {
 		}else {
 			session.setAttribute("loginuser", member2);
 			model.addAttribute("member", member2);
+			
+			List<Workspace> workspaces = workspaceService.selectWorkspacesByEmail(member2.getEmail());
+			session.setAttribute("workspaces",workspaces);
+			
 			return "redirect:/";
 		}
 	}
