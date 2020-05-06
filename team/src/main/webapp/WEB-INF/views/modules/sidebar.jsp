@@ -51,6 +51,20 @@
                 <a href="/team/workspace/workspace-member?email=${ loginuser.email }" class="nav-link">
                   
                   <p>워크스페이스 멤버</p>
+                  <script type="text/javascript">
+					window.addEventListener('load', function(event) {
+						var workspace_member_link = document.querySelector('#workspace_member_li > a');
+						workspace_member_link.addEventListener('click', function(event) {
+							if (current_workspace_no) {
+								location.href = "/team/workspace/workspace-member?email=${ loginuser.email }&workspaceNo=" + current_workspace_no;
+							} else {
+								event.preventDefault();
+								alert('선택된 워크스페이스가 없습니다.');
+							}
+						});
+						
+					});
+            		</script>
                 </a>
               </li>
               <li class="nav-item">
@@ -61,7 +75,6 @@
               </li>
             </ul>
           </li>
-          
           
           <li class="nav-item">
             <a href="/team/project/prlist" class="nav-link">
