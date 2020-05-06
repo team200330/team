@@ -28,7 +28,7 @@
 			<!-- Content Header (Page header) -->
 			<div style="height: 50px; text-align: center; padding-top: 20px;">
 				<a id="active" class="f_link" href="/team/workspace/workspace-member">멤버</a>&nbsp;&nbsp; <a class="f_link"
-					href="#">내 프로필</a>
+					href="/team/account/mypage">내 프로필</a>
 			</div>
 
 			<hr />

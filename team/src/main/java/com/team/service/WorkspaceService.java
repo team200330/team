@@ -34,5 +34,8 @@ public interface WorkspaceService {
 	List<Workspace> selectWorkspacesByWorkspaceNo(int workspaceNo);
 
 	List<Workspace> selectWorkspaceNameByEmail(String email);
+	
+	List<Workspace> selectWorkspacesByEmail(String email);
+	
 
 }

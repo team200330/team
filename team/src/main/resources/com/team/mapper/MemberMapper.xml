@@ -19,6 +19,15 @@
 		SELECT * FROM member WHERE email = #{ email }
 	</select>
 	
+	<update id="updatePassword" parameterType="Member">
+		UPDATE member SET password = #{ password }
+		WHERE email = #{ email }
+	</update>
+	
+	<update id="updateImg" parameterType="Member">
+		UPDATE member SET img = #{ img }
+		WHERE email = #{ email }
+	</update>
 	
 	
 	<resultMap type="Member" id="memberMap">

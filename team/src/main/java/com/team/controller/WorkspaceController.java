@@ -1,6 +1,10 @@
 package com.team.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
+
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -31,7 +35,7 @@ public class WorkspaceController {
 	}
 	
 	@PostMapping(path = { "/create-workspace" })
-	public String docreateworkspace(Workspace workspace, WorkspaceMember workspaceMember) {
+	public String docreateworkspace(Workspace workspace, WorkspaceMember workspaceMember, HttpSession session) {
 		
 		int code = (int)(Math.random()*1000+1);		
 		workspace.setCode(String.valueOf(code));
@@ -44,6 +48,9 @@ public class WorkspaceController {
 		
 		workspaceService.insertWorkspaceMember(workspaceMember);
 		//코드와 워크스페이스 네임을 중복되지않게 작업 해야한다.
+		
+		List<Workspace> workspaces = workspaceService.selectWorkspacesByEmail(workspaceMember.getEmail());
+		session.setAttribute("workspaces",workspaces);
 		
 		return "redirect:/";
 	}
@@ -66,20 +73,37 @@ public class WorkspaceController {
 	}
 	
 	@PostMapping(path = { "/setting-workspace" })
-	public String Dosettingworkspace(Workspace workspace) {
+	public String Dosettingworkspace(Workspace workspace, HttpSession session) {
 		workspaceService.updateWorkspaceName(workspace);
-	return "workspace/setting-workspace"; 
+		List<Workspace> workspaces = (List<Workspace>)session.getAttribute("workspaces");
+		if (workspaces != null && workspaces.size() > 0) {
+			for (Workspace ws: workspaces) {
+				if (ws.getWorkspaceNo() == workspace.getWorkspaceNo()) {
+					ws.setWorkspaceName(workspace.getWorkspaceName());
+				}
+			}
+		}
+		return "workspace/setting-workspace"; 
 	}
 	
 	@PostMapping(path = { "/delete-workspace" })
-	public String Dodeleteworkspace(Workspace workspace) {
+	public String Dodeleteworkspace(Workspace workspace, HttpSession session) {
 		workspaceService.deleteWorkspace(workspace);
+		List<Workspace> workspaces = (List<Workspace>)session.getAttribute("workspaces");
+		if (workspaces != null && workspaces.size() > 0) {
+			for (int idx = workspaces.size() - 1; idx >= 0; idx--) {
+				Workspace ws = workspaces.get(idx);
+				if (ws.getWorkspaceNo() == workspace.getWorkspaceNo()) {
+					workspaces.remove(ws);
+				}
+			}
+		}
 	return "workspace/create-workspace"; //임시
 	}
 	
 	@GetMapping(path = { "/workspace-member" })
-	public String workspacemember(String email,WorkspaceMember workspaceMember,Model model) {
-		
+	public String workspacemember(WorkspaceMember workspaceMember,Model model) {
+		System.out.println(workspaceMember.getWorkspaceNo());
 		List <Member> members = workspaceService.selectMembersByWorkspaceNo(workspaceMember);
 		model.addAttribute("members",members);
 		
@@ -101,11 +125,25 @@ public class WorkspaceController {
 	
 	
 	@GetMapping(path = { "/changeworkspacemembertype" })
-	public String changeworkspacemembertype(WorkspaceMember workspaceMember,Model model) {
+	public String changeworkspacemembertype(WorkspaceMember workspaceMember, HttpSession session, Model model) {
 		
 		//Member member = workspaceService.sd(workspaceMember);
 		//model.addAttribute("member",member);
 		
-	return "workspace/workspace-member"; 
+		List<Workspace> workspaces = (List<Workspace>)session.getAttribute("workspaces");
+		if (workspaces != null && workspaces.size() > 0) {
+			for (Workspace ws: workspaces) {
+				if (ws.getWorkspaceNo() == workspaceMember.getWorkspaceNo()) {
+					List<WorkspaceMember> members = ws.getWorkspaceMembers();
+					for (WorkspaceMember member: members) {
+						if (member.getEmail().equals(workspaceMember.getEmail())) {
+							member.setTypeNo(workspaceMember.getTypeNo());
+						}
+					}
+				}
+			}
+		}
+		
+		return "workspace/workspace-member"; 
 	}
 }
