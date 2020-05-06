@@ -98,7 +98,13 @@
             <div class="card">
               <div class="card-body">              
                 <div class="row">
-                  <div class="col-md-12">                    
+                  <div class="col-md-12">   
+                    <div class="form-group">
+	                    <select class="form-control" id="input-select">
+	                  	  <option>번 업</option>
+	                  	  <option>번 다운</option>
+	                    </select>
+                    </div>
                     <div class="chart">
                       <!-- Sales Chart Canvas -->
                       <canvas id="salesChart" height="180" style="height: 180px;"></canvas>
@@ -109,17 +115,7 @@
                   </div>
                 </div>                                          
               </div>
-            </div>
-            
-            <div class="card">
-              <div class="card-body">
-                <div class="chart">
-                  <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                </div>
-              </div>
-            <!-- /.card -->
-            </div>
-            
+            </div> 
           </div>
           <!-- /.col -->
         </div>

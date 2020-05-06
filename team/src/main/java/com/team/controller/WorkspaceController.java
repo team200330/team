@@ -78,7 +78,7 @@ public class WorkspaceController {
 	}
 	
 	@GetMapping(path = { "/workspace-member" })
-	public String workspacemember(String email,WorkspaceMember workspaceMember,Model model) {
+	public String workspacemember(WorkspaceMember workspaceMember,Model model) {
 		
 		List <Member> members = workspaceService.selectMembersByWorkspaceNo(workspaceMember);
 		model.addAttribute("members",members);

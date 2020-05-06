@@ -108,52 +108,37 @@
       <c:if test="${ not empty loginuser }">
       	<jsp:include page="/WEB-INF/views/modules/topbar-notifications.jsp"/>
       </c:if>
-      
-      
-      
-      
-      <!-- WorkspaceList Dropdown Menu -->
-      <c:if test="${ not empty loginuser }">
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">${ workspace.workspaceName }</a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          
-          <div class="dropdown-divider"></div>
-          <a href="/team/workspace/setting-workspace?workspaceNo=${ workspace.workspaceNo }" class="dropdown-item">
-            <p class="text-sm">${ workspace.workspaceName }<br>워크스페이스 설정, 결제 그 외 더보기...</p>
-          </a>
-          <div class="dropdown-divider"></div>
-            <!-- Message Start -->
-            <div class="media dropdown-item">              
-              <div class="media-body">
-                <h3 class="dropdown-item-title" style="margin-bottom: 10px;">워크스페이스 변경</h3>
-                
-                <div class="input-group input-group-sm" style="margin-bottom: 10px;">                
-                	<input class="form-control form-control-navbar" type="search" placeholder="검색하기" aria-label="Search">
-                    <div class="input-group-append">
-                         <button class="btn btn-navbar" type="submit">
-                         <i class="fas fa-search"></i>
-                         </button>
-                    </div>                     
-                </div>
-              </div>                
-            </div> 
-  			  <c:forEach var="workspace" items="${ workspaces }">
-	              <div class="dropdown-divider"></div>          
-	          	  <a href="#" class="dropdown-item">
-	              <p class="text-sm">${ workspace.workspaceName }</p>
-	              </a>  
-              </c:forEach>
-              <div class="dropdown-divider"></div>
-            <!-- Message End -->
-                   
-          <a href="/team/workspace/create-workspace?email=${ loginuser.email }" class="dropdown-item dropdown-footer">새 워크스페이스 만들기</a>
-        </div>
-      </li>
-      </c:if>
-      <!-- WorkspaceList Dropdown Menu -->
-      
-      <!-- 필요한사람이 살리세요  -->
+
+
+
+
+		<!-- WorkspaceList Dropdown Menu -->
+		<c:if test="${ not empty loginuser }">
+			<li class="nav-item dropdown">
+			
+				<a class="nav-link" data-toggle="dropdown" href="#"> 
+					<i class="far fa-bell"></i>
+					<span class="badge badge-warning navbar-badge">w</span>
+				</a>
+				
+				<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+					<c:if test="${ not empty workspaces }">
+					<span class="dropdown-item dropdown-header">15 Notifications</span>
+					<div class="dropdown-divider"></div>
+					<c:forEach var="workspace" items="${ workspaces }">
+					<a href="#" class="dropdown-item workspace_in_dropdown" data-workspaceNo="${ workspace.workspaceNo }">
+						<span class="text-sm">${ workspace.workspaceName }</span>
+					</a>
+					<div class="dropdown-divider"></div>
+					</c:forEach>
+					</c:if>
+					<a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+				</div>
+			</li>
+		</c:if>
+		<!-- WorkspaceList Dropdown Menu -->
+
+		<!-- 필요한사람이 살리세요  -->
       <!-- 
       <li class="nav-item">
         <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
@@ -163,4 +148,27 @@
       -->
     </ul>
   </nav>
- 
+
+<script type="text/javascript">
+
+	/* console.log('say hello1');
+	var workspacename = document.querySelector("#workspacename");
+	
+	workspacename.addEventListener('click', function (event) {
+		console.log('say hello2');
+    }); */
+
+    var current_workspace_no = null;
+    var workspace_items = document.querySelectorAll(".workspace_in_dropdown")
+    for (var idx = 0; idx < workspace_items.length; idx++) {
+        workspace_items[idx].addEventListener('click', function(event) {
+            
+            event.preventDefault();
+
+            var item = event.target;
+            //alert(item.attributes[2].value);
+            current_workspace_no = item.attributes[2].value;
+        });
+    }
+		
+</script>

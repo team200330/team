@@ -68,6 +68,14 @@
 		<id column="workspace_no" property="workspaceNo" />
 		<result column="email" property="email" />
 		<result column="type_no" property="typeNo" />
+	</resultMap>
+	
+	<resultMap type="Workspace" id="workspaceMap">
+		<id column="workspace_no" property="workspaceNo" />
+		<result column="workspace_name" property="workspaceName" />
+		<result column="deleted" property="deleted" />
+		<result column="code" property="code" />
+		<collection property="workspaceMembers" column="workspace_no" resultMap="workspaceMemberMap" />
 	</resultMap> 
 		
 	<select id="selectWorkspaceByWorkspaceNo" parameterType="com.team.vo.WorkspaceMember" resultMap="workspaceMap">
@@ -103,13 +111,6 @@
 		OR m.department like concat('%',#{name},'%')
 	</select>
 	
-	<resultMap type="workspace" id="workspaceMap">
-		<id column="workspace_no" property="workspaceNo" />
-		<result column="workspace_name" property="workspaceName" />
-		<result column="deleted" property="deleted" />
-		<result column="code" property="code" />		
-	</resultMap> 	
-	
 	<update id="updateWorkspaceName" parameterType="com.team.vo.Workspace">
 		UPDATE workspace
 		SET workspace_name = #{ workspaceName } 
@@ -130,14 +131,22 @@
 	</select>
 	
 	
-	<select id="selectWorkspaceNameByEmail" parameterType="com.team.vo.Workspace" resultType="com.team.vo.Workspace">
+	<select id="selectWorkspaceNameByEmail" parameterType="String" resultType="com.team.vo.Workspace">
 		select workspace_name
 		from workspace
 		where workspace_no = any(
-		select workspace_no
-		from workspace_member
-		where email = #{ email } 
+			select workspace_no
+			from workspace_member
+			where email = #{ email } 
 		)
+	</select>
+	
+	<select id="selectWorkspacesByEmail" parameterType="String" resultMap="workspaceMap">
+		select w.workspace_no, w.workspace_name, w.deleted, w.code, wm.email, wm.type_no
+		from workspace w
+		inner join workspace_member wm
+		on w.workspace_no = wm.workspace_no
+		where wm.email = #{ email }
 	</select>
 		
 </mapper>

@@ -99,4 +99,9 @@ public class WorkspaceServiceImpl implements WorkspaceService {
 		return workspaceMapper.selectWorkspaceNameByEmail(email);
 	}
 	
+	@Override
+	public List<Workspace> selectWorkspacesByEmail(String email) {
+		return workspaceMapper.selectWorkspacesByEmail(email);
+	}
+	
 }

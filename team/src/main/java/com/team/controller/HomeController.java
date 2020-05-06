@@ -29,25 +29,28 @@ public class HomeController {
 			
 			//loginuser안에 멤버테이블에 있는 email을 꺼내온다.
 			
-			WorkspaceMember workspaceMember = workspaceService.selectWorkspaceByEmail(email);
+			//WorkspaceMember workspaceMember = workspaceService.selectWorkspaceByEmail(email);
 			
-			if (workspaceMember != null) {
+			//if (workspaceMember != null) {
 				
-				model.addAttribute("workspaceMember",workspaceMember);
+				//model.addAttribute("workspaceMember",workspaceMember);
 				
-				int workspaceNo = (int)workspaceMember.getWorkspaceNo();
+				//int workspaceNo = (int)workspaceMember.getWorkspaceNo();
 				//workspaceNo는 실제 테이블에 workspace_no이기 때문에
 				//resultmap에서 작업을 하거나 결과값으로 workspace_no workspaceNo를 작성한다.
 				
-				Workspace workspace = workspaceService.selectWorkspaceByWorkspaceNo(workspaceNo);
-				model.addAttribute("workspace",workspace);
+				//Workspace workspace = workspaceService.selectWorkspaceByWorkspaceNo(workspaceNo);
+				//model.addAttribute("workspace",workspace);
 				
 				//List <Workspace> workspaces = workspaceService.selectWorkspacesByWorkspaceNo(workspaceNo);
 				//model.addAttribute("workspaces",workspaces);
 				
-				List<Workspace> workspaces = workspaceService.selectWorkspaceNameByEmail(email);
+				//List<Workspace> workspaces = workspaceService.selectWorkspaceNameByEmail(email);
+				//model.addAttribute("workspaces",workspaces);
+			
+				List<Workspace> workspaces = workspaceService.selectWorkspacesByEmail(email);
 				model.addAttribute("workspaces",workspaces);
-			} 
+			//} 
 		}
 		
 		return "home";
