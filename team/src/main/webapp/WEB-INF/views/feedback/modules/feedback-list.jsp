@@ -20,14 +20,35 @@
 					<div class="post" data-value="${feedback}" id="post${feedback.feedbackNo}">
 						<div style="display:flex;max-height:70px;">
 							<div class="user-block" data-value="${feedback.sender}"style="width:auto">
-								<img class="img-circle img-bordered-sm" src="${not empty loginuser.img ? loginuser.img : '/team/resources/img/profile-default.jpg'}" alt="user image">
+							
+							
+							
+								<!-- 여기 수정 !!!!!! 로그인유저가 아니라 sender 정보가져와서 프사 -->
+								<c:choose>
+									<c:when test="${not empty loginuser.img}">
+										<img class="img-circle img-bordered-sm" src="/team/resources/img/profile/${loginuser.img}">
+									</c:when>
+									<c:otherwise>
+										<img class="img-circle img-bordered-sm" src="/team/resources/img/profile-default.jpg">
+									</c:otherwise>
+								</c:choose>
+								
+								
+								
 								<span class="username"> 
 									<a href="#">${feedback.sender}</a> 
 								</span> <span class="description">${feedback.writedate}</span>
 							</div>
 							<i style="padding:10px; padding-top:12px;"class="fas fa-chevron-right"></i>
 							<div class="user-block">
-								<img style="position:relative;z-index:2" class="img-circle img-bordered-sm" src="${not empty feedback.receivers.get(0).member.img? feedback.receivers.get(0).member.img : '/team/resources/img/profile-default.jpg'}" alt="user image">
+								<c:choose>
+									<c:when test="${not empty feedback.receivers.get(0).member.img}">
+										<img style="position:relative;z-index:2" class="img-circle img-bordered-sm" src="/team/resources/img/profile/${feedback.receivers.get(0).member.img}">
+									</c:when>
+									<c:otherwise>
+										<img style="position:relative;z-index:2" class="img-circle img-bordered-sm" src="/team/resources/img/profile-default.jpg">
+									</c:otherwise>
+								</c:choose>
 								<c:if test="${feedback.receivers.size() > 1}">
 									<div style="padding: 5px;padding-left: 10px;cursor:pointer" class="img-circle img-bordered-sm user-count-img">+ ${feedback.receivers.size() - 1}</div>
 								</c:if>

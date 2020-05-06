@@ -13,7 +13,7 @@
 
 <style>
 .task, ._mem {cursor : default}
-
+._mem_img {width: 43;height: 43;}
 
 .dropdown-item:active {background-color:white;}
 .modal-body-inner {margin:35px 50px 35px 50px;}
@@ -184,7 +184,14 @@
 	            	<c:forEach var="m" items="${ workspaceMembers }">
 	            		<c:if test="${ m.email != loginuser.email }">
 	            		<div class="_mem" data-email="${ m.email }" data-name="${ m.name }">
-		            		<img class="_mem_img img-circle img-bordered-sm" src="${ not empty m.img ? m.img : '/team/resources/img/profile-default.jpg' }" alt="user image">
+	            			<c:choose>
+								<c:when test="${not empty m.img}">
+									<img class="_mem_img img-circle img-bordered-sm" src="/team/resources/img/profile/${m.img}">
+								</c:when>
+								<c:otherwise>
+									<img class="_mem_img img-circle img-bordered-sm" src="/team/resources/img/profile-default.jpg">
+								</c:otherwise>
+							</c:choose>
 		            		<div class="_mem_name">${ m.email }<br/>${ m.name }</div>
 		            		<div class="_mem_icon _mem_icon_default" style="text-align:right" >
 		            			<i class="fas fa-check"></i>

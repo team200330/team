@@ -9,6 +9,7 @@
 <meta charset="utf-8">
 <title>활동 로그</title>
 <style>
+.log-table img {width:43; height:43}
 .card-header {color:#464c59}
 .log-table tr td:nth-child(1) {width:200px;}
 .log-table tr td:nth-child(2), tr td:nth-child(3) {padding-top:20px;}
