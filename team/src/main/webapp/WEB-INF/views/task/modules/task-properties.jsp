@@ -14,6 +14,7 @@
 				<span id="task-side-content" style="font-size:20px;">${ selectedTask.content }</span>	
 			</div>
 			<div>
+				<span style="font-size:12px;">#${ selectedTask.taskNo }</span>
 				<span style="font-size:12px;">작성자 ${ selectedTask.writer }</span>
 				<span style="font-size:12px;">작성일 <fmt:formatDate value="${ selectedTask.createDate }" pattern="yyyy년 MM월 dd일 HH:mm"/></span>	
 			</div>
@@ -28,7 +29,48 @@
 			</div>
 		</div>
 		<div id="task-menu-properties" style="background-color: #eef7f7; height: 100%;">
-			<div>
+			<div id="properties-item1" style="display: flex; padding: 30px;">
+				<div style="width:150px; text-align: left;">
+					<i class="far fa-calendar-alt"></i> 업무기간
+				</div>
+				<div>
+					<div>
+						<i class="far fa-plus-square"></i>
+					</div>
+					<div>
+					</div>
+				</div>
+			</div>
+			<div id="properties-item2" style="display: flex; padding: 30px;">
+				<div style="width:150px; text-align: left;">
+					<i class="fas fa-user-plus"></i> 배정된 멤버
+				</div>
+				<div>
+					<div>
+						<i class="far fa-plus-square"></i>
+					</div>
+					<div>
+					</div>
+				</div>
+			</div>
+			<div id="properties-item3" style="display: flex; padding: 30px;">
+				<div style="width:150px; text-align: left; display:flex;">
+					<div>
+						<i class="far fa-check-square"></i>
+					</div>
+					<div>
+						체크리스트
+					</div>
+				</div>
+				<div>
+					<div>
+						<i class="far fa-plus-square"></i>
+					</div>
+					<div>
+					</div>
+				</div>
+			</div>
+			<div id="properties-item4" style="display: flex; padding: 30px;">
 			</div>
 		</div>
 	</div>
