@@ -54,7 +54,6 @@
 			</div>
 
 			<hr />
-
 			<div class="content-header">
 				<div class="container-fluid">
 					<div class="row mb-2">
@@ -182,8 +181,9 @@
             
             	<div id="workspace_mem" style="margin-bottom:20px;">
 	            	<c:forEach var="m" items="${ workspaceMembers }">
+	            		
 	            		<c:if test="${ m.email != loginuser.email }">
-	            		<div class="_mem" data-email="${ m.email }" data-name="${ m.name }">
+	            		<div class="_mem" data-email="${ m.email }" data-name="${ m.name }" data-img="${ m.img }">
 	            			<c:choose>
 								<c:when test="${not empty m.img}">
 									<img class="_mem_img img-circle img-bordered-sm" src="/team/resources/img/profile/${m.img}">
@@ -267,7 +267,6 @@
 	<script src="/team/resources/js/feedback-css.js"></script>
 	<script type="text/javascript">
 	$(function() {
-		
 
 		// 텍스트 자르고 ... 포함된 문자열 반환하는 함수
 		function textSubString(text) {
@@ -278,13 +277,16 @@
 		$(document).on("click", "._mem", function() {
 			var name = $(this).attr("data-name");
 			var email = $(this).attr("data-email");
+			var img = $(this).attr("data-img").length > 0 ? ("/team/resources/img/profile/" + $(this).attr("data-img")) : "/team/resources/img/profile-default.jpg";
+			
+			console.log(img)
 			
 			if ($(this).children().hasClass("_mem_icon_default")) {
 				$(this).children().removeClass("_mem_icon_default");
 				
 				$("#mem").html($("#mem").html() + 
 					'<div class="float_left mem" data-name="' + name +'" data-email="' + email + '">' +
-						'<img class="mem_img"></img>' +
+						'<img class="mem_img" src="'+ img +'"></img>' +
 						'<div class="mem_name" >'+ name + '</div>' +
 						'<a href="#" class="mem_rm" aria-hidden="true">&times;</a>' +
 						'<input type="hidden" name="email" value="' + email + '"/>' + 
@@ -339,8 +341,6 @@
 	
 		// 업무 검색
 		$("#task_input").keyup(function(e) {
-			console.log($(this).val());
-			
 			$.ajax({
 				url : "/team/feedback/getTasks",
 				method : "get",

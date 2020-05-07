@@ -29,13 +29,11 @@ public class MemberServiceImpl implements MemberService {
 		member.setPassword(Util.getHashedString(member.getPassword(), "SHA-256"));
 		
 		Member member2 = memberMapper.selectMemberByEmailAndPassword(member);
-		
 		return member2;
 	}
 
 	@Override
 	public Member findMemberByEmail(String email) {
-		
 		return memberMapper.selectMemberByEmail(email);
 	}
 

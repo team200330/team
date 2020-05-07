@@ -21,7 +21,14 @@
               <div  class="modal-body-inner">
               	<h6>작성자</h6>
               	<div class="user-block"  style="width: auto;">
-					<img class="img-circle img-bordered-sm" src="" alt="user image">
+              		<c:choose>
+						<c:when test="${not empty feedback.feedbackSender.img}">
+							<img class="img-circle img-bordered-sm" src="/team/resources/img/profile/${feedback.feedbackSender.img}">
+						</c:when>
+						<c:otherwise>
+							<img class="img-circle img-bordered-sm" src="/team/resources/img/profile-default.jpg">
+						</c:otherwise>
+					</c:choose>
 					<span class="username">
 						<a href="#" id="detail-modal-sender">${feedback.feedbackSender.email}</a>
 						<div style="font-weight: normal;font-size:10pt">${feedback.feedbackSender.name}</div>

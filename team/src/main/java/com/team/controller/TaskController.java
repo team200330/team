@@ -131,11 +131,10 @@ public class TaskController {
 	
 	@GetMapping("/timeline/getTable")
 	public String showTimelineTable(HttpSession s, Model model, String searchType) {
-		HashMap<String, Object> params = new HashMap<>();
-		params.put("searchType", (searchType.length() == 0 || searchType == null) ? "A" : searchType);
-		params.put("email", ((Member)s.getAttribute("loginuser")).getEmail());
-		params.put("projectNo", projectNo);
-		
+		HashMap<String, Object> params = 
+			returnParams(projectNo, null, ((Member)s.getAttribute("loginuser")).getEmail(), 
+						(searchType.length() == 0 || searchType == null) ? "A" : searchType, null, null);
+
 		model.addAttribute("table",  // 세션에 프로젝트번호 저장되면 바꾸기 (프로젝트 생성한 달, 프로젝트 마감달)
 			new TimelineTable(timelineService.searchTasks(params), 5, 12).toString());
 		
@@ -146,11 +145,8 @@ public class TaskController {
 	@ResponseBody
 	public String updateDate(int taskNo, String date, String dateType) {
 		Calendar c = Calendar.getInstance();
-		HashMap<String, Object> params = new HashMap<>();
+		HashMap<String, Object> params = returnParams(null, taskNo, null, null, c.get(c.YEAR) + date.split("date")[1], dateType);
 		
-		params.put("taskNo", taskNo);
-		params.put("date", c.get(c.YEAR) + date.split("date")[1]);
-		params.put("dateType", dateType);
 		timelineService.updateDate(params);
 		
 		return "success";
@@ -158,22 +154,35 @@ public class TaskController {
 	
 	@GetMapping(path= {"/timeline"})
 	public String showTaskTimeLine(HttpSession s, Model model) {
-		HashMap<String, Object> params = new HashMap<>();
-		params.put("searchType", "A");
-		params.put("email", ((Member)s.getAttribute("loginuser")).getEmail());
-		params.put("projectNo", projectNo);
-		
-		model.addAttribute("table", 
-			new TimelineTable(timelineService.searchTasks(params), 5, 12).toString());
+		HashMap<String, Object> params = returnParams(projectNo, null, ((Member)s.getAttribute("loginuser")).getEmail(), "A", null, null);
+
+		model.addAttribute("table", new TimelineTable(timelineService.searchTasks(params), 5, 12).toString());
 		
 		return "task/timeline";
 	}
+	
 	@GetMapping("/timeline2")
 	public String showTaskTimeLine() {
 		return "task/timeline";
 	}
 	
 	
+	
+	
+	
+	
+	
+	private HashMap<String, Object> returnParams(Object projectNo, Object taskNo, Object email, Object searchType, Object date, Object dateType) {
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("projectNo", projectNo);
+		params.put("taskNo", taskNo);
+		params.put("email", email);
+		params.put("searchType", searchType);
+		params.put("date", date);
+		params.put("dateType", dateType);
+		
+		return params;
+	}
 	
 	
 	

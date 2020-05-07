@@ -2,7 +2,6 @@ package com.team.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.team.service.FeedbackService;
+import com.team.service.LogService;
 import com.team.service.ProjectService;
 import com.team.service.TimelineService;
 import com.team.vo.Comments;
@@ -36,7 +36,7 @@ public class FeedbackController {
 	@Autowired
 	@Qualifier("feedbackService")
 	private FeedbackService feedbackService;
-	
+
 	@Autowired
 	@Qualifier("projectService")
 	private ProjectService projectService;
@@ -44,39 +44,21 @@ public class FeedbackController {
 	@Autowired
 	@Qualifier("timelineService")
 	private TimelineService timelineService;
+	
+	@Autowired
+	@Qualifier("logService")
+	private LogService logService;
 
-	// 프로젝트 리스트 (워크스페이스의 모든 업무 가져오기 위해)
-	private List<Project> projects = null;
-	
-	// 워크스페이스 멤버 리스트
-	private List<Member> workspaceMembers = null;
-	
 	// 임시 워크스페이스번호
 	// 워크스페이스 번호 세션에 저장되면 바꿀거 : feedbackList, searchFeedback, writeFeedback
 	static final int workspaceNo = 15;
-	
-	private List<Feedback> feedbacks = null;
-	
 
 	@GetMapping("/list")
 	public String feedbackList(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-		// 처음 들어올때 워크스페이스 멤버랑 업무들 가져오기
-		if ( workspaceMembers == null ) workspaceMembers = feedbackService.findWorkspaceMembers(workspaceNo);
-		model.addAttribute("workspaceMembers", workspaceMembers);
+		HashMap<String, Object> params = returnParams(workspaceNo, null, ((Member) session.getAttribute("loginuser")).getEmail(), "M", null, null);
+		model.addAttribute(feedbackService.searchFeedback(params));
+		model.addAttribute("workspaceMembers", feedbackService.findWorkspaceMembers(workspaceNo));
 		
-		if ( projects == null ) projects = feedbackService.findTasksByWorkspaceNo(workspaceNo);
-		model.addAttribute("projects", projects);
-		///////////////////////////////////
-		
-		HashMap<String, Object> params = new HashMap<>();
-		params.put("email", ((Member) session.getAttribute("loginuser")).getEmail());
-		params.put("searchType", "M");
-		params.put("workspaceNo", workspaceNo);
-		
-		feedbacks = feedbackService.searchFeedback(params);
-		model.addAttribute(feedbacks);
-
 		return "/feedback/list";
 	}
 	
@@ -87,27 +69,18 @@ public class FeedbackController {
 	
 	@GetMapping("/search")
 	public String searchFeedback(@RequestParam(defaultValue = "M")String searchType, String email, String key, Model model) {
-		HashMap<String, Object> params = new HashMap<>();
-		params.put("email", email);
-		params.put("searchType", searchType);
-		params.put("workspaceNo", workspaceNo);
-		params.put("key", key);
-	
-		feedbacks = feedbackService.searchFeedback(params);
-		model.addAttribute("feedbackList", feedbacks);
+		HashMap<String, Object> params = returnParams(workspaceNo, null, email, searchType, key, null);
+		model.addAttribute("feedbackList", feedbackService.searchFeedback(params));
 		
 		return "/feedback/modules/feedback-list";
 	}
-	
-	
-	
-	
-	
-	
+
 	@GetMapping("/detail")
 	@ResponseBody
 	public String feedbackDetail(int feedbackNo, HttpSession session) {
-		for (Feedback f : feedbacks) 
+		HashMap<String, Object> params = returnParams(workspaceNo, null, ((Member) session.getAttribute("loginuser")).getEmail(), "M", null, null);
+
+		for (Feedback f : feedbackService.searchFeedback(params)) 
 			if (f.getFeedbackNo() == feedbackNo) {
 				session.setAttribute("feedback", f); break;
 			}
@@ -119,15 +92,11 @@ public class FeedbackController {
 		return "/feedback/modules/feedback-detail";
 	}
 	
-	
-	
-	
+
 	@GetMapping("/count")
 	@ResponseBody
 	public String uncheckedFeedbackCount(HttpSession session) {
-		HashMap<String, Object> params = new HashMap<>();
-		params.put("email", ((Member) session.getAttribute("loginuser")).getEmail());
-		params.put("workspaceNo", workspaceNo);
+		HashMap<String, Object> params = returnParams(workspaceNo, null, ((Member) session.getAttribute("loginuser")).getEmail(), null, null, null);
 		
 		session.setAttribute("feedbackCount", feedbackService.uncheckedFeedbackCount(params));
 		session.setAttribute("latestFeedbackDate", feedbackService.findLatestWritedate(params));
@@ -147,9 +116,7 @@ public class FeedbackController {
 	@PostMapping("/delete")
 	@ResponseBody
 	public String deleteFeedback(HttpSession session, int feedbackNo) {
-		HashMap<String, Object> params = new HashMap<>();
-		params.put("feedbackNo", feedbackNo);
-		params.put("email", ((Member) session.getAttribute("loginuser")).getEmail());
+		HashMap<String, Object> params = returnParams(null, feedbackNo, ((Member) session.getAttribute("loginuser")).getEmail(), null, null, null);
 		
 		feedbackService.deleteFeedback(params);
 		
@@ -159,14 +126,11 @@ public class FeedbackController {
 	@PostMapping("/check")
 	@ResponseBody
 	public String checkFeedback(HttpSession session, int feedbackNo) {
-		HashMap<String, Object> params = new HashMap<>();
-		params.put("feedbackNo", feedbackNo);
-		params.put("email", ((Member) session.getAttribute("loginuser")).getEmail());
+		HashMap<String, Object> params = returnParams(workspaceNo, feedbackNo, ((Member) session.getAttribute("loginuser")).getEmail(), null, null, null);
 		
 		feedbackService.checkFeedback(params);
 		
 		// 읽음처리 한다음에 탑바 읽지않은 피드백 개수 업데이트
-		params.put("workspaceNo", workspaceNo);
 		session.setAttribute("feedbackCount", feedbackService.uncheckedFeedbackCount(params));
 		// 최신 피드백날짜 업데이트
 		session.setAttribute("latestFeedbackDate", feedbackService.findLatestWritedate(params));
@@ -185,7 +149,16 @@ public class FeedbackController {
 	///////////////////////////////////////////////////////////////////////////////
 	
 	@GetMapping("/getNotifications")
-	public String getNotifications(Model model) {
+	public String getNotifications(HttpSession session) {
+		HashMap<String, Object> params = returnParams(workspaceNo, null, ((Member) session.getAttribute("loginuser")).getEmail(), null, null, 1);
+		session.setAttribute("feedbackCount", feedbackService.uncheckedFeedbackCount(params));
+		session.setAttribute("latestFeedbackDate", feedbackService.findLatestWritedate(params));
+		
+		session.setAttribute("logCount", logService.uncheckedLogCount(params));
+		session.setAttribute("latestLogDate", logService.findLatestWriteDate(params));
+		
+		System.out.println( logService.uncheckedLogCount(params));
+		
 		return "/modules/topbar-notifications";
 	}
 	
@@ -196,7 +169,7 @@ public class FeedbackController {
 		String result = "";
 		String selectedMems[] = selected.split(":");
 		
-		for (Member m : workspaceMembers) {
+		for (Member m : feedbackService.findWorkspaceMembers(workspaceNo)) {
 			String className = "_mem_icon_default";
 			String img = m.getImg() != null ? "/team/resources/img/profile/" + m.getImg() : "/team/resources/img/profile-default.jpg";
 			
@@ -217,11 +190,10 @@ public class FeedbackController {
 	
 	@RequestMapping(value = "/getTasks", produces = "application/text; charset=utf8")
 	@ResponseBody
-	public String getTasks(String str) throws UnsupportedEncodingException {
-		//URLDecoder.decode(str, "UTF-8");
+	public String getTasks(String str) throws UnsupportedEncodingException {;
 		String result = "";
 		
-		for (Project p : projects) {
+		for (Project p : feedbackService.findTasksByWorkspaceNo(workspaceNo)) {
 			for (TaskList l : p.getTaskLists()) {
 				for (Task t : l.getTasks()) {
 					if (t.getContent().contains(str) || t.getWriter().contains(str) || p.getProjectName().contains(str)) {
@@ -241,4 +213,15 @@ public class FeedbackController {
 		return result;
 	}
 
+	private HashMap<String, Object> returnParams(Object workspaceNo, Object feedbackNo, Object email, Object searchType, Object key, Object projectNo) {
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("workspaceNo", workspaceNo);
+		params.put("feedbackNo", feedbackNo);
+		params.put("email", email);
+		params.put("searchType", searchType);
+		params.put("key", key);
+		params.put("projectNo", projectNo);
+		
+		return params;
+	}
 }

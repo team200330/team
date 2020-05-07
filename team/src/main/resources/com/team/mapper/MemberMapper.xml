@@ -11,11 +11,11 @@
 		VALUES ( #{ name }, #{ email }, #{ password }, #{ phone }, #{ department }, #{ position }, #{ addressNo }, #{ roadnameAddr }, #{ detailAddr }, #{ img } )
 	</insert>
 	
-	<select id="selectMemberByEmailAndPassword" parameterType="Member" resultType="Member">
+	<select id="selectMemberByEmailAndPassword" parameterType="Member" resultMap="memberMap">
 		SELECT * FROM member WHERE email = #{ email } AND password = #{ password } AND deleted = '0'
 	</select>
 	
-	<select id="selectMemberByEmail" parameterType="Member" resultType="Member">
+	<select id="selectMemberByEmail" parameterType="Member" resultMap="memberMap">
 		SELECT * FROM member WHERE email = #{ email }
 	</select>
 	

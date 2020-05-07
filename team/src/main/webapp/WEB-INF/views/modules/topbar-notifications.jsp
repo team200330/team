@@ -7,15 +7,27 @@
       <li class="nav-item dropdown" >
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge">15</span>
+         
+      		<c:if test="${feedbackCount > 0 || logCount > 0}">
+      			<span class="badge badge-warning navbar-badge">
+      				${feedbackCount + logCount}
+      			</span>
+      		</c:if>
+          
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <span class="dropdown-item dropdown-header">15 Notifications</span>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item notice-text" style="font-size:10.5pt">
-            <i class="fas fa-envelope mr-2" style="margin-right:4px"></i> 4 new messages
-            <span class="float-right text-muted text-sm">3 mins</span>
-          </a>
+          <span class="dropdown-item dropdown-header">
+          	<c:choose>
+          		<c:when test="${feedbackCount > 0 || logCount > 0}">
+          			${feedbackCount + logCount} Notifications
+          		</c:when>
+          		<c:otherwise>
+          			새로운 알림이 없습니다
+          		</c:otherwise>
+          	</c:choose>
+          	
+          	
+          </span>
           <div class="dropdown-divider"></div>
           <a href="/team/feedback/list" class="dropdown-item notice-text" style="font-size:10.5pt">
             <i class="fas fa-users mr-2"></i> 
@@ -48,7 +60,7 @@
             	</c:choose>
           </a>
           <div class="dropdown-divider"></div>
-          <a href="/team/feedback/list" class="dropdown-item dropdown-footer">See All Notifications</a>
+          <a href="/team/log/list" class="dropdown-item dropdown-footer">See All Notifications</a>
         </div>
       </li>
     
