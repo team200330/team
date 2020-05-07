@@ -1,7 +1,6 @@
 package com.team.controller;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,17 +18,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.View;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.team.common.ConvertJsontoCSV;
-import com.team.common.DownloadView;
 import com.team.service.FeedbackService;
 import com.team.service.ProjectService;
 import com.team.service.TimelineService;
 import com.team.vo.Comments;
 import com.team.vo.Feedback;
-import com.team.vo.FeedbackReceiver;
 import com.team.vo.Member;
 import com.team.vo.Project;
 import com.team.vo.Task;
@@ -195,18 +189,16 @@ public class FeedbackController {
 		return "/modules/topbar-notifications";
 	}
 	
-	@GetMapping("/getWorkspaceMembers")
+	
+	@RequestMapping(value = "/getWorkspaceMembers", produces = "application/text; charset=utf8")
 	@ResponseBody
 	public String getWorkspaceMembers(String str, String selected, String email) {
 		String result = "";
 		String selectedMems[] = selected.split(":");
 		
-		System.out.println(selected);
-		
 		for (Member m : workspaceMembers) {
 			String className = "_mem_icon_default";
-			String img = m.getImg() != null ? m.getImg() : "/team/resources/img/profile-default.jpg";
-			System.out.println(img);
+			String img = m.getImg() != null ? "/team/resources/img/profile/" + m.getImg() : "/team/resources/img/profile-default.jpg";
 			
 			for (String s : selectedMems) if (s.equals(m.getEmail())) { className = ""; break; }
 			
