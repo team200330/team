@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.team.common.ConvertJsontoCSV;
 import com.team.common.DownloadView;
@@ -28,6 +29,7 @@ import com.team.service.ProjectService;
 import com.team.service.TimelineService;
 import com.team.vo.Comments;
 import com.team.vo.Feedback;
+import com.team.vo.FeedbackReceiver;
 import com.team.vo.Member;
 import com.team.vo.Project;
 import com.team.vo.Task;
@@ -59,6 +61,8 @@ public class FeedbackController {
 	// 워크스페이스 번호 세션에 저장되면 바꿀거 : feedbackList, searchFeedback, writeFeedback
 	static final int workspaceNo = 15;
 	
+	private List<Feedback> feedbacks = null;
+	
 
 	@GetMapping("/list")
 	public String feedbackList(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -76,7 +80,8 @@ public class FeedbackController {
 		params.put("searchType", "M");
 		params.put("workspaceNo", workspaceNo);
 		
-		model.addAttribute(feedbackService.searchFeedback(params));
+		feedbacks = feedbackService.searchFeedback(params);
+		model.addAttribute(feedbacks);
 
 		return "/feedback/list";
 	}
@@ -94,10 +99,34 @@ public class FeedbackController {
 		params.put("workspaceNo", workspaceNo);
 		params.put("key", key);
 	
-		model.addAttribute("feedbackList", feedbackService.searchFeedback(params));
+		feedbacks = feedbackService.searchFeedback(params);
+		model.addAttribute("feedbackList", feedbacks);
 		
 		return "/feedback/modules/feedback-list";
 	}
+	
+	
+	
+	
+	
+	
+	@GetMapping("/detail")
+	@ResponseBody
+	public String feedbackDetail(int feedbackNo, HttpSession session) {
+		for (Feedback f : feedbacks) 
+			if (f.getFeedbackNo() == feedbackNo) {
+				session.setAttribute("feedback", f); break;
+			}
+		return "success";
+	}
+	
+	@GetMapping("/getDetailModal")
+	public String feedbackDetailModal() {
+		return "/feedback/modules/feedback-detail";
+	}
+	
+	
+	
 	
 	@GetMapping("/count")
 	@ResponseBody

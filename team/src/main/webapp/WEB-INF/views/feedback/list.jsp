@@ -257,49 +257,8 @@
       
       
       <!-- 피드백 상세보기 모달 -->
-      <div id="feedbackDetailModal" class="modal fade">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content" style="cursor:pointer">
-            <div class="modal-header" style="border:none; padding:10px;">
-            </div>
-            <div style="text-align:center;padding:30px">
-            	<h4 style="display:inline-block; font-weight:bold;">피드백 상세</h4>
-            </div>
-            <div class="modal-body" style="margin-bottom:20px;padding:0px;">
-            	<div class="modal-body-inner">
-            		<h6>피드백 보낸 날짜</h6>
-            		<div id="detail-modal-writedate"></div>
-            	</div>
-              <div  class="modal-body-inner">
-              	<h6>작성자</h6>
-              	<div class="user-block"  style="width: auto;">
-					<img class="img-circle img-bordered-sm" src="" alt="user image">
-					<span class="username">
-						<a href="#" id="detail-modal-sender">보낸사람 이메일</a>
-						<div style="font-weight: normal;font-size:10pt">보낸사람 이름</div>
-					</span> 
-				</div>
-              </div>
-              <br/>
-              <div  class="modal-body-inner">
-              	<h6 >피드백을 받을 멤버</h6>
-				<div id="detail-modal-receivers">
-					
-				</div>
-            </div>
-            <br/>
-             <div class="modal-body-inner">
-              	<h6>설명</h6>
-              		<div id="detail-modal-content">피드백 설명 표시될 자리</div>
-              </div>
-            <div class="modal-footer">
-              <div id="detail-modal-public"></div>
-            </div>
-            </div>
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
+      <div id="feedbackDetailModal-container">
+      <jsp:include page="modules/feedback-detail.jsp" />
       </div>
       
 	<%@include file="/WEB-INF/views/modules/common-js.jsp"%>
@@ -511,53 +470,38 @@
 		
 		// 피드백 상세보기 모달
 		$(document).on("click", ".feedback-contents", function() {
-			$("#feedbackDetailModal").modal();
-			
 			var data = $(this).parents(".post").attr("data-value");
-			var isPublic = data.split("opened=")[1].split(",")[0];
-			var r = data.split("Receiver");
+			var feedbackNo = data.split("feedbackNo=")[1].split(",")[0];
 			
-			$("#detail-modal-content").text(data.split("content=")[1].split(",")[0]);
-			$("#detail-modal-writedate").text(data.split("writedate=")[1].split(",")[0]);
-			$("#detail-modal-sender").text(data.split("sender=")[1].split(",")[0]);
-			
-			if (isPublic == "true") {
-				$("#detail-modal-public").html(
-					"<i class='fas fa-lock-open'></i>" +
-					"<span>이 피드백은 모든 사람이 볼 수 있습니다.</span"
-				);
-			} else {
-				$("#detail-modal-public").html(
-					"<i class='fas fa-lock'></i>" +
-					"<span>이 피드백은 작성자와 받는 사람만 볼 수 있습니다.</span>"		
-				);
-			}
-
-			for (var i = 1; i < r.length; i++) {
-				$("#detail-modal-receivers").html($("#detail-modal-receivers").html() +
-					"<div class='float_left mem'>" +
-						"<img class='mem_img'></img>" +
-						"<div class='mem_name'>" + r[i].split("email=")[1].split(",")[0] + "</div>" +
-					"</div>"
-				);
-			}
-			
-			if ("${loginuser.email}" != $("#detail-modal-sender").text()) {
-				$.ajax({
-					url : "check",
-					method : "post",
-					data : {"feedbackNo" : data.split("feedbackNo=")[1].split(",")[0]},
-					success : function(resp, status, xhr) {
-						toastr.info("피드백 &nbsp;&nbsp; " + textSubString($("#detail-modal-content").text()) + " 을 확인했습니다");
-						// 읽음처리 한후 탑바 업데이트
-						$("#topbar-notifications").load("/team/feedback/getNotifications");
-					},
-					error : function(xhr, status, err) { console.log(err); }
-				});
-			}
+			$.ajax({ // 피드백 상세보기
+				url : "/team/feedback/detail",
+				data : {"feedbackNo" : feedbackNo},
+				success : function(data, status, xhr) {
+					$("#feedbackDetailModal-container").load("/team/feedback/getDetailModal", function() {
+						$("#feedbackDetailModal").modal();
+						console.log("${feedback.receivers}")
+						
+						if ("${loginuser.email}" != "${feedback.sender}") { // 로그인유저가 피드백 작성자가 아니면 읽음 처리
+							$.ajax({
+								url : "check",
+								method : "post",
+								data : {"feedbackNo" : feedbackNo},
+								success : function(resp, status, xhr) {
+									toastr.info("피드백 &nbsp;&nbsp; " + textSubString($("#detail-modal-content").text()) + " 을 확인했습니다");
+									// 읽음처리 한후 탑바 업데이트
+									$("#topbar-notifications").load("/team/feedback/getNotifications");
+									
+								},
+								error : function(xhr, status, err) { console.log(err); }
+							});
+						}
+					});
+					
+				}
+			});
 		});
 		
-		$("#feedbackDetailModal").click(function() {
+		$(document).on("click", "#feedbackDetailModal", function() {
 			$("#feedbackDetailModal").modal("hide");
 			
 			$("#detail-modal-sender").html("");

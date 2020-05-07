@@ -77,13 +77,17 @@ public class TaskController {
 	
 	@PostMapping(path = {"/chstatus.action"})
 	@ResponseBody
-	public String updateTaskStatus(int taskNo, int completed, Date completedDate) {
+	public String updateTaskStatus(int taskNo, int completed, Date completedDate, HttpSession session) {
 		HashMap<String, Object> params = new HashMap<>();
 		params.put("taskNo", taskNo);
 		params.put("completed", completed);
 		params.put("completedDate", completedDate);
 		System.out.println(taskNo+"//"+completed);
 		taskService.updateCompleted(params);
+		
+		// 로그로 전달
+		session.setAttribute("taskNo", taskNo);
+		session.setAttribute("completed", completed);
 		return "success";
 	}
 	
