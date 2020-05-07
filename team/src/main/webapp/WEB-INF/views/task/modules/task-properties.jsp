@@ -19,11 +19,15 @@
 			</div>
 		</div>
 		<div class="header-center"
-			style="flex-basis: 33%; text-align: center; padding-top: 20px;">
-			<a id="active" class="f_link" href="#">속성</a>&nbsp;&nbsp;
-			<a id="active2" class="f_link" href="#">코멘트</a>&nbsp;&nbsp;
+			style="flex-basis: 33%; text-align: center; padding-top: 20px; display: flex;">
+			<div style="width:50%; margin: 10px;">
+				<a class="f_link properties" id="active" href="#">　　　　　　　속성　　　　　　　</a>&nbsp;&nbsp;
+			</div>
+			<div style="width:50%; margin: 10px;">
+				<a class="f_link properties" id="active2" href="#">　　　　　　　파일　　　　　　　</a>&nbsp;&nbsp;
+			</div>
 		</div>
-		<div id="task-menu-properties" style="margin-top: 13%; background-color: #eef7f7; height: 100%;">
+		<div id="task-menu-properties" style="background-color: #eef7f7; height: 100%;">
 			<div>
 			</div>
 		</div>

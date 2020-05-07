@@ -52,6 +52,10 @@ input::placeholder {
 .task-field.completed {
 	background-color:#e2e2e2;
 }
+
+.f_link.properties {
+	padding: 10px;
+}
 </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -105,6 +109,8 @@ input::placeholder {
 
 	<!-- jQuery -->
 	<%@include file="/WEB-INF/views/modules/common-js.jsp"%>
+	<script src="/team/resources/js/task-common.js"></script>
+	<script src="/team/resources/js/task-properties-side.js"></script>
 	<script type="text/javascript">
 	</script>
 </body>
