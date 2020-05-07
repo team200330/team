@@ -102,13 +102,19 @@ public class WorkspaceController {
 	}
 	
 	@GetMapping(path = { "/workspace-member" })
-	public String workspacemember(WorkspaceMember workspaceMember,Model model) {
+	public String workspacemember(WorkspaceMember workspaceMember,Model model,int workspaceNo) {
+		
+		model.addAttribute("workspaceNo",workspaceMember.getWorkspaceNo());
+		
 		System.out.println(workspaceMember.getWorkspaceNo());
 		List <Member> members = workspaceService.selectMembersByWorkspaceNo(workspaceMember);
 		model.addAttribute("members",members);
 		
 		Member member = workspaceService.selectMemberTypeNo1ByWorkspaceNo(workspaceMember);
 		model.addAttribute("member",member);
+		
+		int ALLCountWorkspaceMember = workspaceService.selectCountMemberByWorkspaceMember(workspaceMember.getWorkspaceNo());
+		model.addAttribute("ALLCountWorkspaceMember",ALLCountWorkspaceMember);
 		
 		//java.lang.ClassCastException: com.team.vo.WorkspaceMember cannot be cast to com.team.vo.Member
 		//작업중에있음
@@ -145,5 +151,29 @@ public class WorkspaceController {
 		}
 		
 		return "workspace/workspace-member"; 
+	}
+	
+	@PostMapping(path = { "/asc1"})
+	public String asc1(int workspaceNo,Model model) {
+		List <Member> members = workspaceService.selectMemberAsc1ByWorkspaceNo(workspaceNo);
+		model.addAttribute("members",members);
+				
+		if (members == null) {
+			return "not success";
+		} else {
+			return "success";
+		}
+	}
+	
+	@PostMapping(path = { "/asc2"})
+	public String asc2(int workspaceNo,Model model) {
+		List <Member> members = workspaceService.selectMemberAsc2ByWorkspaceNo(workspaceNo);
+		model.addAttribute("members",members);
+				
+		if (members == null) {
+			return "not success";
+		} else {
+			return "success";
+		}
 	}
 }

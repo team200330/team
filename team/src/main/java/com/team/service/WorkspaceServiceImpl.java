@@ -125,4 +125,20 @@ public class WorkspaceServiceImpl implements WorkspaceService {
 		workspaceMapper.deleteWorkspaceMemberType(workspaceMember);		
 	}
 
+	@Override
+	public int selectCountMemberByWorkspaceMember(int workspaceNo) {
+		int ALLCountWorkspaceMember = workspaceMapper.selectCountMemberByWorkspaceMember(workspaceNo);	
+		return ALLCountWorkspaceMember;
+	}
+
+	@Override
+	public List<Member> selectMemberAsc1ByWorkspaceNo(int workspaceNo) {
+		return workspaceMapper.selectMemberAsc1ByWorkspaceNo(workspaceNo);
+	}
+
+	@Override
+	public List<Member> selectMemberAsc2ByWorkspaceNo(int workspaceNo) {
+		return workspaceMapper.selectMemberAsc2ByWorkspaceNo(workspaceNo);
+	}
+
 }
