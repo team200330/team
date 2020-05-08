@@ -44,8 +44,11 @@ public class LogServiceImpl implements LogService {
 		logMapper.insertLog(log);
 
 		// 같은 프로젝트 멤버에게 로그 전송
-		for (ProjectMember member : projectMapper.selectMemberByProjectNo(log.getProjectNo())) 
+		for (ProjectMember member : projectMapper.selectMemberByProjectNo(log.getProjectNo()))  {
 			logMapper.insertLogReceiver(new LogReceiver(log.getLogNo(), member.getEmail()));
+			System.out.println(member.toString());
+			
+		}
 	}
 	
 	@Override

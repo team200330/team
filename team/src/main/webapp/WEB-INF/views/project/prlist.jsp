@@ -391,7 +391,7 @@ $(function() {
 	});
 	// -- write-form-submit 끝
 	
-	$(".task").on("click" , function(event) {
+	$(document).on("click", ".task" , function(event) {
 		var projectNo = $(this).attr('data-projectNo');
 		$('#task-form #projectNo').val(projectNo);
 		console.log(projectNo);

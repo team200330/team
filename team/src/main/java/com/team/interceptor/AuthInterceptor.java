@@ -17,6 +17,7 @@ import com.team.service.LogService;
 import com.team.service.TaskService;
 import com.team.vo.Log;
 import com.team.vo.Member;
+import com.team.vo.Project;
 import com.team.vo.Task;
 
 //public class AuthInterceptor implements HandlerInterceptor {
@@ -80,7 +81,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 			if (taskNo == 0) return;
 			
 			// 임시 프로젝트 번호 : 1
-			Log log = new Log(email, new Date(), taskNo, state, 1);
+			Log log = new Log(email, new Date(), taskNo, state, ((Project) s.getAttribute("projectByNo")).getProjectNo());
 			System.out.println(log.toString());
 			logService.writeLog(log);
 		}
