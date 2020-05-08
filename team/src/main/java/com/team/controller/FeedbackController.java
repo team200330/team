@@ -51,10 +51,14 @@ public class FeedbackController {
 
 	// 임시 워크스페이스번호
 	// 워크스페이스 번호 세션에 저장되면 바꿀거 : feedbackList, searchFeedback, writeFeedback
-	static final int workspaceNo = 15;
+	private int workspaceNo;
 
 	@GetMapping("/list")
 	public String feedbackList(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		workspaceNo = (int) session.getAttribute("workspaceNo");
+		
+		System.out.println(workspaceNo);
+		
 		HashMap<String, Object> params = returnParams(workspaceNo, null, ((Member) session.getAttribute("loginuser")).getEmail(), "M", null, null);
 		model.addAttribute(feedbackService.searchFeedback(params));
 		model.addAttribute("workspaceMembers", feedbackService.findWorkspaceMembers(workspaceNo));

@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.team.service.LogService;
 import com.team.vo.Log;
 import com.team.vo.Member;
+import com.team.vo.Project;
 
 @Controller
 @RequestMapping("/log")
@@ -33,10 +34,11 @@ public class LogController {
 	private LogService logService;
 	
 	// 임시 프로젝트 번호
-	static final int projectNo = 1;
+	private int projectNo;
 	
 	@GetMapping("/list")
 	public String logList(Model model, HttpSession session) {
+		projectNo = ((Project) session.getAttribute("projectByNo")).getProjectNo();
 		
 		HashMap<String, Object> params = new HashMap<>();
 		params.put("projectNo", projectNo);

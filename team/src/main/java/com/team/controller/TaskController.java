@@ -145,7 +145,7 @@ public class TaskController {
 	@GetMapping("/timeline/getTable")
 	public String showTimelineTable(HttpSession s, Model model, String searchType) {
 		HashMap<String, Object> params = 
-			returnParams(projectNo, null, ((Member)s.getAttribute("loginuser")).getEmail(), 
+			returnParams(((Project) s.getAttribute("projectByNo")).getProjectNo(), null, ((Member)s.getAttribute("loginuser")).getEmail(), 
 						(searchType.length() == 0 || searchType == null) ? "A" : searchType, null, null);
 
 		model.addAttribute("table",  // 세션에 프로젝트번호 저장되면 바꾸기 (프로젝트 생성한 달, 프로젝트 마감달)
@@ -167,7 +167,7 @@ public class TaskController {
 	
 	@GetMapping(path= {"/timeline"})
 	public String showTaskTimeLine(HttpSession s, Model model) {
-		HashMap<String, Object> params = returnParams(projectNo, null, ((Member)s.getAttribute("loginuser")).getEmail(), "A", null, null);
+		HashMap<String, Object> params = returnParams(((Project) s.getAttribute("projectByNo")).getProjectNo(), null, ((Member)s.getAttribute("loginuser")).getEmail(), "A", null, null);
 
 		model.addAttribute("table", new TimelineTable(timelineService.searchTasks(params), 5, 12).toString());
 		
