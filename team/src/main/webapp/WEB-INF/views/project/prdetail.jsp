@@ -61,8 +61,10 @@
             		</form>
 					  <div class="form-group">
 		              	<label>프로젝트 삭제</label> <br>
-		              	<form id="deleted" method="post" action="/team/project/deleted"></form>
-		              	<a id="projectDeleted" class="btn btn-default" style="cursor:pointer">프로젝트 삭제하기</a>
+		              	<form id="deleted" method="post" action="/team/project/deleted">
+		              		<input id="de_deleted" type="text" name="deleted"  value=""/>
+		              	</form>
+		              		<a id="projectDeleted" class="btn btn-default projectDeleted" style="cursor:pointer">프로젝트 삭제하기</a>
 		              </div>
                      <div class="form-group">
                      <form id="feedback_write_form2" method="post" action="/team/addProjectMember">

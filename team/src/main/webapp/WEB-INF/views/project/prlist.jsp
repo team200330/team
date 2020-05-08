@@ -457,7 +457,7 @@ $(function() {
 				var workspaceNo = data.workspaceNo;
 				var templateNo = data.templateNo;
 				var proNo = data.proNo;
-				
+
 				/////////// 시작 마감 완료
 				var startdate_t = data.startdate;
 				var startdate_t2 = new Date(startdate_t);
@@ -551,6 +551,7 @@ $(function() {
 				$('#de_proNo').val(proNo);
 				
 				
+				
 				$('#de_managerEmail').val(managerEmail);
 				//$('#de_projectMembers').val(projectMembers);
 				$('#modal-detail2').modal('show');
@@ -605,6 +606,9 @@ $(function() {
 					});
 				});
 				console.log(projectMembers[0])
+					
+						
+				
 /* 				var memberCount = projectMember
 				for(int i = 0; i < projectMember.length; i++){
 					$("#mem2").html($("#mem2").html() + 
@@ -645,6 +649,31 @@ $(function() {
 				}, function() {
 					$(this).css("background-color", "#17a2b8");
 				});
+
+				var deleted = data.deleted;
+				$('#de_deleted').val(deleted);
+				
+				$(document).on("click", ".projectDeleted", function(){
+					
+					var deleted_val = $("#de_deleted");
+					if (deleted_val.val() == "false"){ deleted_val.val('1')} else if (deleted_val.val() == "true"){ deleted_val.val('0')} 
+					//console.log(deleted_val.val())
+					//console.log(projectNo);
+					//if (proPublic == "false"){ proPublic.val('0')} else if (proPublic == "true"){ proPublic.val('1')} 
+					
+					$.ajax({
+						url : "/team/project/deleted",
+						method : "post",
+						data : {"projectNo" : projectNo,
+								"deleted" : deleted },
+						success : function(resp, status, xhr) {
+							
+						},
+						error : function(xhr, status, err) {
+							console.log(err);
+						}
+					});
+				})
 				
 				// -- 비공개 공개 선택
 				$('.list-container1').load('/team/project/list');

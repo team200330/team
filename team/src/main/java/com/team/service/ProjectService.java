@@ -18,6 +18,8 @@ public interface ProjectService {
 	List<Project> findProject2(HashMap<String, Object> params);
 	
 	void updateProjectNo(Map<String, String> arrMap);
+	
+	void updateProjectDeleted(Map<String, String> arrMap);
 
 	List<Project> findPageing(HashMap<String, Object> params);
 
@@ -37,6 +39,8 @@ public interface ProjectService {
 	///////////////////////////////////////////////////
 	
 	List<Project> findProjectAndTasklist(int workspaceNo);
+
+
 
 
 

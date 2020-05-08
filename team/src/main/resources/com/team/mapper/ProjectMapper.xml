@@ -73,6 +73,11 @@
 		WHERE project_no = #{ projectNo }
 	</update>
 	
+	<update id="updateProjectDeleted" parameterType="hashmap">
+		UPDATE project SET deleted= #{ deleted } 
+		WHERE project_no = #{ projectNo }
+	</update>
+	
 	<update id="updateProject">
 		UPDATE project SET project_name = #{projectName}, content = #{content}, pro_public = #{proPublic}, startdate = #{startdate}, deadline = #{deadline}, enddate = #{enddate}
 		WHERE project_no = #{projectNo}

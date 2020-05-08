@@ -63,6 +63,13 @@ public class ProjectServiceImpl implements ProjectService {
 		projectMapper.updateProjectNo(arrMap);
 		
 	}
+	
+
+	@Override
+	public void updateProjectDeleted(Map<String, String> arrMap) {
+		projectMapper.updateProjectDeleted(arrMap);
+		
+	}
 
 	@Override
 	public List<Project> findPageing(HashMap<String, Object> params) {
@@ -122,6 +129,8 @@ public class ProjectServiceImpl implements ProjectService {
 		
 		return projects;
 	}
+
+
 
 
 
