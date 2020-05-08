@@ -125,7 +125,7 @@
 				
 				<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
 					<c:if test="${ not empty sessionScope.workspaces }">
-					<span class="dropdown-item dropdown-header">${ Ascworkspace.workspaceName }</span>
+					<span class="dropdown-item dropdown-header"></span>
 					<div class="dropdown-divider"></div>
 					<c:forEach var="workspace" items="${ workspaces }">
 					<a href="#" class="dropdown-item workspace_in_dropdown" data-workspaceNo="${ workspace.workspaceNo }">
