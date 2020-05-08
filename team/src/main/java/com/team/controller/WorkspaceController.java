@@ -52,6 +52,9 @@ public class WorkspaceController {
 		
 		List<Workspace> workspaces = workspaceService.selectWorkspacesByEmail(workspaceMember.getEmail());
 		session.setAttribute("workspaces",workspaces);	
+		session.setAttribute("workspaceNo", workspaceNo);
+		
+		System.out.println(workspaceNo);
 		
 		return "redirect:/";
 	}
