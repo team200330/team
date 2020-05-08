@@ -163,7 +163,7 @@
 							placeholder="업무리스트 이름" style="width: 190pt; height: 18pt;">
 						<!-- 임시 프로젝트 번호 -->
 						<input id="add-task-projectNo" name="projectNo" type="hidden"
-							value="1"> <span id="cancel-add"
+							value="${ projectByNo.projectNo }"> <span id="cancel-add"
 							style="padding-left: 5pt; cursor: pointer;"> <i
 							class="fas fa-times"></i>
 						</span>

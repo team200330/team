@@ -10,7 +10,7 @@ public interface TaskMapper {
 
 	void insertTaskList(TaskList taskList);
 
-	List<TaskList> selectTaskList();
+	List<TaskList> selectTaskList(int projectNo);
 
 	void deleteTaskList(int listNo);
 

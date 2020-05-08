@@ -24,8 +24,8 @@ public class TaskServiceImpl implements TaskService {
 	}
 
 	@Override
-	public List<TaskList> searchTaskList() {
-		return taskMapper.selectTaskList();
+	public List<TaskList> searchTaskList(int projectNo) {
+		return taskMapper.selectTaskList(projectNo);
 	}
 
 	@Override

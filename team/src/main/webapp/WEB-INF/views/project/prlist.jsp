@@ -161,9 +161,6 @@
     <!-- /.content -->
   <form id="detail-form" action="detail.action" method="get">
   	<input type="hidden" id="projectNo" name="projectNo">
-<%-- <input type="hidden" id="pageNo" name="pageNo" value="${ pager.pageNo }">
-  	<input type="hidden" id="searchType" name="searchType" value="${ param.searchType }">
-  	<input type="hidden" id="searchKey" name="searchKey" value="${ param.searchKey }"> --%>
   </form>
   <form id="task-form" action="task.action" method="get">
   	<input type="hidden" id="projectNo" name="projectNo">

@@ -1,11 +1,8 @@
 package com.team.controller;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -18,12 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.team.service.TaskService;
 import com.team.service.TimelineService;
 import com.team.ui.TimelineTable;
 import com.team.vo.Member;
+import com.team.vo.Project;
 import com.team.vo.Task;
 import com.team.vo.TaskList;
 
@@ -35,8 +31,19 @@ public class TaskController {
 	private TaskService taskService;
 	
 	@GetMapping(path = {"/main"})
-	public String showTaskMain(Model model) {
-		model.addAttribute("taskLists",taskService.searchTaskList());
+	public String showTaskMain(Model model, HttpSession session) {
+		//model.getAttribute("projectNo");
+		//System.out.println((int) session.getAttribute("projectNo"));
+		try {
+			
+			int projectNo = ((Project) session.getAttribute("projectByNo")).getProjectNo();
+			
+		} catch(Exception e) {
+			System.out.println(e);
+		}
+		//System.out.println("넘어온값:"+projectNo);
+		//model.addAttribute("projectNo",projectNo);
+		model.addAttribute("taskLists",taskService.searchTaskList(projectNo));
 		model.addAttribute("tasks",taskService.searchTask());
 		return "task/taskmain";
 	}
@@ -58,8 +65,8 @@ public class TaskController {
 	}
 	
 	@GetMapping(path = {"/loadtask.action"})
-	public String loadTask(Model model) {
-		model.addAttribute("taskLists",taskService.searchTaskList());
+	public String loadTask(Model model, HttpSession session) {
+		model.addAttribute("taskLists",taskService.searchTaskList((int) session.getAttribute("projectNo")));
 		model.addAttribute("tasks",taskService.searchTask());
 		return "task/modules/task-list";
 	}

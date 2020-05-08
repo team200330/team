@@ -2,8 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 			<style>
 				.iconPublic { float: left; margin: 5px; font-size: 14px; }
-				a { color: #343a40;}
-				a:hover { color: #527aa2;}
+			a { color: #343a40;}
+			a:hover { color: #527aa2;}
 			</style>
 			<c:forEach items="${ project }" var="project">
 		          <div class="col-md-3 col-sm-6 col-12 projectChk">
@@ -60,6 +60,17 @@
 		                	
 		                	<span style="float: right; margin:20px 0 0;"><i class="fas fa-cog"></i></span>
 		                	</a>
+		                	
+		                	<%-- <c:if test="${ project.managerEmail eq project.managerEmail}">
+			                	<a class="to-detail" href="javascript:" data-projectNo="${ project.projectNo }" > 
+			                	<span style="float: right; margin:20px 0 0;"><i class="fas fa-cog"></i></span>
+			                	</a>
+		                	</c:if>
+		                	<c:if test="${ not project.managerEmail}">
+			                	<a class="to-detail2" href="javascript:" data-projectNo="${ project.projectNo }" > 
+			                	<span style="float: right; margin:20px 0 0;"><i class="fas fa-cog"></i></span>
+			                	</a>
+		                	</c:if> --%>
 		                	
 		                	<%-- <select name="proNo2" class="selectProNo2 btn btn-block btn-default">
 		                		<option>
