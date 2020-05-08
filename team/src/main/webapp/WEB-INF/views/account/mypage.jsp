@@ -96,15 +96,14 @@ button {
     border-bottom: 1px solid #656565;
     cursor:default;
 }
-#deleteUserModal td{vertical-align: middle;}
-#deleteUserModal .img-circle {width: 37;height: 37;margin-right: 5px;}
-#deleteUserModal tr td:first-child {font-weight: bold;}
+#updateWorkspaceManagerModal td{vertical-align: middle;}
+#updateWorkspaceManagerModal .img-circle {width: 37;height: 37;margin-right: 5px;}
+#updateWorkspaceManagerModal tr td:first-child {font-weight: bold;}
 
 ._mem { height:50px;border:1px solid white;border-radius:.20rem;padding:5px; margin-bottom: 15px; }
 ._mem_name {width:60%;}
-._mem_icon {width:20%; display:block;}
-._mem_icon > i {padding-left:30px;}
-._mem_img {width:43px;margin-right:10px;}
+._mem_img {width:43px;margin-right:10px; float:left;}
+._mem_none {font-size: 10pt;padding: 10;}
 </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -340,13 +339,94 @@ button {
 		
 		// 계정 삭제
 		$(document).on("click", "#delete-user-btn", function() {
-			$("#deleteUserModal").modal();
+			// 소유하고있는 워크스페이스 있으면 소유권이전 모달 띄우기
+			if ("${not empty mypage_workspaces}") $("#updateWorkspaceManagerModal").modal(); 
+			
+			// 없으면 계정삭제 모달 띄우기
+			else $("#deleteUserModal").modal();
+
 		});
 		
+		// 멤버선택 모달 띄우기
 		$(".member-add-modal-btn").click(function() {
 			// 워크스페이스 번호로 멤버 목록 가져오기
-			$("#memberAddModal").modal();
+			$.ajax({
+				url : "/team/account/getWorkspaceMembers",
+				method : "get",
+				data : {
+					"email" : "${loginuser.email}",
+					"workspaceNo" : $(this).attr("id")
+				},
+				success : function(resp, status, xhr) {
+					$("#memberAddModal #workspace_mem").html(resp);
+					$("#memberAddModal").modal();
+				}
+			});
 		});
+		
+		// 소유권이전할 멤버선택
+		$(document).on("click", "._mem", function() {
+			var target = $("#updateWorkspaceManagerModal").find("#" + $(this).attr("data-workspaceNo"));
+			target.find(".change-manager-img").attr("src", $(this).attr("data-img"));
+			target.find(".manager-email").text($(this).attr("data-email"));
+			
+			target.attr("data-email", $(this).attr("data-email"));
+		});
+		
+		// 소우권이전 모달 다음버튼 눌렀을때
+		$("#submit_btn").click(function(e) {
+			var check = true;
+			$("#updateWorkspaceManagerModal tr").each(function() {
+				if($(this).attr("data-email") == false || $(this).attr("data-email") == undefined) {
+					alert("모든 워크스페이스의 소유권을 이전해야 합니다.");
+					e.preventDefault();
+					check = false;
+					return false; 
+				}
+			});
+			
+			if (check) {
+				$("#deleteUserModal").modal();
+				$("#updateWorkspaceManagerModal").modal("hide"); 
+			}
+		});
+		
+		// 계정삭제 버튼 눌렀을때
+		$("#delete-action-btn").click(function(e) {
+			var target = $("#deleteUserModal");
+			
+			if (target.find("#check").is(":checked") == false) {
+				alert("계정 삭제에 동의해야 합니다.");
+				e.preventDefault();
+				return false;
+			}
+			
+			if ("${loginuser.email}" != target.find("#check-email").val()) {
+				alert("이메일이 일치하지 않습니다.");
+				e.preventDefault();
+				return false;
+			}
+			
+			if (!confirm("정말 계정을 삭제할까요?")) return;
+			
+			// 워크스페이스 매니저 변경
+			$("#updateWorkspaceManagerModal tr").each(function() {
+				$.ajax({
+					url : "/team/account/updateWorkspaceMananger",
+					method : "post",
+					data : {
+						"email": "${loginuser.email}",
+						"managerEmail" : $(this).attr("data-email"), 
+						"workspaceNo" : $(this).attr("id")
+					}
+				});
+			});
+			
+			// 계정 삭제
+			/* $.ajax({
+				url : "/team/account/deleteUser"
+			}); */
+		})
 		
 	});
 </script>

@@ -115,7 +115,7 @@
 		OR m.department like concat('%',#{name},'%')
 	</select>
 	
-	<select id="selectMemberAsc1ByWorkspaceNo" parameterType="com.team.vo.Member" resultMap="memberMap">
+	<select id="selectMemberAsc1ByWorkspaceNo" parameterType="int" resultMap="memberMap">
 		SELECT * FROM workspace_member wm
 		INNER JOIN member m
 		ON wm.email = m.email		
@@ -125,7 +125,7 @@
 		ORDER BY m.email asc
 	</select>
 	
-	<select id="selectMemberAsc2ByWorkspaceNo" parameterType="com.team.vo.Member" resultMap="memberMap">
+	<select id="selectMemberAsc2ByWorkspaceNo" parameterType="int" resultMap="memberMap">
 		SELECT * FROM workspace_member wm
 		INNER JOIN member m
 		ON wm.email = m.email		

@@ -41,9 +41,6 @@
 <!--<script src="/team/resources/js/task-properties-side.js"></script> -->
 <!-- Task Common side -->
 <!-- <script src="/team/resources/js/task-common.js"></script> -->
-
-
-
 <!-- pace -->
 <script src="/team/resources/js/pace.js"></script>
 <!-- toast -->

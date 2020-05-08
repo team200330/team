@@ -120,7 +120,7 @@ public class FeedbackServiceImpl implements FeedbackService {
 			
 		for (WorkspaceMember m : workspaceMembers) 
 			members.add(memberMapper.selectMemberByEmail(m.getEmail()));
-	
+
 		return members;
 	}
 
