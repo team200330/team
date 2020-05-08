@@ -22,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.team.common.ConvertJsontoCSV;
 import com.team.common.DownloadView;
+import com.team.service.FeedbackService;
 import com.team.service.ProjectService;
 import com.team.service.TimelineService;
 import com.team.vo.Member;
@@ -38,13 +39,24 @@ public class ProjectController {
 	@Qualifier("projectService")
 	private ProjectService projectService;
 	
+	@Autowired
+	@Qualifier("feedbackService")
+	private FeedbackService feedbackService;
+	
 	// 워크스페이스 멤버 리스트
 	private List<Member> workspaceMembers = null;
 	
 	// 임시 워크스페이스번호
 	// 워크스페이스 번호 세션에 저장되면 바꿀거 : feedbackList, searchFeedback, writeFeedback
 	static final int workspaceNo = 6;
+	//private int workspaceNo
 
+	//로그인 페이지 이동
+	@GetMapping(path = {"/task.action"})
+	public String toTask() {
+		return "task/modules/task-list";
+	}
+	
 	
 	@SuppressWarnings("unused")
 	@GetMapping(path = { "/prlist" })
@@ -54,7 +66,7 @@ public class ProjectController {
 	public String showProjectList( Model model, HttpServletRequest request) {		
 		HttpSession session = request.getSession();
         session.getAttribute("loginuser");
-        
+        //workspaceNo = session.getAttribute("workspaceNo");
         // 임시 워크스페이스 번호 // 워크스페이스 속해있는 멤버 불러오기
  		if ( workspaceMembers == null ) workspaceMembers = projectService.findWorkspaceMembers(workspaceNo);
  		model.addAttribute("workspaceMembers", workspaceMembers);
@@ -176,6 +188,23 @@ public class ProjectController {
 		
 	}
 	
+	@SuppressWarnings("unused")
+	@PostMapping(value="/deleted")
+	@ResponseBody
+	public String projectDeleted (String projectNo, String deleted) {
+		String keyArr[] = {projectNo, deleted};
+		
+		Map< String, String > arrMap = new HashMap<>();
+		arrMap.put("projectNo", projectNo);
+		arrMap.put("deleted", deleted);
+
+		projectService.updateProjectDeleted(arrMap);
+		System.out.println(deleted);
+		
+		return "success";
+		
+	}
+	
 	@GetMapping(path = {"/detail"})
 	@ResponseBody	
 	//public String write(int projectNo) {
@@ -183,17 +212,13 @@ public class ProjectController {
 		
 		Project projectDetail = projectService.selectDetail(projectNo);
 		model.addAttribute("projectDetail", projectDetail);
-		
 		System.out.println("detail projectDetail 값" + projectDetail);
-
 		System.out.println(projectDetail.getProjectMembers());
-
 		
 		return projectDetail;
-		//return "success";
-		//return "project/detail";
 		
 	}
+	
 
 	///////////////////
 	
@@ -205,7 +230,7 @@ public class ProjectController {
 		
 		System.out.println(selected);
 		
-		for (Member m : workspaceMembers) {
+		for (Member m : feedbackService.findWorkspaceMembers(workspaceNo)) {
 			String className = "_mem_icon_default";
 			for (String s : selectedMems) if (s.equals(m.getEmail())) { className = ""; break; }
 			
@@ -230,7 +255,7 @@ public class ProjectController {
 		
 		System.out.println(selected);
 		
-		for (Member m : workspaceMembers) {
+		for (Member m : feedbackService.findWorkspaceMembers(workspaceNo)) {
 			String className = "_mem_icon_default2";
 			for (String s : selectedMems) if (s.equals(m.getEmail())) { className = ""; break; }
 			

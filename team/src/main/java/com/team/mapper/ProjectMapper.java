@@ -38,6 +38,10 @@ public interface ProjectMapper {
 
 	List<Member> selectLoginuserProjectMember(HashMap<String, Object> params);
 
+	ProjectMember selectDetail2(int projectNo);
+
+	void updateProjectDeleted(Map<String, String> arrMap);
+
 
 
 

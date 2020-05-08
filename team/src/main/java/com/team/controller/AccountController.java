@@ -138,7 +138,9 @@ public class AccountController {
 	
 	////////////////////////////////////////////////////////
 	@GetMapping("/mypage")
-	public String mypage() {
+	public String mypage(HttpSession session) {
+		session.setAttribute("mypage_workspaces", workspaceService.selectWorkspaceByManagerEmail(((Member)session.getAttribute("loginuser")).getEmail()));
+		
 		return "/account/mypage";
 	}
 
@@ -186,23 +188,52 @@ public class AccountController {
 		member.setEmail(email);
 		member.setImg(fileName);
 		memberService.updateImg(member);
-			
-		
 
 		return "redirect:/account/mypage";
 	}
+	
 
+	@RequestMapping(value = "/getWorkspaceMembers", produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String getWorkspaceMembers(int workspaceNo, String email) {
+		
+		String result = "";
+		for (Member m : feedbackService.findWorkspaceMembers(workspaceNo)) {
+			
+			String img = m.getImg() != null ? "/team/resources/img/profile/" + m.getImg() : "/team/resources/img/profile-default.jpg";
+			
+			if (!email.equals(m.getEmail()))
+				result += 
+					"<div class='_mem' data-email='" + m.getEmail() + "' data-img='"+ img +"' data-workspaceNo='"+ workspaceNo +"'>" +
+						"<img class='_mem_img img-circle img-bordered-sm' alt='user image' src='" + img + "'>" +
+			        	"<div class='_mem_name'> " + m.getEmail() + "<br/>" + m.getName() + "</div>" +
+			        "</div>";
+		}
+		if (result.length() == 0)
+			result = "<div class='_mem_none'>소유권을 이전할 수 있는 멤버가 없습니다.</div>";
+		
+		return result;
+	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@PostMapping("/updateWorkspaceMananger")
+	public String deleteUser(String email, String managerEmail, int workspaceNo) {
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("email", email);
+		params.put("typeNo", 2);
+		params.put("workspaceNo", workspaceNo);
+		
+		System.out.println(params.values());
+		workspaceService.updateWorkspaceManager(params);
+		
+		params.put("email", managerEmail);
+		params.put("typeNo", 1);
+		
+		System.out.println(params.values());
+		workspaceService.updateWorkspaceManager(params);
+		
+		return "/home2";
+	}
 	
 	
 	
