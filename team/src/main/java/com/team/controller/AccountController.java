@@ -86,10 +86,17 @@ public class AccountController {
 			session.setAttribute("loginuser", member2);
 			model.addAttribute("member", member2);
 			
+			// 로그인시 해당 유저의 이메일로 워크스페이스 목록 가져오기(탑바)
 			List<Workspace> workspaces = workspaceService.selectWorkspacesByEmail(member2.getEmail());
 			session.setAttribute("workspaces",workspaces);
 			
-			
+			//워크스페이스가 없을때 만드는 화면으로
+			if (workspaces.isEmpty()) {
+				
+				return "redirect:/workspace/create-workspace";
+				
+			} else {
+				
 			// 로그인시 읽지않은 피드백개수 가져오기 (탑바)
 			HashMap<String, Object> params = new HashMap<>();
 			params.put("email", member2.getEmail());
@@ -101,9 +108,11 @@ public class AccountController {
 			params.put("projectNo", 1); // 1 == 임시 프로젝트 번호
 			session.setAttribute("logCount", logService.uncheckedLogCount(params));
 			session.setAttribute("latestLogDate", logService.findLatestWriteDate(params));
+
+			}
 			
+			return "redirect:/project/prlist";
 			
-			return "redirect:/";
 		}
 	}
 	

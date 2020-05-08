@@ -165,6 +165,16 @@
 		)
 	</select>
 	
+	<select id="selectAscWorkspaceByEmail" parameterType="String" resultMap="workspaceMap">
+		select w.workspace_no, w.workspace_name, w.deleted, w.code, wm.email, wm.type_no
+		from workspace w
+		inner join workspace_member wm
+		on w.workspace_no = wm.workspace_no
+		where wm.email = #{ email }
+		order by wm.workspace_no ASC
+		LIMIT 1;
+	</select>
+	
 	<select id="selectWorkspacesByEmail" parameterType="String" resultMap="workspaceMap">
 		select w.workspace_no, w.workspace_name, w.deleted, w.code, wm.email, wm.type_no
 		from workspace w
