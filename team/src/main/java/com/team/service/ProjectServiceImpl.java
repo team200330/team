@@ -12,11 +12,9 @@ import com.team.mapper.MemberMapper;
 import com.team.mapper.ProjectMapper;
 import com.team.mapper.TaskMapper;
 import com.team.mapper.WorkspaceMapper;
-import com.team.vo.FeedbackReceiver;
 import com.team.vo.Member;
 import com.team.vo.Project;
 import com.team.vo.ProjectMember;
-import com.team.vo.TaskList;
 import com.team.vo.WorkspaceMember;
 
 import lombok.Setter;
@@ -83,8 +81,6 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public Project selectDetail(int projectNo) {
-		
-		
 		return projectMapper.selectDetail(projectNo);
 	}
 
@@ -126,6 +122,7 @@ public class ProjectServiceImpl implements ProjectService {
 		
 		return projects;
 	}
+
 
 
 

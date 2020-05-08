@@ -45,6 +45,12 @@ public class ProjectController {
 	// 워크스페이스 번호 세션에 저장되면 바꿀거 : feedbackList, searchFeedback, writeFeedback
 	static final int workspaceNo = 6;
 
+	//로그인 페이지 이동
+	@GetMapping(path = {"/task.action"})
+	public String toTask() {
+		return "task/modules/task-list";
+	}
+	
 	
 	@SuppressWarnings("unused")
 	@GetMapping(path = { "/prlist" })
@@ -183,17 +189,13 @@ public class ProjectController {
 		
 		Project projectDetail = projectService.selectDetail(projectNo);
 		model.addAttribute("projectDetail", projectDetail);
-		
 		System.out.println("detail projectDetail 값" + projectDetail);
-
 		System.out.println(projectDetail.getProjectMembers());
-
 		
 		return projectDetail;
-		//return "success";
-		//return "project/detail";
 		
 	}
+	
 
 	///////////////////
 	

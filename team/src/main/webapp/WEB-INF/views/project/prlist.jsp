@@ -40,6 +40,9 @@
 	._mem_img {width:20%;}
 	._mem_name {width:60%;}
 	._mem_icon {width:20%;}
+	a { color: #343a40;}
+	a:hover { color: #527aa2;}
+
 	
  </style>
 </head>
@@ -126,30 +129,6 @@
 		<button type="button" class="btn btn-block btn-outline-secondary btn-flat" data-toggle="modal" data-target="#modal-lg">
 			<i class="fas fa-plus"></i> Add Project
 		</button>
-		
-        <div class="card-footer" style="display: block;">
-          <nav aria-label="Contacts Page Navigation">
-            <ul class="pagination justify-content-center m-0">
-              <li class="paginate_button page-item previous disabled" id="example2_previous"><a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li>
-              <li class="page-item active"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" href="#">4</a></li>
-              <li class="page-item"><a class="page-link" href="#">5</a></li>
-              <li class="page-item"><a class="page-link" href="#">6</a></li>
-              <li class="page-item"><a class="page-link" href="#">7</a></li>
-              <li class="page-item"><a class="page-link" href="#">8</a></li>
-              <li class="paginate_button page-item next" id="example2_next"><a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a></li>
-            </ul>
-          </nav>
-        </div>
-        <div>
-         <nav aria-label="Contacts Page Navigation">
-            <ul class="pagination justify-content-center m-0">
-            ${ pager }
-            </ul>
-        </nav>
-        </div>
        
         
         </div>
@@ -182,9 +161,12 @@
     <!-- /.content -->
   <form id="detail-form" action="detail.action" method="get">
   	<input type="hidden" id="projectNo" name="projectNo">
-<%--   	<input type="hidden" id="pageNo" name="pageNo" value="${ pager.pageNo }">
+<%-- <input type="hidden" id="pageNo" name="pageNo" value="${ pager.pageNo }">
   	<input type="hidden" id="searchType" name="searchType" value="${ param.searchType }">
   	<input type="hidden" id="searchKey" name="searchKey" value="${ param.searchKey }"> --%>
+  </form>
+  <form id="task-form" action="task.action" method="get">
+  	<input type="hidden" id="projectNo" name="projectNo">
   </form>
   </div>
   <!-- /.content-wrapper -->
@@ -432,11 +414,19 @@ $(function() {
 				
 			},
 			"error" : function(xhr, status, err){
-				console.log(err)
+				console.log(err);
 			}
 		});
 	});
 	// -- write-form-submit 끝
+	
+	$(".task").on("click" , function(event) {
+		var projectNo = $(this).attr('data-projectNo');
+		$('#task-form #projectNo').val(projectNo);
+		console.log(projectNo);
+		
+		$("#task-form").submit();
+	});
 	
 	// detail
  	$(document).on("click", ".to-detail", function() { //$('.to-detail').on('click', function(event) {
@@ -475,8 +465,6 @@ $(function() {
 				var deadline_t2 = new Date(deadline_t);
 				var enddate_t = data.enddate;
 				var enddate_t2 = new Date(enddate_t);
-
-
 				
 				function getFormatDate1(startdate_t2){
 				    var year = startdate_t2.getFullYear();              //yyyy
@@ -616,7 +604,14 @@ $(function() {
 						}
 					});
 				});
-
+				console.log(projectMembers[0])
+/* 				var memberCount = projectMember
+				for(int i = 0; i < projectMember.length; i++){
+					$("#mem2").html($("#mem2").html() + 
+	
+					);
+				} */
+				
 				// 멤버 추가 작은모달 이벤트
 				$(document).on("click", "._mem2", function() {
 					var name = $(this).attr("data-name");

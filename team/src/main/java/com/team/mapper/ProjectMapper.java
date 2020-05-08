@@ -38,6 +38,8 @@ public interface ProjectMapper {
 
 	List<Member> selectLoginuserProjectMember(HashMap<String, Object> params);
 
+	ProjectMember selectDetail2(int projectNo);
+
 
 
 
