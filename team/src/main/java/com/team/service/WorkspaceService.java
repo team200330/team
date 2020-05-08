@@ -1,5 +1,6 @@
 package com.team.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.team.vo.Member;
@@ -50,5 +51,9 @@ public interface WorkspaceService {
 	List<Member> selectMemberAsc1ByWorkspaceNo(int workspaceNo);
 
 	List<Member> selectMemberAsc2ByWorkspaceNo(int workspaceNo);
+	
+	List<Workspace> selectWorkspaceByManagerEmail(String email);
+	
+	void updateWorkspaceManager(HashMap<String, Object> params);
 
 }

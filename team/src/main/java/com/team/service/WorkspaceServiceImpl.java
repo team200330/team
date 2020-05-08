@@ -1,5 +1,6 @@
 package com.team.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -139,6 +140,16 @@ public class WorkspaceServiceImpl implements WorkspaceService {
 	@Override
 	public List<Member> selectMemberAsc2ByWorkspaceNo(int workspaceNo) {
 		return workspaceMapper.selectMemberAsc2ByWorkspaceNo(workspaceNo);
+	}
+
+	@Override
+	public List<Workspace> selectWorkspaceByManagerEmail(String email) {
+		return workspaceMapper.selectWorkspaceByManagerEmail(email);
+	}
+
+	@Override
+	public void updateWorkspaceManager(HashMap<String, Object> params) {
+		workspaceMapper.updateWorkspaceManager(params);
 	}
 
 }

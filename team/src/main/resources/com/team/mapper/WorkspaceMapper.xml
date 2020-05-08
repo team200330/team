@@ -70,7 +70,7 @@
 	</resultMap>
 	
 	<resultMap type="WorkspaceMember" id="workspaceMemberMap">
-		<id column="workspace_no" property="workspaceNo" />
+		<result column="workspace_no" property="workspaceNo" />
 		<result column="email" property="email" />
 		<result column="type_no" property="typeNo" />
 	</resultMap>
@@ -200,5 +200,24 @@
 		WHERE workspace_no = #{ workspaceNo } 
 		AND email = #{ email }
 	</delete>
+	
+	
+	
+	
+	
+	
+	
+	<select id="selectWorkspaceByManagerEmail" parameterType="String" resultMap="workspaceMap">
+		SELECT * FROM workspace w
+		INNER JOIN workspace_member m ON w.workspace_no = m.workspace_no
+		WHERE m.email = #{email} AND m.type_no = 1 AND w.deleted = 0
+	</select>
+	
+	<update id="updateWorkspaceManager" parameterType="hashmap">
+		UPDATE workspace_member
+		SET type_no = #{ typeNo } 
+		WHERE email = #{ email } AND workspace_no = #{ workspaceNo }
+	</update>
+	
 	
 </mapper>
