@@ -53,6 +53,11 @@ public class MemberServiceImpl implements MemberService {
 		memberMapper.updateMember(member);
 	}
 
+	@Override
+	public void deleteMember(String email) {
+		memberMapper.deleteMember(email);
+	}
+
 	
 
 }

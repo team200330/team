@@ -29,7 +29,7 @@
     <div class="card-body register-card-body">
       <p class="login-box-msg">Register a new membership</p>
 
-      <form id="register-form" action="register.action" method="post">
+      <form id="register-form" action="register" method="post" enctype="multipart/form-data">
         <div class="input-group mb-3">
           <input type="text" class="form-control" id="name" name="name" placeholder="Full name">
           <div class="input-group-append">
@@ -71,7 +71,7 @@
         </div>
         
         <div class="input-group mb-3">
-          <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone : ex)000-0000-0000">
+          <input type="text" class="form-control" id="phone" name="phone" placeholder="'-'포함하여 입력">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-phone-alt"></span>
@@ -97,17 +97,22 @@
           </div>
         </div>
         
-        <div class="input-group mb-3">
+        <br>
+        <div  class="col-auto">
+             <button type="button" id="btn" class="fas fa-home">우편번호 찾기</button>
+        </div><br>
+        
+       <!--  <div class="input-group mb-3">
           <input type="text" class="form-control" id="addressNo" name="addressNo" placeholder="Address">
           <div class="input-group-append">
             <div class="input-group-text">
               <button type="button" id="btn" class="fas fa-home">우편번호 찾기</button>
             </div>
           </div>
-        </div>
+        </div> -->
         
         <div class="input-group mb-3">
-          <input type="text" class="form-control" id="roadAddr" name="roadAddr" placeholder="Address">
+          <input type="text" class="form-control" id="roadAddr" name="roadnameAddr" placeholder="Address">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-home"></span>
@@ -124,11 +129,11 @@
           </div>
         </div>
         
-        <div>
-        	<label for="img">프로필 이미지</label>
-        	<input type="file" id="img" name="img" />
-        	<div class="select-img"><img src="" /></div>
-        </div>
+	        <div>
+	        	<label for="img">프로필 이미지</label>
+	        	<input type="file" id="img" name="img2" />
+	        	<div class="select-img"><img src="" /></div>
+	        </div>
         
         <div class="row">
           <!-- /.col -->
@@ -140,7 +145,7 @@
       </form>
 
 
-      <a href="login.action" class="text-center">I already have a membership</a>
+      <a href="/team/account/login" class="text-center">I already have a membership</a>
     </div>
     <!-- /.form-box -->
   </div><!-- /.card -->
@@ -158,7 +163,7 @@
 <jsp:include page="/WEB-INF/views/modules/common-js.jsp" />
 
 	<!-- 다음 주소 API -->
-	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 	<script type="text/javascript">
 	$(function(){
@@ -166,7 +171,7 @@
 		//우편번호 api
 		$("#addressNo, #roadAddr").attr({"readonly": "readonly" });
 
-		$("#btn").on("click", function(event) {
+		$(document).on("click", "#btn", function(event) {
 			 new daum.Postcode({
 			        oncomplete: function(data) {
 
@@ -212,11 +217,17 @@
 				$("#confirm").focus();
 				return;
 			}
+			if($("#password").val() != $("#confirm").val() ){
+				alert("비밀번호가 일치하지 않습니다.");
+				$("#password").focus();
+				return;
+			}
 			if($("#phone").val() == '' ){
 				alert("핸드폰을 입력하세요!");
 				$("#phone").focus();
 				return;
 			}
+			
 			
 			// 2. 오류가 없다면 서버로 전송
 			$("#register-form").submit();
@@ -226,7 +237,7 @@
 		$("#email-check").on("click", function(event) {
 			
 			$.ajax({
-				"url" : "checkEmail.action",
+				"url" : "/team/account/checkEmail",
 				"method" : "get",
 				"data" : { "email" : $("#email").val() },
 				"success" : function(result, status, xhr) {
@@ -237,16 +248,11 @@
 					}
 				},
 				"error" : function(xhr, status, err) { alert("이메일 중복체크 실패"); }
+				
 			});
 
 		});
 
-		// 비밀번호 confirm
-		$("#confirm").change(function(event) {
-			var pw = $("#password").val();
-			if ($(this).val() != pw) $("#pw-check-result").text("비밀번호가 일치하지 않습니다.");
-			else $("#pw-check-result").text("");
-		});
 		
 		
 	});

@@ -51,44 +51,66 @@ public class AccountController {
 	private LogService logService;
 	
 	//회원가입 페이지 이동
-	@GetMapping(path = {"/register.action"})
+	@GetMapping("/register")
 	public String toRegister() {
 		
 		return "account/register";
 	}
 	
 	//회원가입
-	@PostMapping(path = {"/register.action"})
-	public String register(Member member, RedirectAttributes attr) {
+	@PostMapping("/register")
+	public String register(@RequestParam("img2")MultipartFile file, HttpServletRequest req, 
+			Member member, RedirectAttributes attr) {
+		
+		
+		ServletContext application = req.getServletContext();
+		String path = application.getRealPath("/resources/img/profile");
+		String fileName = file.getOriginalFilename();
+		
+		try {
+			File f = new File(path, fileName);
+			file.transferTo( f ); //파일 저장
+			member.setImg(fileName);
+		} 
+		catch (Exception ex) { ex.printStackTrace(); }
 		
 		memberService.registerMember(member);
 		System.out.println(member.toString());
 		attr.addFlashAttribute("newEmail", member.getEmail());
 		
-		return "redirect:login.action";
+		return "account/login";
 	}
 	
 	//로그인 페이지 이동
-	@GetMapping(path = {"/login.action"})
+	@GetMapping("/login")
 	public String toLogin() {
 		return "account/login";
 	}
 	
 	//로그인
-	@PostMapping(path = {"login.action"})
-	public String login(Member member, HttpSession session, Model model, RedirectAttributes attr) {
+	@PostMapping("/login")
+	public String login(Member member, HttpSession session, Model model) {
 	
 		Member member2 = memberService.findMemberByEmailAndPassword(member);
 		if (member2 == null) {
-			attr.addFlashAttribute("loginFalse", member);
-			return "redirect:/account/login.action";
+			return "redirect:/account/login";
 		}else {
 			session.setAttribute("loginuser", member2);
 			model.addAttribute("member", member2);
 			
+			// 로그인시 해당 유저의 이메일로 워크스페이스 목록 가져오기(탑바)
 			List<Workspace> workspaces = workspaceService.selectWorkspacesByEmail(member2.getEmail());
 			session.setAttribute("workspaces",workspaces);
 			
+			Workspace workspace = workspaceService.selectAscWorkspaceByEmail(member2.getEmail());
+			session.setAttribute("workspaceNo",workspace.getWorkspaceNo());
+			
+			//워크스페이스가 없을때 만드는 화면으로
+			if (workspaces.isEmpty()) {
+				
+				return "redirect:/workspace/create-workspace";
+				
+			} else {
 			
 			// 로그인시 읽지않은 피드백개수 가져오기 (탑바)
 			HashMap<String, Object> params = new HashMap<>();
@@ -101,14 +123,16 @@ public class AccountController {
 			params.put("projectNo", 1); // 1 == 임시 프로젝트 번호
 			session.setAttribute("logCount", logService.uncheckedLogCount(params));
 			session.setAttribute("latestLogDate", logService.findLatestWriteDate(params));
+
+			}
 			
+			return "redirect:/project/prlist";
 			
-			return "redirect:/";
 		}
 	}
 	
 	//이메일 중복체크
-	@GetMapping("/checkEmail.action")
+	@GetMapping("/checkEmail")
 	@ResponseBody
 	public String checkEmail(String email) {
 		Member member = memberService.findMemberByEmail(email);
@@ -117,12 +141,13 @@ public class AccountController {
 	}
 	
 	//로그아웃 
-	@GetMapping(path = {"/logout.action"})
+	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		
 		session.removeAttribute("loginuser");
 		return "redirect:/";
 	}
+	
 	
 	
 	
@@ -195,7 +220,9 @@ public class AccountController {
 
 	@RequestMapping(value = "/getWorkspaceMembers", produces = "application/text; charset=utf8")
 	@ResponseBody
-	public String getWorkspaceMembers(int workspaceNo, String email) {
+	public String getWorkspaceMembers(int workspaceNo, String email, String str) {
+		
+		System.out.println(str);
 		
 		String result = "";
 		for (Member m : feedbackService.findWorkspaceMembers(workspaceNo)) {
@@ -217,35 +244,34 @@ public class AccountController {
 	
 	
 	@PostMapping("/updateWorkspaceMananger")
-	public String deleteUser(String email, String managerEmail, int workspaceNo) {
+	@ResponseBody
+	public String updateWorkspaceManager(String email, String managerEmail, int workspaceNo) {
 		HashMap<String, Object> params = new HashMap<>();
 		params.put("email", email);
 		params.put("typeNo", 2);
 		params.put("workspaceNo", workspaceNo);
-		
-		System.out.println(params.values());
-		workspaceService.updateWorkspaceManager(params);
+
+		workspaceService.updateWorkspaceManager(params);  // 기존매니저 일반유저로 바꾸고
 		
 		params.put("email", managerEmail);
 		params.put("typeNo", 1);
+
+		workspaceService.updateWorkspaceManager(params); // 매니저 다른유저로 바꾸기
 		
-		System.out.println(params.values());
-		workspaceService.updateWorkspaceManager(params);
-		
-		return "/home2";
+		return "success";
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	@PostMapping("/deleteMember")
+	public String deleteMember(String email, HttpSession session) {
+		System.out.println("--------------------deleteMember----------------------");
+		
+		memberService.deleteMember(email);
+		session.removeAttribute("loginuser");
+		
+		return "redirect:/home2";
+	}
 	
 	
 	

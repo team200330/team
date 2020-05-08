@@ -54,4 +54,6 @@ public interface WorkspaceMapper {
 	List<Workspace> selectWorkspaceByManagerEmail(String email);
 	
 	void updateWorkspaceManager(HashMap<String, Object> params);
+
+	Workspace selectAscWorkspaceByEmail(String email);
 }

@@ -142,7 +142,7 @@
               	<h6 style="margin-top:50px">관련된 업무</h6>
               	<div id="add_task" class="btn btn-secondary float_left" style="width:37px;">+</div>
               	<div id="selectTask"style="padding-left: 55px;padding-top: 7;"></div>
-              	<input type="hidden" name="taskNo">
+              	<input id="hiddenTaskNo" type="hidden" name="taskNo">
               </div>
               <br/><br/>
               <div id="textarea">
@@ -363,10 +363,14 @@
 		});
 		$("#submit_btn").click(function() {
 			if (!confirm("피드백을 작성할까요?")) return;
+			if($("#hiddenTaskNo").val().length == 0) $("#hiddenTaskNo").removeAttr("name");
 			
 			var searchType = $("#dropdown-select").attr("data-value");
 			var feedback = $("#feedback_write_form").serializeArray();
 			var content = $("#feedback_write_form").children("#textarea").children("textarea").val();
+			
+			
+			
 			
 			$.ajax({
 				url : "/team/feedback/write",
@@ -375,13 +379,13 @@
 				success : function(resp, status, xhr) {
 					$("#writeFeedbackModal").modal("hide");
 					$("#feedback-list-container").load("/team/feedback/search?searchType=" + searchType + "&email=${loginuser.email}");
-
+					$("#hiddenTaskNo").attr("name", "taskNo");
 					toastr.success("피드백&nbsp;&nbsp; " + textSubString(content) + " 을 작성했습니다");
 				},
 				error : function(xhr, status, err) {
 					console.log(err);
 				}
-			}); 
+			});  
 		});
 		
 		// 피드백 검색

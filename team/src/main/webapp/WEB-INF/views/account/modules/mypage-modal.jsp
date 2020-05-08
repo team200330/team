@@ -26,7 +26,14 @@
               	 			<tr height="60px" id="${workspace.workspaceNo}">
               	 			<td width="30%">${workspace.workspaceName}</td>
               	 			<td width="50%">
-              	 				<img class="img-circle img-bordered-sm" src="/team/resources/img/profile-default.jpg">
+              	 				<c:choose>
+									<c:when test="${not empty loginuser.img}">
+										<img class="img-circle img-bordered-sm" src="/team/resources/img/profile/${loginuser.img}">
+									</c:when>
+									<c:otherwise>
+										<img class="img-circle img-bordered-sm" src="/team/resources/img/profile-default.jpg">
+									</c:otherwise>
+								</c:choose>
               	 				<i class="fas fa-chevron-right" style="margin-left: 7px;margin-right: 7px;"></i>
               	 				<img class="img-circle img-bordered-sm change-manager-img" src="/team/resources/img/profile-default.jpg">
               	 				<span class="manager-email">관리자를 선택하세요</span>

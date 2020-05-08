@@ -59,7 +59,6 @@
 	<property name="workspaceMapper" ref="workspaceMapper" />	
 	</bean>
 	
-
 	<bean id="memberService" class="com.team.service.MemberServiceImpl">
 		<property name="memberMapper" ref="memberMapper"></property>
 	</bean>
@@ -67,7 +66,7 @@
 	<bean id="projectService" class="com.team.service.ProjectServiceImpl">
 		<property name="projectMapper" ref="projectMapper"/>
 	</bean>
-
+	
 	<bean id="mailSender" class = "org.springframework.mail.javamail.JavaMailSenderImpl">
       <property name="host" value="smtp.gmail.com" />
       <property name="port" value="587" />

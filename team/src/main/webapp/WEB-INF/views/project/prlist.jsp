@@ -10,7 +10,7 @@
 
   <%@include file="/WEB-INF/views/modules/common-css.jsp" %>
  <style>
-
+	.content-wrapper {background: rgb(236, 236, 236);}
 	.page-item.active .page-link {z-index: 1;color: #fff;background-color: #6c757d;border-color: #6c757d;}
  	.bg-info { background-color: #f4f6f9!important; }
  	.bg-info, .bg-info>a { color: #343a40!important; }
@@ -161,9 +161,6 @@
     <!-- /.content -->
   <form id="detail-form" action="detail.action" method="get">
   	<input type="hidden" id="projectNo" name="projectNo">
-<%-- <input type="hidden" id="pageNo" name="pageNo" value="${ pager.pageNo }">
-  	<input type="hidden" id="searchType" name="searchType" value="${ param.searchType }">
-  	<input type="hidden" id="searchKey" name="searchKey" value="${ param.searchKey }"> --%>
   </form>
   <form id="task-form" action="task.action" method="get">
   	<input type="hidden" id="projectNo" name="projectNo">
@@ -286,7 +283,8 @@ $(function() {
 		}
 	});
 	
-	
+	if($('input[name=templateNo]').val() == "basics") { $('input[name=templateNo]').val("1") }
+
 	$('input[name=templateNo]').on('click', function(){	
 		if( $(this).val() == "basics"){ $(this).val("1") }
 		else if($(this).val() == "weekday"){ $(this).val("2") }
@@ -297,39 +295,6 @@ $(function() {
 	});
 	// -- 템플릿 선택 끝
 
-	
-	/*$('.selectProNo2').on('click', function(){
-		//var selectProNoName = ['상태없음', '진행중', '완료', '보류', '취소'];
-		
-		var projectNo = $(this).prev('.projectNo').attr('id');
-		var proNo = $(this).val();
-		console.log(projectNo); // 12345
-		console.log(proNo)		// 상태없음, 진행중, 완료, 보류, 취소
-
-		var option1 = $("<option value='"+projectNo+"'>"+ proNo+"</option>" )
-		console.log(option1)
-		$('.selectProNo2').append(option1);
-		//처음에 추가
-		$('.selectProNo2').prepend(option1);
- 		$('.selectProNo2 option:first').remove();
-		$('.selectProNo2').append('<option value="'+ projectNo +'">'+ proNo +'</option>');
-		if ($('.selectProNo2').val() == '1'){ 
-			for(var count = 0; count < proNo.size(); count++){
-				var option2 = $("<option value='"+projectNo[count]+"'>"+ proNo+"</option>" )
-				console.log(optopn2)
-				$('.selectProNo2').append(option2);
-			}
-			$("<option value='"+projectNo+"'>"+ proNo+"</option>" ).css({'display':'none'});
-			
-		} 
-		
- 		for(var count = 0; count < changeItem.size(); count++){                
-		                var option = $("<option>"+changeItem[count]+"</option>");
-		                $('#select2').append(option);
-		} 
-		
-	})*/
-	
 	// 비공개 공개 선택
 	$('input[name=proPublic]').on('click', function(){
 		var input_id_check =  $(this).attr("id")
@@ -406,7 +371,13 @@ $(function() {
 					$(".selected1").removeClass("selected1");
 					p_check_label.addClass("selected1");
 				}
-				$(".mem2").parent().remove();
+				//$("#mem2").parent().remove();
+				$("#mem2").html(
+	              		'<div class="float_left mem2" data-name="${loginuser.name }" data-email="${loginuser.email }">'+
+						'<div class="mem_name2" >${loginuser.email }</div>'+
+						'<input type="hidden" name="email" value="${loginuser.email }"/>'+
+						'</div>'
+						)
 				
 				// list
 				$('.list-container1').load('/team/project/list');

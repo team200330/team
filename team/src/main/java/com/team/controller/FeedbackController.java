@@ -105,7 +105,7 @@ public class FeedbackController {
 	
 	@PostMapping("/write")
 	@ResponseBody
-	public String writeFeedback(Feedback feedback, String[] email, String isPublic) {
+	public String writeFeedback(Feedback feedback, String[] email, String isPublic) {		
 		feedback.setOpened(isPublic.equals("true") ? true : false);
 		feedback.setWorkspaceNo(workspaceNo);
 		feedbackService.writeFeedback(feedback, email);

@@ -48,8 +48,8 @@ public class ProjectController {
 	
 	// 임시 워크스페이스번호
 	// 워크스페이스 번호 세션에 저장되면 바꿀거 : feedbackList, searchFeedback, writeFeedback
-	static final int workspaceNo = 6;
-	//private int workspaceNo
+	//static final int workspaceNo = 6;
+	private int workspaceNo;
 
 	//로그인 페이지 이동
 	@GetMapping(path = {"/task.action"})
@@ -68,7 +68,7 @@ public class ProjectController {
 	public String showProjectList( Model model, HttpServletRequest request) {		
 		HttpSession session = request.getSession();
         session.getAttribute("loginuser");
-        //workspaceNo = session.getAttribute("workspaceNo");
+        workspaceNo = (int) session.getAttribute("workspaceNo");
         // 임시 워크스페이스 번호 // 워크스페이스 속해있는 멤버 불러오기
  		if ( workspaceMembers == null ) workspaceMembers = projectService.findWorkspaceMembers(workspaceNo);
  		model.addAttribute("workspaceMembers", workspaceMembers);
@@ -84,6 +84,7 @@ public class ProjectController {
 		
 		List<Project> projectList2 = projectService.findProject2(params);
 		model.addAttribute("project2", projectList2);
+		
 		
 //		int pageSize = 2;	// 전체게시글수
 //		int pagerSize = 8;  // 한페이지에 나올 갯수

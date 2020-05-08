@@ -30,7 +30,7 @@
     <div class="card-body login-card-body">
       <p class="login-box-msg">Sign in to start your session</p>
 
-      <form id="login-form" action="login.action" method="post">
+      <form id="login-form" action="/team/account/login" method="post">
         <div class="input-group mb-3">
           <input type="email" id="email" name="email" class="form-control" placeholder="Email">
           <div class="input-group-append">
@@ -59,7 +59,7 @@
           </div>
           <!-- /.col -->
           <div class="col-4">
-            <button type="login" class="btn btn-primary btn-block">Sign In</button>
+            <button type="button" id="login" class="btn btn-primary btn-block">Sign In</button>
           </div>
           <!-- /.col -->
         </div>
@@ -73,7 +73,7 @@
         <a href="#">I forgot my password</a>
       </p>
       <p class="mb-0">
-        <a href="register.action" class="text-center">Register a new membership</a>
+        <a href="/team/account/register" class="text-center">Register a new membership</a>
       </p>
     </div>
     <!-- /.login-card-body -->
@@ -92,7 +92,8 @@
 <jsp:include page="/WEB-INF/views/modules/common-css.jsp" />
 		
 <script type="text/javascript">
-
+$(function(){
+	
 		var newId = '${ newId }'; 
 		var loginFalse = '${ loginFalse }'; 
 		

@@ -21,7 +21,6 @@
 		<typeAlias type="com.team.vo.Workspace" alias="Workspace" />
 		<typeAlias type="com.team.vo.WorkspaceMember" alias="WorkspaceMember" />
 		<typeAlias type="com.team.vo.FeedbackReceiver" alias="FeedbackReceiver"/>
-		<typeAlias type="com.team.vo.Comments" alias="Comments"/>
 	</typeAliases>
 	
 	<mappers>

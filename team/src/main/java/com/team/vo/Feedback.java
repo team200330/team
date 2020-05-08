@@ -12,7 +12,7 @@ public class Feedback {
 	private Date writedate;
 	private String sender;
 	private int workspaceNo;
-	private int taskNo;
+	private Integer taskNo;
 	private boolean opened;
 	
 	private Member feedbackSender;
