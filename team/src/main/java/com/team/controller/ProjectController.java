@@ -84,6 +84,7 @@ public class ProjectController {
 		List<Project> projectList2 = projectService.findProject2(params);
 		model.addAttribute("project2", projectList2);
 		
+		
 //		int pageSize = 2;	// 전체게시글수
 //		int pagerSize = 8;  // 한페이지에 나올 갯수
 //		HashMap<String, Object> params = new HashMap<>();

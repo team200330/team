@@ -64,10 +64,8 @@
 			              <div class="row" style="padding:10px">
 			              	<div id="add_mem" class="btn btn-secondary float_left" style="width:37px;">+</div>
 			              	<div id="mem">
-		
 			              		<div class="float_left mem2" data-name="${loginuser.name }" data-email="${loginuser.email }">
 									<div class="mem_name2" >${loginuser.email }</div>
-									<a href="#" class="mem_rm2" aria-hidden="true">&times;</a>
 									<input type="hidden" name="email" value="${loginuser.email }"/>
 								</div>
 			              	</div>
@@ -104,7 +102,7 @@
 					  <div class="row">
 				 		<label for="template1" class="overflow-hidden display-none margin-right-10px">
 			            <div class="info-box">
-			              <span id="chklabel1" class="selected1 info-box-icon bg-info elevation-1 width-50px"><i   id="nametemplate" class="fas fa-border-none"></i></span>
+			              <span id="chklabel1" class="selected1 info-box-icon bg-info elevation-1 width-50px"><i id="nametemplate" class="fas fa-border-none"></i></span>
 			              <div class="info-box-content">
 			                <span class="info-box-text">기본</span>
 			              </div>
