@@ -68,6 +68,7 @@ public class ProjectController {
 		HttpSession session = request.getSession();
         session.getAttribute("loginuser");
         workspaceNo = (int) session.getAttribute("workspaceNo");
+        System.out.println(workspaceNo);
         // 임시 워크스페이스 번호 // 워크스페이스 속해있는 멤버 불러오기
  		if ( workspaceMembers == null ) workspaceMembers = projectService.findWorkspaceMembers(workspaceNo);
  		model.addAttribute("workspaceMembers", workspaceMembers);
