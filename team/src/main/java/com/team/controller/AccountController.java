@@ -103,15 +103,16 @@ public class AccountController {
 			session.setAttribute("workspaces",workspaces);
 			
 			Workspace workspace = workspaceService.selectAscWorkspaceByEmail(member2.getEmail());
-			session.setAttribute("workspaceNo",workspace.getWorkspaceNo());
 			
 			//워크스페이스가 없을때 만드는 화면으로
-			if (workspaces.isEmpty()) {
+			if (workspace == null || workspaces.isEmpty()) {
 				
 				return "redirect:/workspace/create-workspace";
 				
 			} else {
 			
+			session.setAttribute("workspaceNo",workspace.getWorkspaceNo());
+				
 			// 로그인시 읽지않은 피드백개수 가져오기 (탑바)
 			HashMap<String, Object> params = new HashMap<>();
 			params.put("email", member2.getEmail());
