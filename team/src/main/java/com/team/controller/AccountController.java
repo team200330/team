@@ -51,37 +51,49 @@ public class AccountController {
 	private LogService logService;
 	
 	//회원가입 페이지 이동
-	@GetMapping(path = {"/register.action"})
+	@GetMapping("/register")
 	public String toRegister() {
 		
 		return "account/register";
 	}
 	
 	//회원가입
-	@PostMapping(path = {"/register.action"})
-	public String register(Member member, RedirectAttributes attr) {
+	@PostMapping("/register")
+	public String register(@RequestParam("img2")MultipartFile file, HttpServletRequest req, 
+			Member member, RedirectAttributes attr) {
+		
+		
+		ServletContext application = req.getServletContext();
+		String path = application.getRealPath("/resources/img/profile");
+		String fileName = file.getOriginalFilename();
+		
+		try {
+			File f = new File(path, fileName);
+			file.transferTo( f ); //파일 저장
+			member.setImg(fileName);
+		} 
+		catch (Exception ex) { ex.printStackTrace(); }
 		
 		memberService.registerMember(member);
 		System.out.println(member.toString());
 		attr.addFlashAttribute("newEmail", member.getEmail());
 		
-		return "redirect:login.action";
+		return "account/login";
 	}
 	
 	//로그인 페이지 이동
-	@GetMapping(path = {"/login.action"})
+	@GetMapping("/login")
 	public String toLogin() {
 		return "account/login";
 	}
 	
 	//로그인
-	@PostMapping(path = {"login.action"})
-	public String login(Member member, HttpSession session, Model model, RedirectAttributes attr) {
+	@PostMapping("/login")
+	public String login(Member member, HttpSession session, Model model) {
 	
 		Member member2 = memberService.findMemberByEmailAndPassword(member);
 		if (member2 == null) {
-			attr.addFlashAttribute("loginFalse", member);
-			return "redirect:/account/login.action";
+			return "redirect:/account/login";
 		}else {
 			session.setAttribute("loginuser", member2);
 			model.addAttribute("member", member2);
@@ -120,7 +132,7 @@ public class AccountController {
 	}
 	
 	//이메일 중복체크
-	@GetMapping("/checkEmail.action")
+	@GetMapping("/checkEmail")
 	@ResponseBody
 	public String checkEmail(String email) {
 		Member member = memberService.findMemberByEmail(email);
@@ -129,12 +141,13 @@ public class AccountController {
 	}
 	
 	//로그아웃 
-	@GetMapping(path = {"/logout.action"})
+	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		
 		session.removeAttribute("loginuser");
 		return "redirect:/";
 	}
+	
 	
 	
 	
@@ -249,6 +262,7 @@ public class AccountController {
 	}
 	
 	
+
 	@PostMapping("/deleteMember")
 	public String deleteMember(String email, HttpSession session) {
 		System.out.println("--------------------deleteMember----------------------");
@@ -258,15 +272,6 @@ public class AccountController {
 		
 		return "redirect:/home2";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
