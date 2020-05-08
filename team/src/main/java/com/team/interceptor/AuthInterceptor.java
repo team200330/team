@@ -81,6 +81,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 			
 			// 임시 프로젝트 번호 : 1
 			Log log = new Log(email, new Date(), taskNo, state, 1);
+			System.out.println(log.toString());
 			logService.writeLog(log);
 		}
 		
