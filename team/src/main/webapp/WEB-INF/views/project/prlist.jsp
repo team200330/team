@@ -10,7 +10,7 @@
 
   <%@include file="/WEB-INF/views/modules/common-css.jsp" %>
  <style>
-
+	.content-wrapper {background: rgb(236, 236, 236);}
 	.page-item.active .page-link {z-index: 1;color: #fff;background-color: #6c757d;border-color: #6c757d;}
  	.bg-info { background-color: #f4f6f9!important; }
  	.bg-info, .bg-info>a { color: #343a40!important; }
@@ -374,7 +374,13 @@ $(function() {
 					$(".selected1").removeClass("selected1");
 					p_check_label.addClass("selected1");
 				}
-				$(".mem2").parent().remove();
+				//$("#mem2").parent().remove();
+				$("#mem2").html(
+	              		'<div class="float_left mem2" data-name="${loginuser.name }" data-email="${loginuser.email }">'+
+						'<div class="mem_name2" >${loginuser.email }</div>'+
+						'<input type="hidden" name="email" value="${loginuser.email }"/>'+
+						'</div>'
+						)
 				
 				// list
 				$('.list-container1').load('/team/project/list');
