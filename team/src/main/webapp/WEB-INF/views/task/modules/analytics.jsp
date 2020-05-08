@@ -12,7 +12,7 @@
                 <div class="row">
                   <div class="col-sm-2 col-6">
                     <div class="description-block border-right">                    
-                      <span class="description-text">시작일</span><br>               
+                      <span class="description-text">시작일(진행중)</span><br>               
                       <i class="fas fa-plus-square" style="font-size: 20px;"></i>       
                     </div>
                     <!-- /.description-block -->
@@ -20,7 +20,7 @@
                   <!-- /.col -->
                   <div class="col-sm-2 col-6">
                     <div class="description-block border-right">                    
-                      <span class="description-text">마감일</span><br> 
+                      <span class="description-text">마감일(진행중)</span><br> 
                       <i class="fas fa-plus-square" style="font-size: 20px;"></i>            
                     </div>
                     <!-- /.description-block -->
@@ -28,7 +28,7 @@
                   <!-- /.col -->
                   <div class="col-sm-2 col-6">
                     <div class="description-block border-right">                    
-                      <span class="description-text">완료일</span><br>    
+                      <span class="description-text">완료일(진행중)</span><br>    
                       <i class="fas fa-plus-square" style="font-size: 20px;"></i>              
                     </div>
                     <!-- /.description-block -->
@@ -37,14 +37,14 @@
                   <div class="col-sm-1 col-6">
                     <div class="description-block">                    
                       <span class="description-text">경과시간</span><br>                      
-                      <h5 class="description-header" style="display: inline;">12시간</h5>
+                      <h5 class="description-header" style="display: inline;">12시간(진행중)</h5>
                     </div>
                     <!-- /.description-block -->
                   </div>
                   <div class="col-sm-1 col-6">
                     <div class="description-block">                    
                       <span class="description-text">남은시간</span><br>                      
-                      <h5 class="description-header" style="display: inline;">12시간</h5>
+                      <h5 class="description-header" style="display: inline;">12시간(진행중)</h5>
                     </div>
                     <!-- /.description-block -->
                   </div>
@@ -53,7 +53,7 @@
                     <div class="description-block border-right border-left">                    
                       <span class="description-text">완료됨</span><br>                      
                       <h5 class="description-header" style="display: inline;">${ CountFinishTaskList }개 업무</h5>
-                      <span class="description-percentage text-success">(50%)</span>
+                      <span class="description-percentage text-success">(50%)(진행중)</span>
                     </div>
                     <!-- /.description-block -->
                   </div>
@@ -62,7 +62,7 @@
                     <div class="description-block">                    
                       <span class="description-text">남은 업무</span><br>
                       <h5 class="description-header" style="display: inline;">${ CountnotFinishTaskList }개 업무</h5>
-                      <span class="description-percentage text-danger">(50%)</span>
+                      <span class="description-percentage text-danger">(50%)(진행중)</span>
                     </div>
                     <!-- /.description-block -->
                   </div>
@@ -80,7 +80,10 @@
                     </p>
                     <!-- /.progress-group -->
                     <div class="progress-group text-right mb-3">
-                                 완료됨 50%  (4개 업무)     마감일 지남 0%  (0개 업무)     계획됨 0%  (0개 업무)     마감일 없음 50%  (4개 업무)
+                                 완료됨 50%(진행중)  (${ CountFinishTaskList }개 업무)
+					   마감일 지남 0%(진행중)  (0개 업무(진행중))
+					   계획됨 0%(진행중)  (${ CountnotFinishTaskList }개 업무)
+					   마감일 없음 50%(진행중)  (${ CountendDateNullTaskList }개 업무)
                       <span class="float-right"></span>
                       <div class="progress progress-sm">
                         <div class="progress-bar bg-warning" style="width: 50%"></div>

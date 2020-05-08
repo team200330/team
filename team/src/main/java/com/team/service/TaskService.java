@@ -30,6 +30,10 @@ public interface TaskService {
 	int finishTaskListByProjectMember(ProjectMember projectmember);
 
 	int notfinishTaskListByProjectMember(ProjectMember projectmember);
+
+	int allTaskListByProjectMember(ProjectMember projectmember);
+
+	int endDateNullTaskListByProjectMember(ProjectMember projectmember);
 	
 
 }

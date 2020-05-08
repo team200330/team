@@ -78,6 +78,18 @@ public class TaskServiceImpl implements TaskService {
 		return CountnotFinishTaskList;
 	}
 
+	@Override
+	public int allTaskListByProjectMember(ProjectMember projectmember) {
+		int CountallTaskList = taskMapper.allTaskListByProjectMember(projectmember);
+		return CountallTaskList;
+	}
+
+	@Override
+	public int endDateNullTaskListByProjectMember(ProjectMember projectmember) {
+		int CountendDateNullTaskList = taskMapper.endDateNullTaskListByProjectMember(projectmember);
+		return CountendDateNullTaskList;
+	}
+
 	
 	
 }

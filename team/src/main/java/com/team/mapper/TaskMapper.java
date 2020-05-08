@@ -33,5 +33,9 @@ public interface TaskMapper {
 
 	int notfinishTaskListByProjectMember(ProjectMember projectmember);
 
+	int allTaskListByProjectMember(ProjectMember projectmember);
+
+	int endDateNullTaskListByProjectMember(ProjectMember projectmember);
+
 	
 }

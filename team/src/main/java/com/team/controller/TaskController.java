@@ -111,19 +111,30 @@ public class TaskController {
 	
 	@GetMapping(path = {"/analyticsmain"})
 	public String showanalyticsMain(Model model, HttpSession session, ProjectMember projectmember) {
+
 		
 		projectmember.setProjectNo(((Project) session.getAttribute("projectByNo")).getProjectNo());
+		//프로젝트 세션에 있는 프로젝트넘버값을 셋한다.
 		projectmember.setEmail(((Member) session.getAttribute("loginuser")).getEmail());
-		
-		System.out.println((((Project) session.getAttribute("projectByNo")).getProjectNo()));
-		System.out.println(((Member) session.getAttribute("loginuser")).getEmail());
 		
 		int CountFinishTaskList = taskService.finishTaskListByProjectMember(projectmember);
 		model.addAttribute("CountFinishTaskList",CountFinishTaskList);
 		
 		int CountnotFinishTaskList = taskService.notfinishTaskListByProjectMember(projectmember);
 		model.addAttribute("CountnotFinishTaskList",CountnotFinishTaskList);
-				
+		
+		int CountallTaskList = taskService.allTaskListByProjectMember(projectmember);
+		model.addAttribute("CountallTaskList",CountallTaskList);
+		
+		int something1 = (int)((int)CountFinishTaskList / (int)CountallTaskList * 100);
+		//퍼센트작업중
+		
+		int something2 = (int)((int)CountnotFinishTaskList / (int)CountallTaskList * 100);
+		//퍼센트작업중
+		
+		int CountendDateNullTaskList = taskService.endDateNullTaskListByProjectMember(projectmember);
+		model.addAttribute("CountendDateNullTaskList",CountendDateNullTaskList);
+		
 		return "task/analyticsmain";
 	}
 	
