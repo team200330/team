@@ -112,15 +112,18 @@ public class TaskController {
 	@GetMapping(path = {"/analyticsmain"})
 	public String showanalyticsMain(Model model, HttpSession session, ProjectMember projectmember) {
 		
+		projectmember.setProjectNo(((Project) session.getAttribute("projectByNo")).getProjectNo());
+		projectmember.setEmail(((Member) session.getAttribute("loginuser")).getEmail());
 		
-		int CountFinishTaskList = taskService.finishTaskListByEmail(((Member) session.getAttribute("loginuser")).getEmail());
+		System.out.println((((Project) session.getAttribute("projectByNo")).getProjectNo()));
+		System.out.println(((Member) session.getAttribute("loginuser")).getEmail());
+		
+		int CountFinishTaskList = taskService.finishTaskListByProjectMember(projectmember);
 		model.addAttribute("CountFinishTaskList",CountFinishTaskList);
 		
-		int CountnotFinishTaskList = taskService.notfinishTaskListByEmail(((Member) session.getAttribute("loginuser")).getEmail());
+		int CountnotFinishTaskList = taskService.notfinishTaskListByProjectMember(projectmember);
 		model.addAttribute("CountnotFinishTaskList",CountnotFinishTaskList);
-		
-		
-		
+				
 		return "task/analyticsmain";
 	}
 	

@@ -71,7 +71,7 @@
 	</select>
 	
 	
-	<select id="finishTaskListByEmail" parameterType="String" resultType="int">
+	<select id="finishTaskListByProjectMember" parameterType="String" resultType="int">
 		select COUNT(*) from project p
 		inner join project_member pm
 		on p.project_no = pm.project_no		
@@ -82,11 +82,11 @@
 		inner join workspace w
 		on w.workspace_no = p.workspace_no		
 		where pm.email = #{ email } 
-		AND p.project_no = '84'
+		AND p.project_no = #{ projectNo }
 		AND end_date IS not NULL;
 	</select>	
 	
-	<select id="notfinishTaskListByEmail" parameterType="String" resultType="int">
+	<select id="notfinishTaskListByProjectMember" parameterType="String" resultType="int">
 		select COUNT(*) from project p
 		inner join project_member pm
 		on p.project_no = pm.project_no		
@@ -97,31 +97,8 @@
 		inner join workspace w
 		on w.workspace_no = p.workspace_no		
 		where pm.email = #{ email } 
-		AND p.project_no = '84'
+		AND p.project_no = #{ projectNo }
 		AND end_date IS NULL;
 	</select>
 	
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
