@@ -10,7 +10,7 @@ public interface TaskService {
 
 	void addTaskList(TaskList taskList);
 
-	List<TaskList> searchTaskList();
+	List<TaskList> searchTaskList(int projectNo);
 
 	void deleteTaskList(int listNo);
 

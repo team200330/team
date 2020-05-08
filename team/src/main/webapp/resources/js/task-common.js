@@ -72,6 +72,7 @@ $(function() {
 	// 엔터 submit 시 ajax로 tasklist Add
 	$(document).on("keydown", "#add-task-textarea", function(key) {
 		if (key.keyCode == 13) {
+			console.log($("#add-task-projectNo").attr("value"));
 			var taskList = {
 				"listName" : $("#add-task-textarea").val(),
 				"projectNo" : $("#add-task-projectNo").attr("value")
