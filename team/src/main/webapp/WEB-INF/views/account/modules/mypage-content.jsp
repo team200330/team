@@ -51,12 +51,13 @@
 												</div>
 												<form id="img-form" action="/team/account/updateImg" method="post" enctype="multipart/form-data">
 													<input type="file" name="img" id="img-select" style="display:none">
-													<input type="hidden" name="email" value="${loginuser.email }">
+													<input type="hidden" name="email" value="${loginuser.email}">
 												</form>
 												
 											</div>
 											<div style="padding-left:50px;" class="profile-update">
 												<form id="profile-form" method="post" action="/team/account/updateProfile" onSubmit="return false;">
+													<input type="hidden" name="email" value="${loginuser.email}">
 													<div>
 													<h6>이름</h6>
 													<input type="text" name="name" value="${loginuser.name}"><br>
@@ -83,10 +84,9 @@
 													
 													<div>
 													<h6>주소</h6>
-													<input readonly="readonly" type="text" id="roadAddress" name="roadnameAddr" placeholder="도로명주소">
-													<button id="addr-btn" style="margin-left:3px; font-size: 10.5pt;border: 1px solid #d2d2d2;border-radius: .20rem;padding: 5 15 5 15;font-weight: bold;margin-left: 3px">우편번호 찾기</button><br>
-													<input readonly="readonly" type="text" id="jibunAddress" placeholder="지번주소">
-													<input type="text" id="detailAddress" name="detailAddr" placeholder="상세주소" style="margin-left:3px;margin-top:5px"><br>
+													<input readonly="readonly" type="text" id="roadAddress" name="roadnameAddr" placeholder="도로명주소" value="${loginuser.roadnameAddr}">
+													<button id="addr-btn" style="margin-left:3px; font-size: 10.5pt;color:#5a5a5a;border: 1px solid #d2d2d2;border-radius: .20rem;padding: 5 15 5 15;font-weight: bold;margin-left: 3px">우편번호 찾기</button><br>
+													<input type="text" id="detailAddress" name="detailAddr" placeholder="상세주소" value="${loginuser.detailAddr}" style="margin-left:3px;margin-top:5px"><br>
 													<span class="check-text">팀원들이 본인을 지도에서 찾을 수 있도록 도와주세요!</span>
 													</div>
 													
@@ -158,7 +158,7 @@
 											한 번 삭제된 계정은 다시 복구할 수 없습니다. 계정이 삭제되면 현재 계정에서 생성된 모든 데이터에 더이상 엑세스할 수 없습니다. 
 											삭제 후 Taskworld를 다시 이용하고자 한다면, 새로 가입해주셔야 합니다.
 											</div>
-											<button class="submit-btn" style="background-color:#e95e51; color:white !important; width: 170;">계정 삭제하기</button>
+											<button id="delete-user-btn" class="submit-btn" style="background-color:#e95e51; color:white !important; width: 170;">계정 삭제하기</button>
 										</div>
 										<!-- /.card-body -->
 									</div>

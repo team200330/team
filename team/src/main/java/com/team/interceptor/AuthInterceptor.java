@@ -1,6 +1,7 @@
 package com.team.interceptor;
 
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -57,19 +58,21 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 
 		String uri = request.getRequestURI();
 		
-		if (uri.contains("/addtask.action") || uri.contains("/deletetask.action")) {
-			String email = ((Member)request.getSession().getAttribute("loginuser")).getEmail();
+		if (uri.contains("/addtask.action") || uri.contains("/deletetask.action") || uri.contains("/chstatus.action")) {
+			HttpSession s = request.getSession();
+			String email = ((Member)s.getAttribute("loginuser")).getEmail();
 			String state = null;
 			int taskNo = 0;
 			
 			if (uri.contains("addtask")) {
 				state = "생성";
-				taskNo = ((Task) request.getSession().getAttribute("task")).getTaskNo();
+				taskNo = ((Task)s.getAttribute("task")).getTaskNo();
 			} else if (uri.contains("deletetask")) {
 				state = "삭제";
-				taskNo = (int) request.getSession().getAttribute("taskNo");
-			} else {
-				
+				taskNo = (int)s.getAttribute("taskNo");
+			} else if (uri.contains("chstatus")){
+				state = (int)s.getAttribute("completed") == 1 ? "완료" : "완료 취소";
+				taskNo = (int)s.getAttribute("taskNo");
 			}
 
 			if (taskNo == 0) return;

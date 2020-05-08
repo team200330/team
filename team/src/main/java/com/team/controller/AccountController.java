@@ -165,7 +165,6 @@ public class AccountController {
 	
 	@GetMapping("/mypageContent")
 	public String mypageContentPage(HttpSession session, String email) {
-		session.removeAttribute("loginuser");
 		session.setAttribute("loginuser", memberService.findMemberByEmail(email));
 		return "/account/modules/mypage-content";
 	}

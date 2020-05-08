@@ -38,6 +38,12 @@
 		AND ( type_no = 1 OR type_no = 2 );
 	</select>
 	
+	<select id="selectCountMemberByWorkspaceMember" parameterType="int" resultType="int">
+		SELECT COUNT(*)
+		FROM workspace_member
+		WHERE workspace_no = #{ workspaceNo } 
+	</select>
+	
 	<select id="selectMembersByWorkspaceNo" parameterType="com.team.vo.WorkspaceMember" resultMap="memberMap">
 		SELECT * FROM workspace_member wm
 		INNER JOIN member m
@@ -107,6 +113,26 @@
 		WHERE w.workspace_no = #{ position } 
 		AND m.name like concat('%',#{name},'%')
 		OR m.department like concat('%',#{name},'%')
+	</select>
+	
+	<select id="selectMemberAsc1ByWorkspaceNo" parameterType="com.team.vo.Member" resultMap="memberMap">
+		SELECT * FROM workspace_member wm
+		INNER JOIN member m
+		ON wm.email = m.email		
+		INNER JOIN workspace w
+		ON wm.workspace_no = w.workspace_no
+		WHERE w.workspace_no = #{ workspaceNo } 
+		ORDER BY m.email asc
+	</select>
+	
+	<select id="selectMemberAsc2ByWorkspaceNo" parameterType="com.team.vo.Member" resultMap="memberMap">
+		SELECT * FROM workspace_member wm
+		INNER JOIN member m
+		ON wm.email = m.email		
+		INNER JOIN workspace w
+		ON wm.workspace_no = w.workspace_no
+		WHERE w.workspace_no = #{ workspaceNo } 
+		ORDER BY wm.type_no asc
 	</select>
 	
 	<update id="updateWorkspaceName" parameterType="com.team.vo.Workspace">

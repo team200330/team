@@ -35,6 +35,3 @@
   
  <!-- pace -->
  <link rel="stylesheet" href="/team/resources/css/pace.css">
- 
- <!-- notice topbar -->
-  <link rel="stylesheet" href="/team/resources/css/notice.css">

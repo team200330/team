@@ -96,7 +96,15 @@ button {
     border-bottom: 1px solid #656565;
     cursor:default;
 }
+#deleteUserModal td{vertical-align: middle;}
+#deleteUserModal .img-circle {width: 37;height: 37;margin-right: 5px;}
+#deleteUserModal tr td:first-child {font-weight: bold;}
 
+._mem { height:50px;border:1px solid white;border-radius:.20rem;padding:5px; margin-bottom: 15px; }
+._mem_name {width:60%;}
+._mem_icon {width:20%; display:block;}
+._mem_icon > i {padding-left:30px;}
+._mem_img {width:43px;margin-right:10px;}
 </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -146,6 +154,11 @@ button {
 			</section>
 			<!-- /.content -->
 		</div>
+	</div>
+	
+	<!-- 탈퇴 모달 -->
+	<div id="modal-container">
+		<jsp:include page="modules/mypage-modal.jsp"></jsp:include>
 	</div>
 
 	<!-- /.content-wrapper -->
@@ -324,10 +337,19 @@ button {
 				}
 			});
 		});
+		
+		// 계정 삭제
+		$(document).on("click", "#delete-user-btn", function() {
+			$("#deleteUserModal").modal();
+		});
+		
+		$(".member-add-modal-btn").click(function() {
+			// 워크스페이스 번호로 멤버 목록 가져오기
+			$("#memberAddModal").modal();
+		});
+		
 	});
-	</script>
-
-
+</script>
 </body>
 
 </html>

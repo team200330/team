@@ -38,9 +38,10 @@
 <!-- Toastr -->
 <script src="/team/resources/plugins/toastr/toastr.min.js"></script>
 <!-- Task Properties side -->
-<script src="/team/resources/js/task-properties-side.js"></script>
+<!--<script src="/team/resources/js/task-properties-side.js"></script> -->
 <!-- Task Common side -->
-<script src="/team/resources/js/task-common.js"></script>
+<!-- <script src="/team/resources/js/task-common.js"></script> -->
+
 
 
 <!-- pace -->
