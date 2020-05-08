@@ -99,26 +99,8 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<div class="modal-body">
-				<div class="container">
-					<div class="row">
-						<div class="col-sm-6">
-							<div class="form-group">
-								<div class="input-group date" id="datetimepicker2"
-									data-target-input="nearest">
-									<input type="text" class="form-control datetimepicker-input"
-										data-target="#datetimepicker2" />
-									<div class="input-group-append" data-target="#datetimepicker2"
-										data-toggle="datetimepicker">
-										<div class="input-group-text">
-											<i class="fa fa-calendar"></i>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+			<div class="modal-body" style="text-align:left;">
+				<input class="myDatePicker">
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -130,8 +112,35 @@
 
 <script type="text/javascript">
 	$(function() {
-		$('#datetimepicker2').datetimepicker({
-			locale : 'ko'
+		$('.myDatepicker').datepicker({
+			  // readonly mode
+			  readonly: false,
+			  // disable the date picker
+			  disabled: false,
+			  // year/month/date/date-range/datetime/datetime-range
+			  type: 'datetime-range', 
+			  // date format
+			  format: 'yyyy-MM-dd',
+			  // placeholder text
+			  placeholder: 'Please pick a day',
+			  // alignment
+			  // 'left'/'center'/'right'
+			  align: 'left',
+			  // start/end dates
+			  startDate: null,
+			  endDate: null,
+			  // i18n
+			  lang: 'en-US',
+			  // character to separate the dates
+			  rangeSeparator: '-',
+			  // default date
+			  defaultValue: '',
+			  // z-index property
+			  zIndex: 999,
+			  onChange: null,
+			  onShow: null,
+			  onHide: null
 		});
+		$('.myDatepicker').datepicker();
 	});
 </script>
