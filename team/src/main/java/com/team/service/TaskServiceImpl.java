@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.team.mapper.TaskMapper;
+import com.team.vo.ProjectMember;
 import com.team.vo.Task;
 import com.team.vo.TaskList;
 
@@ -62,6 +63,18 @@ public class TaskServiceImpl implements TaskService {
 	@Override
 	public int notfinishTaskListByEmail(String email) {
 		int CountnotFinishTaskList = taskMapper.notfinishTaskListByEmail(email);
+		return CountnotFinishTaskList;
+	}
+
+	@Override
+	public int finishTaskListByProjectMember(ProjectMember projectmember) {
+		int CountFinishTaskList = taskMapper.finishTaskListByProjectMember(projectmember);
+		return CountFinishTaskList;
+	}
+
+	@Override
+	public int notfinishTaskListByProjectMember(ProjectMember projectmember) {
+		int CountnotFinishTaskList = taskMapper.notfinishTaskListByProjectMember(projectmember);
 		return CountnotFinishTaskList;
 	}
 

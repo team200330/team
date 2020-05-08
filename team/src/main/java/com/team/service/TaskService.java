@@ -3,6 +3,7 @@ package com.team.service;
 import java.util.HashMap;
 import java.util.List;
 
+import com.team.vo.ProjectMember;
 import com.team.vo.Task;
 import com.team.vo.TaskList;
 
@@ -25,6 +26,10 @@ public interface TaskService {
 	int finishTaskListByEmail(String email);
 
 	int notfinishTaskListByEmail(String email);
+
+	int finishTaskListByProjectMember(ProjectMember projectmember);
+
+	int notfinishTaskListByProjectMember(ProjectMember projectmember);
 	
 
 }

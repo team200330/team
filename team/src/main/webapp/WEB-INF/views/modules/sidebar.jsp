@@ -58,8 +58,7 @@
 							if (current_workspace_no) {
 								location.href = "/team/workspace/workspace-member?email=${ loginuser.email }&workspaceNo=" + current_workspace_no;
 							} else {
-								event.preventDefault();
-								alert('선택된 워크스페이스가 없습니다.');
+								location.href = "/team/workspace/workspace-member?email=${ loginuser.email }&workspaceNo=" + ${ workspaceNo };
 							}
 						});
 						
@@ -77,8 +76,7 @@
           </li>
           
           <li class="nav-item">
-            <a href="/team/workspace/workspace-member?workspaceNo=3" class="nav-link">
-            <a href="/team/workspace/workspace-member?email=${ loginuser.email }" class="nav-link">
+            <a href="/team/workspace/workspace-member?email=${ loginuser.email }&workspaceNo=${ workspaceNo }" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
               <p>
                         워크스페이스 멤버
