@@ -195,7 +195,9 @@ public class AccountController {
 
 	@RequestMapping(value = "/getWorkspaceMembers", produces = "application/text; charset=utf8")
 	@ResponseBody
-	public String getWorkspaceMembers(int workspaceNo, String email) {
+	public String getWorkspaceMembers(int workspaceNo, String email, String str) {
+		
+		System.out.println(str);
 		
 		String result = "";
 		for (Member m : feedbackService.findWorkspaceMembers(workspaceNo)) {
@@ -217,26 +219,33 @@ public class AccountController {
 	
 	
 	@PostMapping("/updateWorkspaceMananger")
-	public String deleteUser(String email, String managerEmail, int workspaceNo) {
+	@ResponseBody
+	public String updateWorkspaceManager(String email, String managerEmail, int workspaceNo) {
 		HashMap<String, Object> params = new HashMap<>();
 		params.put("email", email);
 		params.put("typeNo", 2);
 		params.put("workspaceNo", workspaceNo);
-		
-		System.out.println(params.values());
-		workspaceService.updateWorkspaceManager(params);
+
+		workspaceService.updateWorkspaceManager(params);  // 기존매니저 일반유저로 바꾸고
 		
 		params.put("email", managerEmail);
 		params.put("typeNo", 1);
+
+		workspaceService.updateWorkspaceManager(params); // 매니저 다른유저로 바꾸기
 		
-		System.out.println(params.values());
-		workspaceService.updateWorkspaceManager(params);
-		
-		return "/home2";
+		return "success";
 	}
 	
 	
-	
+	@PostMapping("/deleteMember")
+	public String deleteMember(String email, HttpSession session) {
+		System.out.println("--------------------deleteMember----------------------");
+		
+		memberService.deleteMember(email);
+		session.removeAttribute("loginuser");
+		
+		return "redirect:/home2";
+	}
 	
 	
 	
