@@ -98,7 +98,7 @@ input::placeholder {
 						style="height: 30px;">
 						<i class="fas fa-arrow-left"></i>
 					</button>
-					<a href="#" id="project-name" style="padding-left: 20px">프로젝트 명</a>
+					<a href="#" id="project-name" style="padding-left: 20px; font-size: 20px; font-weight: bold;">${projectByNo.projectName }</a>
 				</div>
 				<div class="header-center"
 					style="flex-basis: 33%; text-align: center; padding-top: 20px;">
