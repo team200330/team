@@ -1,6 +1,7 @@
 package com.team.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -52,8 +53,8 @@ public class LogServiceImpl implements LogService {
 		List<Log> logs = new ArrayList<>();
 		
 		for (Log log : logMapper.selectLogByProjectNo(params)) {
-			log.setTask(taskMapper.selectTaskByTaskNo(log.getTaskNo()));
-			log.getReceiver().setMember(memberMapper.selectMemberByEmail((String) params.get("email")));
+			log.setTask(taskMapper.selectTaskByTaskNo(log.getTaskNo()));	// 업무 가져오기
+			log.setSender(memberMapper.selectMemberByEmail(log.getEmail()));// 보낸사람정보 가져오기
 			logs.add(log);
 		}
 		
@@ -68,6 +69,16 @@ public class LogServiceImpl implements LogService {
 	@Override
 	public void logDeleteByReceiver(HashMap<String, Object> params) {
 		logMapper.deleteLogByReceiver(params);
+	}
+
+	@Override
+	public int uncheckedLogCount(HashMap<String, Object> params) {
+		return logMapper.countLog(params);
+	}
+
+	@Override
+	public Date findLatestWriteDate(HashMap<String, Object> params) {
+		return logMapper.selectLatestWritedate(params);
 	}
 
 

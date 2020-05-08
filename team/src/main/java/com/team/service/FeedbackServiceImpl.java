@@ -76,13 +76,14 @@ public class FeedbackServiceImpl implements FeedbackService {
 		for (Feedback f : feedbacks) {
 			List<FeedbackReceiver> rl = new ArrayList<>();
 			
-			for (FeedbackReceiver r : f.getReceivers()) {
-				r.setMember(memberMapper.selectMemberByEmail((String) params.get("email")));
+			for (FeedbackReceiver r : f.getReceivers()) { // 피드백 리시버 가져오기
+				r.setMember(memberMapper.selectMemberByEmail(r.getEmail()));
 				rl.add(r);
 			}
 			
 			f.setReceivers(rl);
-			f.setComments(feedbackMapper.selectComments(f.getFeedbackNo()));
+			f.setComments(feedbackMapper.selectComments(f.getFeedbackNo())); // 피드백 코멘트 가져오기
+			f.setFeedbackSender(memberMapper.selectMemberByEmail(f.getSender())); // 피드백 보낸사람 가져오기
 			if (f.getTaskNo() > 0) f.setTask(taskMapper.selectTaskByTaskNo(f.getTaskNo()));
 		}
 		

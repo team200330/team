@@ -38,15 +38,20 @@
 		AND ( type_no = 1 OR type_no = 2 );
 	</select>
 	
-	<select id="selectMembersByWorkspaceNo" parameterType="com.team.vo.WorkspaceMember" resultType="com.team.vo.Member">
+	<select id="selectCountMemberByWorkspaceMember" parameterType="int" resultType="int">
+		SELECT COUNT(*)
+		FROM workspace_member
+		WHERE workspace_no = #{ workspaceNo } 
+	</select>
+	
+	<select id="selectMembersByWorkspaceNo" parameterType="com.team.vo.WorkspaceMember" resultMap="memberMap">
 		SELECT * FROM workspace_member wm
 		INNER JOIN member m
 		ON wm.email = m.email		
 		INNER JOIN workspace w
 		ON wm.workspace_no = w.workspace_no
-		WHERE wm.email = #{ email } 
-		AND type_no = 2	
-		LIMIT 5;
+		WHERE w.workspace_no = #{ workspaceNo } 
+		AND wm.type_no = 2	
 	</select>
 		
 	<resultMap type="Member" id="memberMap">
@@ -68,6 +73,14 @@
 		<id column="workspace_no" property="workspaceNo" />
 		<result column="email" property="email" />
 		<result column="type_no" property="typeNo" />
+	</resultMap>
+	
+	<resultMap type="Workspace" id="workspaceMap">
+		<id column="workspace_no" property="workspaceNo" />
+		<result column="workspace_name" property="workspaceName" />
+		<result column="deleted" property="deleted" />
+		<result column="code" property="code" />
+		<collection property="workspaceMembers" column="workspace_no" resultMap="workspaceMemberMap" />
 	</resultMap> 
 		
 	<select id="selectWorkspaceByWorkspaceNo" parameterType="com.team.vo.WorkspaceMember" resultMap="workspaceMap">
@@ -81,15 +94,14 @@
 		WHERE workspace_no = #{ workspaceNo } 
 	</select>
 	
-	<select id="selectMemberTypeNo1ByWorkspaceNo" parameterType="com.team.vo.WorkspaceMember" resultType="com.team.vo.Member">
+	<select id="selectMemberTypeNo1ByWorkspaceNo" parameterType="com.team.vo.WorkspaceMember" resultMap="memberMap">
 		SELECT * FROM workspace_member wm
 		INNER JOIN member m
 		ON wm.email = m.email		
 		INNER JOIN workspace w
 		ON wm.workspace_no = w.workspace_no
-		WHERE wm.email = #{ email } 
-		AND type_no = 1
-		LIMIT 1;
+		WHERE w.workspace_no = #{ workspaceNo } 
+		AND wm.type_no = 1	
 	</select>
 	
 	<select id="WorkspaceMemberNameAndDepartmentSearch" parameterType="com.team.vo.Member" resultMap="memberMap">
@@ -103,12 +115,25 @@
 		OR m.department like concat('%',#{name},'%')
 	</select>
 	
-	<resultMap type="workspace" id="workspaceMap">
-		<id column="workspace_no" property="workspaceNo" />
-		<result column="workspace_name" property="workspaceName" />
-		<result column="deleted" property="deleted" />
-		<result column="code" property="code" />		
-	</resultMap> 	
+	<select id="selectMemberAsc1ByWorkspaceNo" parameterType="com.team.vo.Member" resultMap="memberMap">
+		SELECT * FROM workspace_member wm
+		INNER JOIN member m
+		ON wm.email = m.email		
+		INNER JOIN workspace w
+		ON wm.workspace_no = w.workspace_no
+		WHERE w.workspace_no = #{ workspaceNo } 
+		ORDER BY m.email asc
+	</select>
+	
+	<select id="selectMemberAsc2ByWorkspaceNo" parameterType="com.team.vo.Member" resultMap="memberMap">
+		SELECT * FROM workspace_member wm
+		INNER JOIN member m
+		ON wm.email = m.email		
+		INNER JOIN workspace w
+		ON wm.workspace_no = w.workspace_no
+		WHERE w.workspace_no = #{ workspaceNo } 
+		ORDER BY wm.type_no asc
+	</select>
 	
 	<update id="updateWorkspaceName" parameterType="com.team.vo.Workspace">
 		UPDATE workspace
@@ -130,14 +155,50 @@
 	</select>
 	
 	
-	<select id="selectWorkspaceNameByEmail" parameterType="com.team.vo.Workspace" resultType="com.team.vo.Workspace">
+	<select id="selectWorkspaceNameByEmail" parameterType="String" resultType="com.team.vo.Workspace">
 		select workspace_name
 		from workspace
 		where workspace_no = any(
-		select workspace_no
-		from workspace_member
-		where email = #{ email } 
+			select workspace_no
+			from workspace_member
+			where email = #{ email } 
 		)
 	</select>
-		
+	
+	<select id="selectWorkspacesByEmail" parameterType="String" resultMap="workspaceMap">
+		select w.workspace_no, w.workspace_name, w.deleted, w.code, wm.email, wm.type_no
+		from workspace w
+		inner join workspace_member wm
+		on w.workspace_no = wm.workspace_no
+		where wm.email = #{ email }
+	</select>
+	
+	<select id="selectWorkspaceMemberTypeByWorkspaceMember" parameterType="com.team.vo.WorkspaceMember" resultType="com.team.vo.WorkspaceMember">
+		select w.workspace_no, w.workspace_name, w.deleted, w.code, wm.email, wm.type_no
+		from workspace w
+		inner join workspace_member wm
+		on w.workspace_no = wm.workspace_no
+		where wm.email = #{ email } and wm.workspace_no = #{ workspaceNo } and wm.type_no = 1	
+	</select>
+	
+	<update id="changeLoginuserType" parameterType="com.team.vo.WorkspaceMember">
+		UPDATE workspace_member
+		SET type_no = '2'
+		WHERE workspace_no = #{ workspaceNo } 
+		AND email = #{ email }
+	</update>
+	
+	<update id="changeWorkspaceMemberType" parameterType="com.team.vo.WorkspaceMember">
+		UPDATE workspace_member
+		SET type_no = '1'
+		WHERE workspace_no = #{ workspaceNo } 
+		AND email = #{ email }
+	</update>
+	
+	<delete id="deleteWorkspaceMemberType" parameterType="com.team.vo.WorkspaceMember">
+		DELETE FROM workspace_member
+		WHERE workspace_no = #{ workspaceNo } 
+		AND email = #{ email }
+	</delete>
+	
 </mapper>

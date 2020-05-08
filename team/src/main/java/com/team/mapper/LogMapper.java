@@ -1,5 +1,6 @@
 package com.team.mapper;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,5 +21,9 @@ public interface LogMapper {
 	public void updateCheckedByReceiver(HashMap<String, Object> params);
 	
 	public void deleteLogByReceiver(HashMap<String, Object> params);
+	
+	public int countLog(HashMap<String, Object> params);
+	
+	public Date selectLatestWritedate(HashMap<String, Object> params);
 	
 }

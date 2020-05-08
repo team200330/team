@@ -13,6 +13,7 @@ public class Log {
 	private int taskNo;
 	private int projectNo;
 	
+	private Member sender;
 	private LogReceiver receiver;
 	private Task task;
 	

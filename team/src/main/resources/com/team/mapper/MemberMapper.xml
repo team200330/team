@@ -7,18 +7,34 @@
 <mapper namespace="com.team.mapper.MemberMapper">
 
 	<insert id="insertMember" parameterType="Member">
-		INSERT INTO member (name, email, password, phone, department, position, address_no, roadname_addr, detail_addr, img )
-		VALUES ( #{ name }, #{ email }, #{ password }, #{ phone }, #{ department }, #{ position }, #{ addressNo }, #{ roadnameAddr }, #{ detailAddr }, #{ img } )
+		INSERT INTO member (name, email, password, phone, department, position, roadname_addr, detail_addr, img )
+		VALUES ( #{ name }, #{ email }, #{ password }, #{ phone }, #{ department }, #{ position },  #{ roadnameAddr }, #{ detailAddr }, #{ img } )
 	</insert>
 	
-	<select id="selectMemberByEmailAndPassword" parameterType="Member" resultType="Member">
+	<select id="selectMemberByEmailAndPassword" parameterType="Member" resultMap="memberMap">
 		SELECT * FROM member WHERE email = #{ email } AND password = #{ password } AND deleted = '0'
 	</select>
 	
-	<select id="selectMemberByEmail" parameterType="Member" resultType="Member">
+	<select id="selectMemberByEmail" parameterType="Member" resultMap="memberMap">
 		SELECT * FROM member WHERE email = #{ email }
 	</select>
 	
+	<update id="updatePassword" parameterType="Member">
+		UPDATE member SET password = #{ password }
+		WHERE email = #{ email }
+	</update>
+	
+	<update id="updateImg" parameterType="Member">
+		UPDATE member SET img = #{ img }
+		WHERE email = #{ email }
+	</update>
+	
+	<update id="updateMember" parameterType="Member">
+		UPDATE member SET
+		name = #{ name }, phone = #{ phone }, department = #{ department }, position = #{ position },
+		roadname_addr = #{ roadnameAddr }, detail_addr = #{ detailAddr }
+		WHERE email = #{ email }
+	</update>
 	
 	
 	<resultMap type="Member" id="memberMap">

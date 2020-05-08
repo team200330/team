@@ -5,10 +5,10 @@ $(function() {
 	let isDown = false;
 	let startX;
 	let scrollLeft;
+	$(document).on('click',function(e){
+		console.log($(e.target).attr("class"));
+	});
 	$(document).on('mousedown', slider, function(e) {
-		if ($(e.target).attr("id") != "task-container") {
-			return;
-		}
 		if (e.which == 1) {
 			isDown = true;
 			// slider.classList.add('active');
@@ -19,9 +19,6 @@ $(function() {
 		}
 	});
 	$(document).on('mouseleave', slider, function(e) {
-		if ($(e.target).attr("id") != "task-container") {
-			return;
-		}
 		if (e.which == 1) {
 			isDown = false;
 			// slider.classList.remove('active');
@@ -30,9 +27,6 @@ $(function() {
 	});
 
 	$(document).on('mouseup', slider, function(e) {
-		if ($(e.target).attr("id") != "task-container") {
-			return;
-		}
 		if (e.which == 1) {
 			isDown = false;
 			// slider.classList.remove('active');
@@ -41,16 +35,13 @@ $(function() {
 	});
 
 	$(document).on('mousemove', slider, function(e) {
-		if ($(e.target).attr("id") != "task-container") {
-			return;
-		}
 		if (e.which == 1) {
 			if (!isDown)
 				return;
 			e.preventDefault();
 			// const x = e.pageX - slider.offsetLeft;
 			const x = e.pageX - slider.offset().left;
-			const walk = (x - startX) * 3; // scroll-fast
+			const walk = (x - startX) * 1; // scroll-fast
 			// slider.scrollLeft = scrollLeft - walk;
 			slider.scrollLeft(scrollLeft - walk);
 			// console.log(walk);

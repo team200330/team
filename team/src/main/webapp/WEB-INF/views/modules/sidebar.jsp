@@ -35,37 +35,42 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+          
+   
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-users"></i>
               <p>
-                Dashboard
+                	멤버
                 <i class="right fas fa-angle-left"></i>
+                
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="./index.html" class="nav-link active">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard v1</p>
+              <li class="nav-item" id="workspace_member_li">
+                <a href="#" class="nav-link">
+                  
+                  <p>워크스페이스 멤버</p>
+                  <script type="text/javascript">
+					window.addEventListener('load', function(event) {
+						var workspace_member_link = document.querySelector('#workspace_member_li > a');
+						workspace_member_link.addEventListener('click', function(event) {
+							if (current_workspace_no) {
+								location.href = "/team/workspace/workspace-member?email=${ loginuser.email }&workspaceNo=" + current_workspace_no;
+							} else {
+								event.preventDefault();
+								alert('선택된 워크스페이스가 없습니다.');
+							}
+						});
+						
+					});
+            		</script>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./index2.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard v2</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="./index3.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard v3</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/team/task/main" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>업무 테스트페이지</p>
+                <a href="/team/account/mypage" class="nav-link">
+                  
+                  <p>내 프로필</p>
                 </a>
               </li>
             </ul>
@@ -96,27 +101,27 @@
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-chart-pie"></i>
               <p>
-                Charts
+                	업무
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/charts/chartjs.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>ChartJS</p>
+                <a href="/team/task/main" class="nav-link">
+                  
+                  <p>업무 리스트</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/flot.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Flot</p>
+                <a href="/team/task/timeline" class="nav-link">
+                  
+                  <p>타임라인</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/inline.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Inline</p>
+                <a href="/team/task/analyticsmain" class="nav-link">
+                  
+                  <p>분석</p>
                 </a>
               </li>
             </ul>
@@ -132,44 +137,19 @@
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="/team/log/list" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  
                   <p>활동 로그</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="/team/feedback/list" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  
                   <p>피드백</p>
                 </a>
               </li>
               </ul>
               </li>
           
-         <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-             <i class="nav-icon fas fa-comment"></i>
-              <p> 채팅
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a data-toggle="modal" class="nav-link" data-target="#create-chat">
-                  <i class="nav-icon fas fa-comment-medical"></i>
-                  <p>채팅방 만들기</p>
-                </a>
-              </li>
-              <c:forEach items="${ chat }" var="chat">
-	              <li class="nav-item">
-	                <a href="chat?chatNo=${ chat.chatNo }" class="nav-link">
-	                  <i class="far fa-circle nav-icon"></i>
-	                  <p>${ chat.chatName }</p>
-	                </a>
-	              </li>
-              </c:forEach>
-            </ul>
-          </li>
-   
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -177,13 +157,4 @@
     <!-- /.sidebar -->
   </aside>
 
-  			<div class="modal fade" id="create-chat">
-		       <div class="modal-dialog modal-lg">
-		         <div class="modal-content">
-             	<jsp:include page="/WEB-INF/views/chatting/create.jsp" />
-		  </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
-      <!-- /.modal -->
+  			

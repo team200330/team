@@ -59,10 +59,6 @@
 	<property name="workspaceMapper" ref="workspaceMapper" />	
 	</bean>
 	
-	<bean id="chatService" class="com.team.service.ChatServiceImpl">
-	<property name="chatMapper" ref="chatMapper" />	
-	</bean>
-
 	<bean id="memberService" class="com.team.service.MemberServiceImpl">
 		<property name="memberMapper" ref="memberMapper"></property>
 	</bean>

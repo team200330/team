@@ -9,8 +9,8 @@
 	</insert>
 	
 	<insert id="insertTask" parameterType="Task">
-		INSERT INTO task (list_no, content, writer)
-		VALUES ( #{listNo}, #{content}, #{writer})	
+		INSERT INTO task (list_no, content, writer, create_date)
+		VALUES ( #{listNo}, #{content}, #{writer}, NOW())	
 		<selectKey keyProperty="taskNo" order="AFTER" resultType="int">
 		SELECT LAST_INSERT_ID();
 		</selectKey>
@@ -34,6 +34,7 @@
 		<result column="list_no" property="listNo"/>
 		<result column="content" property="content"/>
 		<result column="writer" property="writer"/>
+		<result column="create_date" property="createDate"/>
 		<result column="start_date" property="startDate"/>
 		<result column="end_date" property="endDate"/>
 		<result column="completed_date" property="completedDate"/>

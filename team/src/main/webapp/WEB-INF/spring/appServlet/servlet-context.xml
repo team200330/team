@@ -34,4 +34,10 @@
 	</interceptors>
 	
 	
+	<!-- File Upload Handler (Class, Bean) Registration -->
+	<beans:bean id="multipartResolver"
+				class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	</beans:bean>
+	
+	
 </beans:beans>

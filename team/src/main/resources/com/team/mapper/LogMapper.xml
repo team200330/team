@@ -38,6 +38,22 @@
 	ORDER BY l.log_no DESC
 	</select>
 	
+	<select id="countLog" parameterType="hashmap" resultType="int">
+	SELECT COUNT(*) FROM log_receiver r
+	INNER JOIN log l
+	ON r.log_no = l.log_no
+	WHERE receiver = #{email} AND project_no = #{projectNo}
+	AND checked = 0 AND deleted = 0
+	</select>
+	
+	<select id="selectLatestWritedate" parameterType="hashmap" resultType="java.util.Date">
+	SELECT writedate FROM log
+	WHERE log_no = (
+		SELECT MAX(log_no) FROM log_receiver
+		WHERE receiver = #{email} AND checked = 0 AND project_no = #{projectNo}
+	)
+	</select>
+	
 	<update id="updateCheckedByReceiver" parameterType="hashmap">
 	UPDATE log_receiver SET checked = 1
 	WHERE log_no = #{logNo} AND receiver = #{receiver}

@@ -28,7 +28,7 @@
 		WHERE 
 			<if test='searchType.contains("M")'> t.writer = #{email} AND </if>
 			<if test='searchType.contains("C")'> t.completed = 0 AND </if>
-		project_no = #{projectNo} AND t.deleted = 0
+		project_no = #{projectNo} AND t.deleted = 0 AND l.deleted = 0
 	</select>
 	
 	<update id="updateDate" parameterType="hashmap">

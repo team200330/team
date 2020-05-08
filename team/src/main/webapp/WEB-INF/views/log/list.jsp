@@ -9,6 +9,7 @@
 <meta charset="utf-8">
 <title>활동 로그</title>
 <style>
+.log-table img {width:43; height:43}
 .card-header {color:#464c59}
 .log-table tr td:nth-child(1) {width:200px;}
 .log-table tr td:nth-child(2), tr td:nth-child(3) {padding-top:20px;}
@@ -166,8 +167,9 @@
 				method : "post", 
 				data : {"logNo": logNo},
 				success : function(resp, status, xhr) {
+					$("#topbar-notifications").load("/team/feedback/getNotifications");
 					$("#log-list-container").load("/team/log/search?"+ searchType +"searchType=A&email=${loginuser.email}");
-					
+
 					var target = $(this).parents(".unchecked-log");
 					target.removeClass(".unchecked-log");
 					target.addClass(".checked-log");
@@ -194,6 +196,7 @@
 				data : {"logNo": logNo},
 				success : function(resp, status, xhr) {
 					$("#log-list-container").load("/team/log/search?searchType="+ searchType +"&email=${loginuser.email}");
+					$("#topbar-notifications").load("/team/feedback/getNotifications");
 				
 					toastr.error(textSubString(text) +" 업무와 관련된 로그를 삭제했습니다");
 				},
@@ -219,6 +222,7 @@
 					data : {"logNo": target[i].id},
 					success : function(resp, status, xhr) {
 						$("#log-list-container").load("/team/log/search?"+ searchType +"searchType=A&email=${loginuser.email}");
+						$("#topbar-notifications").load("/team/feedback/getNotifications");
 						
 						var target = $(this).parents(".unchecked-log");
 						target.removeClass(".unchecked-log");
@@ -250,6 +254,7 @@
 					data : {"logNo": target[i].id},
 					success : function(resp, status, xhr) {
 						$("#log-list-container").load("/team/log/search?searchType="+ searchType +"&email=${loginuser.email}");
+						$("#topbar-notifications").load("/team/feedback/getNotifications");
 					},
 					error : function(xhr, status, err) {
 						console.log(err);

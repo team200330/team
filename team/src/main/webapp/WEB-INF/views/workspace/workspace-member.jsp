@@ -27,8 +27,8 @@
 		<div class="content-wrapper" style="background-color:#ececec">
 			<!-- Content Header (Page header) -->
 			<div style="height: 50px; text-align: center; padding-top: 20px;">
-				<a id="active" class="f_link" href="/team/workspace/workspace-member">멤버</a>&nbsp;&nbsp; <a class="f_link"
-					href="#">내 프로필</a>
+				<a id="active" class="f_link" href="/team/workspace/workspace-member">멤버</a>&nbsp;&nbsp;
+				<a class="f_link" href="/team/account/mypage">내 프로필</a>
 			</div>
 
 			<hr />
@@ -64,22 +64,20 @@
                   </form>                   
                   </div>
 				  <div class="form-group col-12 col-sm-6 col-md-3">
-                        <select class="form-control">
-                          <option>모든 멤버(5)(작업중)</option>
-                          <option>활동 중인 멤버(5)(작업중)</option>
-                          <option>초대 중인 멤버(0)(작업중)</option>
-                          <option>삭제된 팀원(1)(작업중)</option>
-                        </select>
+                          <p class="form-control">모든 멤버(${ ALLCountWorkspaceMember })</p>
                   </div>
+                  
+                  <form>
+	                  <div class="form-group col-12 col-sm-6 col-md-3">
+	                        <select class="form-control" id="asc">
+	                          <option value="이름순">이름순</option>
+	                          <option value="관리자/멤버">관리자/멤버</option>
+	                        </select>
+	                  </div>
+	              </form>
+	              
                   <div class="form-group col-12 col-sm-6 col-md-3">
-                        <select class="form-control">
-                          <option>이름순(작업중)</option>
-                          <option>관리자/멤버(작업중)</option>
-                          <option>온라인/오프라인(작업중)</option>
-                        </select>
-                  </div>
-                  <div class="form-group col-12 col-sm-6 col-md-3">
-                    <a href="invite-workspace?workspaceNo=3" class="form-control btn btn-sm btn-success">
+                    <a id="invite_member" href="/team/workspace/invite-workspace?workspaceNo=${ workspaceNo }" class="form-control btn btn-sm btn-success">
                       <i class="fas fa-user" style="margin-top: 7px;"></i> 멤버 초대하기
                     </a>
                   </div>
@@ -92,7 +90,7 @@
            <div class="col-12 col-sm-6 col-md-3 d-flex align-items-stretch">
               <div class="card bg-light">
                 <div class="card-header text-muted border-bottom-0">
-                  	직함 : ${ member.position }
+                  	직함 : ${ member.position }${ workspaceNo }
                 </div>
                 <div class="card-body pt-0">
                   <div class="row">
@@ -112,13 +110,16 @@
                 </div>
                 <div class="card-footer">                
                   <div class="text-right">
-                                      
+                  
+                    <c:if test="${ workspacemember ne null }">
                     <a href="#" class="btn btn-sm bg-danger" data-toggle="dropdown" style="padding-top: 7px; height: 30px;">
                     <i class="fas fa-trash-alt"></i>
                     	<div class="dropdown-menu">
                             <button class="dropdown-item" >워크스페이스에서 삭제</button>
                         </div>
                     </a>
+                    </c:if>
+                    
                     <a href="#" class="btn btn-sm bg-teal">
                       <i class="fas fa-comments"></i> 대화
                     </a>
@@ -143,11 +144,17 @@
                 <div class="card-body pt-0">
                   <div class="row">
                     <div class="col-7">
-                      <h2 class="lead"><b>${ member.name }</b><a data-toggle="dropdown" href="#"><i class="fas fa-cog ml-3" style="font-size: 18px; color: darkgray;"></i>
-                      <div class="dropdown-menu">
-                            <button class="dropdown-item" onclick="location.href='/team/changeworkspacemembertype?workspaceNo=3&email=${ member.email }&'">관리자 권한부여</button>
-                        </div>
-                      </a></h2>
+                      <h2 class="lead">
+                      	<b>${ member.name }</b>
+                      	<c:if test="${ workspacemember ne null }">
+                      		<a data-toggle="dropdown" href="#">
+                      		<i class="fas fa-cog ml-3" style="font-size: 18px; color: darkgray;"></i>
+                      		<div class="dropdown-menu">
+                        	<button class="dropdown-item" id="changeworkspacemembertype" onclick="location.href='/team/workspace/changeworkspacemembertype?email=${ member.email }&workspaceNo=${ workspaceNo }'">관리자 권한부여</button>
+                        	</div>
+                       	</c:if>                        
+                      		</a>
+                      </h2>
                       <p class="text-muted text-sm"><b>부서 : </b>${ member.department }</p>
                       <ul class="mb-0 text-muted" style="list-style-type: none; padding:0;">
                       	<li class="small">연락처 : ${ member.phone }</li>
@@ -162,13 +169,14 @@
                 </div>
                 <div class="card-footer">                
                   <div class="text-right">
-                                      
-                    <a href="#" class="btn btn-sm bg-danger" data-toggle="dropdown" style="padding-top: 7px; height: 30px;">
-                    <i class="fas fa-trash-alt"></i>
+                    	<c:if test="${ workspacemember ne null }">
+                    	<a href="#" class="btn btn-sm bg-danger" data-toggle="dropdown" style="padding-top: 7px; height: 30px;">
+                    	<i class="fas fa-trash-alt"></i>
                     	<div class="dropdown-menu">
-                            <button class="dropdown-item" onclick="location.href='/team/deleteworkspacemember?workspaceNo=3&email=${ member.email }'">워크스페이스에서 삭제</button>
+                            <button class="dropdown-item" id="deleteworkspacemember" onclick="location.href='/team/workspace/deleteworkspacemember?email=${ member.email }&workspaceNo=${ workspaceNo }'">워크스페이스에서 삭제</button>
                         </div>
-                    </a>
+                        </c:if>
+                    	</a>
                     <a href="#" class="btn btn-sm bg-teal">
                       <i class="fas fa-comments"></i> 대화
                     </a>
@@ -223,3 +231,88 @@
 </body>
 
 </html>
+
+<script type="text/javascript">
+
+			var workspaceNo = '${ workspaceNo }';
+			
+			console.log(workspaceNo);
+
+			$(function() {
+				var changeworkspacemembertype = $('#changeworkspacemembertype');
+				changeworkspacemembertype.on('click', function(event) {
+					if (current_workspace_no) {
+						location.href = "/team/workspace/changeworkspacemembertype?email=${ member.email }&workspaceNo=${ workspaceNo }";
+					} else {
+						event.preventDefault();
+						alert('선택된 워크스페이스가 없습니다.');
+					}
+				});
+				
+				var deleteworkspacemember = $('#deleteworkspacemember');
+				deleteworkspacemember.on('click', function(event) {
+					if (current_workspace_no) {
+						location.href = "/team/workspace/deleteworkspacemember?email=${ member.email }&workspaceNo=${ workspaceNo }";
+					} else {
+						event.preventDefault();
+						alert('선택된 워크스페이스가 없습니다.');
+					}
+				});
+				
+				$(document).on('change', "select#asc", function(event) {
+					 
+			    var asc = $(this).val();
+			    if (asc == "이름순") {
+				    	
+			    		$.ajax({
+							"url": "/team/workspace/asc1",
+							"method" : "post",
+							"data": { "workspaceNo": workspaceNo },
+							"success": function(result, status, xhr) {
+								
+								if (result == 'success') {
+								alert('이름순으로 변경되었습니다.');	
+								
+								} else {
+								alert('유효한 정보가 없습니다.');
+								
+								}
+							},			
+											
+							"error": function(xhr, status, data) {
+							alert('오류가 발생했습니다.');
+							
+							} 
+						});
+
+				    	
+				    } else if (asc == "관리자/멤버"){
+
+				    	$.ajax({
+							"url": "/team/workspace/asc2",
+							"method" : "post",
+							"data": { "workspaceNo": workspaceNo },
+							"success": function(result, status, xhr) {
+								
+								if (result == 'success') {
+								alert('관리자/멤버순으로 변경되었습니다.');	
+								
+								} else {
+								alert('유효한 정보가 없습니다.');
+								
+								}
+							},			
+											
+							"error": function(xhr, status, data) {
+							alert('오류가 발생했습니다.');
+							
+							} 
+						});
+
+					    
+					}
+				    		
+			    });  
+				
+			});			
+</script>

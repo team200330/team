@@ -29,14 +29,28 @@ public class MemberServiceImpl implements MemberService {
 		member.setPassword(Util.getHashedString(member.getPassword(), "SHA-256"));
 		
 		Member member2 = memberMapper.selectMemberByEmailAndPassword(member);
-		
 		return member2;
 	}
 
 	@Override
 	public Member findMemberByEmail(String email) {
-		
 		return memberMapper.selectMemberByEmail(email);
+	}
+
+	@Override
+	public void updatePassword(Member member) {
+		member.setPassword(Util.getHashedString(member.getPassword(), "SHA-256"));
+		memberMapper.updatePassword(member);
+	}
+
+	@Override
+	public void updateImg(Member member) {
+		memberMapper.updateImg(member);
+	}
+
+	@Override
+	public void updateMember(Member member) {
+		memberMapper.updateMember(member);
 	}
 
 	

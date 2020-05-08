@@ -33,5 +33,21 @@ public interface WorkspaceMapper {
 	List<Workspace> selectWorkspacesByWorkspaceNo(int workspaceNo);
 
 	List<Workspace> selectWorkspaceNameByEmail(String email);
+	
+	List<Workspace> selectWorkspacesByEmail(String email);
+
+	void changeWorkspaceMemberType(WorkspaceMember workspaceMember);
+
+	WorkspaceMember selectWorkspaceMemberTypeByWorkspaceMember(WorkspaceMember workspaceMember);
+
+	void changeLoginuserType(WorkspaceMember workspaceMember);
+
+	void deleteWorkspaceMemberType(WorkspaceMember workspaceMember);
+
+	int selectCountMemberByWorkspaceMember(int workspaceNo);
+
+	List<Member> selectMemberAsc1ByWorkspaceNo(int workspaceNo);
+
+	List<Member> selectMemberAsc2ByWorkspaceNo(int workspaceNo);
 
 }

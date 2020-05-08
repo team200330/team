@@ -12,4 +12,5 @@ public class Workspace {
 	private String code;
 	
 	private List<Project> projects;
+	private List<WorkspaceMember> workspaceMembers;
 }

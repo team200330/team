@@ -10,6 +10,9 @@ public interface MemberService {
 
 	Member findMemberByEmail(String email);
 
+	void updatePassword(Member member);
+	
+	void updateImg(Member member);
 
-
+	void updateMember(Member member);
 }
