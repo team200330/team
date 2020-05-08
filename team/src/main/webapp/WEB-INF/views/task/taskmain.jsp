@@ -24,7 +24,9 @@ input#add-task {
 	font-size: 1.0em;
 	font-weight: 900;
 }
-
+.gmi-time-panel__body__item--spinner__item::marker {
+	display: none;
+}
 .custom-control-input:checked ~.custom-control-label::before {
 	color: #fff;
 	border-color: #4c5d6f;
@@ -64,7 +66,7 @@ input::placeholder {
 
 .modal-dialog {
 	top: 35%;
-	left: 30%;
+	left: 20%;
 }
 .modal-backdrop {
 	position: fixed;
@@ -131,6 +133,7 @@ input::placeholder {
 	<%@include file="/WEB-INF/views/modules/common-js.jsp"%>
 	<script src="/team/resources/js/task-common.js"></script>
 	<script src="/team/resources/js/task-properties-side.js"></script>
+	<script src="/team/resources/js/i18n/datepicker.en-US.js"></script>
 	<script type="text/javascript">
 	</script>
 </body>

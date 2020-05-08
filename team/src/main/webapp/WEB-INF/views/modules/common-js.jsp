@@ -45,3 +45,5 @@
 <script src="/team/resources/js/pace.js"></script>
 <!-- toast -->
 <script src="/team/resources/js/toast.js"></script>
+<!-- datepicker -->
+<script src="/team/resources/js/jquery-datepicker.js"></script>
