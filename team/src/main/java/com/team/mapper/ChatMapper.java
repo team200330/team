@@ -6,10 +6,16 @@ import com.team.vo.Chat;
 import com.team.vo.Message;
 
 public interface ChatMapper {
+
+	void insertMessage(Message message);
+
+	void createChat(Chat chat);
+
+	List<Message> selectMessage();
 	
-	 void createChat(Chat chat);
+	 
 	
-	 Chat read(int chatNo);
+	
 	
 
 

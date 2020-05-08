@@ -1,6 +1,7 @@
 package com.team.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,10 +14,15 @@ import org.springframework.stereotype.Service;
 
 import com.team.mapper.FeedbackMapper;
 import com.team.mapper.MemberMapper;
+import com.team.mapper.ProjectMapper;
+import com.team.mapper.TaskMapper;
+import com.team.mapper.TimelineMapper;
 import com.team.mapper.WorkspaceMapper;
 import com.team.vo.Comments;
 import com.team.vo.Feedback;
 import com.team.vo.Member;
+import com.team.vo.Project;
+import com.team.vo.TaskList;
 import com.team.vo.FeedbackReceiver;
 import com.team.vo.WorkspaceMember;
 
@@ -34,6 +40,18 @@ public class FeedbackServiceImpl implements FeedbackService {
 	@Autowired
 	@Qualifier("memberMapper")
 	private MemberMapper memberMapper;
+	
+	@Autowired
+	@Qualifier("timelineMapper")
+	private TimelineMapper timelineMapper;
+	
+	@Autowired
+	@Qualifier("projectMapper")
+	private ProjectMapper projectMapper;
+	
+	@Autowired
+	@Qualifier("taskMapper")
+	private TaskMapper taskMapper;
 	
 	@Override
 	public void writeFeedback(Feedback feedback, String[] email) {
@@ -55,9 +73,30 @@ public class FeedbackServiceImpl implements FeedbackService {
 	@Override
 	public List<Feedback> searchFeedback(HashMap<String, Object> params) {
 		List<Feedback> feedbacks = feedbackMapper.selectFeedback(params);
-		for (Feedback f : feedbacks) f.setComments(feedbackMapper.selectComments(f.getFeedbackNo()));
+		for (Feedback f : feedbacks) {
+			List<FeedbackReceiver> rl = new ArrayList<>();
+			
+			for (FeedbackReceiver r : f.getReceivers()) {
+				r.setMember(memberMapper.selectMemberByEmail((String) params.get("email")));
+				rl.add(r);
+			}
+			
+			f.setReceivers(rl);
+			f.setComments(feedbackMapper.selectComments(f.getFeedbackNo()));
+			if (f.getTaskNo() > 0) f.setTask(taskMapper.selectTaskByTaskNo(f.getTaskNo()));
+		}
 		
 		return feedbacks;
+	}
+	
+	@Override
+	public int uncheckedFeedbackCount(HashMap<String, Object> params) {
+		return feedbackMapper.countFeedback(params);
+	}
+	
+	@Override
+	public Date findLatestWritedate(HashMap<String, Object> params) {
+		return feedbackMapper.selectLatestWritedate(params);
 	}
 	
 	@Override
@@ -80,10 +119,28 @@ public class FeedbackServiceImpl implements FeedbackService {
 			
 		for (WorkspaceMember m : workspaceMembers) 
 			members.add(memberMapper.selectMemberByEmail(m.getEmail()));
-		
-			
+	
 		return members;
 	}
+
+	@Override
+	public List<Project> findTasksByWorkspaceNo(int workspaceNo) {
+		List<Project> projects = new ArrayList<>();
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("searchType", "A");
+		params.put("email", "none");
+		
+		for (Project p : projectMapper.selectProjectByWorkspaceNo(workspaceNo)) {
+			params.put("projectNo", p.getProjectNo());
+			p.setTaskLists(timelineMapper.searchTasks(params));
+			projects.add(p);
+		}
+		return projects;
+	}
+
+	
+
+
 
 	
 

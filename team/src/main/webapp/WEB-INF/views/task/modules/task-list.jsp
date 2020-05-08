@@ -1,8 +1,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ page pageEncoding="utf-8"%>
 <section class="section-body">
 	<div class="body-top">
-		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<div class="bg-dark">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="width:400px">
 			<i class="fas fa-search"></i>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarSupportedContent"
@@ -30,32 +32,39 @@
 				</form>
 			</div>
 		</nav>
+		</div>
 	</div>
-	<div id="body-task" style="height: 73%;
+	<div id="body-task" style="height: 79%;
 		 display: flex; flex-wrap: nowrap; white-space: nowrap; overflow-x: scroll; padding: 15 0 0 15;">
 		<div id="task-container">
 			<div style="display: flex; flex-wrap: nowrap; align-items: flex-start">
 				<c:forEach items="${ taskLists }" var="taskList">
 					<div id="taskList-task-wrapper-${ taskList.listNo }" onmousemove="event.stopPropagation();" class="taskList-task" style="margin-bottom: 5px">
 						<div id="taskList-wrapper" class="btn btn-primary active" 
-						style="width:300px; margin-right: 5pt; padding: 0 0 0 0; border-radius: 0;">
-							<div id="taskList-div-${ taskList.listNo }" class="btn btn-primary active" style="display: flex" data-tno="${ taskList.listNo }" data-pno="${ taskList.projectNo }">
+						style="width:300px; margin-right: 5pt; padding: 0 0 0 0; border-radius: 0; background-color:#308eb7; border-color:#308eb7;">
+							<div id="taskList-div-${ taskList.listNo }" class="btn btn-primary active" style="display: flex; background-color:#308eb7; border-color:#308eb7;" data-tno="${ taskList.listNo }" data-pno="${ taskList.projectNo }">
 								<div id="listname" style="width:80%; text-align: left;">
 									<span>${ taskList.listName }</span>
 								</div>
 								<div id="settings" style="width:20%; display:flex; padding-top: 3pt">
 									<div id="icon-addtask-div" style="width:60%;">
-										<!-- 
-										<i id="icon-addtask-taskList-${ taskList.listNo }" onclick="showAddTaskDiv(this)" style="cursor: pointer" class="fas fa-plus"></i>
-										 -->
 										<i id="icon-addtask-taskList-${ taskList.listNo }" style="cursor: pointer" class="fas fa-plus icon-addtask"></i>
 									</div>
-									<div style="width:40%;">
-										<i id="task-setting" style="cursor: pointer" class="fas fa-ellipsis-v" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
-										<div id="${ taskList.listNo }" class="dropdown-menu" aria-labelledby="task-setting">
-										    <button class="dropdown-item list-delete-btn" type="button">리스트 삭제</button>
-										    <button class="dropdown-item" type="button">Another action</button>
-										    <button class="dropdown-item" type="button">Something else here</button>
+									<div id="tl-setting-wrap" style="width:40%;">
+										<!-- 
+										<i id="icon-setting-${ taskList.listNo }" style="cursor: pointer" class="fas fa-ellipsis-v menu-setting" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+										 -->
+										<i id="icon-setting-${ taskList.listNo }" style="cursor: pointer" class="fas fa-ellipsis-v menu-setting"></i>
+										<!-- 
+										<div id="tl-setting-${ taskList.listNo }" class="dropdown-menu tl-setting">
+										 -->
+										<div class="dropdown">
+											<div id="tl-setting-${ taskList.listNo }" class="dropdown-menu tl-settings">
+											    <button class="dropdown-item" type="button">Another action</button>
+											    <button class="dropdown-item" type="button">Something else here</button>
+											    <div class="dropdown-divider"></div>
+											    <button class="dropdown-item warning list-delete-btn" style="color:red;" type="button">리스트 삭제</button>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -83,23 +92,57 @@
 							<c:forEach items="${ tasks }" var="task">
 								<c:if test="${task.listNo eq taskList.listNo }">
 									<div class="dropright">
-										<div id="task-${task.taskNo}" class="btn btn-light task-field" 
-										style="margin-top:3px; width:300px; min-height:38px;height:auto; border-radius: 0; display:flex; flex-wrap:nowrap;"
-										data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-											<div>
+									<c:choose>
+										<c:when test="${ task.completed eq false }">
+											<div id="task-${task.taskNo}" class="btn btn-light task-field" 
+											style="margin-top:3px; width:300px; min-height:38px;height:auto; border-radius: 0;"
+											data-tno="${ task.taskNo }" data-lno="${ taskList.listNo }">
+										</c:when>
+										<c:otherwise>
+											<div id="task-${task.taskNo}" class="btn btn-light task-field completed" 
+											style="margin-top:3px; width:300px; min-height:38px;height:auto; border-radius: 0;"
+											data-tno="${ task.taskNo }" data-lno="${ taskList.listNo }">
+										</c:otherwise>
+									</c:choose>
+											<div id="cbox-content-wrap" style="display:flex; flex-wrap:nowrap;">
+											<div id="checkbox-div">
 												<div class="custom-control custom-checkbox">
-													<input type="checkbox" class="custom-control-input"	id="checkbox-${ task.taskNo }">
+													<c:choose>
+														<c:when test="${ task.completed eq false }">
+															<input id="checkbox-${ task.taskNo }" type="checkbox" class="custom-control-input task-chbox">
+														</c:when>
+														<c:otherwise>
+															<input id="checkbox-${ task.taskNo }" type="checkbox" class="custom-control-input task-chbox" checked="checked">
+														</c:otherwise>
+													</c:choose>
 													<label class="custom-control-label" for="checkbox-${ task.taskNo }"></label>
 												</div>
 											</div>
-											<div>
+											<div id="content-div">
 												<span style="display:block; text-align:left; white-space: normal; word-break: break-all;">${ task.content }</span>
 											</div>
+											</div>
+											<c:if test="${ task.completed eq true }">
+											<div class="dropdown-divider"></div>
+											<div style="text-align:left; font-size:8pt">
+												<span>
+													<fmt:formatDate value="${task.completedDate}" pattern="yyyy-MM-dd E요일  HH:mm"/> 에 완료
+												</span>
+											</div>
+											</c:if>
 										</div>
+										<!-- 
 										<div id="${ task.taskNo }" class="dropdown-menu" aria-labelledby="task-${task.taskNo}">
 										    <button class="dropdown-item task-delete-btn" type="button">업무 삭제</button>
 										    <button class="dropdown-item" type="button">Another action</button>
 										    <button class="dropdown-item" type="button">Something else here</button>
+										</div>
+										 -->
+										<div id="menu-${ task.taskNo }" class="contextmenu dropdown-menu">
+										  <button class="dropdown-item">기능1</button>
+										  <button class="dropdown-item">기능2</button>
+										  <div class="dropdown-divider"></div>
+										  <button class="dropdown-item warning task-delete-btn" style="color:red;">업무 삭제</button>
 										</div>
 									</div>
 								</c:if>
@@ -128,5 +171,13 @@
 				</div>
 			</div>
 		</div>
+		<div id="task-properties" class="menu-component">
+			<jsp:include page="task-properties.jsp"></jsp:include>
+		</div>
+		<!-- 
+		<div>
+			<jsp:include page="task-properties.jsp"></jsp:include>
+		</div>
+		 -->
 	</div>
 </section>

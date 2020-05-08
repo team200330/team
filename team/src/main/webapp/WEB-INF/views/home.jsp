@@ -1,5 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
+<%@ page session="true" %>
 <html>
 
 <head>
@@ -64,11 +64,12 @@
 </div>
 <!-- ./wrapper -->
 
-
-<script>
-  $.widget.bridge('uibutton', $.ui.button)
-</script>
   <%@include file="/WEB-INF/views/modules/common-js.jsp" %>
+
+<script type="text/javascript">
+ // $.widget.bridge('uibutton', $.ui.button)
+</script>
+
 
 </body>
 

@@ -124,11 +124,11 @@
           </div>
         </div>
         
-        <div>
-        	<label for="img">프로필 이미지</label>
-        	<input type="file" id="img" name="img" />
-        	<div class="select-img"><img src="" /></div>
-        </div>
+	        <div>
+	        	<label for="img">프로필 이미지</label>
+	        	<input type="file" id="img" name="img" />
+	        	<div class="select-img"><img src="" /></div>
+	        </div>
         
         <div class="row">
           <!-- /.col -->

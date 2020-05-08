@@ -1,6 +1,6 @@
 package com.team.vo;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import lombok.Data;
@@ -12,6 +12,7 @@ public class Task {
 	private String content;
 	private Date startDate;
 	private Date endDate;
+	private Date completedDate;
 	private boolean completed; // 완료 여부
 	private boolean deleted;
 	private String writer;
@@ -19,4 +20,10 @@ public class Task {
 	
 	private List<TaskMember> taskMembers;
 	private List<File> files;
+	
+	////////////////////////////
+	// string date
+	private String s_startDate;
+	private String s_endDate;
+	private String s_completedDate;
 }

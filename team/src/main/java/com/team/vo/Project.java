@@ -22,5 +22,6 @@ public class Project {
 	
 	private List<TaskList> taskLists;
 	private List<ProjectMember> projectMembers;
+
 	
 }

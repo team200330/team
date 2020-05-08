@@ -9,11 +9,13 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.team.mapper.LogMapper;
+import com.team.mapper.MemberMapper;
 import com.team.mapper.ProjectMapper;
 import com.team.mapper.TaskMapper;
 import com.team.service.LogService;
 import com.team.vo.Log;
 import com.team.vo.LogReceiver;
+import com.team.vo.Member;
 import com.team.vo.Project;
 import com.team.vo.ProjectMember;
 
@@ -32,6 +34,10 @@ public class LogServiceImpl implements LogService {
 	@Qualifier("taskMapper")
 	private TaskMapper taskMapper;
 
+	@Autowired
+	@Qualifier("memberMapper")
+	private MemberMapper memberMapper;
+	
 	@Override
 	public void writeLog(Log log) {
 		logMapper.insertLog(log);
@@ -39,7 +45,6 @@ public class LogServiceImpl implements LogService {
 		// 같은 프로젝트 멤버에게 로그 전송
 		for (ProjectMember member : projectMapper.selectMemberByProjectNo(log.getProjectNo())) 
 			logMapper.insertLogReceiver(new LogReceiver(log.getLogNo(), member.getEmail()));
-		
 	}
 	
 	@Override
@@ -48,6 +53,7 @@ public class LogServiceImpl implements LogService {
 		
 		for (Log log : logMapper.selectLogByProjectNo(params)) {
 			log.setTask(taskMapper.selectTaskByTaskNo(log.getTaskNo()));
+			log.getReceiver().setMember(memberMapper.selectMemberByEmail((String) params.get("email")));
 			logs.add(log);
 		}
 		

@@ -8,7 +8,7 @@
 <script src="/team/resources/plugins/jquery-ui/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <!-- Bootstrap 4 -->
-<script src="/team/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/team/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>   
 <!-- ChartJS -->
 <script src="/team/resources/plugins/chart.js/Chart.min.js"></script>
 <!-- Sparkline -->
@@ -37,3 +37,13 @@
 <script src="/team/resources/plugins/sweetalert2/sweetalert2.min.js"></script>
 <!-- Toastr -->
 <script src="/team/resources/plugins/toastr/toastr.min.js"></script>
+<!-- Task Properties side -->
+<script src="/team/resources/js/task-properties-side.js"></script>
+<!-- Task Common side -->
+<script src="/team/resources/js/task-common.js"></script>
+
+
+<!-- pace -->
+<script src="/team/resources/js/pace.js"></script>
+<!-- toast -->
+<script src="/team/resources/js/toast.js"></script>

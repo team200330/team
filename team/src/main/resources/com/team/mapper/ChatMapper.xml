@@ -5,16 +5,22 @@
 		   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.team.mapper.ChatMapper">
+	
+	<select id="selectMessage" resultType="Message">
+		select message, send_date
+		from message
+		order by message_no asc
+	</select>
 
 	<insert id="createChat" parameterType="Chat">
-		insert into chat chat_name
-		values #{ chatName }
+		INSERT INTO chat ( chat_no, chat_name )
+		VALUES ( #{ chatNo }, #{ chatName })
 	</insert>
 	
-	<select id="read" resultType="com.team.vo.Chat">
-		select * from chat where chat_no #{ chatNo }
-	</select> 
-	
+	<insert id="insertMessage" parameterType="Message">
+		insert into message message
+		values #{ message }
+	</insert>
 	
 	
 	<resultMap type="Chat" id="chatMap">

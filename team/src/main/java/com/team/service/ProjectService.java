@@ -4,15 +4,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.team.vo.Member;
 import com.team.vo.Project;
+import com.team.vo.ProjectMember;
 
 public interface ProjectService {
 
-	void writeProject(Project project);
-
-	List<Project> findProject();
+	void writeProject(Project project, String[] email);
+	//void writeProject(Project project, String[] email, List<ProjectMember> projectMember);
 	
-	List<Project> findProject2();
+	List<Project> findProject(HashMap<String, Object> params);
+	
+	List<Project> findProject2(HashMap<String, Object> params);
 	
 	void updateProjectNo(Map<String, String> arrMap);
 
@@ -23,6 +26,18 @@ public interface ProjectService {
 	Project searchProjectByNo(int projectNo);
 
 	Project selectDetail(int projectNo);
+
+	void updateProject(Project project);
+
+	List<Member> loginuserProjectMember(HashMap<String, Object> params);
+
+	List<Member> findWorkspaceMembers(int workspaceNo);
+
+
+	///////////////////////////////////////////////////
+	
+	List<Project> findProjectAndTasklist(int workspaceNo);
+
 
 
 

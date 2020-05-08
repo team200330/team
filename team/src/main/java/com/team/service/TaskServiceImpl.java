@@ -1,5 +1,6 @@
 package com.team.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,5 +47,12 @@ public class TaskServiceImpl implements TaskService {
 	public void deleteTask(int taskNo) {
 		taskMapper.deleteTask(taskNo);
 	}
+
+	@Override
+	public void updateCompleted(HashMap<String, Object> params) {
+		taskMapper.updateCompleted(params);
+	}
+
+	
 	
 }

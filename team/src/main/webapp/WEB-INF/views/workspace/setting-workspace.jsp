@@ -1,5 +1,5 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" pageEncoding="utf-8" contentType="text/html; charset=utf-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page pageEncoding="utf-8"%>
 <html>
 
 <head>
@@ -63,7 +63,8 @@
                     <div id="collapseOne" class="panel-collapse collapse show">
                       <div class="card-body">
                         <p>워크스페이스 이름</p>   
-                        <form action="setting-workspace" method="post">     
+                        <form action="setting-workspace" method="post">                             
+      					<input type="hidden" class="form-control" name="workspace_no" value="${ workspace.workspaceNo }">
                         <input type="hidden" name="workspaceNo" value="${ workspace.workspaceNo }">                
                         <div class="input-group input-group-sm mb-3">
 		                  <input type="text" name="workspaceName" class="form-control" value="${ workspace.workspaceName }">

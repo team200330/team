@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.team.service.WorkspaceService;
 import com.team.vo.Member;
@@ -24,28 +23,37 @@ public class WorkspaceController {
 	@Autowired
 	@Qualifier("workspaceService")
 	private WorkspaceService workspaceService;
-	
-	
+		
 	@GetMapping(path = { "/create-workspace" })
-	public String showcreateworkspaceform(Model model) {		
-		int code = (int)(Math.random()*1000+1);
-		model.addAttribute("code", code);
+	public String showcreateworkspaceform() {	
 		
 	return "workspace/create-workspace"; 
 	}
 	
 	@PostMapping(path = { "/create-workspace" })
-	public String docreateworkspace(Workspace workspace) {		
-		   workspaceService.insertWorkspace(workspace);		   
-	return "workspace/setting-workspace"; //임시
+	public String docreateworkspace(Workspace workspace, WorkspaceMember workspaceMember) {
+		
+		int code = (int)(Math.random()*1000+1);		
+		workspace.setCode(String.valueOf(code));
+		//코드값을 workspace안에 set 넣는다.
+		workspaceService.insertWorkspace(workspace);		
+		
+		int workspaceNo = (int)workspace.getWorkspaceNo();
+		workspaceMember.setWorkspaceNo(workspaceNo);
+		//만들어진 workspace에서 workspaceNo를 꺼내서 workspacemember안에 set 넣는다.
+		
+		workspaceService.insertWorkspaceMember(workspaceMember);
+		//코드와 워크스페이스 네임을 중복되지않게 작업 해야한다.
+		
+		return "redirect:/";
 	}
 	
 	@GetMapping(path = { "/invite-workspace" })
 	public String inviteworkspaceform(int workspaceNo,Model model) {		
-	List<Project> Projects = workspaceService.selectProjectByWorkspaceNo(workspaceNo);
-	model.addAttribute("Projects",Projects);
-	Workspace workspace = workspaceService.selectWorkspaceByWorkspaceNo(workspaceNo);
-	model.addAttribute("workspace",workspace);	
+		List<Project> Projects = workspaceService.selectProjectByWorkspaceNo(workspaceNo);
+		model.addAttribute("Projects",Projects);
+		Workspace workspace = workspaceService.selectWorkspaceByWorkspaceNo(workspaceNo);
+		model.addAttribute("workspace",workspace);	
 	return "workspace/invite-workspace"; 
 	}
 	
@@ -53,7 +61,8 @@ public class WorkspaceController {
 	public String settingworkspaceform(int workspaceNo,Model model) {
 		Workspace workspace = workspaceService.selectWorkspaceByWorkspaceNo(workspaceNo);
 		model.addAttribute("workspace",workspace);
-	return "workspace/setting-workspace"; 
+		
+		return "workspace/setting-workspace";
 	}
 	
 	@PostMapping(path = { "/setting-workspace" })
@@ -69,11 +78,17 @@ public class WorkspaceController {
 	}
 	
 	@GetMapping(path = { "/workspace-member" })
-	public String workspacemember(int workspaceNo,Model model) {
-		List <Member> members = workspaceService.selectMembersByWorkspaceNo(workspaceNo);
+	public String workspacemember(String email,WorkspaceMember workspaceMember,Model model) {
+		
+		List <Member> members = workspaceService.selectMembersByWorkspaceNo(workspaceMember);
 		model.addAttribute("members",members);
-		Member member = workspaceService.selectMemberTypeNo1ByWorkspaceNo(workspaceNo);
+		
+		Member member = workspaceService.selectMemberTypeNo1ByWorkspaceNo(workspaceMember);
 		model.addAttribute("member",member);
+		
+		//java.lang.ClassCastException: com.team.vo.WorkspaceMember cannot be cast to com.team.vo.Member
+		//작업중에있음
+		
 	return "workspace/workspace-member"; 
 	}
 	
@@ -83,5 +98,14 @@ public class WorkspaceController {
 		model.addAttribute("members",members);
 	return "redirect:workspace/workspace-member"; 
 	}
-
+	
+	
+	@GetMapping(path = { "/changeworkspacemembertype" })
+	public String changeworkspacemembertype(WorkspaceMember workspaceMember,Model model) {
+		
+		//Member member = workspaceService.sd(workspaceMember);
+		//model.addAttribute("member",member);
+		
+	return "workspace/workspace-member"; 
+	}
 }

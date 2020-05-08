@@ -14,24 +14,53 @@
 		<result column="pro_public" property="proPublic" />
 		<result column="template_no" property="templateNo" />
 		<result column="pro_no" property="proNo" />
+		<collection property="projectMembers" column="project_no" resultMap="projectMemberMap" />
 	</resultMap>
 	
 	<resultMap type="ProjectMember" id="projectMemberMap">
-		<result column="project_no" property="projectNo"/>
+		<id column="project_no" property="projectNo"/>
 		<result column="email" property="email"/>
 	</resultMap>
 	
-	<insert id="insertProject">
+	<resultMap type="WorkspaceMember" id="workspaceMemberMap">
+		<id column="workspace_no" property="workspaceNo" />
+		<result column="email" property="email" />
+		<result column="type_no" property="typeNo" />
+	</resultMap> 
+	
+ 	<insert id="insertProject" parameterType="project">
 		INSERT INTO project ( project_name, content, manager_email, pro_public, template_no, workspace_no)
-		VALUES ( #{projectName}, #{content}, "1@1", #{proPublic}, #{templateNo}, "6" )
+		VALUES ( #{projectName}, #{content}, #{managerEmail}, #{proPublic}, #{templateNo}, #{workspaceNo} )
+		<selectKey keyProperty="projectNo" order="AFTER" resultType="int">
+			SELECT LAST_INSERT_ID();
+		</selectKey>
 	</insert>
 	
-	<select id="selectProject" resultMap="projectMap">
-		<![CDATA[ SELECT * FROM project WHERE deleted = 0 ORDER BY project_no DESC ]]>
+ 	<insert id="insertProjectMember" parameterType="projectMember">
+		INSERT INTO project_member(project_no, email) 
+		VALUES (#{projectNo}, #{email})
+	</insert>
+	
+	<select id="selectProject" resultMap="projectMap" parameterType="hashmap" >
+		<![CDATA[
+		SELECT *
+		FROM project p
+		WHERE p.workspace_no = #{workspaceNo}
+		ORDER BY project_no DESC
+		]]>
+		<!-- <![CDATA[ SELECT * FROM project WHERE deleted = 0 AND workspace_no = 6 ORDER BY project_no DESC ]]>
+		<![CDATA[ SELECT * FROM project WHERE deleted = 0 AND workspace_no = #{workspace_no} ORDER BY project_no DESC; ]]> -->
 	</select>
 	
-	<select id="selectProject2" resultMap="projectMap">
-		<![CDATA[ SELECT * FROM project WHERE deleted = 0 ORDER BY project_no DESC LIMIT 4 ]]>
+	<select id="selectProject2" resultMap="projectMap" parameterType="hashmap" >
+		<![CDATA[ 
+		SELECT *
+		FROM project p
+		WHERE p.workspace_no = #{workspaceNo}
+		ORDER BY project_no DESC 
+		LIMIT 4 
+		]]>
+		<!--  <![CDATA[ SELECT * FROM project WHERE deleted = 0 AND workspace_no = #{workspace_no} ORDER BY project_no DESC LIMIT 4 ]]> -->
 	</select>
 	
 	<select id="selectProjectByWorkspaceNo" parameterType="int" resultMap="projectMap">
@@ -42,6 +71,11 @@
 	<update id="updateProjectNo" parameterType="hashmap">
 		UPDATE project SET pro_no=#{ proNo } 
 		WHERE project_no = #{ projectNo }
+	</update>
+	
+	<update id="updateProject">
+		UPDATE project SET project_name = #{projectName}, content = #{content}, pro_public = #{proPublic}, startdate = #{startdate}, deadline = #{deadline}, enddate = #{enddate}
+		WHERE project_no = #{projectNo}
 	</update>
 	
 	<select id="selectProjectByNo" parameterType="int" resultMap="projectMap">
@@ -58,15 +92,76 @@
 	</select>
 	
 	<select id="selectDetail" parameterType="int" resultMap="projectMap">
-		SELECT * FROM project
-		WHERE project_no = #{projectNo}	
+<!-- 	<![CDATA[
+	SELECT *, IFNULL(MAX(pm.email), '추가된 프로젝트  멤버가 없습니다.') AS email
+	FROM project p
+	LEFT OUTER JOIN project_member pm
+	ON p.project_no = pm.project_no 
+	WHERE pm.project_no =  #{projectNo };
+	]]> -->
+	<![CDATA[
+	SELECT *
+	FROM project p
+	INNER JOIN project_member pm
+	ON p.project_no = pm.project_no 
+	WHERE p.project_no = #{projectNo}
+	]]>
 	</select>
 	
+	
+
+	<select id="selectLoginuserProjectMember" parameterType="hashmap" resultMap="projectMap">
+	<![CDATA[
+	SELECT * 
+	FROM project p
+	INNER JOIN project_member pm 
+	ON p.project_no = pm.project_no
+	WHERE deleted = '0' AND p.workspace_no = #{workspaceNo}
+	ORDER BY p.project_no DESC
+	]]>
+	
+
+	</select>
 	
 	<select id="selectMemberByProjectNo" parameterType="int" resultMap="projectMemberMap">
 		SELECT * FROM project_member
-		WHERE project_no = #{ projectNo }
+		WHERE project_no = #{ projectNo}
 	</select>
+	
+<!-- 	<select id="selectProjectMember" parameterType="hashmap" resultMap="feedbackMap">
+		SELECT DISTINCT wm.email FROM workspace_member wm
+		INNER JOIN project p 
+		ON p.workspace_no = wm.workspace_no
+		WHERE 
+			p.manager_email = 
+			<choose>
+				<when test="searchType == 'M'.toString()">
+					(sender = #{email} OR email = #{email}) AND
+				</when>
+				<when test="searchType == 'S'.toString()">
+					sender = #{email} AND
+				</when>
+				<when test="searchType == 'R'.toString()">
+					email = #{email} AND
+				</when>
+				<when test="searchType == 'A'.toString()">
+					email = #{email} AND opened = 1 AND
+				</when>
+				<when test="searchType == 'I'.toString()">
+				(sender LIKE CONCAT('%',#{key},'%') OR 
+				email LIKE CONCAT('%',#{key},'%') OR 
+				f.content LIKE CONCAT('%',#{key},'%') ) AND
+				</when>
+			</choose>
+		AND 
+			deleted = '0' 
+		AND 
+			wm.workspace_no = 6
+		ORDER BY p.project_no DESC;
+			
+		deleted = '0' AND workspace_no = #{workspaceNo}
+		ORDER BY f.feedback_no DESC
+	</select> -->
 
 
 </mapper>

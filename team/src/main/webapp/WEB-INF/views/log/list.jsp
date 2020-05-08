@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
 <%-- <fmt:formatDate value="${ logs.get(0).writedate }" pattern="yyyy-MM-dd hh:mm"/> --%>
 <%@ page pageEncoding="utf-8"%>
 <html>
@@ -112,7 +113,6 @@
 	<%@include file="/WEB-INF/views/modules/common-js.jsp"%>
 	
 	<!-- css 관련 스크립트 -->
-	<script src="/team/resources/js/toast.js"></script>
 	<script src="/team/resources/js/log-css.js"></script>
 	<script type="text/javascript">
 	$(function() {		

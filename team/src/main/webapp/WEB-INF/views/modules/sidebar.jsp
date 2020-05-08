@@ -73,6 +73,7 @@
           
           <li class="nav-item">
             <a href="/team/workspace/workspace-member?workspaceNo=3" class="nav-link">
+            <a href="/team/workspace/workspace-member?email=${ loginuser.email }" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
               <p>
                         워크스페이스 멤버
@@ -141,19 +142,48 @@
                   <p>피드백</p>
                 </a>
               </li>
+              </ul>
+              </li>
+          
+         <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+             <i class="nav-icon fas fa-comment"></i>
+              <p> 채팅
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a data-toggle="modal" class="nav-link" data-target="#create-chat">
+                  <i class="nav-icon fas fa-comment-medical"></i>
+                  <p>채팅방 만들기</p>
+                </a>
+              </li>
+              <c:forEach items="${ chat }" var="chat">
+	              <li class="nav-item">
+	                <a href="chat?chatNo=${ chat.chatNo }" class="nav-link">
+	                  <i class="far fa-circle nav-icon"></i>
+	                  <p>${ chat.chatName }</p>
+	                </a>
+	              </li>
+              </c:forEach>
             </ul>
           </li>
-          
-          <li class="nav-item">
-            <a href="/team/chatting/chat" class="nav-link">
-              <i class="nav-icon fas fa-comment"></i>
-              <p>채팅</p>
-            </a>
-          </li>
-
+   
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
   </aside>
+
+  			<div class="modal fade" id="create-chat">
+		       <div class="modal-dialog modal-lg">
+		         <div class="modal-content">
+             	<jsp:include page="/WEB-INF/views/chatting/create.jsp" />
+		  </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->

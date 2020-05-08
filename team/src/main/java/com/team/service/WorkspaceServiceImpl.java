@@ -31,8 +31,8 @@ public class WorkspaceServiceImpl implements WorkspaceService {
 	}
 
 	@Override
-	public List<Member> selectMembersByWorkspaceNo(int workspaceNo) {
-		List <Member> members = workspaceMapper.selectMembersByWorkspaceNo(workspaceNo);
+	public List<Member> selectMembersByWorkspaceNo(WorkspaceMember workspaceMember) {
+		List <Member> members = workspaceMapper.selectMembersByWorkspaceNo(workspaceMember);
 		return members;
 	}
 	
@@ -40,11 +40,6 @@ public class WorkspaceServiceImpl implements WorkspaceService {
 	public List<Project> selectProjectByWorkspaceNo(int workspaceNo) {
 		List<Project> Projects = projectMapper.selectProjectByWorkspaceNo(workspaceNo);
 		return Projects;
-	}
-
-	@Override
-	public Workspace selectWorkspaceByWorkspaceNo(int workspaceNo) {
-		return workspaceMapper.selectWorkspaceByWorkspaceNo(workspaceNo);
 	}
 
 	@Override
@@ -60,8 +55,8 @@ public class WorkspaceServiceImpl implements WorkspaceService {
 	}
 
 	@Override
-	public Member selectMemberTypeNo1ByWorkspaceNo(int workspaceNo) {
-		Member member1 = workspaceMapper.selectMemberTypeNo1ByWorkspaceNo(workspaceNo);
+	public Member selectMemberTypeNo1ByWorkspaceNo(WorkspaceMember workspaceMember) {
+		Member member1 = workspaceMapper.selectMemberTypeNo1ByWorkspaceNo(workspaceMember);
 		return member1;
 	}
 
@@ -69,6 +64,39 @@ public class WorkspaceServiceImpl implements WorkspaceService {
 	public List<Member> WorkspaceMemberNameAndDepartmentSearch(Member member) {
 		List <Member> members = workspaceMapper.WorkspaceMemberNameAndDepartmentSearch(member);
 		return members;
+	}
+
+	@Override
+	public void insertWorkspaceMember(WorkspaceMember workspaceMember) {
+		workspaceMapper.insertWorkspaceMember(workspaceMember);
+		
+	}
+
+	@Override
+	public void updateWorkspace(Workspace workspace) {
+		workspaceMapper.updateWorkspace(workspace);
+		
+	}	
+
+	@Override
+	public Workspace selectWorkspaceByWorkspaceNo(int workspaceNo) {
+		return workspaceMapper.selectWorkspaceByWorkspaceNo(workspaceNo);
+	}
+
+	@Override
+	public List<Workspace> selectWorkspacesByWorkspaceNo(int workspaceNo) {
+		return workspaceMapper.selectWorkspacesByWorkspaceNo(workspaceNo);
+	}
+	
+	@Override
+	public WorkspaceMember selectWorkspaceByEmail(String email) {
+		WorkspaceMember workspaceMember = workspaceMapper.selectWorkspaceByEmail(email);
+		return workspaceMember;
+	}
+
+	@Override
+	public List<Workspace> selectWorkspaceNameByEmail(String email) {
+		return workspaceMapper.selectWorkspaceNameByEmail(email);
 	}
 	
 }

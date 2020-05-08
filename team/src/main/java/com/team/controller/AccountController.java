@@ -53,10 +53,10 @@ public class AccountController {
 	
 		Member member2 = memberService.findMemberByEmailAndPassword(member);
 		if (member2 == null) {
-			return "redirect:/account/login.action";
+			return "redirect:/account/login";
 		}else {
 			session.setAttribute("loginuser", member2);
-			return "account/login";
+			return "redirect:/";
 		}
 	}
 	

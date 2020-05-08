@@ -1,5 +1,6 @@
 package com.team.mapper;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.team.vo.Task;
@@ -21,4 +22,7 @@ public interface TaskMapper {
 
 	void deleteTask(int taskNo);
 
+	void updateCompleted(HashMap<String, Object> params);
+
+	
 }

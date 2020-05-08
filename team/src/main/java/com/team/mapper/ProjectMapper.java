@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.team.vo.Member;
 import com.team.vo.Project;
 import com.team.vo.ProjectMember;
 
@@ -16,10 +17,12 @@ public interface ProjectMapper {
 	///////////////////////////////////////////
 	
 	void insertProject(Project project);
-
-	List<Project> selectProject();
 	
-	List<Project> selectProject2();
+	void insertProjectMember(ProjectMember projectMember);
+	
+	List<Project> selectProject(HashMap<String, Object> params);
+	
+	List<Project> selectProject2(HashMap<String, Object> params);
 	
 	void updateProjectNo(Map<String, String> arrMaparrMap);
 	
@@ -30,6 +33,16 @@ public interface ProjectMapper {
 	Project selectProjectByNo(int projectNo);
 
 	Project selectDetail(int projectNo);
+
+	void updateProject(Project project);
+
+	List<Member> selectLoginuserProjectMember(HashMap<String, Object> params);
+
+
+
+
+	
+	
 	
 
 
