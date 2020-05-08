@@ -68,7 +68,7 @@
                   </div>
                   
                   <form>
-	                  <div class="form-group col-12 col-sm-6 col-md-3">
+	                  <div class="form-group col-12 col-sm-6 col-md-3" style="max-width: 100%;">
 	                        <select class="form-control" id="asc">
 	                          <option value="이름순">이름순</option>
 	                          <option value="관리자/멤버">관리자/멤버</option>
@@ -236,8 +236,6 @@
 
 			var workspaceNo = '${ workspaceNo }';
 			
-			console.log(workspaceNo);
-
 			$(function() {
 				var changeworkspacemembertype = $('#changeworkspacemembertype');
 				changeworkspacemembertype.on('click', function(event) {
@@ -286,7 +284,7 @@
 						});
 
 				    	
-				    } else if (asc == "관리자/멤버"){
+				} else if (asc == "관리자/멤버"){
 
 				    	$.ajax({
 							"url": "/team/workspace/asc2",
@@ -308,11 +306,10 @@
 							
 							} 
 						});
-
 					    
-					}
+				}
 				    		
-			    });  
+		    });  
 				
-			});			
+		});			
 </script>

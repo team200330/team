@@ -53,8 +53,9 @@ public class ProjectController {
 
 	//로그인 페이지 이동
 	@GetMapping(path = {"/task.action"})
-	public String toTask() {
-		return "task/modules/task-list";
+	public String toTask( HttpSession session, int projectNo) {
+		session.setAttribute("projectNo", projectNo);
+		return "redirect:/task/main";
 	}
 	
 	
@@ -192,9 +193,8 @@ public class ProjectController {
 	@PostMapping(value="/deleted")
 	@ResponseBody
 	public String projectDeleted (String projectNo, String deleted) {
-		String keyArr[] = {projectNo, deleted};
 		
-		Map< String, String > arrMap = new HashMap<>();
+		Map< String, Object > arrMap = new HashMap<>();
 		arrMap.put("projectNo", projectNo);
 		arrMap.put("deleted", deleted);
 
