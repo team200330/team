@@ -33,9 +33,10 @@
 	</insert>	
 		
 	<select id="selectWorkspaceMembers" parameterType="int" resultMap="workspaceMemberMap">
-		SELECT * FROM workspace_member
+		SELECT * FROM workspace_member w
+		INNER JOIN member m ON m.email = w.email
 		WHERE workspace_no = #{ workspaceNo } 
-		AND ( type_no = 1 OR type_no = 2 );
+		AND ( type_no = 1 OR type_no = 2 ) AND deleted = 0
 	</select>
 	
 	<select id="selectCountMemberByWorkspaceMember" parameterType="int" resultType="int">
@@ -210,4 +211,17 @@
 		AND email = #{ email }
 	</delete>
 	
+	<select id="selectWorkspaceByManagerEmail" parameterType="String" resultMap="workspaceMap">
+		SELECT * FROM workspace w
+		INNER JOIN workspace_member m 
+		ON w.workspace_no = m.workspace_no
+		WHERE m.email = #{ email } AND m.type_no = 1
+		AND w.deleted = 0
+	</select>
+	
+	<update id="updateWorkspaceManager" parameterType="hashmap">
+		UPDATE workspace_member
+		SET type_no = #{ typeNo }
+		WHERE email = #{ email }
+	</update>
 </mapper>

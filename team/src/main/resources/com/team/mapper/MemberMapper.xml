@@ -36,6 +36,11 @@
 		WHERE email = #{ email }
 	</update>
 	
+	<update id="deleteMember" parameterType="String">
+		UPDATE member SET deleted = 1
+		WHERE email = #{ email }
+	</update>
+	
 	
 	<resultMap type="Member" id="memberMap">
 		<id column="email" property="email"/>

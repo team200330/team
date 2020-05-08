@@ -15,5 +15,7 @@ public interface MemberMapper {
 	void updateImg(Member member);
 	
 	void updateMember(Member member);
+	
+	void deleteMember(String email);
 
 }

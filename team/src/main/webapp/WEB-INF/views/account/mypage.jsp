@@ -101,7 +101,6 @@ button {
 #updateWorkspaceManagerModal tr td:first-child {font-weight: bold;}
 
 ._mem { height:50px;border:1px solid white;border-radius:.20rem;padding:5px; margin-bottom: 15px; }
-._mem_name {width:60%;}
 ._mem_img {width:43px;margin-right:10px; float:left;}
 ._mem_none {font-size: 10pt;padding: 10;}
 </style>
@@ -418,14 +417,21 @@ button {
 						"email": "${loginuser.email}",
 						"managerEmail" : $(this).attr("data-email"), 
 						"workspaceNo" : $(this).attr("id")
+					}, 
+					success : function() {
+						$.ajax({
+							url : "/team/account/deleteMember",
+							method : "post",
+							data : {
+								"email" : "${loginuser.email}"
+							}
+						}); 
 					}
 				});
 			});
 			
 			// 계정 삭제
-			/* $.ajax({
-				url : "/team/account/deleteUser"
-			}); */
+			
 		})
 		
 	});
