@@ -21,6 +21,10 @@ public interface TaskService {
 	void deleteTask(int taskNo);
 
 	void updateCompleted(HashMap<String, Object> params);
+
+	int finishTaskListByEmail(String email);
+
+	int notfinishTaskListByEmail(String email);
 	
 
 }
