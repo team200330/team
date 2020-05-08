@@ -7,6 +7,7 @@
 <title>워크스페이스 멤버</title>
 <link rel="stylesheet" href="/team/resources/css/log-feedback.css">
 <%@include file="/WEB-INF/views/modules/common-css.jsp"%>
+
 <style>
 section.section-header {
 	position: relative;
@@ -56,6 +57,25 @@ input::placeholder {
 .f_link.properties {
 	padding: 10px;
 }
+
+.pitem {
+	color: #016979;
+}
+
+.modal-dialog {
+	top: 35%;
+	left: 30%;
+}
+.modal-backdrop {
+	position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -5;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+}
+
 </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
