@@ -40,7 +40,7 @@ public interface ProjectMapper {
 
 	ProjectMember selectDetail2(int projectNo);
 
-	void updateProjectDeleted(Map<String, String> arrMap);
+	void updateProjectDeleted(Map<String, Object> arrMap);
 
 
 
