@@ -152,8 +152,7 @@
 		FROM workspace_member
 		WHERE email = #{ email } 
 		LIMIT 1;
-	</select>
-	
+	</select>	
 	
 	<select id="selectWorkspaceNameByEmail" parameterType="String" resultType="com.team.vo.Workspace">
 		select workspace_name
