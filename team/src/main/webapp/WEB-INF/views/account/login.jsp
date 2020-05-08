@@ -94,19 +94,6 @@
 <script type="text/javascript">
 $(function(){
 	
-		var newId = '${ newId }'; 
-		var loginFalse = '${ loginFalse }'; 
-		
-		if (newId && !history.state) {
-			$('#messageModal .modal-body').text("회원가입이 완료 되었습니다.")
-			$('#messageModal').modal('show');
-		} else if( loginFalse && !history.state ){
-			$('#messageModal .modal-body').text("로그인 실패 하였습니다.")
-			$('#messageModal').modal('show');
-		}
-		history.replaceState({}, null, null);
-
-
 		$("#login").on("click" , function(event) {
 			// 1. 유효성 검사
 			if($("#email").val() == '' ){

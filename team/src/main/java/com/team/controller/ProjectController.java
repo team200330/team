@@ -54,7 +54,8 @@ public class ProjectController {
 	//로그인 페이지 이동
 	@GetMapping(path = {"/task.action"})
 	public String toTask( HttpSession session, int projectNo) {
-		session.setAttribute("projectNo", projectNo);
+		System.out.println("프로젝트번호:"+projectNo);
+		session.setAttribute("projectByNo", projectService.searchProjectByNo(projectNo));
 		return "redirect:/task/main";
 	}
 	
