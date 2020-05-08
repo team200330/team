@@ -12,7 +12,7 @@
 	/*._mem_icon {width:20%;}*/
 </style>
             <div class="modal-header">
-              <h4 class="modal-title">새 프로젝트</h4>
+              <h4 class="modal-title"></h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -59,7 +59,13 @@
 	                    <input id="de_managerEmail" name="managerEmail" class="form-control" type="text" value="">
 	                  </div>
             		</form>
-
+					  <div class="form-group">
+		              	<label>프로젝트 삭제</label> <br>
+		              	<form id="deleted" method="post" action="/team/project/deleted">
+		              		<input id="de_deleted" type="text" name="deleted"  value=""/>
+		              	</form>
+		              		<a id="projectDeleted" class="btn btn-default projectDeleted" style="cursor:pointer">프로젝트 삭제하기</a>
+		              </div>
                      <div class="form-group">
                      <form id="feedback_write_form2" method="post" action="/team/addProjectMember">
                        <label for="exampleInputEmail1">프로젝트 멤버(선택사항)</label> <span style="color:#a0a0a0;">&nbsp;&nbsp;같은 워크스페이스에 있는 사람을 프로젝트에 초대하세요.</span>

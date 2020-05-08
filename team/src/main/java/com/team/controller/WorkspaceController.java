@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.team.service.WorkspaceService;
 import com.team.vo.Member;
@@ -50,7 +51,7 @@ public class WorkspaceController {
 		//코드와 워크스페이스 네임을 중복되지않게 작업 해야한다.
 		
 		List<Workspace> workspaces = workspaceService.selectWorkspacesByEmail(workspaceMember.getEmail());
-		session.setAttribute("workspaces",workspaces);
+		session.setAttribute("workspaces",workspaces);	
 		
 		return "redirect:/";
 	}
@@ -154,10 +155,12 @@ public class WorkspaceController {
 	}
 	
 	@PostMapping(path = { "/asc1"})
+	@ResponseBody
 	public String asc1(int workspaceNo,Model model) {
+		System.out.println(workspaceNo);
 		List <Member> members = workspaceService.selectMemberAsc1ByWorkspaceNo(workspaceNo);
 		model.addAttribute("members",members);
-				
+		System.out.println(members);
 		if (members == null) {
 			return "not success";
 		} else {
@@ -166,10 +169,12 @@ public class WorkspaceController {
 	}
 	
 	@PostMapping(path = { "/asc2"})
+	@ResponseBody
 	public String asc2(int workspaceNo,Model model) {
+		System.out.println(workspaceNo);
 		List <Member> members = workspaceService.selectMemberAsc2ByWorkspaceNo(workspaceNo);
 		model.addAttribute("members",members);
-				
+		System.out.println(members);
 		if (members == null) {
 			return "not success";
 		} else {

@@ -18,7 +18,7 @@
 	</resultMap>
 	
 	<resultMap type="ProjectMember" id="projectMemberMap">
-		<id column="project_no" property="projectNo"/>
+		<result column="project_no" property="projectNo"/>
 		<result column="email" property="email"/>
 	</resultMap>
 	
@@ -45,7 +45,7 @@
 		<![CDATA[
 		SELECT *
 		FROM project p
-		WHERE p.workspace_no = #{workspaceNo}
+		WHERE deleted = 0 AND p.workspace_no = #{workspaceNo}
 		ORDER BY project_no DESC
 		]]>
 		<!-- <![CDATA[ SELECT * FROM project WHERE deleted = 0 AND workspace_no = 6 ORDER BY project_no DESC ]]>
@@ -56,7 +56,7 @@
 		<![CDATA[ 
 		SELECT *
 		FROM project p
-		WHERE p.workspace_no = #{workspaceNo}
+		WHERE deleted = 0 AND p.workspace_no = #{workspaceNo}
 		ORDER BY project_no DESC 
 		LIMIT 4 
 		]]>
@@ -73,6 +73,11 @@
 		WHERE project_no = #{ projectNo }
 	</update>
 	
+	<update id="updateProjectDeleted" parameterType="hashmap">
+		UPDATE project SET deleted= #{ deleted } 
+		WHERE project_no = #{ projectNo }
+	</update>
+	
 	<update id="updateProject">
 		UPDATE project SET project_name = #{projectName}, content = #{content}, pro_public = #{proPublic}, startdate = #{startdate}, deadline = #{deadline}, enddate = #{enddate}
 		WHERE project_no = #{projectNo}
@@ -82,45 +87,37 @@
 		SELECT * FROM project
 		WHERE project_no = #{ projectNo }
 	</select>
-	
-	<select id="selectPageing" parameterType="hashmap" resultMap="projectMap">
 
-	</select>
-	
 	<select id="selectProjectListCount" parameterType="hashmap" resultType="int" >
 		SELECT COUNT(*) FROM project WHERE deleted = '0' ORDER BY project_no DESC
 	</select>
 	
 	<select id="selectDetail" parameterType="int" resultMap="projectMap">
-<!-- 	<![CDATA[
-	SELECT *, IFNULL(MAX(pm.email), '추가된 프로젝트  멤버가 없습니다.') AS email
-	FROM project p
-	LEFT OUTER JOIN project_member pm
-	ON p.project_no = pm.project_no 
-	WHERE pm.project_no =  #{projectNo };
-	]]> -->
-	<![CDATA[
-	SELECT *
-	FROM project p
-	INNER JOIN project_member pm
-	ON p.project_no = pm.project_no 
-	WHERE p.project_no = #{projectNo}
-	]]>
+		<![CDATA[
+		SELECT *
+		FROM project p
+		INNER JOIN project_member pm
+		ON p.project_no = pm.project_no 
+		WHERE p.project_no = #{projectNo} 
+		ORDER BY pm.email ASC
+		]]>
+				
+		<!-- SELECT *, IFNULL(MAX(pm.email), '추가된 프로젝트  멤버가 없습니다.') AS email
+		FROM project p
+		LEFT OUTER JOIN project_member pm
+		ON p.project_no = pm.project_no 
+		WHERE pm.project_no =  #{projectNo} -->
 	</select>
 	
-	
-
 	<select id="selectLoginuserProjectMember" parameterType="hashmap" resultMap="projectMap">
-	<![CDATA[
-	SELECT * 
-	FROM project p
-	INNER JOIN project_member pm 
-	ON p.project_no = pm.project_no
-	WHERE deleted = '0' AND p.workspace_no = #{workspaceNo}
-	ORDER BY p.project_no DESC
-	]]>
-	
-
+		<![CDATA[
+		SELECT * 
+		FROM project p
+		INNER JOIN project_member pm 
+		ON p.project_no = pm.project_no
+		WHERE deleted = '0' AND p.workspace_no = #{workspaceNo}
+		ORDER BY p.project_no DESC
+		]]>
 	</select>
 	
 	<select id="selectMemberByProjectNo" parameterType="int" resultMap="projectMemberMap">

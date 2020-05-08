@@ -10,7 +10,7 @@
 
   <%@include file="/WEB-INF/views/modules/common-css.jsp" %>
  <style>
-
+	.content-wrapper {background: rgb(236, 236, 236);}
 	.page-item.active .page-link {z-index: 1;color: #fff;background-color: #6c757d;border-color: #6c757d;}
  	.bg-info { background-color: #f4f6f9!important; }
  	.bg-info, .bg-info>a { color: #343a40!important; }
@@ -40,6 +40,9 @@
 	._mem_img {width:20%;}
 	._mem_name {width:60%;}
 	._mem_icon {width:20%;}
+	a { color: #343a40;}
+	a:hover { color: #527aa2;}
+
 	
  </style>
 </head>
@@ -126,30 +129,6 @@
 		<button type="button" class="btn btn-block btn-outline-secondary btn-flat" data-toggle="modal" data-target="#modal-lg">
 			<i class="fas fa-plus"></i> Add Project
 		</button>
-		
-        <div class="card-footer" style="display: block;">
-          <nav aria-label="Contacts Page Navigation">
-            <ul class="pagination justify-content-center m-0">
-              <li class="paginate_button page-item previous disabled" id="example2_previous"><a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li>
-              <li class="page-item active"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" href="#">4</a></li>
-              <li class="page-item"><a class="page-link" href="#">5</a></li>
-              <li class="page-item"><a class="page-link" href="#">6</a></li>
-              <li class="page-item"><a class="page-link" href="#">7</a></li>
-              <li class="page-item"><a class="page-link" href="#">8</a></li>
-              <li class="paginate_button page-item next" id="example2_next"><a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a></li>
-            </ul>
-          </nav>
-        </div>
-        <div>
-         <nav aria-label="Contacts Page Navigation">
-            <ul class="pagination justify-content-center m-0">
-            ${ pager }
-            </ul>
-        </nav>
-        </div>
        
         
         </div>
@@ -182,9 +161,12 @@
     <!-- /.content -->
   <form id="detail-form" action="detail.action" method="get">
   	<input type="hidden" id="projectNo" name="projectNo">
-<%--   	<input type="hidden" id="pageNo" name="pageNo" value="${ pager.pageNo }">
+<%-- <input type="hidden" id="pageNo" name="pageNo" value="${ pager.pageNo }">
   	<input type="hidden" id="searchType" name="searchType" value="${ param.searchType }">
   	<input type="hidden" id="searchKey" name="searchKey" value="${ param.searchKey }"> --%>
+  </form>
+  <form id="task-form" action="task.action" method="get">
+  	<input type="hidden" id="projectNo" name="projectNo">
   </form>
   </div>
   <!-- /.content-wrapper -->
@@ -304,7 +286,8 @@ $(function() {
 		}
 	});
 	
-	
+	if($('input[name=templateNo]').val() == "basics") { $('input[name=templateNo]').val("1") }
+
 	$('input[name=templateNo]').on('click', function(){	
 		if( $(this).val() == "basics"){ $(this).val("1") }
 		else if($(this).val() == "weekday"){ $(this).val("2") }
@@ -315,39 +298,6 @@ $(function() {
 	});
 	// -- 템플릿 선택 끝
 
-	
-	/*$('.selectProNo2').on('click', function(){
-		//var selectProNoName = ['상태없음', '진행중', '완료', '보류', '취소'];
-		
-		var projectNo = $(this).prev('.projectNo').attr('id');
-		var proNo = $(this).val();
-		console.log(projectNo); // 12345
-		console.log(proNo)		// 상태없음, 진행중, 완료, 보류, 취소
-
-		var option1 = $("<option value='"+projectNo+"'>"+ proNo+"</option>" )
-		console.log(option1)
-		$('.selectProNo2').append(option1);
-		//처음에 추가
-		$('.selectProNo2').prepend(option1);
- 		$('.selectProNo2 option:first').remove();
-		$('.selectProNo2').append('<option value="'+ projectNo +'">'+ proNo +'</option>');
-		if ($('.selectProNo2').val() == '1'){ 
-			for(var count = 0; count < proNo.size(); count++){
-				var option2 = $("<option value='"+projectNo[count]+"'>"+ proNo+"</option>" )
-				console.log(optopn2)
-				$('.selectProNo2').append(option2);
-			}
-			$("<option value='"+projectNo+"'>"+ proNo+"</option>" ).css({'display':'none'});
-			
-		} 
-		
- 		for(var count = 0; count < changeItem.size(); count++){                
-		                var option = $("<option>"+changeItem[count]+"</option>");
-		                $('#select2').append(option);
-		} 
-		
-	})*/
-	
 	// 비공개 공개 선택
 	$('input[name=proPublic]').on('click', function(){
 		var input_id_check =  $(this).attr("id")
@@ -424,7 +374,13 @@ $(function() {
 					$(".selected1").removeClass("selected1");
 					p_check_label.addClass("selected1");
 				}
-				$(".mem2").parent().remove();
+				//$("#mem2").parent().remove();
+				$("#mem2").html(
+	              		'<div class="float_left mem2" data-name="${loginuser.name }" data-email="${loginuser.email }">'+
+						'<div class="mem_name2" >${loginuser.email }</div>'+
+						'<input type="hidden" name="email" value="${loginuser.email }"/>'+
+						'</div>'
+						)
 				
 				// list
 				$('.list-container1').load('/team/project/list');
@@ -432,11 +388,19 @@ $(function() {
 				
 			},
 			"error" : function(xhr, status, err){
-				console.log(err)
+				console.log(err);
 			}
 		});
 	});
 	// -- write-form-submit 끝
+	
+	$(".task").on("click" , function(event) {
+		var projectNo = $(this).attr('data-projectNo');
+		$('#task-form #projectNo').val(projectNo);
+		console.log(projectNo);
+		
+		$("#task-form").submit();
+	});
 	
 	// detail
  	$(document).on("click", ".to-detail", function() { //$('.to-detail').on('click', function(event) {
@@ -467,7 +431,7 @@ $(function() {
 				var workspaceNo = data.workspaceNo;
 				var templateNo = data.templateNo;
 				var proNo = data.proNo;
-				
+
 				/////////// 시작 마감 완료
 				var startdate_t = data.startdate;
 				var startdate_t2 = new Date(startdate_t);
@@ -475,8 +439,6 @@ $(function() {
 				var deadline_t2 = new Date(deadline_t);
 				var enddate_t = data.enddate;
 				var enddate_t2 = new Date(enddate_t);
-
-
 				
 				function getFormatDate1(startdate_t2){
 				    var year = startdate_t2.getFullYear();              //yyyy
@@ -563,6 +525,7 @@ $(function() {
 				$('#de_proNo').val(proNo);
 				
 				
+				
 				$('#de_managerEmail').val(managerEmail);
 				//$('#de_projectMembers').val(projectMembers);
 				$('#modal-detail2').modal('show');
@@ -616,7 +579,17 @@ $(function() {
 						}
 					});
 				});
-
+				console.log(projectMembers[0])
+					
+						
+				
+/* 				var memberCount = projectMember
+				for(int i = 0; i < projectMember.length; i++){
+					$("#mem2").html($("#mem2").html() + 
+	
+					);
+				} */
+				
 				// 멤버 추가 작은모달 이벤트
 				$(document).on("click", "._mem2", function() {
 					var name = $(this).attr("data-name");
@@ -650,6 +623,35 @@ $(function() {
 				}, function() {
 					$(this).css("background-color", "#17a2b8");
 				});
+
+				var deleted = data.deleted;
+				$('#de_deleted').val(deleted);
+				
+				$(document).on("click", ".projectDeleted", function(){
+					
+					var deleted_val = $("#de_deleted");
+					if (deleted_val.val() == "false"){ deleted_val.val('1')} else if (deleted_val.val() == "true"){ deleted_val.val('0')}
+					console.log(deleted_val.val())
+					deleted = deleted_val.val();
+					//console.log(projectNo);
+					//if (proPublic == "false"){ proPublic.val('0')} else if (proPublic == "true"){ proPublic.val('1')} 
+					
+					$.ajax({
+						url : "/team/project/deleted",
+						method : "post",
+						data : {"projectNo" : projectNo,
+								"deleted" : deleted },
+						success : function(resp, status, xhr) {
+							
+							$('.list-container1').load('/team/project/list');
+							$('.list-container2').load('/team/project/list2');
+							$('#modal-detail2').modal('hide');
+						},
+						error : function(xhr, status, err) {
+							console.log(err);
+						}
+					});
+				})
 				
 				// -- 비공개 공개 선택
 				$('.list-container1').load('/team/project/list');

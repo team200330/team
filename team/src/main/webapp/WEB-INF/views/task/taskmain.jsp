@@ -7,6 +7,7 @@
 <title>워크스페이스 멤버</title>
 <link rel="stylesheet" href="/team/resources/css/log-feedback.css">
 <%@include file="/WEB-INF/views/modules/common-css.jsp"%>
+
 <style>
 section.section-header {
 	position: relative;
@@ -23,7 +24,9 @@ input#add-task {
 	font-size: 1.0em;
 	font-weight: 900;
 }
-
+.gmi-time-panel__body__item--spinner__item::marker {
+	display: none;
+}
 .custom-control-input:checked ~.custom-control-label::before {
 	color: #fff;
 	border-color: #4c5d6f;
@@ -56,6 +59,25 @@ input::placeholder {
 .f_link.properties {
 	padding: 10px;
 }
+
+.pitem {
+	color: #016979;
+}
+
+.modal-dialog {
+	top: 35%;
+	left: 20%;
+}
+.modal-backdrop {
+	position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -5;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+}
+
 </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -111,6 +133,7 @@ input::placeholder {
 	<%@include file="/WEB-INF/views/modules/common-js.jsp"%>
 	<script src="/team/resources/js/task-common.js"></script>
 	<script src="/team/resources/js/task-properties-side.js"></script>
+	<script src="/team/resources/js/i18n/datepicker.en-US.js"></script>
 	<script type="text/javascript">
 	</script>
 </body>

@@ -86,7 +86,7 @@
 													<h6>주소</h6>
 													<input readonly="readonly" type="text" id="roadAddress" name="roadnameAddr" placeholder="도로명주소" value="${loginuser.roadnameAddr}">
 													<button id="addr-btn" style="margin-left:3px; font-size: 10.5pt;color:#5a5a5a;border: 1px solid #d2d2d2;border-radius: .20rem;padding: 5 15 5 15;font-weight: bold;margin-left: 3px">우편번호 찾기</button><br>
-													<input type="text" id="detailAddress" name="detailAddr" placeholder="상세주소" value="${loginuser.detailAddr}" style="margin-left:3px;margin-top:5px"><br>
+													<input type="text" id="detailAddress" name="detailAddr" placeholder="상세주소" value="${loginuser.detailAddr}" style="margin-top:5px"><br>
 													<span class="check-text">팀원들이 본인을 지도에서 찾을 수 있도록 도와주세요!</span>
 													</div>
 													

@@ -2,6 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 			<style>
 				.iconPublic { float: left; margin: 5px; font-size: 14px; }
+				a { color: #343a40;}
+				a:hover { color: #527aa2;}
 			</style>
 			<c:forEach items="${ project }" var="project">
 		          <div class="col-md-3 col-sm-6 col-12 projectChk">
@@ -10,7 +12,9 @@
 		              <div class="info-box-content">
 		              	<c:if test="${ project.proPublic eq 'false'}"><span class="iconPublic"><i class="fas fa-user-lock"></i></span></c:if>
 		                <c:if test="${ project.proPublic eq 'true'}"><span class="iconPublic"><i class="fas fa-globe"></i></span></c:if>
-		                <span class="info-box-text" style="font-weight: 500;">${ project.projectName }</span>
+		                <a class="task" href="javascript:" data-projectNo="${ project.projectNo }" >
+		                	<span class="info-box-text" style="font-weight: 500;">${ project.projectName }</span>
+		                </a>
 		                <c:if test="${ project.content == null}"><span class="progress-description">&nbsp;&nbsp;&nbsp;</span></c:if>
 		                <c:if test="${ project.content eq project.content }"><span class="progress-description" style="height: 23px;">${ project.content }</span></c:if>
 						<span class="info-box-number">

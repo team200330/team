@@ -33,9 +33,10 @@
 	</insert>	
 		
 	<select id="selectWorkspaceMembers" parameterType="int" resultMap="workspaceMemberMap">
-		SELECT * FROM workspace_member
+		SELECT * FROM workspace_member w
+		INNER JOIN member m ON m.email = w.email
 		WHERE workspace_no = #{ workspaceNo } 
-		AND ( type_no = 1 OR type_no = 2 );
+		AND ( type_no = 1 OR type_no = 2 ) AND deleted = 0
 	</select>
 	
 	<select id="selectCountMemberByWorkspaceMember" parameterType="int" resultType="int">
@@ -115,7 +116,7 @@
 		OR m.department like concat('%',#{name},'%')
 	</select>
 	
-	<select id="selectMemberAsc1ByWorkspaceNo" parameterType="com.team.vo.Member" resultMap="memberMap">
+	<select id="selectMemberAsc1ByWorkspaceNo" parameterType="int" resultMap="memberMap">
 		SELECT * FROM workspace_member wm
 		INNER JOIN member m
 		ON wm.email = m.email		
@@ -125,7 +126,7 @@
 		ORDER BY m.email asc
 	</select>
 	
-	<select id="selectMemberAsc2ByWorkspaceNo" parameterType="com.team.vo.Member" resultMap="memberMap">
+	<select id="selectMemberAsc2ByWorkspaceNo" parameterType="int" resultMap="memberMap">
 		SELECT * FROM workspace_member wm
 		INNER JOIN member m
 		ON wm.email = m.email		
@@ -152,8 +153,7 @@
 		FROM workspace_member
 		WHERE email = #{ email } 
 		LIMIT 1;
-	</select>
-	
+	</select>	
 	
 	<select id="selectWorkspaceNameByEmail" parameterType="String" resultType="com.team.vo.Workspace">
 		select workspace_name
@@ -163,6 +163,16 @@
 			from workspace_member
 			where email = #{ email } 
 		)
+	</select>
+	
+	<select id="selectAscWorkspaceByEmail" parameterType="String" resultMap="workspaceMap">
+		select w.workspace_no, w.workspace_name, w.deleted, w.code, wm.email, wm.type_no
+		from workspace w
+		inner join workspace_member wm
+		on w.workspace_no = wm.workspace_no
+		where wm.email = #{ email }
+		order by wm.workspace_no ASC
+		LIMIT 1;
 	</select>
 	
 	<select id="selectWorkspacesByEmail" parameterType="String" resultMap="workspaceMap">
@@ -201,4 +211,17 @@
 		AND email = #{ email }
 	</delete>
 	
+	<select id="selectWorkspaceByManagerEmail" parameterType="String" resultMap="workspaceMap">
+		SELECT * FROM workspace w
+		INNER JOIN workspace_member m 
+		ON w.workspace_no = m.workspace_no
+		WHERE m.email = #{ email } AND m.type_no = 1
+		AND w.deleted = 0
+	</select>
+	
+	<update id="updateWorkspaceManager" parameterType="hashmap">
+		UPDATE workspace_member
+		SET type_no = #{ typeNo }
+		WHERE email = #{ email }
+	</update>
 </mapper>

@@ -84,7 +84,7 @@ public class FeedbackServiceImpl implements FeedbackService {
 			f.setReceivers(rl);
 			f.setComments(feedbackMapper.selectComments(f.getFeedbackNo())); // 피드백 코멘트 가져오기
 			f.setFeedbackSender(memberMapper.selectMemberByEmail(f.getSender())); // 피드백 보낸사람 가져오기
-			if (f.getTaskNo() > 0) f.setTask(taskMapper.selectTaskByTaskNo(f.getTaskNo()));
+			if (f.getTaskNo() != null) f.setTask(taskMapper.selectTaskByTaskNo(f.getTaskNo()));
 		}
 		
 		return feedbacks;
@@ -120,7 +120,7 @@ public class FeedbackServiceImpl implements FeedbackService {
 			
 		for (WorkspaceMember m : workspaceMembers) 
 			members.add(memberMapper.selectMemberByEmail(m.getEmail()));
-	
+
 		return members;
 	}
 

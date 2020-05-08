@@ -55,7 +55,7 @@
         <div class="row align-items-center">
           
           <div class="col-6 col-xl-2">
-            <h1 class="mb-0 site-logo"><a href="index.html" class="h2 mb-0">Finances<span class="text-primary">.</span> </a></h1>
+            <h1 class="mb-0 site-logo" style="width: 200px;"><a href="index.html" class="h2 mb-0">TEAM PLAN<span class="text-primary">.</span> </a></h1>
           </div>
 
           <div class="col-12 col-md-10 d-none d-xl-block">

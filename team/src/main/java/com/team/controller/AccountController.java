@@ -98,9 +98,19 @@ public class AccountController {
 			session.setAttribute("loginuser", member2);
 			model.addAttribute("member", member2);
 			
+			// 로그인시 해당 유저의 이메일로 워크스페이스 목록 가져오기(탑바)
 			List<Workspace> workspaces = workspaceService.selectWorkspacesByEmail(member2.getEmail());
 			session.setAttribute("workspaces",workspaces);
 			
+			Workspace workspace = workspaceService.selectAscWorkspaceByEmail(member2.getEmail());
+			session.setAttribute("workspaceNo",workspace.getWorkspaceNo());
+			
+			//워크스페이스가 없을때 만드는 화면으로
+			if (workspaces.isEmpty()) {
+				
+				return "redirect:/workspace/create-workspace";
+				
+			} else {
 			
 			// 로그인시 읽지않은 피드백개수 가져오기 (탑바)
 			HashMap<String, Object> params = new HashMap<>();
@@ -113,9 +123,11 @@ public class AccountController {
 			params.put("projectNo", 1); // 1 == 임시 프로젝트 번호
 			session.setAttribute("logCount", logService.uncheckedLogCount(params));
 			session.setAttribute("latestLogDate", logService.findLatestWriteDate(params));
+
+			}
 			
+			return "redirect:/project/prlist";
 			
-			return "redirect:/";
 		}
 	}
 	
@@ -151,7 +163,9 @@ public class AccountController {
 	
 	////////////////////////////////////////////////////////
 	@GetMapping("/mypage")
-	public String mypage() {
+	public String mypage(HttpSession session) {
+		session.setAttribute("mypage_workspaces", workspaceService.selectWorkspaceByManagerEmail(((Member)session.getAttribute("loginuser")).getEmail()));
+		
 		return "/account/mypage";
 	}
 
@@ -199,21 +213,66 @@ public class AccountController {
 		member.setEmail(email);
 		member.setImg(fileName);
 		memberService.updateImg(member);
-			
-		
 
 		return "redirect:/account/mypage";
 	}
+	
 
+	@RequestMapping(value = "/getWorkspaceMembers", produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String getWorkspaceMembers(int workspaceNo, String email, String str) {
+		
+		System.out.println(str);
+		
+		String result = "";
+		for (Member m : feedbackService.findWorkspaceMembers(workspaceNo)) {
+			
+			String img = m.getImg() != null ? "/team/resources/img/profile/" + m.getImg() : "/team/resources/img/profile-default.jpg";
+			
+			if (!email.equals(m.getEmail()))
+				result += 
+					"<div class='_mem' data-email='" + m.getEmail() + "' data-img='"+ img +"' data-workspaceNo='"+ workspaceNo +"'>" +
+						"<img class='_mem_img img-circle img-bordered-sm' alt='user image' src='" + img + "'>" +
+			        	"<div class='_mem_name'> " + m.getEmail() + "<br/>" + m.getName() + "</div>" +
+			        "</div>";
+		}
+		if (result.length() == 0)
+			result = "<div class='_mem_none'>소유권을 이전할 수 있는 멤버가 없습니다.</div>";
+		
+		return result;
+	}
+	
+	
+	@PostMapping("/updateWorkspaceMananger")
+	@ResponseBody
+	public String updateWorkspaceManager(String email, String managerEmail, int workspaceNo) {
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("email", email);
+		params.put("typeNo", 2);
+		params.put("workspaceNo", workspaceNo);
+
+		workspaceService.updateWorkspaceManager(params);  // 기존매니저 일반유저로 바꾸고
+		
+		params.put("email", managerEmail);
+		params.put("typeNo", 1);
+
+		workspaceService.updateWorkspaceManager(params); // 매니저 다른유저로 바꾸기
+		
+		return "success";
+	}
+	
+	
+
+	@PostMapping("/deleteMember")
+	public String deleteMember(String email, HttpSession session) {
+		System.out.println("--------------------deleteMember----------------------");
+		
+		memberService.deleteMember(email);
+		session.removeAttribute("loginuser");
+		
+		return "redirect:/home2";
+	}
 	
 	
 	
-	
-}	
-	
-	
-	
-	
-	
-	
-	
+}

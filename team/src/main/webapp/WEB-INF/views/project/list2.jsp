@@ -2,6 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 			<style>
 				.iconPublic { float: left; margin: 5px; font-size: 14px; }
+				a { color: #343a40;}
+				a:hover { color: #527aa2;}
 			</style>
 			<c:forEach items="${ project2 }" var="project2">
 		          <div class="col-md-3 col-sm-6 col-12 projectChk">
@@ -10,59 +12,13 @@
 		              <div class="info-box-content">
 		              	<c:if test="${ project2.proPublic eq 'false'}"><span class="iconPublic"><i class="fas fa-user-lock"></i></span></c:if>
 		                <c:if test="${ project2.proPublic eq 'true'}"><span class="iconPublic"><i class="fas fa-globe"></i></span></c:if>
-		                <span class="info-box-text" style="font-weight: 500;">${ project2.projectName }</span>
+		                <a class="task" href="javascript:" data-projectNo="${ project2.projectNo }" >
+		                	<span class="info-box-text" style="font-weight: 500;">${ project2.projectName }</span>
+		                </a>
 		                <c:if test="${ project2.content == null}"><span class="progress-description">&nbsp;&nbsp;&nbsp;</span></c:if>
 		                <c:if test="${ project2.content eq project2.content }"><span class="progress-description" style="height: 23px;">${ project2.content }</span></c:if>
 						<span class="info-box-number">
-		                	<div style="display:none" id="${project2.projectNo }" class="projectNo">${project2.projectNo }</div>
-<%-- 		                	<select name="proNo" class="seletProNo btn btn-block btn-default" >
-			                	<c:if test="${project2.proNo eq '1' }">
-				                	<option value="1" selected="selected">상태없음 </option>
-			                		<option value="2">진행중 </option>
-			                		<option value="3">완료 </option>
-			                		<option value="4">보류 </option>
-			                		<option value="5">취소 </option>
-			                	</c:if>
-				                <c:if test="${project2.proNo eq '2' }">
-					                <option value="1">상태없음 </option>
-			                		<option value="2" selected="selected">진행중 </option>
-			                		<option value="3">완료 </option>
-			                		<option value="4">보류 </option>
-			                		<option value="5">취소 </option>
-				                </c:if>
-				                <c:if test="${project2.proNo eq '3' }">
-				                	<option value="1">상태없음 </option>
-			                		<option value="2">진행중 </option>
-			                		<option value="3" selected="selected">완료 </option>
-			                		<option value="4">보류 </option>
-			                		<option value="5">취소 </option>
-				                </c:if>
-				                <c:if test="${project2.proNo eq '4' }">
-				                	<option value="1">상태없음 </option>
-			                		<option value="2">진행중 </option>
-			                		<option value="3">완료 </option>
-			                		<option value="4" selected="selected">보류 </option>
-			                		<option value="5">취소 </option>
-				                </c:if>
-				                <c:if test="${project2.proNo eq '5' }">
-				                	<option value="1">상태없음 </option>
-			                		<option value="2">진행중 </option>
-			                		<option value="3">완료 </option>
-			                		<option value="4">보류 </option>
-			                		<option value="5" selected="selected">취소 </option>
-				                </c:if>
-		                	</select> --%>
-		                	
-		                	<%-- <select name="proNo2" class="selectProNo2 btn btn-block btn-default">
-		                		<option>
-		                			<c:if test="${project.proNo eq '1' }">상태없음</c:if>
-		                			<c:if test="${project.proNo eq '2' }">진행중</c:if>
-		                			<c:if test="${project.proNo eq '3' }">완료</c:if>
-		                			<c:if test="${project.proNo eq '4' }">보류</c:if>
-		                			<c:if test="${project.proNo eq '5' }">취소</c:if>
-		                		</option>
-		                	</select>
- --%>		                	
+		                	<div style="display:none" id="${project2.projectNo }" class="projectNo">${project2.projectNo }</div>      	
 					    </span>
 		                <div class="progress">
 		                  <div class="progress-bar" style="width: 70%"></div>

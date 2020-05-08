@@ -2,7 +2,11 @@
 		 contentType="text/html; charset=utf-8"
     	 pageEncoding="utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<style>
+.navbar-white {
+    background-color: rgb(236, 236, 236);
+}
+</style>
   
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
@@ -10,12 +14,12 @@
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
-      <li class="nav-item d-none d-sm-inline-block">
+<!--       <li class="nav-item d-none d-sm-inline-block">
         <a href="/team" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Contact</a>
-      </li>
+      </li> -->
     </ul>
 
     <!-- SEARCH FORM -->
@@ -32,14 +36,14 @@
     </form> 
     -->
       
-      <div class="input-group input-group-sm" style="width: 70%;">
+<!--       <div class="input-group input-group-sm" style="width: 70%;">
         <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
         <div class="input-group-append">
           <button class="btn btn-navbar" type="submit">
             <i class="fas fa-search"></i>
           </button>
         </div>
-      </div>
+      </div> -->
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
@@ -125,7 +129,7 @@
 				
 				<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
 					<c:if test="${ not empty sessionScope.workspaces }">
-					<span class="dropdown-item dropdown-header">워크스페이스 목록</span>
+					<span class="dropdown-item dropdown-header"></span>
 					<div class="dropdown-divider"></div>
 					<c:forEach var="workspace" items="${ workspaces }">
 					<a href="#" class="dropdown-item workspace_in_dropdown" data-workspaceNo="${ workspace.workspaceNo }">
