@@ -34,13 +34,7 @@ public class TaskController {
 	public String showTaskMain(Model model, HttpSession session) {
 		//model.getAttribute("projectNo");
 		//System.out.println((int) session.getAttribute("projectNo"));
-		try {
-			
-			int projectNo = ((Project) session.getAttribute("projectByNo")).getProjectNo();
-			
-		} catch(Exception e) {
-			System.out.println(e);
-		}
+		int projectNo = ((Project) session.getAttribute("projectByNo")).getProjectNo();
 		//System.out.println("넘어온값:"+projectNo);
 		//model.addAttribute("projectNo",projectNo);
 		model.addAttribute("taskLists",taskService.searchTaskList(projectNo));
@@ -66,7 +60,8 @@ public class TaskController {
 	
 	@GetMapping(path = {"/loadtask.action"})
 	public String loadTask(Model model, HttpSession session) {
-		model.addAttribute("taskLists",taskService.searchTaskList((int) session.getAttribute("projectNo")));
+		int projectNo = ((Project) session.getAttribute("projectByNo")).getProjectNo();
+		model.addAttribute("taskLists",taskService.searchTaskList(projectNo));
 		model.addAttribute("tasks",taskService.searchTask());
 		return "task/modules/task-list";
 	}
