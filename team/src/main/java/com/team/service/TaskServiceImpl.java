@@ -53,6 +53,18 @@ public class TaskServiceImpl implements TaskService {
 		taskMapper.updateCompleted(params);
 	}
 
+	@Override
+	public int finishTaskListByEmail(String email) {
+		int CountFinishTaskList = taskMapper.finishTaskListByEmail(email);
+		return CountFinishTaskList;
+	}
+
+	@Override
+	public int notfinishTaskListByEmail(String email) {
+		int CountnotFinishTaskList = taskMapper.notfinishTaskListByEmail(email);
+		return CountnotFinishTaskList;
+	}
+
 	
 	
 }

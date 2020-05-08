@@ -52,7 +52,7 @@
                   <div class="col-sm-2 col-6">
                     <div class="description-block border-right border-left">                    
                       <span class="description-text">완료됨</span><br>                      
-                      <h5 class="description-header" style="display: inline;">4개 업무</h5>
+                      <h5 class="description-header" style="display: inline;">${ CountFinishTaskList }개 업무</h5>
                       <span class="description-percentage text-success">(50%)</span>
                     </div>
                     <!-- /.description-block -->
@@ -61,7 +61,7 @@
                   <div class="col-sm-2 col-6">
                     <div class="description-block">                    
                       <span class="description-text">남은 업무</span><br>
-                      <h5 class="description-header" style="display: inline;">4개 업무</h5>
+                      <h5 class="description-header" style="display: inline;">${ CountnotFinishTaskList }개 업무</h5>
                       <span class="description-percentage text-danger">(50%)</span>
                     </div>
                     <!-- /.description-block -->

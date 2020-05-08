@@ -52,8 +52,11 @@ public class WorkspaceController {
 		
 		List<Workspace> workspaces = workspaceService.selectWorkspacesByEmail(workspaceMember.getEmail());
 		session.setAttribute("workspaces",workspaces);	
+		session.setAttribute("workspaceNo",workspaceNo);	
 		
-		return "redirect:/";
+		System.out.println(workspaceNo);
+		
+		return "redirect:/project/prlist";
 	}
 	
 	@GetMapping(path = { "/invite-workspace" })

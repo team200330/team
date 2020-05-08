@@ -20,6 +20,7 @@ import com.team.service.TimelineService;
 import com.team.ui.TimelineTable;
 import com.team.vo.Member;
 import com.team.vo.Project;
+import com.team.vo.ProjectMember;
 import com.team.vo.Task;
 import com.team.vo.TaskList;
 
@@ -109,7 +110,17 @@ public class TaskController {
 	}
 	
 	@GetMapping(path = {"/analyticsmain"})
-	public String showanalyticsMain() {
+	public String showanalyticsMain(Model model, HttpSession session, ProjectMember projectmember) {
+		
+		
+		int CountFinishTaskList = taskService.finishTaskListByEmail(((Member) session.getAttribute("loginuser")).getEmail());
+		model.addAttribute("CountFinishTaskList",CountFinishTaskList);
+		
+		int CountnotFinishTaskList = taskService.notfinishTaskListByEmail(((Member) session.getAttribute("loginuser")).getEmail());
+		model.addAttribute("CountnotFinishTaskList",CountnotFinishTaskList);
+		
+		
+		
 		return "task/analyticsmain";
 	}
 	
