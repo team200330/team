@@ -152,4 +152,9 @@ public class WorkspaceServiceImpl implements WorkspaceService {
 		workspaceMapper.updateWorkspaceManager(params);
 	}
 
+	@Override
+	public Workspace selectAscWorkspaceByEmail(String email) {
+		return workspaceMapper.selectAscWorkspaceByEmail(email);
+	}
+
 }

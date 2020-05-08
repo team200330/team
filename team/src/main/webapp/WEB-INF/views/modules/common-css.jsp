@@ -35,3 +35,5 @@
   
  <!-- pace -->
  <link rel="stylesheet" href="/team/resources/css/pace.css">
+ <!--  -->
+ <link rel="stylesheet" href="/team/resources/css/jquery.datepicker.min.css">

@@ -66,7 +66,7 @@ public class ProjectServiceImpl implements ProjectService {
 	
 
 	@Override
-	public void updateProjectDeleted(Map<String, String> arrMap) {
+	public void updateProjectDeleted(Map<String, Object> arrMap) {
 		projectMapper.updateProjectDeleted(arrMap);
 		
 	}

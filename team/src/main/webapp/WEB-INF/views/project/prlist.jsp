@@ -656,8 +656,9 @@ $(function() {
 				$(document).on("click", ".projectDeleted", function(){
 					
 					var deleted_val = $("#de_deleted");
-					if (deleted_val.val() == "false"){ deleted_val.val('1')} else if (deleted_val.val() == "true"){ deleted_val.val('0')} 
-					//console.log(deleted_val.val())
+					if (deleted_val.val() == "false"){ deleted_val.val('1')} else if (deleted_val.val() == "true"){ deleted_val.val('0')}
+					console.log(deleted_val.val())
+					deleted = deleted_val.val();
 					//console.log(projectNo);
 					//if (proPublic == "false"){ proPublic.val('0')} else if (proPublic == "true"){ proPublic.val('1')} 
 					
@@ -668,6 +669,9 @@ $(function() {
 								"deleted" : deleted },
 						success : function(resp, status, xhr) {
 							
+							$('.list-container1').load('/team/project/list');
+							$('.list-container2').load('/team/project/list2');
+							$('#modal-detail2').modal('hide');
 						},
 						error : function(xhr, status, err) {
 							console.log(err);

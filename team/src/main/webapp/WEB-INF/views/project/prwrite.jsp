@@ -63,7 +63,14 @@
 	                  	  <div class="form-group">			              
 			              <div class="row" style="padding:10px">
 			              	<div id="add_mem" class="btn btn-secondary float_left" style="width:37px;">+</div>
-			              	<div id="mem"></div>
+			              	<div id="mem">
+		
+			              		<div class="float_left mem2" data-name="${loginuser.name }" data-email="${loginuser.email }">
+									<div class="mem_name2" >${loginuser.email }</div>
+									<a href="#" class="mem_rm2" aria-hidden="true">&times;</a>
+									<input type="hidden" name="email" value="${loginuser.email }"/>
+								</div>
+			              	</div>
 			              </div>
 			              </div>
                       </div>

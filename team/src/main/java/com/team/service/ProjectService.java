@@ -19,7 +19,7 @@ public interface ProjectService {
 	
 	void updateProjectNo(Map<String, String> arrMap);
 	
-	void updateProjectDeleted(Map<String, String> arrMap);
+	void updateProjectDeleted(Map<String, Object> arrMap);
 
 	List<Project> findPageing(HashMap<String, Object> params);
 

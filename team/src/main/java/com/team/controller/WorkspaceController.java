@@ -51,7 +51,7 @@ public class WorkspaceController {
 		//코드와 워크스페이스 네임을 중복되지않게 작업 해야한다.
 		
 		List<Workspace> workspaces = workspaceService.selectWorkspacesByEmail(workspaceMember.getEmail());
-		session.setAttribute("workspaces",workspaces);
+		session.setAttribute("workspaces",workspaces);	
 		
 		return "redirect:/";
 	}
