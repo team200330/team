@@ -65,6 +65,7 @@
                        <label for="exampleInputEmail1">프로젝트 멤버(선택사항)</label> <span style="color:#a0a0a0;">&nbsp;&nbsp;같은 워크스페이스에 있는 사람을 프로젝트에 초대하세요.</span>
 		            
 		            	<input type="hidden" name="sender" value="${ loginuser.email }"/>
+		            	<input type="hidden" name="projectNo" value="${ projectNo}"/>
 		              	<!-- <div id="add_mem" class="btn btn-secondary float_left" style="width:37px;">+</div> -->
 		              	
 			            <div class="modal-body" style="padding:10px;">
@@ -87,8 +88,6 @@
 			              <i class="fas fa-user-plus"></i>
 			              <button type="button" class="btn btn-primary" id="saveSubmit4">프로젝트에 멤버 추가하기</button>
 			            </div>
-			            
-			            
 			            
 		              <br/>
 		             </form>

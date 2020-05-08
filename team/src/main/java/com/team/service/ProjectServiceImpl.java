@@ -88,7 +88,16 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public Project selectDetail(int projectNo) {
-		return projectMapper.selectDetail(projectNo);
+		Project p = projectMapper.selectDetail(projectNo);
+		
+		List<Member> m = new ArrayList<>();
+		
+		for (ProjectMember pm : p.getProjectMembers()) {
+			m.add(memberMapper.selectMemberByEmail(pm.getEmail()));
+			}
+		p.setMember(m);
+	
+		return p;
 	}
 
 	@Override

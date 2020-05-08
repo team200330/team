@@ -155,13 +155,28 @@
         <!-- /.modal-dialog -->
       </div>
       <!-- /.modal -->
+      
+            
+<%--       <div class="modal fade" id="modal-detail3">
+        <div class="modal-dialog modal-lg">
+          <div id="detail-id" class="modal-content">
+             <jsp:include page="prdetail2.jsp" />
+		  </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal --> --%>
 
 
     </section>
     <!-- /.content -->
-  <form id="detail-form" action="detail.action" method="get">
+   <form id="detail-form" action="detail.action" method="get">
   	<input type="hidden" id="projectNo" name="projectNo">
   </form>
+<!--   <form id="detail-form2" action="detail2.action" method="get">
+  	<input type="hidden" id="projectNo" name="projectNo">
+  </form> -->
   <form id="task-form" action="task.action" method="get">
   	<input type="hidden" id="projectNo" name="projectNo">
   </form>
@@ -398,6 +413,39 @@ $(function() {
 		
 		$("#task-form").submit();
 	});
+
+
+/* 	// 피드백 상세보기 모달
+	$(document).on("click", ".to-detail2", function() {
+ 		var projectNo = $(this).attr('data-projectNo');
+		$('#detail-form2 #projectNo').val(projectNo);
+
+		console.log(projectNo);
+
+		//var feedbackNo = data.split("feedbackNo=")[1].split(",")[0];
+		
+		$.ajax({ // 피드백 상세보기
+			"url":"/team/project/detail2",
+			"method":"get",
+			"async" : true,
+			"data" : {	"projectNo" : projectNo },
+			"dataType" : "json", // dataType : 응답 컨텐츠의 종류 지정			
+			"success" : function(data, status, xhr) {
+
+				$("#detail-id").load("/team/project/getDetailModal2", function() {
+					$('#modal-detail3').modal('show');		
+					//console.log(projectDetail.projectNo)
+					console.log(data.project.Member)
+					
+					
+				});
+				
+				//$('.list-container1').load('/team/project/list');
+				//$('.list-container2').load('/team/project/list2');
+
+			}
+		});
+	}); */
 	
 	// detail
  	$(document).on("click", ".to-detail", function() { //$('.to-detail').on('click', function(event) {
@@ -424,7 +472,7 @@ $(function() {
 				var projectNo = data.projectNo;
 				var managerEmail = data.managerEmail;
 				var proPublic = data.proPublic;
-				var projectMembers = data.projectMembers;
+				//var projectMembers = data.projectMembers;
 				var workspaceNo = data.workspaceNo;
 				var templateNo = data.templateNo;
 				var proNo = data.proNo;
@@ -576,7 +624,26 @@ $(function() {
 						}
 					});
 				});
-				console.log(projectMembers[0])
+				
+				var projectMembers = data.projectMembers;
+				var member = data.member;
+				console.log(member[0].name)
+				console.log(projectMembers[0].email, member[0].name)
+				console.log(projectMembers[1].email)
+				console.log(projectMembers[2].email)
+				console.log(projectMembers.length)
+				
+				for ( i = 0; i < projectMembers.length; i++){				
+					$("#mem2").html($("#mem2").html() + 
+						'<div class="float_left mem2" data-name="' + member[i].name +'" data-email="' + projectMembers[i].email + '">' +
+							'<div class="mem_name2" >'+ member[i].name + '</div>' +
+							'<a href="#" class="mem_rm2" aria-hidden="true">&times;</a>' +
+							'<input type="hidden" name="email" value="' + projectMembers[i].email + '"/>' + 
+						'</div>'	
+					);
+				}
+
+				
 					
 						
 				
@@ -649,6 +716,8 @@ $(function() {
 						}
 					});
 				})
+				
+				$('#modal-detail2').modal('hide');
 				
 				// -- 비공개 공개 선택
 				$('.list-container1').load('/team/project/list');

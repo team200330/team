@@ -212,26 +212,75 @@ public class ProjectController {
 		
 	}
 	
-	@GetMapping(path = {"/detail"})
-	@ResponseBody	
-	//public String write(int projectNo) {
-	public Project write(int projectNo, Model model) {
-		
-		Project projectDetail = projectService.selectDetail(projectNo);
-		model.addAttribute("projectDetail", projectDetail);
-		System.out.println("detail projectDetail 값" + projectDetail);
-		System.out.println(projectDetail.getProjectMembers());
-		
-		return projectDetail;
-		
-	}
+	
+	  @GetMapping(path = {"/detail"})
+	  
+	  @ResponseBody //public String write(int projectNo) { 
+	  public Project write(int projectNo, Model model) {
+	  
+	  Project projectDetail = projectService.selectDetail(projectNo);
+	  model.addAttribute("projectDetail", projectDetail);
+	  //System.out.println("detail projectDetail 값" + projectDetail);
+	  System.out.println(projectDetail.getMember());
+	  System.out.println(projectDetail); 
+	  return projectDetail;
+	  
+	  }
+	 
+	
+//	@GetMapping(path = {"/detail2"})
+//	@ResponseBody	
+//	//public String write(int projectNo) {
+//	public String write2(int projectNo, Model model, HttpSession session) {
+////		Project projectDetail = projectService.selectDetail(projectNo);
+////
+////		HashMap<String, Object> params = new HashMap<>();
+////		//params.put("email", projectDetail.getMember());	
+////		params.put("projectDetail", projectDetail);
+////		model.addAllAttributes(params);
+////		System.out.println("값"+params);
+////		
+////		
+////		return params;	
+//		  Project project = projectService.selectDetail(projectNo);
+//		  List<Member> member = (List<Member>) project.getMember();
+//		  
+//			HashMap<String, Object> params = new HashMap<>();
+//			params.put("project", project);
+//			params.put("workspaceNo", workspaceNo);
+//			params.put("member", member);
+//			model.addAllAttributes(params);
+//
+//		  //System.out.println("detail projectDetail 값" + projectDetail);
+//		  System.out.println("project : "+project);
+//		  System.out.println("member : "+member); 
+//		  return "success";
+//		 
+//		
+//		//Project projectDetail = projectService.selectDetail(projectNo);
+//		//model.addAttribute("projectDetail", projectDetail);
+//		//System.out.println("detail projectDetail 값" + projectDetail);
+//
+//		
+//	}
+//
+//	@GetMapping("/getDetailModal2")
+//	public String projectDetailModal() {
+//		return "/project/prdetail";
+//	}
+	
 	
 
 	///////////////////
 	
 	@GetMapping("/getProjectMember")
 	@ResponseBody
-	public String getWorkspaceMembers(String str, String selected, String email) {
+	public String getWorkspaceMembers(String str, String selected, String email, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+        session.getAttribute("loginuser");
+        workspaceNo = (int) session.getAttribute("workspaceNo");
+        System.out.println(workspaceNo);
+        
 		String result = "";
 		String selectedMems[] = selected.split(":");
 		
@@ -256,7 +305,12 @@ public class ProjectController {
 	
 	@GetMapping("/getProjectMember2")
 	@ResponseBody
-	public String getWorkspaceMembers2(String str, String selected, String email) {
+	public String getWorkspaceMembers2(String str, String selected, String email, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+        session.getAttribute("loginuser");
+        workspaceNo = (int) session.getAttribute("workspaceNo");
+        System.out.println(workspaceNo);
+        
 		String result = "";
 		String selectedMems[] = selected.split(":");
 		
