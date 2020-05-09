@@ -16,10 +16,10 @@
 		</selectKey>
 	</insert>
 
-	<select id="selectTaskList" resultMap="taskListMap">
+	<select id="selectTaskList" resultMap="taskListMap" parameterType="int">
 		SELECT *
 		FROM task_list
-		WHERE deleted = '0'
+		WHERE deleted = '0' AND project_no = #{projectNo}
 	</select>
 	
 	<select id="selectTask" resultMap="taskMap">
