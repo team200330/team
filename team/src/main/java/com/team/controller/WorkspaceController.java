@@ -76,9 +76,12 @@ public class WorkspaceController {
 	}
 	
 	@GetMapping(path = { "/setting-workspace" })
-	public String settingworkspaceform(int workspaceNo,Model model) {
+	public String settingworkspaceform(int workspaceNo,Model model,HttpSession session) {
 		Workspace workspace = workspaceService.selectWorkspaceByWorkspaceNo(workspaceNo);
 		model.addAttribute("workspace",workspace);
+		
+		session.removeAttribute("workspaceNo");
+		session.setAttribute("workspaceNo",workspace.getWorkspaceNo());
 		
 		return "workspace/setting-workspace";
 	}
@@ -94,6 +97,7 @@ public class WorkspaceController {
 				}
 			}
 		}
+		
 		return "workspace/setting-workspace"; 
 	}
 	

@@ -16,10 +16,10 @@
 		</selectKey>
 	</insert>
 
-	<select id="selectTaskList" resultMap="taskListMap">
+	<select id="selectTaskList" resultMap="taskListMap" parameterType="int">
 		SELECT *
 		FROM task_list
-		WHERE deleted = '0'
+		WHERE deleted = '0' AND project_no = #{projectNo}
 	</select>
 	
 	<select id="selectTask" resultMap="taskMap">
@@ -68,8 +68,7 @@
 	<select id="selectTaskByTaskNo" parameterType="int" resultMap="taskMap">
 		SELECT * FROM task
 		WHERE task_no = #{taskNo}
-	</select>
-	
+	</select>	
 	
 	<select id="finishTaskListByProjectMember" parameterType="com.team.vo.ProjectMember" resultType="int">
 		select COUNT(*) from project p
@@ -103,6 +102,20 @@
 	
 	<select id="allTaskListByProjectMember" parameterType="com.team.vo.ProjectMember" resultType="int">
 		select COUNT(*) from project p
+		inner join project_member pm
+		on p.project_no = pm.project_no		
+		inner join task_list tl
+		on tl.project_no = p.project_no		
+		inner join task t
+		on t.list_no = tl.list_no		
+		inner join workspace w
+		on w.workspace_no = p.workspace_no		
+		where pm.email = #{ email } 
+		AND p.project_no = #{ projectNo }
+	</select>
+	
+	<select id="TaskListByProjectMember" parameterType="com.team.vo.ProjectMember" resultType="com.team.vo.Task">
+		select * from project p
 		inner join project_member pm
 		on p.project_no = pm.project_no		
 		inner join task_list tl

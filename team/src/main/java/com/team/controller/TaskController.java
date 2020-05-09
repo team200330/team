@@ -3,6 +3,7 @@ package com.team.controller;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -137,15 +138,21 @@ public class TaskController {
 		
 		int CountallTaskList = taskService.allTaskListByProjectMember(projectmember);
 		model.addAttribute("CountallTaskList",CountallTaskList);
-		
-		int something1 = (int)((int)CountFinishTaskList / (int)CountallTaskList * 100);
-		//퍼센트작업중
-		
-		int something2 = (int)((int)CountnotFinishTaskList / (int)CountallTaskList * 100);
-		//퍼센트작업중
-		
+				
 		int CountendDateNullTaskList = taskService.endDateNullTaskListByProjectMember(projectmember);
 		model.addAttribute("CountendDateNullTaskList",CountendDateNullTaskList);
+		
+		double finishTaskPercent = (double)((double)CountFinishTaskList / (double)CountallTaskList * 100 );		
+		model.addAttribute("finishTaskPercent",finishTaskPercent);		
+		
+		double notfinishTaskPercent = (double)((double)CountnotFinishTaskList / (double)CountallTaskList * 100 );		
+		model.addAttribute("notfinishTaskPercent",notfinishTaskPercent);	
+		
+		double endDateNullTaskPercent = (double)((double)CountendDateNullTaskList / (double)CountallTaskList * 100 );		
+		model.addAttribute("endDateNullTaskPercent",endDateNullTaskPercent);	
+		
+		List <Task> tasks = taskService.TaskListByProjectMember(projectmember);
+		model.addAttribute("tasks",tasks);
 		
 		return "task/analyticsmain";
 	}
