@@ -153,15 +153,17 @@ public class FeedbackController {
 	
 	@GetMapping("/getNotifications")
 	public String getNotifications(HttpSession session) {
-		HashMap<String, Object> params = returnParams(workspaceNo, null, ((Member) session.getAttribute("loginuser")).getEmail(), null, null, ((Project) session.getAttribute("projectByNo")).getProjectNo());
+		Integer projectNo = ((Project) session.getAttribute("projectByNo")) == null ? null : ((Project) session.getAttribute("projectByNo")).getProjectNo();
+		HashMap<String, Object> params = returnParams(workspaceNo, null, ((Member) session.getAttribute("loginuser")).getEmail(), null, null, projectNo);
 		session.setAttribute("feedbackCount", feedbackService.uncheckedFeedbackCount(params));
 		session.setAttribute("latestFeedbackDate", feedbackService.findLatestWritedate(params));
 		
+		//System.out.println("feedbackCount : "+ session.getAttribute("feedbackCount"));
 
 		session.setAttribute("logCount", logService.uncheckedLogCount(params));
 		session.setAttribute("latestLogDate", logService.findLatestWriteDate(params));
 		
-		System.out.println( logService.uncheckedLogCount(params));
+		//System.out.println("feedbackCount : "+ session.getAttribute("logCount"));
 		
 		return "/modules/topbar-notifications";
 	}

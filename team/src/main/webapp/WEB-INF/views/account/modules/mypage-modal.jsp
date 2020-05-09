@@ -110,8 +110,10 @@
             	</div>
             	<div style="text-align:center;font-size:11pt; font-weight:bold; margin-top:25px">
             		이메일 계정 확인<br><br>
-            		<input type="text" id="check-email" style="width: 250px;height: 30;border-radius: .20rem; border: 1px solid #b3b3b3; padding-left: 10px;margin-bottom:10px !important"><br>
+            		<form action="/team/account/deleteMember" method="post" id="deleteUserForm">
+            		<input type="text" name="email" id="check-email" style="width: 250px;height: 30;border-radius: .20rem; border: 1px solid #b3b3b3; padding-left: 10px;margin-bottom:10px !important"><br>
             		<input type="checkbox" id="check"> <span style="font-weight:normal; font-size:10pt; color:gray">계정 삭제에 동의합니다.</span>
+            		</form>
             	</div>
             	
             </div>

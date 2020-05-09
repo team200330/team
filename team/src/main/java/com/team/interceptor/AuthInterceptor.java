@@ -39,18 +39,15 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		HttpSession session = request.getSession();
 		System.out.println(uri);
 		
-		if (uri.contains("/feedback/") || uri.contains("/log/") || uri.contains("/project/") || uri.contains("/timeline") || uri.contains("/mypage")) { 
-			if (session.getAttribute("loginuser") == null) {
-				response.sendRedirect("/team/account/login.action");
-				return false; // 컨트롤러로 요청을 전달하지 마세요
-			}
-		} else if (uri.contains("/workspace/")) { // 조승연 팀원 작업 영역
-			if (session.getAttribute("loginuser") == null) {
-				response.sendRedirect("/team/account/login.action");
-				return false; // 컨트롤러로 요청을 전달하지 마세요
-			}
-		}
+		if (uri.contains("/login.action") || uri.contains("/register.action") || uri.contains("home"))
+			return true;
 		
+		else
+			if (session.getAttribute("loginuser") == null) {
+				response.sendRedirect("/team/account/login.action");
+				return false; // 컨트롤러로 요청을 전달하지 마세요
+			}
+
 		return true; // 컨트롤러로 요청을 전달하세요
 	}
 	

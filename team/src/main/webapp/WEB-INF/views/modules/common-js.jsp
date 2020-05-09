@@ -56,6 +56,12 @@
 
 <script type="text/javascript">
 $(function() {
+	// 탑바리로드
+	$(function() {
+		$("#topbar-notifications").load("/team/feedback/getNotifications");
+	});
+	
+	// 멤버초대모달
 	$(document).on("click","#inviteModal",function() {
 		$("#inviteMemberModal").modal();
 	});
@@ -74,6 +80,7 @@ $(function() {
 		});
 	});
 	
+	// 초대코드입력모달
 	$(document).on("click", "#joinModal", function() {
 		$("#joinWorkspaceModal").modal();
 	});
@@ -93,6 +100,7 @@ $(function() {
 					e.preventDefault();
 					return false;
 				} else {
+					alert("워크스페이스에 멤버로 참여되었습니다.");
 					// 멤버 추가하고 프로젝트 리스트로 리다이렉트
 					$("#workspaceJoinForm #form-workspaceNo").val(data);
 					$("#workspaceJoinForm").submit();

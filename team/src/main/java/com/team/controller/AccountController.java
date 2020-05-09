@@ -250,11 +250,8 @@ public class AccountController {
 
 	@PostMapping("/deleteMember")
 	public String deleteMember(String email, HttpSession session) {
-		System.out.println("--------------------deleteMember----------------------");
-
 		memberService.deleteMember(email);
-		session.removeAttribute("loginuser");
-
+		session.invalidate();
 		return "redirect:/home2";
 	}
 
