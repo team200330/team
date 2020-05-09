@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.team.service.LogService;
 import com.team.service.TaskService;
 import com.team.service.TimelineService;
 import com.team.ui.TimelineTable;
@@ -30,6 +31,10 @@ public class TaskController {
 	@Autowired
 	@Qualifier("taskService")
 	private TaskService taskService;
+
+	@Autowired
+	@Qualifier("logService")
+	private LogService logService;
 	
 	@GetMapping(path = {"/main"})
 	public String showTaskMain(Model model, HttpSession session) {
@@ -40,6 +45,13 @@ public class TaskController {
 		//model.addAttribute("projectNo",projectNo);
 		model.addAttribute("taskLists",taskService.searchTaskList(projectNo));
 		model.addAttribute("tasks",taskService.searchTask());
+		
+		// 프로젝트 선택시 읽지않은 로그개수 가져오기 (탑바)
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("projectNo", ((Project) session.getAttribute("projectByNo")).getProjectNo()); 
+		session.setAttribute("logCount", logService.uncheckedLogCount(params));
+		session.setAttribute("latestLogDate", logService.findLatestWriteDate(params));
+		
 		return "task/taskmain";
 	}
 	
@@ -154,10 +166,9 @@ public class TaskController {
 	@Qualifier("timelineService")
 	private TimelineService timelineService;
 	
-	static final int projectNo = 1;
-	
 	@GetMapping("/timeline/getTable")
 	public String showTimelineTable(HttpSession s, Model model, String searchType) {
+		
 		HashMap<String, Object> params = 
 			returnParams(((Project) s.getAttribute("projectByNo")).getProjectNo(), null, ((Member)s.getAttribute("loginuser")).getEmail(), 
 						(searchType.length() == 0 || searchType == null) ? "A" : searchType, null, null);

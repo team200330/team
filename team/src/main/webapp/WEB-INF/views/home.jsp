@@ -1,5 +1,7 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="true" %>
+<%@ page language="java" 
+		 contentType="text/html; charset=utf-8"
+    	 pageEncoding="utf-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 
 <head>
@@ -43,9 +45,11 @@
 
     <!-- Main content -->
     <section class="content">
-    <
+    
     </section>
     <!-- /.content -->
+    
+
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
@@ -64,11 +68,12 @@
 </div>
 <!-- ./wrapper -->
 
+
+
   <%@include file="/WEB-INF/views/modules/common-js.jsp" %>
 
-<script type="text/javascript">
- // $.widget.bridge('uibutton', $.ui.button)
-</script>
+
+
 
 
 </body>

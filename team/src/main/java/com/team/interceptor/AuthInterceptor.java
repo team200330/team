@@ -37,7 +37,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 				
 		String uri = request.getRequestURI();
 		HttpSession session = request.getSession();
-		
+		System.out.println(uri);
 		
 		if (uri.contains("/feedback/") || uri.contains("/log/") || uri.contains("/project/") || uri.contains("/timeline") || uri.contains("/mypage")) { 
 			if (session.getAttribute("loginuser") == null) {
@@ -59,7 +59,6 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
 
 		String uri = request.getRequestURI();
-		System.out.println(uri);
 		
 		if (uri.contains("/addtask.action") || uri.contains("/deletetask.action") || uri.contains("/chstatus.action")) {
 			HttpSession s = request.getSession();

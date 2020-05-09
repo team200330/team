@@ -224,4 +224,15 @@
 		SET type_no = #{ typeNo }
 		WHERE email = #{ email }
 	</update>
+	
+	<select id="selectWorkspaceByCode" parameterType="int" resultMap="workspaceMap">
+		SELECT *
+		FROM workspace
+		WHERE code = #{ code }
+	</select>
+	
+	<insert id="insertWorkspaceMember2" parameterType="hashmap">
+		INSERT INTO workspace_member(workspace_no, email, type_no)
+		VALUES (#{workspaceNo}, #{email}, 2)
+	</insert>
 </mapper>

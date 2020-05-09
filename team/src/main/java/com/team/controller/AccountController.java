@@ -28,6 +28,7 @@ import com.team.service.LogService;
 import com.team.service.MemberService;
 import com.team.service.WorkspaceService;
 import com.team.vo.Member;
+import com.team.vo.Project;
 import com.team.vo.Workspace;
 
 @Controller
@@ -45,10 +46,6 @@ public class AccountController {
 	@Autowired
 	@Qualifier("feedbackService")
 	private FeedbackService feedbackService;
-
-	@Autowired
-	@Qualifier("logService")
-	private LogService logService;
 
 	// 회원가입 페이지 이동
 	@GetMapping("/register")
@@ -119,14 +116,9 @@ public class AccountController {
 				// 로그인시 읽지않은 피드백개수 가져오기 (탑바)
 				HashMap<String, Object> params = new HashMap<>();
 				params.put("email", member2.getEmail());
-				params.put("workspaceNo", 15); // 15 == 임시 워크스페이스 번호
+				params.put("workspaceNo", session.getAttribute("workspaceNo"));
 				session.setAttribute("feedbackCount", feedbackService.uncheckedFeedbackCount(params));
 				session.setAttribute("latestFeedbackDate", feedbackService.findLatestWritedate(params));
-
-				// 로그인시 읽지않은 로그개수 가져오기 (탑바)
-				params.put("projectNo", 1); // 1 == 임시 프로젝트 번호
-				session.setAttribute("logCount", logService.uncheckedLogCount(params));
-				session.setAttribute("latestLogDate", logService.findLatestWriteDate(params));
 
 			}
 
@@ -150,10 +142,7 @@ public class AccountController {
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 
-		session.removeAttribute("workspaceNo");
-		session.removeAttribute("projectByNo");
-		session.removeAttribute("loginuser");
-		session.removeAttribute("workspaces");
+		session.invalidate(); // 세션 초기화
 		return "redirect:/";
 	}
 
