@@ -37,5 +37,7 @@ public interface TaskMapper {
 
 	int endDateNullTaskListByProjectMember(ProjectMember projectmember);
 
+	List<Task> TaskListByProjectMember(ProjectMember projectmember);
+
 	
 }

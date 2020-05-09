@@ -84,7 +84,7 @@
 					   계획됨 ${ notfinishTaskPercent }% (${ CountnotFinishTaskList }개 업무)
                       <span class="float-right"></span>
                       <div class="progress progress-sm">
-                        <div class="progress-bar bg-warning" style="width: 50%"></div>
+                        <div class="progress-bar bg-warning" style="width: ${ finishTaskPercent }%"></div>
                       </div>
                     </div>
                     <!-- /.progress-group -->
@@ -161,7 +161,7 @@
     var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
 
     var areaChartData = {
-      labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      labels  : ['January1', 'February', 'March', 'April', 'May', 'June', 'July'],
       datasets: [
         {
           label               : 'Digital Goods',
@@ -330,5 +330,6 @@
     })
   })
 </script>
+
 </body>
 </html>

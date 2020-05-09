@@ -3,6 +3,7 @@ package com.team.controller;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -137,6 +138,9 @@ public class TaskController {
 		
 		double endDateNullTaskPercent = (double)((double)CountendDateNullTaskList / (double)CountallTaskList * 100 );		
 		model.addAttribute("endDateNullTaskPercent",endDateNullTaskPercent);	
+		
+		List <Task> tasks = taskService.TaskListByProjectMember(projectmember);
+		model.addAttribute("tasks",tasks);
 		
 		return "task/analyticsmain";
 	}
