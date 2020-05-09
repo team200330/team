@@ -41,12 +41,11 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		
 		if (uri.contains("/login.action") || uri.contains("/register.action") || uri.contains("home"))
 			return true;
-		
-		else
-			if (session.getAttribute("loginuser") == null) {
-				response.sendRedirect("/team/account/login.action");
-				return false; // 컨트롤러로 요청을 전달하지 마세요
-			}
+	
+		if (session.getAttribute("loginuser") == null) {
+			response.sendRedirect("/team/account/login.action");
+			return false; // 컨트롤러로 요청을 전달하지 마세요
+		}
 
 		return true; // 컨트롤러로 요청을 전달하세요
 	}
