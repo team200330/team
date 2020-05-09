@@ -53,7 +53,7 @@
                     <div class="description-block border-right border-left">                    
                       <span class="description-text">완료됨</span><br>                      
                       <h5 class="description-header" style="display: inline;">${ CountFinishTaskList }개 업무</h5>
-                      <span class="description-percentage text-success">(50%)(진행중)</span>
+                      <span class="description-percentage text-success">(${ finishTaskPercent }%)</span>
                     </div>
                     <!-- /.description-block -->
                   </div>
@@ -62,7 +62,7 @@
                     <div class="description-block">                    
                       <span class="description-text">남은 업무</span><br>
                       <h5 class="description-header" style="display: inline;">${ CountnotFinishTaskList }개 업무</h5>
-                      <span class="description-percentage text-danger">(50%)(진행중)</span>
+                      <span class="description-percentage text-danger">(${ notfinishTaskPercent }%)</span>
                     </div>
                     <!-- /.description-block -->
                   </div>
@@ -80,10 +80,8 @@
                     </p>
                     <!-- /.progress-group -->
                     <div class="progress-group text-right mb-3">
-                                 완료됨 50%(진행중)  (${ CountFinishTaskList }개 업무)
-					   마감일 지남 0%(진행중)  (0개 업무(진행중))
-					   계획됨 0%(진행중)  (${ CountnotFinishTaskList }개 업무)
-					   마감일 없음 50%(진행중)  (${ CountendDateNullTaskList }개 업무)
+                                 완료됨 ${ finishTaskPercent }% (${ CountFinishTaskList }개 업무)
+					   계획됨 ${ notfinishTaskPercent }% (${ CountnotFinishTaskList }개 업무)
                       <span class="float-right"></span>
                       <div class="progress progress-sm">
                         <div class="progress-bar bg-warning" style="width: 50%"></div>
