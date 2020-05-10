@@ -20,9 +20,9 @@
 						<span class="info-box-number">
 		                	<div style="display:none" id="${project2.projectNo }" class="projectNo">${project2.projectNo }</div>      	
 					    </span>
-		                <div class="progress">
+		                <!-- <div class="progress">
 		                  <div class="progress-bar" style="width: 70%"></div>
-		                </div>
+		                </div> -->
 		              </div>
 		              <!-- /.info-box-content -->
 		            </div>
