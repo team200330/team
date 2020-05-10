@@ -41,6 +41,18 @@
 		VALUES (#{projectNo}, #{email})
 	</insert>
 	
+	<insert id="updateProjectMember" parameterType="projectMember" >
+		INSERT INTO project_member
+		SELECT #{projectNo}, #{email}
+		FROM DUAL 
+		WHERE NOT EXISTS (SELECT * FROM project_member WHERE project_no = #{projectNo} AND email = #{email} )
+	</insert>
+	
+	<delete id="projectMemberDeleted" parameterType="projectMember">
+		DELETE FROM project_member 
+		WHERE project_no = #{projectNo} AND email= #{email}
+	</delete>
+	
 	<select id="selectProject" resultMap="projectMap" parameterType="hashmap" >
 		<![CDATA[
 		SELECT *
@@ -85,7 +97,7 @@
 	
 	<select id="selectProjectByNo" parameterType="int" resultMap="projectMap">
 		SELECT * FROM project
-		WHERE project_no = #{ projectNo }
+		WHERE project_no = #{projectNo}
 	</select>
 
 	<select id="selectProjectListCount" parameterType="hashmap" resultType="int" >
@@ -123,6 +135,10 @@
 	<select id="selectMemberByProjectNo" parameterType="int" resultMap="projectMemberMap">
 		SELECT * FROM project_member
 		WHERE project_no = #{ projectNo}
+	</select>
+	
+	<select id="selectProjectMember" parameterType="int" resultMap="projectMemberMap">
+		SELECT * FROM project_member WHERE project_no = #{ projectNo }
 	</select>
 	
 <!-- 	<select id="selectProjectMember" parameterType="hashmap" resultMap="feedbackMap">
