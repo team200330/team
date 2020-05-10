@@ -53,6 +53,7 @@ public class TimelineTable {
 				for (Task t : taskLists.get(listIdx).getTasks()) {
 					String tdClass = "task-" + t.getTaskNo() + " list-" + t.getListNo(); // 해당업무의 모든 날짜컬럼의 클래스 : 업무번호와 리스트번호
 					String tContent = t.getContent().length() > 10 ? t.getContent().substring(0, 10) + " ..." : t.getContent();
+					boolean same = false;
 					
 					// class=list-{list번호}-task : 업무리스트의 리스트 (업무 행의 첫번째 컬럼) 
 					table.append("<tr class='task "+tdClass+"'><td class='fixed list-"+t.getListNo()+"-task'>" + tContent + "</td>");
@@ -61,9 +62,26 @@ public class TimelineTable {
 						Date sDate = t.getStartDate();
 						Date eDate = t.getEndDate();
 						
+						
 						for (int j = 1; j < endDate[i] + 1; j++) {
-							if (sDate != null && eDate != null) {
-								if (sDate.getMonth() == i && sDate.getDate() == j) table.append("<td class='startdate ");	// 업무 시작날짜
+	
+							if (same == true) {
+								table.append("<td class='"+tdClass+"' data-date='date-"+(i+1)+"-"+j+"'></td>");		
+								continue;
+							}
+							else if (sDate != null && eDate != null) {
+								
+								if (sDate.toString().equals(eDate.toString()) && j == sDate.getDate()) { 
+									same = true;
+									
+									table.append("<td class='startdate " + tdClass+"' data-date='date-"+(i+1)+"-"+j+"'></td>");
+									table.append("<td class='enddate " + tdClass+"' data-date='date-"+(i+1)+"-"+(j+1)+"'></td>");
+									
+									for (int k = j + 2; k < endDate[i]; k++) table.append("<td class='"+tdClass+"' data-date='date-"+(i+1)+"-"+k+"'></td>");
+									
+									break;
+								}
+								else if (sDate.getMonth() == i && sDate.getDate() == j) table.append("<td class='startdate ");	// 업무 시작날짜
 								else if (sDate.getMonth() >= i && eDate.getMonth() == i && eDate.getDate() == j) table.append("<td class='enddate ");	// 업무 끝날짜
 								else table.append("<td class='");															// 날짜설정 안되있을때
 							} else table.append("<td class='");									
