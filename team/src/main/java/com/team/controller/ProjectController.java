@@ -2,6 +2,7 @@ package com.team.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -360,5 +361,26 @@ public class ProjectController {
 	
 	
 	
+	
+	
+	
+	
+	///////////////////////////////////////////////////////////////////////////////
+	// 분석페이지에서 프로젝트 마감일, 종료일 업데이트
+	@PostMapping("/updateProjectDate")
+	@ResponseBody
+	public String updateProjectDate(Date date, String dateType, int projectNo) {
+		// java.util.date -> java.sql.date
+		java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+		
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("dateType", dateType);
+		params.put("projectNo", projectNo);
+		params.put("date", sqlDate);
+		
+		projectService.updateProjectDate(params);
+		
+		return "success";
+	}
 	
 }

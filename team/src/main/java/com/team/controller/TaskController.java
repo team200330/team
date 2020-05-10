@@ -2,7 +2,9 @@ package com.team.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +19,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -129,40 +130,133 @@ public class TaskController {
 	
 	@GetMapping(path = {"/analyticsmain"})
 	public String showanalyticsMain(Model model, HttpSession session, ProjectMember projectmember) {
-
-		
 		projectmember.setProjectNo(((Project) session.getAttribute("projectByNo")).getProjectNo());
 		//프로젝트 세션에 있는 프로젝트넘버값을 셋한다.
 		projectmember.setEmail(((Member) session.getAttribute("loginuser")).getEmail());
 		
-		int CountFinishTaskList = taskService.finishTaskListByProjectMember(projectmember);
-		model.addAttribute("CountFinishTaskList",CountFinishTaskList);
+		Project project = (Project) session.getAttribute("projectByNo");
+		model.addAttribute("project", project);
+
+		String email = ((Member) session.getAttribute("loginuser")).getEmail();
 		
-		int CountnotFinishTaskList = taskService.notfinishTaskListByProjectMember(projectmember);
-		model.addAttribute("CountnotFinishTaskList",CountnotFinishTaskList);
+		/////////////////////////////////////////////////////////////////////////////////////
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(project.getStartdate());
+
+		// 현재시간 - 해당일자를 1000분의 1초 단위로 구한다음 / 1000 / 24 / 60 / 60 해서 날짜를 구한다.
+		// Math.round(double * 100 / 100.0) == 소수점 둘째자리까지 자른다.
+		double elapsedTime = (System.currentTimeMillis() - cal.getTimeInMillis()) / 1000 / (24 * 60 * 60);
+		model.addAttribute("elapsedTime", Math.round(elapsedTime * 100 / 100.0));  // 프로젝트 시작일로부터 경과시간 (현재시간 - 시작일)
 		
-		int CountallTaskList = taskService.allTaskListByProjectMember(projectmember);
-		model.addAttribute("CountallTaskList",CountallTaskList);
-				
-		int CountendDateNullTaskList = taskService.endDateNullTaskListByProjectMember(projectmember);
-		model.addAttribute("CountendDateNullTaskList",CountendDateNullTaskList);
+		cal.setTime(project.getDeadline());
+		double remainingTime = (cal.getTimeInMillis() - System.currentTimeMillis()) / 1000 / (24 * 60 * 60);
+		model.addAttribute("remainingTime", project.getDeadline() != null ? Math.round(remainingTime * 100 / 100.0) : "-"); // 마감일까지 남은 시간 (마감일 - 현재시간)
 		
-		double finishTaskPercent = (double)((double)CountFinishTaskList / (double)CountallTaskList * 100 );		
-		model.addAttribute("finishTaskPercent",finishTaskPercent);		
+		/////////////////////////////////////////////////////////////////////////////////////
 		
-		double notfinishTaskPercent = (double)((double)CountnotFinishTaskList / (double)CountallTaskList * 100 );		
-		model.addAttribute("notfinishTaskPercent",notfinishTaskPercent);	
 		
-		double endDateNullTaskPercent = (double)((double)CountendDateNullTaskList / (double)CountallTaskList * 100 );		
-		model.addAttribute("endDateNullTaskPercent",endDateNullTaskPercent);	
 		
-		List <Task> tasks = taskService.TaskListByProjectMember(projectmember);
-		model.addAttribute("tasks",tasks);
+//		int CountFinishTaskList = taskService.finishTaskListByProjectMember(projectmember);
+//		model.addAttribute("CountFinishTaskList",CountFinishTaskList);
+//		
+//		int CountnotFinishTaskList = taskService.notfinishTaskListByProjectMember(projectmember);
+//		model.addAttribute("CountnotFinishTaskList",CountnotFinishTaskList);
+//		
+//		int CountallTaskList = taskService.allTaskListByProjectMember(projectmember);
+//		model.addAttribute("CountallTaskList",CountallTaskList);
+//				
+//		int CountendDateNullTaskList = taskService.endDateNullTaskListByProjectMember(projectmember);
+//		model.addAttribute("CountendDateNullTaskList",CountendDateNullTaskList);
+//		
+//		double finishTaskPercent = (double)((double)CountFinishTaskList / (double)CountallTaskList * 100 );		
+//		model.addAttribute("finishTaskPercent",finishTaskPercent);		
+//		
+//		double notfinishTaskPercent = (double)((double)CountnotFinishTaskList / (double)CountallTaskList * 100 );		
+//		model.addAttribute("notfinishTaskPercent",notfinishTaskPercent);	
+//		
+//		double endDateNullTaskPercent = (double)((double)CountendDateNullTaskList / (double)CountallTaskList * 100 );		
+//		model.addAttribute("endDateNullTaskPercent",endDateNullTaskPercent);	
+//		
+//		List <Task> tasks = taskService.TaskListByProjectMember(projectmember);
+//		model.addAttribute("tasks",tasks);
+		
+		
+		
+		
+		
+		
+		///////////////////////////////////////////////////////////////////
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("projectNo", project.getProjectNo());
+
+		// 전체업무 데이터 설정
+		setModelDatas(model, params);
+		
+		// 내가 작성한 업무 데이터 설정
+		params.put("email", email);
+		setModelDatas(model, params);
+		
+		
+		///////////////////////////////////////////////////////////////////
+		// 그래프용 데이터 - 프로젝트 생성일부터 1달간 1일 간격으로 생성된 업무 가져오기
+		HashMap<String, Object> createdTasks = new HashMap<>();		// 생성된 업무 날짜별 가져오기
+		HashMap<String, Object> completedTasks = new HashMap<>();	// 완료된 업무 날짜별 가져오기
+		String[] tmp = project.getStartdate().toString().split("-");
+		String date = tmp[0] + "-" + tmp[1] + "-";
+		
+		cal.setTime(project.getStartdate());
+		
+		for (int i = project.getStartdate().getDate(); i < cal.getActualMaximum(Calendar.DATE); i += 2) {
+			// 생성된 업무 날짜별 가져오기
+			params.put("startDate", date + i); params.put("endDate", date + (i + 1));
+			createdTasks.put(date + i, taskService.countTaskByCreatedDate(params));
+			// 완료된 업무 날짜별 가져오기
+			params.put("searchType", "completed");
+			completedTasks.put(date + i, taskService.countTaskByCreatedDate(params));
+			
+			params.remove("searchType");
+		}
+		
+		
+		// 날짜 오름차순 정렬
+		Object[] mapkey = createdTasks.keySet().toArray();
+		Arrays.sort(mapkey); 
+		
+		// javascript 로 Object 배열 하나씩 못꺼내와서 문자열로 바꿈
+		String keySet = "";
+		for (Object o : mapkey) keySet += (o.toString() + "_"); 
+
+		//for (Object s : mapkey) System.out.println(s + " : " + createdTasks.get(s).toString());
+		
+		model.addAttribute("createdTasks", createdTasks);
+		model.addAttribute("completedTasks", completedTasks);
+		model.addAttribute("keySet", keySet);
 		
 		return "task/analyticsmain";
 	}
 	
 	
+	
+	void setModelDatas(Model model, HashMap<String, Object> params) {
+		String prefix = params.get("email") != null ? "M" : "A";
+
+		// 전체 업무 개수
+		model.addAttribute(prefix + "_total", taskService.countCompletedTasks(params));
+		
+		// 완료된 업무
+		params.put("completed", true);
+		model.addAttribute(prefix + "_completed", taskService.countCompletedTasks(params));
+
+		// 마감일 지난 업무
+		params.put("pastDeadline", true); params.remove("completed");
+		model.addAttribute(prefix + "_pastDeadline", taskService.countCompletedTasks(params));
+
+		// 마감일이 있는 업무
+		params.put("hasDeadline", true); params.remove("pastDeadline");
+		model.addAttribute(prefix + "_hasDeadline", taskService.countCompletedTasks(params));
+		
+		params.remove("hasDeadline");
+	}
 	
 	
 	

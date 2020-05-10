@@ -146,8 +146,42 @@
 		
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+
 	<insert id="insertTask2" parameterType="Task">
 		INSERT INTO task (list_no, content, writer, start_date, end_date)
 		VALUES ( #{listNo}, #{content}, #{writer}, #{startDate}, #{endDate} )	
 	</insert>
+	
+	<select id="countCompletedTasks" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*)
+		FROM task t
+		INNER JOIN task_list l ON t.list_no = l.list_no
+		WHERE l.project_no = #{projectNo}
+		AND t.deleted = 0 AND l.deleted = 0
+			<choose>
+				<when test="completed == true">AND t.completed = 1</when>
+				<when test="pastDeadline == true"><![CDATA[ AND t.end_date > #{endDate}]]></when>
+				<when test="hasDeadline == true">AND t.end_date IS NOT NULL</when>
+			</choose>
+			<if test="email != null">AND t.writer = #{email}</if>
+	</select>
+	
+	<select id="countTaskByCreatedDate" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*)
+		FROM task t
+		INNER JOIN task_list l ON t.list_no = l.list_no
+		WHERE l.project_no = #{projectNo}
+		AND t.deleted = 0 AND l.deleted = 0
+		AND 
+		<![CDATA[ create_date >= #{startDate} AND create_date <= #{endDate}]]>
+		<if test='searchType == "completed"'>AND t.completed = 1</if>
+	</select>
 </mapper>

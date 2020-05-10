@@ -154,6 +154,12 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 
+	@Override
+	public void updateProjectDate(HashMap<String, Object> params) {
+		projectMapper.updateProjectDate(params);
+	}
+
+
 
 
 

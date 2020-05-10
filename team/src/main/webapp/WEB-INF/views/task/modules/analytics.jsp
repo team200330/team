@@ -1,4 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page pageEncoding="utf-8"%>
   <!-- Content Wrapper. Contains page content -->
     <section class="content">
@@ -12,24 +14,24 @@
                 <div class="row">
                   <div class="col-sm-2 col-6">
                     <div class="description-block border-right">                    
-                      <span class="description-text">시작일(진행중)</span><br>               
-                      <i class="fas fa-plus-square" style="font-size: 20px;"></i>       
+                      <span class="description-text">시작일</span><br>               
+                      <input type="date" style="width:140px" value="${project.startdate}" readonly="readonly">
                     </div>
                     <!-- /.description-block -->
                   </div>
                   <!-- /.col -->
                   <div class="col-sm-2 col-6">
                     <div class="description-block border-right">                    
-                      <span class="description-text">마감일(진행중)</span><br> 
-                      <i class="fas fa-plus-square" style="font-size: 20px;"></i>            
+                      <span class="description-text">마감일</span><br> 
+                      <input id="project-deadline" type="date" style="width:140px" value="${not empty project.deadline ? project.deadline : '-'}">           
                     </div>
                     <!-- /.description-block -->
                   </div>
                   <!-- /.col -->
                   <div class="col-sm-2 col-6">
                     <div class="description-block border-right">                    
-                      <span class="description-text">완료일(진행중)</span><br>    
-                      <i class="fas fa-plus-square" style="font-size: 20px;"></i>              
+                      <span class="description-text">완료일</span><br>    
+                     <input id="project-enddate" type="date" style="width:140px" value="${not empty project.enddate ? project.enddate : '-'}">       
                     </div>
                     <!-- /.description-block -->
                   </div>
@@ -37,14 +39,18 @@
                   <div class="col-sm-1 col-6">
                     <div class="description-block">                    
                       <span class="description-text">경과시간</span><br>                      
-                      <h5 class="description-header" style="display: inline;">12시간(진행중)</h5>
+                      <h5 class="description-header" style="display: inline;">
+                      	${elapsedTime} 일
+                      </h5>
                     </div>
                     <!-- /.description-block -->
                   </div>
                   <div class="col-sm-1 col-6">
                     <div class="description-block">                    
                       <span class="description-text">남은시간</span><br>                      
-                      <h5 class="description-header" style="display: inline;">12시간(진행중)</h5>
+                      <h5 class="description-header" style="display: inline;">
+                      	${remainingTime} 일
+                      </h5>
                     </div>
                     <!-- /.description-block -->
                   </div>
@@ -52,8 +58,10 @@
                   <div class="col-sm-2 col-6">
                     <div class="description-block border-right border-left">                    
                       <span class="description-text">완료됨</span><br>                      
-                      <h5 class="description-header" style="display: inline;">${ CountFinishTaskList }개 업무</h5>
-                      <span class="description-percentage text-success">(${ finishTaskPercent }%)</span>
+                      <h5 class="description-header" style="display: inline;">${A_completed}개 업무</h5>
+                      <span class="description-percentage text-success">
+                      	(<fmt:formatNumber value="${A_completed / A_total * 100}" pattern=".0"/>)%
+                     </span>
                     </div>
                     <!-- /.description-block -->
                   </div>
@@ -61,70 +69,67 @@
                   <div class="col-sm-2 col-6">
                     <div class="description-block">                    
                       <span class="description-text">남은 업무</span><br>
-                      <h5 class="description-header" style="display: inline;">${ CountnotFinishTaskList }개 업무</h5>
-                      <span class="description-percentage text-danger">(${ notfinishTaskPercent }%)</span>
+                      <h5 class="description-header" style="display: inline;">${A_total - A_completed}개 업무</h5>
+                      <span class="description-percentage text-danger">
+                      	(<fmt:formatNumber value="${(A_total - A_completed) / A_total * 100}" pattern=".0"/>)%
+                      	</span>
                     </div>
                     <!-- /.description-block -->
                   </div>
                 </div>
                 <!-- /.row --> 
-              </div>
+               
             </div>
-            <div class="card">
-            <!-- /.card-header -->
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-md-12">
-                    <p class="text-center">
-                      <strong style="font-size:20px;">프로젝트 개요</strong>
-                    </p>
-                    <!-- /.progress-group -->
-                    <div class="progress-group text-right mb-3">
-                                 완료됨 ${ finishTaskPercent }% (${ CountFinishTaskList }개 업무)
-					   계획됨 ${ notfinishTaskPercent }% (${ CountnotFinishTaskList }개 업무)
-                      <span class="float-right"></span>
-                      <div class="progress progress-sm">
-                        <div class="progress-bar bg-warning" style="width: ${ finishTaskPercent }%"></div>
-                      </div>
-                    </div>
-                    <!-- /.progress-group -->
-                  </div>
-                  <!-- /.col -->
-                </div>
-                <!-- /.row -->
-              </div>
-              <!-- ./card-body -->
              </div>
+          </div>
+            
+            
+           
+            <div class="row">
+                <div class="col-md-6">   
+                	<div class="card" style="margin-left: 7px; width:100%">
+                		<div class="card-body" style="padding:3rem; padding-top:30">
+                			<h5 style="text-align:center; margin-bottom: 30;">내가 작성한 업무</h5>
+           					<canvas id="myDonutChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+           				</div>
+           			</div>
+           		</div>
+           		
+           		 <div class="col-md-6">   
+           			<div class="card" style="margin-right: 7px;width:100%">
+                		<div class="card-body" style="padding:3rem; padding-top:30">
+                			<h5 style="text-align:center; margin-bottom: 30;">전체 업무</h5>
+           					<canvas id="allDonutChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+           				</div>
+           			</div>
+           		</div>
+           	</div>
+      
+            
+            
             <!-- /.card -->
-            <div class="card">
+            <div class="card" style="margin-left: 7px;margin-right: 7px; width:100%">
               <div class="card-body">              
                 <div class="row">
                   <div class="col-md-12">   
-                    <div class="form-group">
-	                    <select class="form-control" id="input-select">
-	                  	  <option>번 업</option>
-	                  	  <option>번 다운</option>
-	                    </select>
-                    </div>
-                    <div class="chart">
-                      <!-- Sales Chart Canvas -->
-                      <canvas id="salesChart" height="180" style="height: 180px;"></canvas>
-                    </div>
-                    <p class="text-center" style="font-size:12px;">전체 업무량 완료된 업무량</p>
-                    <p class="text-center" style="font-size:12px;">번 업(Burn Up) 차트는 프로젝트의 크기와 완료된 업무 총량를 비교합니다. 두 개의 선이 만날 때, 프로젝트는 완료됩니다. 기간: 프로젝트 생성일부터</p>
-                    <!-- /.chart-responsive -->
+                  	<h5 style="text-align:center; margin: 30;">업무 그래프</h5>
+	                <div class="chart" style="margin-bottom:30px">
+	                  <canvas id="areaChart" style="min-height: 250px; height: 350px; max-height: 350px; max-width: 100%;"></canvas>
+	                  <div style="text-align: center; margin-top: 20;font-size: 10.5pt;color: gray;">
+	                  	업무 총량과 완료된 업무량을 그래프로 비교합니다. 기간 : 프로젝트 생성일부터
+	                  </div>
+	                </div>
+                   
                   </div>
                 </div>                                          
               </div>
-            </div> 
-          </div>
-          <!-- /.col -->
-        </div>
-        <!-- /.row -->
-      </div><!--/. container-fluid -->
-    </section>
-    <!-- /.content -->
+      
+      		</div>
+ 		</div>
 
+      </div>
+      </section>
+      
 <!-- REQUIRED SCRIPTS -->
 <!-- jQuery -->
 <script src="/team/resources/plugins/jquery/jquery.min.js"></script>
@@ -147,107 +152,40 @@
 <!-- PAGE SCRIPTS -->
 <script src="/team/resources/dist/js/pages/dashboard2.js"></script>
 <script>
-  $(function () {
-    /* ChartJS
-     * -------
-     * Here we will create a few charts using ChartJS
-     */
+$(function() {
+	// 마감일, 완료일 번경
+	$(document).on("change", "#project-deadline, #project-enddate", function() {
+		var date = new Date($(this).val());
+		var dateType = $(this).attr("id") == "project-deadline" ? "deadline" : "enddate";
 
-    //--------------
-    //- AREA CHART -
-    //--------------
-
-    // Get context with jQuery - using jQuery's .get() method.
-    var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
-
-    var areaChartData = {
-      labels  : ['January1', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [
-        {
-          label               : 'Digital Goods',
-          backgroundColor     : 'rgba(60,141,188,0.9)',
-          borderColor         : 'rgba(60,141,188,0.8)',
-          pointRadius          : false,
-          pointColor          : '#3b8bba',
-          pointStrokeColor    : 'rgba(60,141,188,1)',
-          pointHighlightFill  : '#fff',
-          pointHighlightStroke: 'rgba(60,141,188,1)',
-          data                : [28, 48, 40, 19, 86, 27, 90]
-        },
-        {
-          label               : 'Electronics',
-          backgroundColor     : 'rgba(210, 214, 222, 1)',
-          borderColor         : 'rgba(210, 214, 222, 1)',
-          pointRadius         : false,
-          pointColor          : 'rgba(210, 214, 222, 1)',
-          pointStrokeColor    : '#c1c7d1',
-          pointHighlightFill  : '#fff',
-          pointHighlightStroke: 'rgba(220,220,220,1)',
-          data                : [65, 59, 80, 81, 56, 55, 40]
-        },
-      ]
-    }
-
-    var areaChartOptions = {
-      maintainAspectRatio : false,
-      responsive : true,
-      legend: {
-        display: false
-      },
-      scales: {
-        xAxes: [{
-          gridLines : {
-            display : false,
-          }
-        }],
-        yAxes: [{
-          gridLines : {
-            display : false,
-          }
-        }]
-      }
-    }
-
-    // This will get the first returned node in the jQuery collection.
-    var areaChart       = new Chart(areaChartCanvas, { 
-      type: 'line',
-      data: areaChartData, 
-      options: areaChartOptions
-    })
-
-    //-------------
-    //- LINE CHART -
-    //--------------
-    var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
-    var lineChartOptions = jQuery.extend(true, {}, areaChartOptions)
-    var lineChartData = jQuery.extend(true, {}, areaChartData)
-    lineChartData.datasets[0].fill = false;
-    lineChartData.datasets[1].fill = false;
-    lineChartOptions.datasetFill = false
-
-    var lineChart = new Chart(lineChartCanvas, { 
-      type: 'line',
-      data: lineChartData, 
-      options: lineChartOptions
-    })
-
-    //-------------
+		$.ajax({
+			url : "/team/project/updateProjectDate",
+			method : "post",
+			data : {
+				"date" : date,
+				"projectNo" : "${projectByNo.projectNo}",
+				"dateType" : dateType
+			}
+		});
+	});
+	
+	
+	// 내가 작성한 업무
+	//-------------
     //- DONUT CHART -
     //-------------
     // Get context with jQuery - using jQuery's .get() method.
-    var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
+    var donutChartCanvas = $('#myDonutChart').get(0).getContext('2d')
     var donutData        = {
       labels: [
-          'Chrome', 
-          'IE',
-          'FireFox', 
-          'Safari', 
-          'Opera', 
-          'Navigator', 
+          '완료', 
+          '마감일 지남',
+          '계획됨', 
+          '마감일 없음' 
       ],
       datasets: [
         {
-          data: [700,500,400,600,300,100],
+          data: ["${M_completed}", "${M_pastDeadline}", "${M_hasDeadline}", "${M_total - M_hasDeadline}"],
           backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
         }
       ]
@@ -262,73 +200,111 @@
       type: 'doughnut',
       data: donutData,
       options: donutOptions      
-    })
-
-    //-------------
-    //- PIE CHART -
-    //-------------
-    // Get context with jQuery - using jQuery's .get() method.
-    var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
-    var pieData        = donutData;
-    var pieOptions     = {
+    });
+	
+	///////////////////////////////////////////////////////////////
+    var donutChartCanvas2 = $('#allDonutChart').get(0).getContext('2d')
+    var donutData2        = {
+      labels: [
+          '완료', 
+          '마감일 지남',
+          '계획됨', 
+          '마감일 없음' 
+      ],
+      datasets: [
+        {
+          data: ["${A_completed}", "${A_pastDeadline}", "${A_hasDeadline}", "${A_total - A_hasDeadline}"],
+          backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+        }
+      ]
+    }
+    var donutOptions2     = {
       maintainAspectRatio : false,
       responsive : true,
     }
-    //Create pie or douhnut chart
-    // You can switch between pie and douhnut using the method below.
-    var pieChart = new Chart(pieChartCanvas, {
-      type: 'pie',
-      data: pieData,
-      options: pieOptions      
-    })
+    var donutChart2 = new Chart(donutChartCanvas2, {
+      type: 'doughnut',
+      data: donutData2,
+      options: donutOptions2      
+    });
+	
+	
+  	//--------------
+    //- AREA CHART -
+    //--------------
+    // Get context with jQuery - using jQuery's .get() method.
+  	var keySet = "<c:out value='${keySet}' />".split("_");
+  	var created = "<c:out value='${createdTasks}' />".split("{")[1].split("}")[0].split(",");
+  	var completed = "<c:out value='${completedTasks}' />".split("{")[1].split("}")[0].split(",");
+  	var createdArr = new Array(), completedArr = new Array();
+  	
+  	// 키셋 순서로 차트에 넣을 데이터 배열 만들기
+  	for (var i = 0; i < created.length; i++){
+  		for (var j = 0; j < created.length; j++) 
+  			if (created[j].includes(keySet[i])) {
+  				createdArr[i] = created[j].split("=")[1] == "0" ? "0" : created[j].split("=")[1]
+  				completedArr[i] = completed[j].split("=")[1] == "0" ? "0" : completed[j].split("=")[1]
+  				break;
+  			}
+  	} 
+  	
+    var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
 
-    //-------------
-    //- BAR CHART -
-    //-------------
-    var barChartCanvas = $('#barChart').get(0).getContext('2d')
-    var barChartData = jQuery.extend(true, {}, areaChartData)
-    var temp0 = areaChartData.datasets[0]
-    var temp1 = areaChartData.datasets[1]
-    barChartData.datasets[0] = temp1
-    barChartData.datasets[1] = temp0
-
-    var barChartOptions = {
-      responsive              : true,
-      maintainAspectRatio     : false,
-      datasetFill             : false
+    var areaChartData = {
+      labels  : keySet,
+      datasets: [
+        {
+          label               : '완료된 업무량',
+          backgroundColor     : 'rgba(60,141,188,0.9)',
+          borderColor         : 'rgba(60,141,188,0.8)',
+          pointRadius          : false,
+          pointColor          : '#3b8bba',
+          pointStrokeColor    : 'rgba(60,141,188,1)',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(60,141,188,1)',
+          data                : completedArr
+        },
+        {
+          label               : '전체 업무량',
+          backgroundColor     : 'rgba(210, 214, 222, 1)',
+          borderColor         : 'rgba(210, 214, 222, 1)',
+          pointRadius         : false,
+          pointColor          : 'rgba(210, 214, 222, 1)',
+          pointStrokeColor    : '#c1c7d1',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(220,220,220,1)',
+          data                : createdArr
+        },
+      ]
     }
 
-    var barChart = new Chart(barChartCanvas, {
-      type: 'bar', 
-      data: barChartData,
-      options: barChartOptions
-    })
-
-    //---------------------
-    //- STACKED BAR CHART -
-    //---------------------
-    var stackedBarChartCanvas = $('#stackedBarChart').get(0).getContext('2d')
-    var stackedBarChartData = jQuery.extend(true, {}, barChartData)
-
-    var stackedBarChartOptions = {
-      responsive              : true,
-      maintainAspectRatio     : false,
+    var areaChartOptions = {
+      maintainAspectRatio : false,
+      responsive : true,
+      legend: {
+        display: true
+      },
       scales: {
         xAxes: [{
-          stacked: true,
+          gridLines : {
+            display : true,
+          }
         }],
         yAxes: [{
-          stacked: true
+          gridLines : {
+            display : true,
+          }
         }]
       }
     }
 
-    var stackedBarChart = new Chart(stackedBarChartCanvas, {
-      type: 'bar', 
-      data: stackedBarChartData,
-      options: stackedBarChartOptions
+    // This will get the first returned node in the jQuery collection.
+    var areaChart       = new Chart(areaChartCanvas, { 
+      type: 'line',
+      data: areaChartData, 
+      options: areaChartOptions
     })
-  })
+});
 </script>
 
 </body>
