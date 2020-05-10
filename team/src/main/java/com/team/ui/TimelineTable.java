@@ -62,15 +62,17 @@ public class TimelineTable {
 						Date sDate = t.getStartDate();
 						Date eDate = t.getEndDate();
 						
-						
 						for (int j = 1; j < endDate[i] + 1; j++) {
 	
+							// 날짜 똑같으면 해당날짜와 그다음날짜를 시작일자, 끝일자로 설정하고 나머지 일자는 날짜 클래스만 넣는다
+							// 나머지 일자에 날짜 클래스만 넣는 부분
 							if (same == true) {
 								table.append("<td class='"+tdClass+"' data-date='date-"+(i+1)+"-"+j+"'></td>");		
 								continue;
 							}
+							
 							else if (sDate != null && eDate != null) {
-								
+								// 날짜 똑같으면 해당날짜와 그다음날짜를 시작, 끝일자로 설정하는 부분
 								if (sDate.toString().equals(eDate.toString()) && j == sDate.getDate()) { 
 									same = true;
 									
@@ -78,11 +80,13 @@ public class TimelineTable {
 									table.append("<td class='enddate " + tdClass+"' data-date='date-"+(i+1)+"-"+(j+1)+"'></td>");
 									
 									for (int k = j + 2; k < endDate[i]; k++) table.append("<td class='"+tdClass+"' data-date='date-"+(i+1)+"-"+k+"'></td>");
-									
 									break;
 								}
-								else if (sDate.getMonth() == i && sDate.getDate() == j) table.append("<td class='startdate ");	// 업무 시작날짜
+								// 날짜가 똑같지 않으면 시작일자를 설정한다
+								else if (sDate.getMonth() == i && sDate.getDate() == j) table.append("<td class='startdate ");
+								// 끝일자를 설정한다
 								else if (sDate.getMonth() >= i && eDate.getMonth() == i && eDate.getDate() == j) table.append("<td class='enddate ");	// 업무 끝날짜
+								// 날짜 똑같지않을떄 나머지일자를 설정한다
 								else table.append("<td class='");															// 날짜설정 안되있을때
 							} else table.append("<td class='");									
 							
