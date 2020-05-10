@@ -145,4 +145,9 @@
 		
 		
 	
+	
+	<insert id="insertTask2" parameterType="Task">
+		INSERT INTO task (list_no, content, writer, start_date, end_date)
+		VALUES ( #{listNo}, #{content}, #{writer}, #{startDate}, #{endDate} )	
+	</insert>
 </mapper>
