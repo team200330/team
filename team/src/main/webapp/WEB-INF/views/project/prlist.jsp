@@ -43,6 +43,7 @@
 	a { color: #343a40;}
 	a:hover { color: #527aa2;}
 	._mem_icon_default {display: none;}
+	._mem_a_none { pointer-events: none; cursor : default; }
 
 	
  </style>
@@ -415,38 +416,6 @@ $(function() {
 		$("#task-form").submit();
 	});
 
-
-/* 	// 피드백 상세보기 모달
-	$(document).on("click", ".to-detail2", function() {
- 		var projectNo = $(this).attr('data-projectNo');
-		$('#detail-form2 #projectNo').val(projectNo);
-
-		console.log(projectNo);
-
-		//var feedbackNo = data.split("feedbackNo=")[1].split(",")[0];
-		
-		$.ajax({ // 피드백 상세보기
-			"url":"/team/project/detail2",
-			"method":"get",
-			"async" : true,
-			"data" : {	"projectNo" : projectNo },
-			"dataType" : "json", // dataType : 응답 컨텐츠의 종류 지정			
-			"success" : function(data, status, xhr) {
-
-				$("#detail-id").load("/team/project/getDetailModal2", function() {
-					$('#modal-detail3').modal('show');		
-					//console.log(projectDetail.projectNo)
-					console.log(data.project.Member)
-					
-					
-				});
-				
-				//$('.list-container1').load('/team/project/list');
-				//$('.list-container2').load('/team/project/list2');
-
-			}
-		});
-	}); */
 	
 	// detail
  	$(document).on("click", ".to-detail", function() { //$('.to-detail').on('click', function(event) {
@@ -633,10 +602,14 @@ $(function() {
 				});
 
 
+				//프로젝트 삭제
 				var deleted = data.deleted;
 				$('#de_deleted').val(deleted);
 				
 				$(document).on("click", ".projectDeleted", function(){
+					if (confirm(" 프로젝트를 삭제합니다. 삭제하시겠습니까?") == true){ 
+						if (confirm("복구가 불가능합니다. 정말 삭제하시겠습니까?") == false){ return false; };
+					} //취소하면 안넘어감
 					
 					var deleted_val = $("#de_deleted");
 					if (deleted_val.val() == "false"){ deleted_val.val('1')} else if (deleted_val.val() == "true"){ deleted_val.val('0')}
@@ -651,16 +624,16 @@ $(function() {
 								"deleted" : deleted },
 						success : function(resp, status, xhr) {
 
-							//$('#modal-detail2').modal('hide');
+							$('.list-container1').load('/team/project/list');
+							$('.list-container2').load('/team/project/list2');
+							$('#modal-detail2').modal('hide');
+							//$('#modal-detail2').modal('show');
 						},
 						error : function(xhr, status, err) {
 							console.log(err);
 						}
 					});
-					$('#modal-detail2').modal('show');
 					
-					$('.list-container1').load('/team/project/list');
-					$('.list-container2').load('/team/project/list2');
 				});
 
 				// 멤버 검색 작은모달 ajax
@@ -751,12 +724,14 @@ $(function() {
 								'<input type="hidden" name="email" value="' + email + '"/>' + 
 							'</div>'	
 						);
-						$("._mem2 div[data-email='" + email + "']").css({ 'pointer-events': 'none', 'cursor' : 'default' })
+						//$("._mem2 div[data-email='" + email + "']").css({ 'pointer-events': 'none', 'cursor' : 'default' })
+						$("._mem2 div[data-email='" + email + "']").addClass("_mem_a_none");
 						
 					} else {
 						$(this).children("._mem_icon2").addClass("_mem_icon_default2");
 						
-						$("._mem2 div[data-email='" + email + "']").css({ 'pointer-events': '', 'cursor' : '' })
+						//$("._mem2 div[data-email='" + email + "']").css({ 'pointer-events': '', 'cursor' : '' })
+						$("._mem2 div[data-email='" + email + "']").removeClass("_mem_a_none");
 						$("#mem2 div[data-email='" + email + "']").remove();
 					}
 
@@ -800,14 +775,14 @@ $(function() {
 								"email" : email },
 						success : function(resp, status, xhr) {						
 								
-								$("._mem2 div[data-email='" + email + "']").css({ 'pointer-events': 'all', 'cursor' : 'all' })
+								$("._mem2 div[data-email='" + email + "']").css({ 'pointer-events': '', 'cursor' : '' })
 							
 						},
 						error : function(xhr, status, err) {
 							console.log(err);
 						}
 					});
-					$('#modal-detail2').modal('show');
+					$('#modal-detail2').load('/team/project/detail');
 					$('.list-container1').load('/team/project/list');
 					$('.list-container2').load('/team/project/list2');
 					
