@@ -10,44 +10,41 @@ import com.team.vo.ProjectMember;
 
 public interface ProjectMapper {
 	
-	List<Project> selectProjectByWorkspaceNo(int workspaceNo);
+	public List<Project> selectProjectByWorkspaceNo(int workspaceNo);
 	
-	List<ProjectMember> selectMemberByProjectNo(int projectNo);
+	public List<ProjectMember> selectMemberByProjectNo(int projectNo);
 	
 	///////////////////////////////////////////
 	
-	void insertProject(Project project);
+	public void insertProject(Project project);
+	public void insertProjectMember(ProjectMember projectMember);
 	
-	void insertProjectMember(ProjectMember projectMember);
+	public List<Project> selectProject(HashMap<String, Object> params);
+	public List<Project> selectProject2(HashMap<String, Object> params);
 	
-	List<Project> selectProject(HashMap<String, Object> params);
+	public void updateProjectNo(Map<String, String> arrMaparrMap);
 	
-	List<Project> selectProject2(HashMap<String, Object> params);
+	public List<Project> selectPageing(HashMap<String, Object> params);
+
+	public int selectProjectListCount(HashMap<String, Object> params);
+
+	public Project selectProjectByNo(int projectNo);
+
+	public Project selectDetail(int projectNo);
 	
-	void updateProjectNo(Map<String, String> arrMaparrMap);
+	public void updateProjectMember(ProjectMember projectMember);
 	
-	List<Project> selectPageing(HashMap<String, Object> params);
+	public void projectMemberDeleted(ProjectMember projectMember);
 
-	int selectProjectListCount(HashMap<String, Object> params);
+	public void updateProject(Project project);
 
-	Project selectProjectByNo(int projectNo);
+	public List<Member> selectLoginuserProjectMember(HashMap<String, Object> params);
 
-	Project selectDetail(int projectNo);
+	public ProjectMember selectDetail2(int projectNo);
 
-	void updateProject(Project project);
+	public void updateProjectDeleted(Map<String, Object> arrMap);
 
-	List<Member> selectLoginuserProjectMember(HashMap<String, Object> params);
-
-	ProjectMember selectDetail2(int projectNo);
-
-	void updateProjectDeleted(Map<String, Object> arrMap);
-
-
-
-
-	
-	
-	
+	public List<ProjectMember> selectProjectMember(HashMap<String, Object> params);
 
 
 

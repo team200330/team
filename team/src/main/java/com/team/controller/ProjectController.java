@@ -171,6 +171,17 @@ public class ProjectController {
 		return "project/list2";
 	}
 	
+	@PostMapping(path = {"/addProjectMember"})
+	@ResponseBody	
+	public String addProjectMember(ProjectMember projectMember, int projectNo, String email) {
+		System.out.println(projectNo + email);
+		projectMember.setProjectNo(projectNo);
+		projectMember.setEmail(email);
+		projectService.updateProjectMember(projectMember);
+		
+		return "success";
+		
+	}
 	
 	@PostMapping(path = {"/detailUpdate"})
 	@ResponseBody	
@@ -180,8 +191,7 @@ public class ProjectController {
 		return "success";
 	}
 	
-	@SuppressWarnings("unused")
-	@PostMapping(value="/projectByproNo")
+	@PostMapping(path = {"/projectByproNo"})
 	@ResponseBody
 	public String projectNoByProNo (String projectNo, String proNo) {
 		String keyArr[] = {projectNo, proNo};
@@ -196,8 +206,20 @@ public class ProjectController {
 		
 	}
 	
-	@SuppressWarnings("unused")
-	@PostMapping(value="/deleted")
+	@PostMapping(path = {"/projectMemberDeleted"})
+	@ResponseBody
+	public String projectMemberDeleted (ProjectMember projectMember, int projectNo, String email) {
+		
+		System.out.println(projectNo + email);
+		projectMember.setProjectNo(projectNo);
+		projectMember.setEmail(email);
+		projectService.projectMemberDeleted(projectMember);
+		
+		return "success";
+		
+	}
+	
+	@PostMapping(path = {"/deleted"})
 	@ResponseBody
 	public String projectDeleted (String projectNo, String deleted) {
 		
@@ -214,7 +236,6 @@ public class ProjectController {
 	
 	
 	  @GetMapping(path = {"/detail"})
-	  
 	  @ResponseBody //public String write(int projectNo) { 
 	  public Project write(int projectNo, Model model) {
 	  
@@ -226,50 +247,7 @@ public class ProjectController {
 	  return projectDetail;
 	  
 	  }
-	 
-	
-//	@GetMapping(path = {"/detail2"})
-//	@ResponseBody	
-//	//public String write(int projectNo) {
-//	public String write2(int projectNo, Model model, HttpSession session) {
-////		Project projectDetail = projectService.selectDetail(projectNo);
-////
-////		HashMap<String, Object> params = new HashMap<>();
-////		//params.put("email", projectDetail.getMember());	
-////		params.put("projectDetail", projectDetail);
-////		model.addAllAttributes(params);
-////		System.out.println("값"+params);
-////		
-////		
-////		return params;	
-//		  Project project = projectService.selectDetail(projectNo);
-//		  List<Member> member = (List<Member>) project.getMember();
-//		  
-//			HashMap<String, Object> params = new HashMap<>();
-//			params.put("project", project);
-//			params.put("workspaceNo", workspaceNo);
-//			params.put("member", member);
-//			model.addAllAttributes(params);
-//
-//		  //System.out.println("detail projectDetail 값" + projectDetail);
-//		  System.out.println("project : "+project);
-//		  System.out.println("member : "+member); 
-//		  return "success";
-//		 
-//		
-//		//Project projectDetail = projectService.selectDetail(projectNo);
-//		//model.addAttribute("projectDetail", projectDetail);
-//		//System.out.println("detail projectDetail 값" + projectDetail);
-//
-//		
-//	}
-//
-//	@GetMapping("/getDetailModal2")
-//	public String projectDetailModal() {
-//		return "/project/prdetail";
-//	}
-	
-	
+
 
 	///////////////////
 	
@@ -335,12 +313,6 @@ public class ProjectController {
 	
 
 	
-	
-	
-	
-	
-	
-	
 	// 프로젝트 CSV 로 내보내기
 	@Autowired
 	@Qualifier("timelineService")
@@ -382,4 +354,11 @@ public class ProjectController {
 		downloadList = lists;
 		return "success";
 	}
+	
+	
+	
+	
+	
+	
+	
 }
