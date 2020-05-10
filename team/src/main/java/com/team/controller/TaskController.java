@@ -1,5 +1,7 @@
 package com.team.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -15,7 +17,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.team.service.LogService;
 import com.team.service.TaskService;
 import com.team.service.TimelineService;
@@ -169,6 +174,7 @@ public class TaskController {
 	
 	
 	///////////////////////////////////////////
+	// timeline
 	@Autowired
 	@Qualifier("timelineService")
 	private TimelineService timelineService;
@@ -211,12 +217,6 @@ public class TaskController {
 		return "task/timeline";
 	}
 	
-	
-	
-	
-	
-	
-	
 	private HashMap<String, Object> returnParams(Object projectNo, Object taskNo, Object email, Object searchType, Object date, Object dateType) {
 		HashMap<String, Object> params = new HashMap<>();
 		params.put("projectNo", projectNo);
@@ -232,45 +232,69 @@ public class TaskController {
 	
 	
 	/////////////////////////////////////////////////////////////////
+	// calendar
+	@GetMapping("/calendar")
+	public String calender(Model model, HttpSession s) throws JsonProcessingException {
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("searchType", "A");
+		params.put("projectNo", ((Project) s.getAttribute("projectByNo")).getProjectNo());
+		
+		// json 타입으로 뷰에 전송시 날짜 이상하게 나오기때문에 simpledateformat 으로 고침
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+		
+		List<Task> tasks = new ArrayList<>();
+		for (TaskList l : timelineService.searchTasks(params)) {
+			System.out.println(l.toString());
+			
+			for (Task t : l.getTasks()) { 
+				System.out.println("startdate : " + t.getStartDate());
+				System.out.println("enddate : " + t.getEndDate());
+				
+				if (t.getStartDate() != null) t.setS_startDate(f.format(t.getStartDate()));
+				if (t.getEndDate() != null) t.setS_endDate(f.format(t.getEndDate()));
+				if (t.getCompletedDate() != null) t.setS_completedDate(f.format(t.getCompletedDate()));
+				
+				System.out.println("s_startDate : " + t.getS_startDate());
+				System.out.println("s_endDate : " + t.getS_endDate());
+				
+				System.out.println(t.toString());
+				tasks.add(t);
+			}
+		}
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonText = mapper.writeValueAsString(tasks);
+		model.addAttribute( "tasks", jsonText );
+		return "/task/calendar-main";
+	}
 	
-//	@GetMapping("/calender")
-//	public String calender(Model model) throws JsonProcessingException {
-//		HashMap<String, Object> params = new HashMap<>();
-//		params.put("searchType", "A");
-//		params.put("projectNo", projectNo);
-//
-//		// json 타입으로 뷰에 전송시 날짜 이상하게 나오기때문에 simpledateformat 으로 고침
-//		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-//		
-//		List<Task> tasks = new ArrayList<>();
-//		for (TaskList l : timelineService.searchTasks(params)) {
-//			for (Task t : l.getTasks()) { 
-//				if (t.getStartDate() != null) t.setS_startDate(f.format(t.getStartDate()));
-//				if (t.getEndDate() != null) t.setS_endDate(f.format(t.getEndDate()));
-//				if (t.getCompletedDate() != null) t.setS_completedDate(f.format(t.getCompletedDate()));
-//				tasks.add(t);
-//			}
-//		}
-//		
-//		ObjectMapper mapper = new ObjectMapper();
-//		String jsonText = mapper.writeValueAsString(tasks);
-//		model.addAttribute( "tasks", jsonText );
-//		return "/calender";
-//	}
+	@GetMapping("/loadCalendar")
+	public String loadCalendar() {
+		return "/task/modules/calendar";
+	}
 	
+	@GetMapping("/getTaskLists")
+	@ResponseBody
+	public String getTaskList(HttpSession s) {
+		s.setAttribute("calTaskLists",taskService.searchTaskList(((Project) s.getAttribute("projectByNo")).getProjectNo()));
+		return "success";
+	}
 	
+	@GetMapping("/loadCalendarModal")
+	public String loadCalendarModal(HttpSession s) {
+		return "/task/modules/calendar-modals";
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	@PostMapping(path = {"/addtaskSetStartDate"})
+	public String addTask2(Task task, HttpSession s, Model model) throws JsonProcessingException {
+		s.setAttribute("task", task);
+		s.removeAttribute("calTaskLists");
+		
+		taskService.addTask2(task);
+		return "redirect:/task/calendar";
+	}
+
 	
 	
 	

@@ -40,4 +40,6 @@ public interface TaskMapper {
 	List<Task> TaskListByProjectMember(ProjectMember projectmember);
 
 	
+	void insertTask2(Task task);
+	
 }

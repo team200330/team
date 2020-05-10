@@ -37,5 +37,7 @@ public interface TaskService {
 
 	List<Task> TaskListByProjectMember(ProjectMember projectmember);
 	
+	
+	void addTask2(Task task);
 
 }

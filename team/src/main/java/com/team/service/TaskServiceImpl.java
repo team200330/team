@@ -96,5 +96,9 @@ public class TaskServiceImpl implements TaskService {
 	}
 
 	
-	
+	@Override
+	public void addTask2(Task task) {
+		taskMapper.insertTask2(task);
+	}
+
 }

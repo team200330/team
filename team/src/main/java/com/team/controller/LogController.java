@@ -40,6 +40,8 @@ public class LogController {
 	public String logList(Model model, HttpSession session) {
 		projectNo = ((Project) session.getAttribute("projectByNo")).getProjectNo();
 		
+		System.out.println("projectNo : " + projectNo);
+		
 		HashMap<String, Object> params = new HashMap<>();
 		params.put("projectNo", projectNo);
 		params.put("email", ((Member) session.getAttribute("loginuser")).getEmail());
