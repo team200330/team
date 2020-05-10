@@ -90,6 +90,11 @@ public class TaskServiceImpl implements TaskService {
 		return CountendDateNullTaskList;
 	}
 
+	@Override
+	public List<Task> TaskListByProjectMember(ProjectMember projectmember) {
+		return taskMapper.TaskListByProjectMember(projectmember);
+	}
+
 	
 	
 }

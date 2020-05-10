@@ -34,6 +34,8 @@ public interface TaskService {
 	int allTaskListByProjectMember(ProjectMember projectmember);
 
 	int endDateNullTaskListByProjectMember(ProjectMember projectmember);
+
+	List<Task> TaskListByProjectMember(ProjectMember projectmember);
 	
 
 }

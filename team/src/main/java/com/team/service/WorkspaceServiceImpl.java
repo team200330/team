@@ -157,4 +157,14 @@ public class WorkspaceServiceImpl implements WorkspaceService {
 		return workspaceMapper.selectAscWorkspaceByEmail(email);
 	}
 
+	@Override
+	public Workspace selectWorkspaceByCode(int code) {
+		return workspaceMapper.selectWorkspaceByCode(code);
+	}
+
+	@Override
+	public void insertWorkspaceMember2(HashMap<String, Object> params) {
+		workspaceMapper.insertWorkspaceMember2(params);
+	}
+
 }

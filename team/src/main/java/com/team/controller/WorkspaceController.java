@@ -2,17 +2,24 @@ package com.team.controller;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
 
+import java.util.HashMap;
 import java.util.List;
 
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.team.service.WorkspaceService;
@@ -69,9 +76,12 @@ public class WorkspaceController {
 	}
 	
 	@GetMapping(path = { "/setting-workspace" })
-	public String settingworkspaceform(int workspaceNo,Model model) {
+	public String settingworkspaceform(int workspaceNo,Model model,HttpSession session) {
 		Workspace workspace = workspaceService.selectWorkspaceByWorkspaceNo(workspaceNo);
 		model.addAttribute("workspace",workspace);
+		
+		session.removeAttribute("workspaceNo");
+		session.setAttribute("workspaceNo",workspace.getWorkspaceNo());
 		
 		return "workspace/setting-workspace";
 	}
@@ -87,6 +97,7 @@ public class WorkspaceController {
 				}
 			}
 		}
+		
 		return "workspace/setting-workspace"; 
 	}
 	
@@ -183,5 +194,77 @@ public class WorkspaceController {
 		} else {
 			return "success";
 		}
+	}
+	
+	
+	
+	
+	
+	
+	///////////////////////////////////////////////
+	
+	@Autowired
+	private JavaMailSenderImpl mailSender;
+	
+	@GetMapping("/join-workspace")
+	public String joinWorkspace() {
+		return "/workspace/join-workspace";
+	}
+	
+	@GetMapping("/invite")
+	@ResponseBody
+	public String sendInviteCode(String email, int workspaceNo) {
+		Workspace w = workspaceService.selectWorkspaceByWorkspaceNo(workspaceNo);
+		
+		MimeMessagePreparator preparator = new MimeMessagePreparator() {
+			@Override
+			public void prepare(MimeMessage mimeMessage) throws Exception {
+				String content = 
+					"<div style='text-align:center;margin-bottom:50px'>" +
+						"<h1 style='font-weight: bold;margin-top: 80px;margin-bottom: 50px;'>TeamPlan 의 워크스페이스에 당신을 초대합니다.</h1>" +
+						"<div style='color:gray'>" +
+							w.getWorkspaceName() + " 워크스페이스에 초대되었습니다. <br>팀플랜에 가입하여 아래의 초대코드를 입력하세요" +
+						"</div>" +
+						"<div style='font-size:30pt'>"+ w.getCode()+"</div>" +
+						"<a href='https://localhost:8081/team/home2'>팀플랜 가입하기</a>" + 
+					"</div>";
+				
+				
+				final MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+				helper.setFrom("TeamPlan");
+				helper.setTo(email);
+				helper.setSubject("TeamPlan 의 워크스페이스에 당신을 초대합니다."); // 제목
+				helper.setText(content, true); // 내용
+			}
+		};
+		mailSender.send(preparator);
+
+		return "success";
+	}
+	
+	@GetMapping("/checkJoin")
+	@ResponseBody
+	public int checkJoin(int code) {
+		Workspace workspace = workspaceService.selectWorkspaceByCode(code);
+		
+		if (workspace != null) return workspace.getWorkspaceNo();
+		else return -1;
+	}
+	
+	@PostMapping("/join")
+	public String joinWorkspace(int workspaceNo, String email, HttpSession session) {
+		
+		System.out.println(workspaceNo);
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("email", email);
+		params.put("workspaceNo", workspaceNo);
+		
+		workspaceService.insertWorkspaceMember2(params);
+		
+		// 세션에 새로 데이터 저장
+		session.setAttribute("workspaces", workspaceService.selectWorkspacesByEmail(email));
+		session.setAttribute("workspaceNo", workspaceService.selectWorkspaceByWorkspaceNo(workspaceNo).getWorkspaceNo());
+		
+		return "redirect:/project/prlist";
 	}
 }

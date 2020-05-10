@@ -135,6 +135,9 @@ input::placeholder {
 	<script src="/team/resources/js/task-properties-side.js"></script>
 	<script src="/team/resources/js/i18n/datepicker.en-US.js"></script>
 	<script type="text/javascript">
+	$(function() {
+		$("#topbar-notifications").load("/team/feedback/getNotifications");
+	});
 	</script>
 </body>
 

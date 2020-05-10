@@ -58,4 +58,7 @@ public interface WorkspaceService {
 
 	Workspace selectAscWorkspaceByEmail(String email);
 
+	Workspace selectWorkspaceByCode(int code);
+	
+	void insertWorkspaceMember2(HashMap<String, Object> params);
 }

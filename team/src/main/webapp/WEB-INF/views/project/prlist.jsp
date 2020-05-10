@@ -873,7 +873,10 @@ $(function() {
 	// 프로젝트 CSV 파일로 내보내기
 	var checked = false;
 	var download = false;
-	$("#projectDownloadBtn").click(function() {
+	$(document).on("click", "#projectDownloadBtn", function() {
+		
+		console.log($("#de_projectNo").val());
+		
 		var target = $(this);
 		if (checked == false) {
 			$.ajax({

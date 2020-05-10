@@ -47,3 +47,70 @@
 <script src="/team/resources/js/toast.js"></script>
 <!-- datepicker -->
 <script src="/team/resources/js/jquery-datepicker.js"></script>
+
+
+
+
+<!-- 이메일 코드전송 관련 -->
+<jsp:include page="/WEB-INF/views/workspace/modals.jsp"></jsp:include>
+
+<script type="text/javascript">
+$(function() {
+	// 탑바리로드
+	$(function() {
+		$("#topbar-notifications").load("/team/feedback/getNotifications");
+	});
+	
+	// 멤버초대모달
+	$(document).on("click","#inviteModal",function() {
+		$("#inviteMemberModal").modal();
+	});
+	
+	$(document).on("click", "#send-invite-code", function() {
+		$.ajax({
+			url : "/team/workspace/invite",
+			data : {
+				"email" : $("#invite-email").val(),
+				"workspaceNo" : "${workspaceNo}"
+			},
+			success : function() {
+				alert("초대코드 발송이 완료되었습니다.");
+				$("#inviteMemberModal").modal("hide");
+			}
+		});
+	});
+	
+	// 초대코드입력모달
+	$(document).on("click", "#joinModal", function() {
+		$("#joinWorkspaceModal").modal();
+	});
+	
+	$(document).on("click", "#workspace-join-btn", function(e) {
+		var code = $("#join-code").val();
+		var workspaceNo = $("#form-workspaceNo");
+		
+		$.ajax({
+			url : "/team/workspace/checkJoin",
+			data : {
+				"code": code
+			},
+			success : function(data, status, xhr) {
+				if (data < 0) {
+					alert("초대코드가 일치하지 않습니다.");
+					e.preventDefault();
+					return false;
+				} else {
+					alert("워크스페이스에 멤버로 참여되었습니다.");
+					// 멤버 추가하고 프로젝트 리스트로 리다이렉트
+					$("#workspaceJoinForm #form-workspaceNo").val(data);
+					$("#workspaceJoinForm").submit();
+
+				}
+			}
+		});
+	});
+})
+
+</script>
+
+

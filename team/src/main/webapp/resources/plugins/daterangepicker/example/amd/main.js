@@ -87,7 +87,7 @@ $(document).ready(function() {
         toLabel: 'To',
         customRangeLabel: 'Custom',
         daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr','Sa'],
-        monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        monthNames: ['January1', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
         firstDay: 1
       };
     }

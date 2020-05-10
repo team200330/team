@@ -417,21 +417,12 @@ button {
 						"email": "${loginuser.email}",
 						"managerEmail" : $(this).attr("data-email"), 
 						"workspaceNo" : $(this).attr("id")
-					}, 
-					success : function() {
-						$.ajax({
-							url : "/team/account/deleteMember",
-							method : "post",
-							data : {
-								"email" : "${loginuser.email}"
-							}
-						}); 
 					}
 				});
 			});
 			
 			// 계정 삭제
-			
+			$("#deleteUserForm").submit();
 		})
 		
 	});

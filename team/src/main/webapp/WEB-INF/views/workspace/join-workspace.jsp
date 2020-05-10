@@ -18,16 +18,20 @@
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body" style="box-shadow: 26px 20px 50px 1px rgba(0, 0, 0, 0.2);">
-      <h4 class="login-box-msg">워크스페이스 만들기</h4>
-	  <h6 class="login-box-msg">워크스페이스는 회사, 부서, 팀, <br>혹은 개인이 될 수 있습니다.</h6>
-	  <h5 class="login-box-msg">워크스페이스 이름</h5>
+      <h4 class="login-box-msg">워크스페이스 참여하기</h4>
+	  <h6 class="login-box-msg">이메일로 발송받은 초대코드를 입력하여 워크스페이스에 참여할 수 있습니다.</h6>
+	  <h5 class="login-box-msg">초대코드</h5>
       <form action="create-workspace" method="post">
       	<input type="hidden" class="form-control" name="email" value="${ loginuser.email }">
         <div class="input-group mb-3">
-          <input type="text" class="form-control" name="workspaceName" placeholder="예) 가나다 주식회사, 마케팅 팀...">
+        	<form method="post" action="/team/workspace/join" id="workspaceJoinForm">
+        		<input type="hidden" name="workspaceNo" id="form-workspaceNo" value="">
+	            <input type="hidden" value="${loginuser.email}" name="email">
+          		<input id="join-code" type="text" class="form-control" name="code" placeholder="여기에 초대코드를 입력하세요">
+          </form>
         </div>
         <div class="social-auth-links text-center mb-3">
-        	<button type="submit" class="btn btn-block btn-danger">만들기</button>
+        	<button id="workspace-join-btn"type="submit" class="btn btn-block btn-info">참여하기</button>
       	</div>
       </form>
 
@@ -35,8 +39,8 @@
       <!-- /.social-auth-links -->
 
       <p class="mb-1">
-        <a href="/team">뒤로</a>
-        <a href="join-workspace" style="margin-left: 118px;">또는 초대코드 입력하기</a>
+        <a href="/team/workspace/create-workspace">뒤로</a>
+ 
       </p>
     </div>
     <!-- /.login-card-body -->
