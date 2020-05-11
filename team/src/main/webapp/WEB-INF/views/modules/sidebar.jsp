@@ -46,17 +46,18 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item" >
-                <a style="cursor:pointer" class="nav-link" id="inviteModal">
-                  <p>이메일로 팀원 초대</p>
-                </a>
-              </li>
-              <li class="nav-item">
+            <li class="nav-item">
                 <a href="/team/workspace/workspace-member?email=${ loginuser.email }&workspaceNo=${ workspaceNo }" class="nav-link">
                   
                   <p>워크스페이스 멤버</p>
                 </a>
              </li>
+              <li class="nav-item" >
+                <a style="cursor:pointer" class="nav-link" id="inviteModal">
+                  <p>이메일로 팀원 초대</p>
+                </a>
+              </li>
+              
               <li class="nav-item" >
                 <a style="cursor:pointer" class="nav-link" id="joinModal">
                   <p>다른 워크스페이스 참여하기</p>
@@ -77,27 +78,7 @@
           </li>
    
     
-          <li class="nav-item">
-            <a href="/team/workspace/workspace-member?email=${ loginuser.email }&workspaceNo=${ workspaceNo }" class="nav-link">
-              <i class="nav-icon fas fa-users"></i>
-              <p>
-                        워크스페이스 멤버
-                <!-- <script type="text/javascript">
-					window.addEventListener('load', function(event) {
-						var workspace_member_link = document.querySelector('#workspace_member_li > a');
-						workspace_member_link.addEventListener('click', function(event) {
-							if (current_workspace_no) {
-								location.href = "/team/workspace/workspace-member?email=${ loginuser.email }&workspaceNo=" + current_workspace_no;
-							} else {
-								location.href = "/team/workspace/workspace-member?email=${ loginuser.email }&workspaceNo=" + ${ workspaceNo };
-							}
-						});
-						
-					});
-            	</script> -->
-              </p>
-            </a>
-          </li>
+
           
           <li class="nav-item">
             <a href="/team/project/prlist" class="nav-link">
@@ -134,6 +115,13 @@
               </li>
               <li class="nav-item">
                 <a href="/team/task/analyticsmain" class="nav-link">
+                  
+                  <p>캘린더</p>
+                </a>
+              </li>
+              
+              <li class="nav-item">
+                <a href="/team/task/calendar" class="nav-link">
                   
                   <p>분석</p>
                 </a>

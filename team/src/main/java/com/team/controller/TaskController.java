@@ -163,9 +163,12 @@ public class TaskController {
 		double elapsedTime = (System.currentTimeMillis() - cal.getTimeInMillis()) / 1000 / (24 * 60 * 60);
 		model.addAttribute("elapsedTime", Math.round(elapsedTime * 100 / 100.0));  // 프로젝트 시작일로부터 경과시간 (현재시간 - 시작일)
 		
-		cal.setTime(project.getDeadline());
-		double remainingTime = (cal.getTimeInMillis() - System.currentTimeMillis()) / 1000 / (24 * 60 * 60);
-		model.addAttribute("remainingTime", project.getDeadline() != null ? Math.round(remainingTime * 100 / 100.0) : "-"); // 마감일까지 남은 시간 (마감일 - 현재시간)
+		if (project.getDeadline() != null) {
+			cal.setTime(project.getDeadline());
+			double remainingTime = (cal.getTimeInMillis() - System.currentTimeMillis()) / 1000 / (24 * 60 * 60);
+			model.addAttribute("remainingTime", project.getDeadline() != null ? Math.round(remainingTime * 100 / 100.0) : "-"); // 마감일까지 남은 시간 (마감일 - 현재시간)
+		}
+		
 		
 		/////////////////////////////////////////////////////////////////////////////////////
 		
@@ -247,10 +250,17 @@ public class TaskController {
 		model.addAttribute("completedTasks", completedTasks);
 		model.addAttribute("keySet", keySet);
 		
+//		System.out.println("A_total : " + model.getAttribute("A_total"));
+//		System.out.println("A_completed : " + model.getAttribute("A_completed"));
+//		System.out.println("A_pastDeadline : " + model.getAttribute("A_pastDeadline"));
+//		System.out.println("A_hasDeadline : " + model.getAttribute("A_hasDeadline"));
+//		System.out.println("M_total : " + model.getAttribute("M_total"));
+//		System.out.println("M_completed : " + model.getAttribute("M_completed"));
+//		System.out.println("M_pastDeadline : " + model.getAttribute("M_pastDeadline"));
+//		System.out.println("M_hasDeadline : " + model.getAttribute("M_hasDeadline"));
+		
 		return "task/analyticsmain";
 	}
-	
-	
 	
 	void setModelDatas(Model model, HashMap<String, Object> params) {
 		String prefix = params.get("email") != null ? "M" : "A";
@@ -353,20 +363,10 @@ public class TaskController {
 		
 		List<Task> tasks = new ArrayList<>();
 		for (TaskList l : timelineService.searchTasks(params)) {
-			System.out.println(l.toString());
-			
 			for (Task t : l.getTasks()) { 
-				System.out.println("startdate : " + t.getStartDate());
-				System.out.println("enddate : " + t.getEndDate());
-				
 				if (t.getStartDate() != null) t.setS_startDate(f.format(t.getStartDate()));
 				if (t.getEndDate() != null) t.setS_endDate(f.format(t.getEndDate()));
 				if (t.getCompletedDate() != null) t.setS_completedDate(f.format(t.getCompletedDate()));
-				
-				System.out.println("s_startDate : " + t.getS_startDate());
-				System.out.println("s_endDate : " + t.getS_endDate());
-				
-				System.out.println(t.toString());
 				tasks.add(t);
 			}
 		}
@@ -393,8 +393,8 @@ public class TaskController {
 	public String loadCalendarModal(HttpSession s) {
 		return "/task/modules/calendar-modals";
 	}
-	
 
+	
 	@PostMapping(path = {"/addtaskSetStartDate"})
 	public String addTask2(Task task, HttpSession s, Model model) throws JsonProcessingException {
 		s.setAttribute("task", task);

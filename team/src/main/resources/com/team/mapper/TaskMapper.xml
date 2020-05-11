@@ -169,8 +169,8 @@
 	
 
 	<insert id="insertTask2" parameterType="Task">
-		INSERT INTO task (list_no, content, writer, start_date, end_date)
-		VALUES ( #{listNo}, #{content}, #{writer}, #{startDate}, #{endDate} )	
+		INSERT INTO task (list_no, content, writer, start_date, end_date, create_date)
+		VALUES ( #{listNo}, #{content}, #{writer}, #{startDate}, #{endDate} , NOW())	
 	</insert>
 	
 	<select id="countCompletedTasks" parameterType="hashmap" resultType="int">
@@ -181,7 +181,7 @@
 		AND t.deleted = 0 AND l.deleted = 0
 			<choose>
 				<when test="completed == true">AND t.completed = 1</when>
-				<when test="pastDeadline == true"><![CDATA[ AND t.end_date > #{endDate}]]></when>
+				<when test="pastDeadline == true"><![CDATA[ AND t.end_date < #{endDate}]]></when>
 				<when test="hasDeadline == true">AND t.end_date IS NOT NULL</when>
 			</choose>
 			<if test="email != null">AND t.writer = #{email}</if>

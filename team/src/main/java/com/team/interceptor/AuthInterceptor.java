@@ -39,7 +39,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		HttpSession session = request.getSession();
 		System.out.println(uri);
 		
-		if (uri.contains("/login.action") || uri.contains("/register.action") || uri.contains("home"))
+		if (uri.contains("/login.action") || uri.contains("/register.action") || uri.contains("/home") || uri.equals("/team/"))
 			return true;
 	
 		if (session.getAttribute("loginuser") == null) {
