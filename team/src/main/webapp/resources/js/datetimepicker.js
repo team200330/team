@@ -6,10 +6,10 @@
             selectData: "now",
             dateFormat: "YYYY-MM-DD HH:mm",
             showTime: true,
-            locale: 'ko',
+            locale: 'en',
             positionShift: { top: 20, left: 0},
-            //title: "Select Date and Time",
-            buttonTitle: "저장"
+            title: "Select Date and Time",
+            buttonTitle: "확인"
         }, options);
         moment.locale(settings.locale);
         var elem = this;
@@ -318,16 +318,43 @@
                         $a.attr('id', 'field-time');
                         $el.append($a);
                         var $line = $('<div>');
-                        $line.attr('id', 'time-line');
+                        $line.attr('id', 'time-line-'+$(elem).attr('id'));
                         $line.addClass('dtp_modal-time-line');
                         $line.text(lastSelected.format(settings.dateFormat));
 
                         $a.append($line);
                         $a.append(createTimer());
+                        
+                        var $but2 = $('<div>');
+                        
+                        $but2.addClass('dpt_modal-button');
+                        $but2.text('저장');
+                        
                         var $but = $('<div>');
                         $but.addClass('dpt_modal-button');
                         $but.text(settings.buttonTitle);
+                        $but.attr('id',$(elem).attr('id')+"ConfirmBtn");
+                        $but2.attr('id',$(elem).attr('id')+"SaveBtn");
+                        $but2.on('click',function(){
+                        	var arrF = settings.dateFormat.split(' ');
+                    		//console.log(arrF);
+                            arrF.length = 2;
+                            arrF[0] = 'YYYY-MM-DD';
+                            arrF[1] = 'HH:mm';
+                        	if($(this).attr('id') == 'pickerFromSaveBtn'){
+                        		//console.log("From 버튼 클릭");
+                        		lastSelected.hour(parseInt($hour.text()));
+                        		lastSelected.minute(parseInt($minute.text()));
+                        		$('#time-line-'+$(elem).attr('id')).text(lastSelected.format(arrF[0])+" "+lastSelected.format(arrF[1]));
+                        	}else{
+                        		//console.log("To 버튼 클릭");
+                        		lastSelected.hour(parseInt($hour.text()));
+                        		lastSelected.minute(parseInt($minute.text()));
+                        		$('#time-line-'+$(elem).attr('id')).text(lastSelected.format(arrF[0])+" "+lastSelected.format(arrF[1]));
+                        	}
+                        });
                         $but.bind('click', close);
+                        $el.append($but2);
                         $el.append($but);
                         $c.append($el);
                     }
@@ -335,7 +362,7 @@
                 }
                 function updateDate() {
                     if (settings.showTime) {
-                        $('#time-line').text(lastSelected.format(settings.dateFormat));
+                        //$('#time-line').text(lastSelected.format(settings.dateFormat));
                     }
                     updateMainElem();
                     elem.next().val(selectDate.format(settings.dateFormat));
@@ -364,7 +391,7 @@
                         $s.text(lastSelected.format(arrF[1]));
                         elem.append($s);
                         $s = $('<i>');
-                        $s.addClass('fa fa-clock-o ico-size');
+                        $s.addClass('fa fa-clock ico-size');
                         elem.append($s);
                     }
                 }

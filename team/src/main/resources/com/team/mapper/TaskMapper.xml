@@ -64,6 +64,19 @@
 		SET completed = #{ completed }, completed_date = #{ completedDate }
 		WHERE task_no = #{ taskNo } 
 	</update>
+	
+	<update id="updateTaskTimes" parameterType="hashmap">
+		UPDATE task
+		<choose>
+			<when test="timeFrom == 'pickerFrom'">
+				SET start_date = #{ anyDate }
+			</when>
+			<otherwise>
+				SET end_date = #{ anyDate }
+			</otherwise>
+		</choose>
+		WHERE task_no = #{ taskNo }
+	</update>
 		
 	<select id="selectTaskByTaskNo" parameterType="int" resultMap="taskMap">
 		SELECT * FROM task
@@ -173,7 +186,7 @@
 			</choose>
 			<if test="email != null">AND t.writer = #{email}</if>
 	</select>
-	
+
 	<select id="taskCount" parameterType="project" resultType="int">
 		SELECT COUNT(*)
 		FROM task t

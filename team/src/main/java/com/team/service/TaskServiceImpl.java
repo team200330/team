@@ -129,5 +129,11 @@ public class TaskServiceImpl implements TaskService {
 		// TODO Auto-generated method stub
 		return taskMapper.taskCompletedCount(projectNo);
 	}
+	
+	@Override
+	public void updateTaskTimes(HashMap<String, Object> params) {
+		taskMapper.updateTaskTimes(params);
+
+	}
 
 }
