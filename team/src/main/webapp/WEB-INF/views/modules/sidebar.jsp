@@ -8,8 +8,8 @@
     <!-- Brand Logo -->
     <a href="/team/" class="brand-link">
       <img src="/team/resources/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-           style="opacity: .8">
-      <span class="brand-text font-weight-light">AdminLTE 3</span>
+           style="opacity: .8; margin-top: 5px;">
+      <span class="brand-text" style="font-weight: 800;font-size: 30px;">TEAM PLAN <span style="color: #00cc2c;"><b>.</b></span></span>
     </a>
 
     <!-- Sidebar -->
@@ -19,12 +19,12 @@
         <div class="info">
 			<c:choose>
 			<c:when test="${ empty sessionScope.loginuser }">
-				<li><a href="/team/account/login">로그인</a></li>
-				<li><a href="/team/account/register">회원가입</a></li>
+				<li style="list-style: none;margin-left: 20px;"><a href="/team/account/login">로그인</a></li>
+				<li style="list-style: none;margin-left: 20px;"><a href="/team/account/register">회원가입</a></li>
 			</c:when>
 			<c:otherwise>
-				<li style="color:white">${ loginuser.name }님 환영합니다</li>
-				<li><a href="/team/account/logout">로그아웃</a></li>
+				<li style="color:white; list-style: none;margin-left: 20px;">${ loginuser.name }님 환영합니다</li>
+				<li style="list-style: none;margin-left: 20px;"><a href="/team/account/logout">로그아웃</a></li>
 			</c:otherwise>
 			</c:choose>
         </div>
