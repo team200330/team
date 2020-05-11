@@ -6,10 +6,10 @@
       <!-- Notifications Dropdown Menu -->
       <li class="nav-item dropdown" >
         <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-bell"></i>
+          <i class="far fa-comments"></i>
          
       		<c:if test="${feedbackCount > 0 || logCount > 0}">
-      			<span class="badge badge-warning navbar-badge">
+      			<span class="badge badge-danger navbar-badge">
       				${feedbackCount + logCount}
       			</span>
       		</c:if>

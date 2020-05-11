@@ -77,7 +77,7 @@
 	              </form>
 	              
                   <div class="form-group col-12 col-sm-6 col-md-3">
-                    <a id="invite_member" href="/team/workspace/invite-workspace?workspaceNo=${ workspaceNo }" class="form-control btn btn-sm btn-success">
+                    <a id="invite_member" href="#" class="form-control btn btn-sm btn-success">
                       <i class="fas fa-user" style="margin-top: 7px;"></i> 멤버 초대하기
                     </a>
                   </div>
@@ -195,24 +195,9 @@
             
           </div>
         </div>
-        <!-- /.card-body -->
-        <div class="card-footer">
-          <nav aria-label="Contacts Page Navigation">
-            <ul class="pagination justify-content-center m-0">
-              <li class="page-item active"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" href="#">4</a></li>
-              <li class="page-item"><a class="page-link" href="#">5</a></li>
-              <li class="page-item"><a class="page-link" href="#">6</a></li>
-              <li class="page-item"><a class="page-link" href="#">7</a></li>
-              <li class="page-item"><a class="page-link" href="#">8</a></li>
-            </ul>
-          </nav>
-        </div>
-        <!-- /.card-footer -->
-      </div>
-      <!-- /.card -->
+       </div>
+       </section>
+       
 		</div>
 		<!-- /.content-wrapper -->
 		<%@include file="/WEB-INF/views/modules/footer.jsp" %>
@@ -232,7 +217,17 @@
 
 </html>
 
+<script>
+$(function() {
+	$("#invite_member").click(function() {
+		$("#inviteMemberModal").modal();
+	});
+})
+</script>
+
+
 <script type="text/javascript">
+
 
 			var workspaceNo = '${ workspaceNo }';
 			
