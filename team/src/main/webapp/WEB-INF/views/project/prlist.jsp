@@ -607,9 +607,7 @@ $(function() {
 				$('#de_deleted').val(deleted);
 				
 				$(document).on("click", ".projectDeleted", function(){
-					if (confirm(" 프로젝트를 삭제합니다. 삭제하시겠습니까?") == true){ 
-						if (confirm("복구가 불가능합니다. 정말 삭제하시겠습니까?") == false){ return false; };
-					} //취소하면 안넘어감
+					if (confirm(" 프로젝트를 삭제합니다. 삭제하시겠습니까?") == false){ return false; } //취소하면 안넘어감
 					
 					var deleted_val = $("#de_deleted");
 					if (deleted_val.val() == "false"){ deleted_val.val('1')} else if (deleted_val.val() == "true"){ deleted_val.val('0')}

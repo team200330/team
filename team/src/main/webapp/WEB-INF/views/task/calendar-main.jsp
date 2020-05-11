@@ -52,7 +52,7 @@ section.section-header {
    <section class="section-header" style="">
 		<div class="header-left"
 			style="flex-basis: 20%; padding-top: 20px; padding-left: 20px; display: flex; flex-wrap: nowrap;">
-			<button type="button" class="btn btn-secondary"
+			<button type="button" class="btn btn-secondary" onclick="location.href='/team/project/prlist';"
 				style="height: 30px;">
 				<i class="fas fa-arrow-left"></i>
 			</button>

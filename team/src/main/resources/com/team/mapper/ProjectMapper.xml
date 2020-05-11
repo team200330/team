@@ -8,6 +8,8 @@
 		<result column="workspace_no" property="workspaceNo" />
 		<result column="project_name" property="projectName" />
 		<result column="startdate" property="startdate" />
+		<result column="deadline" property="deadline" />
+		<result column="enddate" property="enddate" />
 		<result column="content" property="content" />
 		<result column="manager_email" property="managerEmail" />
 		<result column="deleted" property="deleted" />
@@ -177,6 +179,16 @@
 	</select> -->
 
 
+
+
+	<update id="updateProjectDate" parameterType="hashmap">
+		UPDATE project SET
+		<choose>
+			<when test='dateType == "deadline"'>deadline = #{ date }</when>
+			<when test='dateType == "enddate"'>enddate = #{ date }</when>
+		</choose>
+		WHERE project_no = #{ projectNo }
+	</update>
 </mapper>
 
 

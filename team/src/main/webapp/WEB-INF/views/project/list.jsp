@@ -1,10 +1,12 @@
 <%@ page pageEncoding="utf-8" contentType="text/html; charset=utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-			<style>
-				.iconPublic { float: left; margin: 5px; font-size: 14px; }
-			a { color: #343a40;}
-			a:hover { color: #527aa2;}
-			</style>
+<style>
+	.iconPublic { float: left; margin: 5px; font-size: 14px; }
+a { color: #343a40;}
+a:hover { color: #527aa2;}
+</style>
+			<c:choose>
+			<c:when test="${not empty project}">
 			<c:forEach items="${ project }" var="project">
 		          <div class="col-md-3 col-sm-6 col-12 projectChk">
 		            <div class="info-box bg-info">
@@ -83,9 +85,9 @@
 		                	</select>
  --%>		                	
 					    </span>
-		                <div class="progress">
+		                <!-- <div class="progress">
 		                  <div class="progress-bar" style="width: 70%"></div>
-		                </div>
+		                </div> -->
 		              </div>
 		              <!-- /.info-box-content -->
 		            </div>
@@ -94,5 +96,12 @@
 		          <!-- /.col -->
 			</c:forEach>
 
-
+			</c:when>
+			
+			<c:otherwise>
+				<div style="text-align:center; margin-top: -80px;">
+					<img style="width:75%" src="/team/resources/img/project_null.jpg">
+				</div>
+			</c:otherwise>
+			</c:choose>
 

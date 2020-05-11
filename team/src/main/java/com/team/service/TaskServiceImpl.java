@@ -106,4 +106,17 @@ public class TaskServiceImpl implements TaskService {
 		return taskMapper.selectTaskByTaskNo(taskNo);
 	}
 
+	
+	///////////////////////////////////
+	// 업무분석 관련
+	@Override
+	public int countCompletedTasks(HashMap<String, Object> params) {
+		return taskMapper.countCompletedTasks(params);
+	}
+
+	@Override
+	public int countTaskByCreatedDate(HashMap<String, Object> params) {
+		return taskMapper.countTaskByCreatedDate(params);
+	}
+
 }

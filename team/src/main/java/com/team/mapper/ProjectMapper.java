@@ -46,7 +46,7 @@ public interface ProjectMapper {
 
 	public List<ProjectMember> selectProjectMember(HashMap<String, Object> params);
 
-
+	public void updateProjectDate(HashMap<String, Object> params);
 
 
 
