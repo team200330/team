@@ -4,6 +4,7 @@
 	.iconPublic { float: left; margin: 5px; font-size: 14px; }
 a { color: #343a40;}
 a:hover { color: #527aa2;}
+.info-box .progress {    height: 15px;}
 </style>
 			<c:choose>
 			<c:when test="${not empty projectCount}">
@@ -86,7 +87,18 @@ a:hover { color: #527aa2;}
  --%>		                	
 					    </span>
 		                <div class="progress">
-		                  <div class="progress-bar" style="width: ${project.probability}%"></div>
+		                <c:choose>
+		                <c:when  test="${ project.probability eq 'NaN'}">
+		                	<div class="progress-bar" style="width: 0%;">
+		                		<span style=" font-weight: 800; color: #527aa2; margin-left: 10px;">0%</span>
+		                	</div>
+		                </c:when>
+		                <c:otherwise>
+		                	<div class="progress-bar" style="width:${project.probability}%;">
+		                		<span style=" font-weight: 800;">${project.probability}%</span>
+		                	</div>
+		                </c:otherwise>
+		                </c:choose>
 		                </div>
 		              </div>
 		              <!-- /.info-box-content -->
