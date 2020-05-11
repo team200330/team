@@ -46,4 +46,6 @@ public interface TaskService {
 	int countTaskByCreatedDate(HashMap<String, Object> params);
 	Task searchTask(int taskNo);
 
+	void updateTaskTimes(HashMap<String, Object> params);
+
 }

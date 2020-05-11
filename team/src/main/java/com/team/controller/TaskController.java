@@ -116,6 +116,18 @@ public class TaskController {
 		return "success";
 	}
 	
+	@PostMapping(path = {"/chtime.action"})
+	@ResponseBody
+	public String updateTaskTimes(int taskNo, Date anyDate, String timeFrom) {
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("taskNo", taskNo);
+		params.put("anyDate", anyDate);
+		params.put("timeFrom", timeFrom);
+		System.out.println(params);
+		taskService.updateTaskTimes(params);
+		return "success";
+	}
+	
 	@PostMapping(path = {"/deletelist.action"})
 	@ResponseBody
 	public String deleteList(int listNo) {

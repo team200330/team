@@ -119,4 +119,9 @@ public class TaskServiceImpl implements TaskService {
 		return taskMapper.countTaskByCreatedDate(params);
 	}
 
+	@Override
+	public void updateTaskTimes(HashMap<String, Object> params) {
+		taskMapper.updateTaskTimes(params);
+	}
+
 }

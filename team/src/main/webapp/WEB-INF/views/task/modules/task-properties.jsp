@@ -15,18 +15,30 @@
 				<span id="task-side-content" style="font-size:20px;">${ selectedTask.content }</span>	
 			</div>
 			<div>
-				<span style="font-size:12px;">#${ selectedTask.taskNo }</span>
+				#<span id="taskNoSpan" style="font-size:12px;">${ selectedTask.taskNo }</span>
 				<span style="font-size:12px;">작성자 ${ selectedTask.writer }</span>
-				<span style="font-size:12px;">작성일 ${ selectedTask.createDate }<fmt:formatDate value="${ selectedTask.createDate }" pattern="yyyy년 MM월 dd일 HH:mm"/></span>
+				<span style="font-size:12px;">작성일 <fmt:formatDate value="${ selectedTask.createDate }" pattern="yyyy년 MM월 dd일 HH:mm"/></span>
 				<c:choose>
 					<c:when test="${selectedTask.startDate eq null}">
-						<span id="startDate">널입니다</span>	
+						<c:set var="now" value="<%=new java.util.Date()%>" />
+						<span style="display:none" id="startDateHidden">selectedTask.startDate</span>	
+						<span style="display:none" id="startDate"><fmt:formatDate value="${now}" pattern="yyyy년 MM월 dd일 HH:mm"/></span>	
 					</c:when>
 					<c:otherwise>
-						<span id="startDate"><fmt:formatDate value="${ selectedTask.startDate }" pattern="yyyy-MM-dd HH:mm"/></span>	
+						<c:set var="existStartDate" value="0"/>
+						<span style="display:none" id="startDate"><fmt:formatDate value="${ selectedTask.startDate }" pattern="yyyy-MM-dd HH:mm"/></span>	
 					</c:otherwise>
 				</c:choose>
-				<span id="endDate">${ selectedTask.endDate }</span>	
+				<c:choose>
+					<c:when test="${selectedTask.endDate eq null}">
+						<c:set var="now" value="<%=new java.util.Date()%>" />
+						<span style="display:none" id="endDateHidden">selectedTask.endDate</span>	
+						<span style="display:none" id="endDate"><fmt:formatDate value="${now}" pattern="yyyy년 MM월 dd일 HH:mm"/></span>	
+					</c:when>
+					<c:otherwise>
+						<span style="display:none" id="endDate"><fmt:formatDate value="${ selectedTask.endDate }" pattern="yyyy-MM-dd HH:mm"/></span>	
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
 		<div class="header-center"
@@ -39,7 +51,7 @@
 			</div>
 		</div>
 		<div id="task-menu-properties" style="background-color: #eef7f7; height: 100%; padding-top: 15px">
-			<div id="properties-item1" class="pitem" style="display: flex; padding: 20 30 20 30;">
+			<div id="properties-item1" class="pitem" style="display: flex; padding: 20 30 0 30;">
 				<div style="width:150px; text-align: left; display:flex;">
 					<div style="width:25px; padding-top:3px;">
 						<i class="far fa-calendar-alt"></i>
@@ -53,6 +65,7 @@
 						 <div>
 							 <span>시작 일</span>
 							 <div id="pickerFrom"></div>
+							 <span id="doSettingStart" style="color: red; font-size:12px;">시작 일을 저장해주세요</span>
 						 </div>
 						 <div style="padding-top:30px;">
 						 	<span>　~　</span>
@@ -60,6 +73,7 @@
 						 <div>
 							 <span>마감 일</span>
 							 <div id="pickerTo"></div>
+							 <span id="doSettingEnd" style="color: red; font-size:12px;">마감 일을 저장해주세요</span>
 						 </div>
 					</div>
 					<div>
@@ -131,25 +145,81 @@
 </div>
  -->
 <script type="text/javascript">
-	function chooseDate(){
-		var startDate = $("#startDate").text();
-		return startDate == null ? "now" : startDate;
-	}
-	console.log("뭐고?: "+$("#startDate").text());
-	$('#pickerFrom').dateTimePicker({
-		selectData : $("#startDate").text(),
-		positionShift : {
-			top : 50,
-			left : -250
-		},
-		title : "시작 시간을 설정하세요",
-	});
-	$('#pickerTo').dateTimePicker({
-		selectData : "now",
-		positionShift : {
-			top : 50,
-			left : -450
-		},
-		title : "마감 시간을 설정하세요",
+	//console.log("뭐고?: "+$("#startDate").text());
+	$(function(){
+
+		function parseDate(str) {
+			var y = str.substr(0,4);
+			var m = str.substr(5,2);
+			var d = str.substr(8,2);
+			var h = str.substr(11,2);
+			var min = str.substr(14,2);
+			return new Date(y,m-1,d,h,min);
+		}
+		
+		$('#pickerFrom').dateTimePicker({
+			selectData : $("#startDate").text(),
+			positionShift : {
+				top : 50,
+				left : -250
+			},
+			title : "시작 시간을 설정하세요",
+		});
+		$('#pickerTo').dateTimePicker({
+			selectData : $("#endDate").text(),
+			positionShift : {
+				top : 50,
+				left : -450
+			},
+			title : "마감 시간을 설정하세요",
+		});
+		//console.log($("#startDateHidden").text());
+		if($("#startDateHidden").text() == ""){
+			$("#doSettingStart").css("display","none");
+		}
+		if($("#endDateHidden").text() == ""){
+			$("#doSettingEnd").css("display","none");
+		}
+
+		$(document).on('click','#pickerFromSaveBtn',function(){
+			//console.log("전달시간1: "+$("#time-line-pickerFrom").text());
+			$.ajax({
+				url : "/team/task/chtime.action",
+				method : "post",
+				data : {
+					"taskNo" : $('#taskNoSpan').text(),
+					"anyDate" : parseDate($('#time-line-pickerFrom').text()),
+					"timeFrom" : "pickerFrom"
+				},
+				success : function(resp, status, xhr) {
+					$("#task-properties").load("properties?taskNo="+$('#taskNoSpan').text());
+				},
+				error : function(xhr, status, err) {
+					console.log(err);
+				}
+			});
+		});
+		$(document).on('click','#pickerToSaveBtn',function(){
+			//console.log("전달시간1: "+$("#time-line-pickerTo").text());
+			if( parseDate($('#time-line-pickerFrom').text()) > parseDate($('#time-line-pickerTo').text()) ){
+				alert("종료 일을 다시 설정해주세요");
+				return;
+			}
+			$.ajax({
+				url : "/team/task/chtime.action",
+				method : "post",
+				data : {
+					"taskNo" : $('#taskNoSpan').text(),
+					"anyDate" : parseDate($('#time-line-pickerTo').text()),
+					"timeFrom" : "pickerTo"
+				},
+				success : function(resp, status, xhr) {
+					$("#task-properties").load("properties?taskNo="+$('#taskNoSpan').text());
+				},
+				error : function(xhr, status, err) {
+					console.log(err);
+				}
+			});
+		});
 	});
 </script>
