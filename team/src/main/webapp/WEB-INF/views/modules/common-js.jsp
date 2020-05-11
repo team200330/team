@@ -96,11 +96,17 @@ $(function() {
 				"code": code
 			},
 			success : function(data, status, xhr) {
-				if (data < 0) {
+				if (data == -1) {
 					alert("초대코드가 일치하지 않습니다.");
 					e.preventDefault();
 					return false;
-				} else {
+				} 
+				else if (data == -2) {
+					alert("이미 참여중인 워크스페이스입니다.");
+					e.preventDefault();
+					return false;
+				}
+				else {
 					alert("워크스페이스에 멤버로 참여되었습니다.");
 					// 멤버 추가하고 프로젝트 리스트로 리다이렉트
 					$("#workspaceJoinForm #form-workspaceNo").val(data);

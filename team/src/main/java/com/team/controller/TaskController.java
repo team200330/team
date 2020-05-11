@@ -341,20 +341,10 @@ public class TaskController {
 		
 		List<Task> tasks = new ArrayList<>();
 		for (TaskList l : timelineService.searchTasks(params)) {
-			System.out.println(l.toString());
-			
 			for (Task t : l.getTasks()) { 
-				System.out.println("startdate : " + t.getStartDate());
-				System.out.println("enddate : " + t.getEndDate());
-				
 				if (t.getStartDate() != null) t.setS_startDate(f.format(t.getStartDate()));
 				if (t.getEndDate() != null) t.setS_endDate(f.format(t.getEndDate()));
 				if (t.getCompletedDate() != null) t.setS_completedDate(f.format(t.getCompletedDate()));
-				
-				System.out.println("s_startDate : " + t.getS_startDate());
-				System.out.println("s_endDate : " + t.getS_endDate());
-				
-				System.out.println(t.toString());
 				tasks.add(t);
 			}
 		}
