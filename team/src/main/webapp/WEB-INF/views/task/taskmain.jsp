@@ -115,7 +115,7 @@ input::placeholder {
 			<div id="task-body">
 				<jsp:include page="modules/task-list.jsp"></jsp:include>
 			</div>
-			
+			<span id="userName" style="display:none;">${loginuser.name }</span>
 			
 			
 			<!-- /.card -->
@@ -134,7 +134,7 @@ input::placeholder {
 	<%@include file="/WEB-INF/views/modules/common-js.jsp"%>
 	<script src="/team/resources/js/task-common.js"></script>
 	<script src="/team/resources/js/task-properties-side.js"></script>
-	<script src="/team/resources/js/i18n/datepicker.en-US.js"></script>
+	<script src="/team/resources/js/i18n/datepicker.ko.js"></script>
 	<script type="text/javascript">
 	$(function() {
 		$("#topbar-notifications").load("/team/feedback/getNotifications");

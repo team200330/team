@@ -37,3 +37,4 @@
  <link rel="stylesheet" href="/team/resources/css/pace.css">
  <!--  -->
  <link rel="stylesheet" href="/team/resources/css/jquery.datepicker.min.css">
+ <link rel="stylesheet" href="/team/resources/css/datetimepicker.css">

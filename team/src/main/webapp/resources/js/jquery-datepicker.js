@@ -352,11 +352,11 @@
         disabled: false,
         type: 'date', // year/month/date/date-range/datetime/datetime-range
         format: 'yyyy-MM-dd',
-        placeholder: 'Please pick a day',
+        placeholder: '기간을 설정해주세요',
         align: 'left',
         startDate: null,
         endDate: null,
-        lang: 'en-US',
+        lang: 'ko',
         rangeSeparator: '-',
         weekStart: 0,
         defaultValue: '',
@@ -958,7 +958,7 @@
         var yearLabel = type === 'date' || type === 'month' || type === 'datetime' ? datepicker.date.getFullYear() + ' '+ datepicker.yearSuffix +'' : startYear + ' '+ datepicker.yearSuffix +'' + ' - ' + endYear + ' '+ datepicker.yearSuffix +'';
         var monthLabel = datepicker.monthsShort[datepicker.date.getMonth()];
         var monthDom = type === 'date' || type === 'datetime' ? '<span class="gmi-date-picker__header__label--month">'+ monthLabel +'</span>' : '';
-        var dateDomStr = '<div data-role="'+ type +'" class="gmi-picker-panel gmi-date-picker '+ hasTimeClass +'" style="display: none;">' +
+        var dateDomStr = '<div id="datePick" data-role="'+ type +'" class="gmi-picker-panel gmi-date-picker '+ hasTimeClass +'" style="display: none;">' +
           '<div class="gmi-picker-panel__body">'
           + datetimeHeaderStr +
           '<div class="gmi-picker-panel__body__header">' +
@@ -1058,7 +1058,7 @@
         var disabledClass = type === 'datetime-range' && datepicker.minDate && datepicker.maxDate ? '' : type === 'datetime' ? '' : 'disabled';
         var datetimeFooterStr = '<div class="gmi-picker-panel__footer">' +
           '<a href="JavaScript:" data-role="'+ buttonRole +'" class="gmi-picker-panel__link-btn '+ buttonClass +'">'+ buttonText +'</a>' +
-          '<a href="JavaScript:" data-role="determine" class="gmi-picker-panel__link-btn gmi-picker-panel__link-btn--determine '+ disabledClass +'">'+ datepicker.confirmDateButton +'</a>' +
+          '<a href="JavaScript:" id="confirmDate" data-role="determine" class="gmi-picker-panel__link-btn gmi-picker-panel__link-btn--determine '+ disabledClass +'">'+ datepicker.confirmDateButton +'</a>' +
           '</div>';
         return datetimeFooterStr;
       },
@@ -1869,7 +1869,7 @@
           top += elHeight;
           datepicker.$pickerPanel.removeClass(classOriginBottomX);
         }
-        return {top: top, left: left};
+        return {top: top, left: left-240};
       },
       _setDatePanelPosition: function () {
         var elWidth = $el.outerWidth();
@@ -2031,24 +2031,26 @@
   };
 
   DatePicker.LANG = {
-    'en-US': {
-      days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-      daysMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-      months: ['January3', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-      monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-      yearSuffix: '',
-      monthSuffix: '',
-      todaySuffix: 'Today',
-      dateInputPlaceholder: 'Select date',
-      rangeStartInputPlaceholder: 'Start Date',
-      rangeEndPlaceholder: 'End Date',
-      dateTimeInputPlaceholder: 'Select time',
-      rangeStartTimeInputPlaceholder: 'Start Time',
-      rangeEndTimeInputPlaceholder: 'End Time',
-      nowDateButton: 'Now',
-      confirmDateButton: 'Confirm',
-      cancelTimeButton: 'Cancel',
-      clearButton: 'Clear'
+    'ko': {
+    	days : [ '일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일' ],
+		daysMin : [ '일', '월', '화', '수', '목', '금', '토' ],
+		months : [ '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월',
+				'11월', '12월' ],
+		monthsShort : [ '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월',
+				'10월', '11월', '12월' ],
+		yearSuffix : '',
+		monthSuffix : '',
+		todaySuffix : '오늘',
+		dateInputPlaceholder : '날짜 설정',
+		rangeStartInputPlaceholder : '시작 일',
+		rangeEndPlaceholder : '종료 일',
+		dateTimeInputPlaceholder : '시간 설정',
+		rangeStartTimeInputPlaceholder : '시작 시간',
+		rangeEndTimeInputPlaceholder : '종료 시간',
+		nowDateButton : '현재',
+		confirmDateButton : '확인',
+		cancelTimeButton : '취소',
+		clearButton : '초기화'
     }
   };
 

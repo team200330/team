@@ -40,4 +40,6 @@ public interface TaskService {
 	
 	void addTask2(Task task);
 
+	Task searchTask(int taskNo);
+
 }

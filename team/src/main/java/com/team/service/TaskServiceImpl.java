@@ -101,4 +101,9 @@ public class TaskServiceImpl implements TaskService {
 		taskMapper.insertTask2(task);
 	}
 
+	@Override
+	public Task searchTask(int taskNo) {
+		return taskMapper.selectTaskByTaskNo(taskNo);
+	}
+
 }

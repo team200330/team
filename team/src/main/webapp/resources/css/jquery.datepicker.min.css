@@ -83,6 +83,7 @@
 }
 
 .gmi-picker-panel__body__header--time {
+	list-style: none;
 	padding: 8px;
 	border-bottom: 1px solid #d3dce6;
 	min-height: 30px

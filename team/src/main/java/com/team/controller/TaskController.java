@@ -88,11 +88,14 @@ public class TaskController {
 	
 	@GetMapping(path = {"/properties"})
 	public String loadProperties(int taskNo, Model model) {
+		/*
 		for(Task task : taskService.searchTask()) {
 			if(task.getTaskNo() == taskNo) {
 				model.addAttribute("selectedTask", task);
 			}
 		}
+		*/
+		model.addAttribute("selectedTask",taskService.searchTask(taskNo));
 		return "task/modules/task-properties";
 	}
 	
