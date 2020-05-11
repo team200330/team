@@ -125,7 +125,7 @@ button {
 			<!-- Content Header (Page header) -->
 			
 				<div style="height: 50px; text-align: center; padding-top: 20px;">
-					<a class="f_link" href="/team/workspace/workspace-member">멤버</a>&nbsp;&nbsp;
+					<a class="f_link" href="/team/workspace/workspace-member?email=${ loginuser.email }&workspaceNo=${ workspaceNo }">멤버</a>&nbsp;&nbsp;
 					<a id="active" class="f_link" href="/team/account/mypage">내 프로필</a>
 				</div>
 
