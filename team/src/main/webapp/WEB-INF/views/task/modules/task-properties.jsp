@@ -65,7 +65,14 @@
 						 <div>
 							 <span>시작 일</span>
 							 <div id="pickerFrom"></div>
-							 <span id="doSettingStart" style="color: red; font-size:12px;">시작 일을 저장해주세요</span>
+							 <c:choose>
+							 <c:when test="${ selectedTask.startDate eq null }">
+								 <span id="doSettingStart" style="color: red; font-size:12px;">시작 일을 저장해주세요</span>
+							 </c:when>
+							 <c:otherwise>
+							 	<span>　</span>
+							 </c:otherwise>
+							 </c:choose>
 						 </div>
 						 <div style="padding-top:30px;">
 						 	<span>　~　</span>
@@ -73,7 +80,14 @@
 						 <div>
 							 <span>마감 일</span>
 							 <div id="pickerTo"></div>
-							 <span id="doSettingEnd" style="color: red; font-size:12px;">마감 일을 저장해주세요</span>
+							 <c:choose>
+							 <c:when test="${ selectedTask.endDate eq null }">
+								 <span id="doSettingEnd" style="color: red; font-size:12px;">마감 일을 저장해주세요</span>
+							 </c:when>
+							 <c:otherwise>
+							 	<span>　</span>
+							 </c:otherwise>
+							 </c:choose>
 						 </div>
 					</div>
 					<div>
@@ -174,12 +188,12 @@
 			title : "마감 시간을 설정하세요",
 		});
 		//console.log($("#startDateHidden").text());
-		if($("#startDateHidden").text() == ""){
+		/* if($("#startDateHidden").text() == ""){
 			$("#doSettingStart").css("display","none");
 		}
 		if($("#endDateHidden").text() == ""){
 			$("#doSettingEnd").css("display","none");
-		}
+		} */
 
 		$(document).on('click','#pickerFromSaveBtn',function(){
 			//console.log("전달시간1: "+$("#time-line-pickerFrom").text());
@@ -192,7 +206,8 @@
 					"timeFrom" : "pickerFrom"
 				},
 				success : function(resp, status, xhr) {
-					$("#task-properties").load("properties?taskNo="+$('#taskNoSpan').text());
+					//$("#task-properties").load("properties?taskNo="+$('#taskNoSpan').text());
+					$("#doSettingStart").css("display","none");
 				},
 				error : function(xhr, status, err) {
 					console.log(err);
@@ -214,7 +229,8 @@
 					"timeFrom" : "pickerTo"
 				},
 				success : function(resp, status, xhr) {
-					$("#task-properties").load("properties?taskNo="+$('#taskNoSpan').text());
+					//$("#task-properties").load("properties?taskNo="+$('#taskNoSpan').text());
+					$("#doSettingEnd").css("display","none");
 				},
 				error : function(xhr, status, err) {
 					console.log(err);
