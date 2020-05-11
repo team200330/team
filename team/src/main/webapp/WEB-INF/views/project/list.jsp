@@ -1,5 +1,6 @@
 <%@ page pageEncoding="utf-8" contentType="text/html; charset=utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <style>
 	.iconPublic { float: left; margin: 5px; font-size: 14px; }
 a { color: #343a40;}
@@ -94,8 +95,12 @@ a:hover { color: #527aa2;}
 		                	</div>
 		                </c:when>
 		                <c:otherwise>
+		               
 		                	<div class="progress-bar" style="width:${project.probability}%;">
-		                		<span style=" font-weight: 800;">${project.probability}%</span>
+		                		<span style=" font-weight: 800;">
+		                		 <fmt:formatNumber value="${project.probability}" pattern=".0"/>%
+		                			
+		                		</span>
 		                	</div>
 		                </c:otherwise>
 		                </c:choose>
