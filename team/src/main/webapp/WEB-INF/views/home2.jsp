@@ -1,8 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="true" %>
+<%@ page pageEncoding="utf-8" session="true" %>
 <html>
   <head>
-    <title>Finances &mdash; Website Template by Colorlib</title>
+    <title>TEAMPLAN</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
@@ -55,7 +55,7 @@
         <div class="row align-items-center">
           
           <div class="col-6 col-xl-2">
-            <h1 class="mb-0 site-logo" style="width: 200px;"><a href="index.html" class="h2 mb-0">TEAM PLAN<span class="text-primary">.</span> </a></h1>
+            <h1 class="mb-0 site-logo" style="width: 200px;"><a href="#home-section" class="h2 mb-0">TEAM PLAN<span class="text-primary">.</span> </a></h1>
           </div>
 
           <div class="col-12 col-md-10 d-none d-xl-block">
@@ -66,12 +66,12 @@
                 <li class="has-children">
                   <a href="#about-section" class="nav-link">About Us</a>
                   <ul class="dropdown">
-                    <li><a href="#team-section" class="nav-link">Team</a></li>
+                   <!--  <li><a href="#team-section" class="nav-link">Team</a></li> -->
+                   <li><a href="#services-section" class="nav-link">Services</a></li>
                     <li><a href="#pricing-section" class="nav-link">Pricing</a></li>
                     <li><a href="#faq-section" class="nav-link">FAQ</a></li>
-                    <li><a href="#gallery-section" class="nav-link">Gallery</a></li>
-                    <li><a href="#services-section" class="nav-link">Services</a></li>
-                    <li><a href="#testimonials-section" class="nav-link">Testimonials</a></li>
+                    <!-- <li><a href="#gallery-section" class="nav-link">Gallery</a></li> -->
+                   <!--  <li><a href="#testimonials-section" class="nav-link">Testimonials</a></li> -->
                     <li class="has-children">
                       <a href="#">More Links</a>
                       <ul class="dropdown">
@@ -112,26 +112,24 @@
           <div class="col-md-10 mt-lg-5 text-center">
             <div class="single-text owl-carousel">
               <div class="slide">
-                <h1 class="text-uppercase" data-aos="fade-up">Banking Solutions</h1>
-                <p class="mb-5 desc"  data-aos="fade-up" data-aos-delay="100">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae minima delectus accusamus accusantium deleniti libero excepturi porro illo.</p>
+                <h1 class="text-uppercase" data-aos="fade-up">프로젝트 기획</h1><br>
+                <p class="mb-5 desc"  data-aos="fade-up" data-aos-delay="100">프로젝트는 팀이 공통된 목표를 향해 함께 나아갈 수 있도록 관련된<br> 업무들을 한 곳에 모아놓은 곳입니다.</p>
                 <div data-aos="fade-up" data-aos-delay="100">
                   <a href="#" target="_blank" class="btn  btn-primary mr-2 mb-2">Get In Touch</a>
                 </div>
               </div>
 
               <div class="slide">
-                <h1 class="text-uppercase" data-aos="fade-up">Financing Solutions</h1>
-                <p class="mb-5 desc" data-aos="fade-up" data-aos-delay="100">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Repudiandae minima delectus accusamus accusantium deleniti libero excepturi porro illo.</p>
+                <h1 class="text-uppercase" data-aos="fade-up">업무관리</h1><br>
+                <p class="mb-5 desc" data-aos="fade-up" data-aos-delay="100">업무를 작성하고, 마감일을 설정하고,<br> 팀원과 자신을 업무에 배정할 수 있습니다.</p>
                 <div data-aos="fade-up" data-aos-delay="100">
                   <a href="#" target="_blank" class="btn  btn-primary mr-2 mb-2">Get In Touch</a>
                 </div>
               </div>
 
               <div class="slide">
-                <h1 class="text-uppercase" data-aos="fade-up">Savings Accounts</h1>
-                <p class="mb-5 desc" data-aos="fade-up" data-aos-delay="100">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Repudiandae minima delectus accusamus accusantium deleniti libero excepturi porro illo.</p>
+                <h1 class="text-uppercase" data-aos="fade-up">업무분석</h1><br>
+                <p class="mb-5 desc" data-aos="fade-up" data-aos-delay="100">업무리스트 별로 마감일이 지난 업무, 완료된 업무, 계획된 업무는 몇 퍼센트인지 확인하며,<br> 프로젝트 안의 업무 완료 비율을 추적할 수 있습니다.</p>
                 <div data-aos="fade-up" data-aos-delay="100">
                   <a href="#" target="_blank" class="btn  btn-primary mr-2 mb-2">Get In Touch</a>
                 </div>
@@ -156,7 +154,7 @@
         <div class="row mb-5 justify-content-center">
           <div class="col-md-8 text-center">
             <h2 class="section-title mb-3" data-aos="fade-up" data-aos-delay="">About Us</h2>
-            <p class="lead" data-aos="fade-up" data-aos-delay="100">Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus minima neque tempora reiciendis.</p>
+            <p class="lead" data-aos="fade-up" data-aos-delay="100">워크스페이스, 프로젝트 관리, 타임라인, 피드백, 파일공유 등 <br>다양한 협업 도구를 갖추고 있습니다.</p>
           </div>
         </div>
         <div class="row">
@@ -167,11 +165,11 @@
           </div>
           <div class="col-lg-5 ml-auto" data-aos="fade-up" data-aos-delay="100">
             
-            <h3 class="text-black mb-4">We Solve Your Financial Problem</h3>
+            <h3 class="text-black mb-4">프로젝트 템플릿으로 손쉽게<br> 정리하는 업무 프로세스</h3>
 
-            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+            <p>자동으로 생성되는 템플릿을 사용하면 업무 프로세스를 고민하는 시간을 줄일 수 있습니다.</p>
 
-            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
+            <p>전 세계 모든 사용자들이 더 효율적인 협업을 할 수 있도록 기여하는 것이 TEAMPLAN의 목표입니다.</p>
             
           </div>
         </div>    
@@ -183,19 +181,19 @@
       <div class="container">
         <div class="row mb-5">
           <div class="col-md-4 text-center" data-aos="fade-up" data-aos-delay="">
-            <img src="/team/resources/main/images/flaticon-svg/svg/001-wallet.svg" alt="Free Website Template by Free-Template.co" class="img-fluid w-25 mb-4">
-            <h3 class="card-title">Money Savings</h3>
-            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+            <img src="/team/resources/main/images/project3.png" alt="Free Website Template by Free-Template.co" class="img-fluid w-25 mb-4">
+            <h3 class="card-title">프로젝트 관리</h3>
+            <p>프로젝트는 팀이 공통된 목표를 향해<br> 함께 나아갈 수 있도록 관련된<br> 업무들을 한 곳에 모아놓은 곳입니다.</p>
           </div>
           <div class="col-md-4 text-center" data-aos="fade-up" data-aos-delay="100">
-            <img src="/team/resources/main/images/flaticon-svg/svg/004-cart.svg" alt="Free Website Template by Free-Template.co" class="img-fluid w-25 mb-4">
-            <h3 class="card-title">Online Shoppings</h3>
-            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+            <img src="/team/resources/main/images/task3.png" alt="Free Website Template by Free-Template.co" class="img-fluid w-25 mb-4">
+            <h3 class="card-title">업무관리</h3>
+            <p>업무를 작성하고, 마감일을 설정하고,<br> 팀원과 자신을 업무에 배정할 수 있습니다.</p>
           </div>
           <div class="col-md-4 text-center" data-aos="fade-up" data-aos-delay="200">
-            <img src="/team/resources/main/images/flaticon-svg/svg/006-credit-card.svg" alt="Free Website Template by Free-Template.co" class="img-fluid w-25 mb-4">
-            <h3 class="card-title">Credit / Debit Cards</h3>
-            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+            <img src="/team/resources/main/images/analysis.png" alt="Free Website Template by Free-Template.co" class="img-fluid w-25 mb-4">
+            <h3 class="card-title">업무분석</h3>
+            <p>업무리스트 별로 마감일이 지난 업무, 완료된 업무, 계획된 업무는 몇 퍼센트인지 확인하며,<br>프로젝트 안의 업무 완료 비율을 추적할 수 있습니다.</p>
           </div>
 
         </div>
@@ -203,21 +201,21 @@
         <div class="row">
           <div class="col-lg-6 mb-5" data-aos="fade-up" data-aos-delay="">
             <figure class="circle-bg">
-            <img src="/team/resources/main/images/about_2.jpg" alt="Free Website Template by Free-Template.co" class="img-fluid">
+            <img src="/team/resources/main/images/about.jpg" alt="Free Website Template by Free-Template.co" class="img-fluid">
             </figure>
           </div>
           <div class="col-lg-5 ml-auto" data-aos="fade-up" data-aos-delay="100">
             <div class="mb-4">
-              <h3 class="h3 mb-4 text-black">Banking Solutions Is Our Priority</h3>
-              <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+              <h3 class="h3 mb-4 text-black">협업을 더욱 스마트하게</h3>
+              <p>한 곳에서 프로젝트를 관리하고 업무를 추적해 팀원들과 <br> 원활하게 협업할 수 있습니다.</p>
               
             </div>
               
             <div class="mb-4">
               <ul class="list-unstyled ul-check success">
-                <li>Officia quaerat eaque neque</li>
-                <li>Lorem ipsum dolor sit amet</li>
-                <li>Consectetur adipisicing elit</li>
+                <li>Amazon Web Services</li>
+                <li>GDPR</li>
+                <li>Privacy Shield certified</li>
               </ul>
               
             </div>
@@ -233,7 +231,7 @@
     
 
     
-    <section class="site-section border-bottom" id="team-section">
+    <!-- <section class="site-section border-bottom" id="team-section">
       <div class="container">
         <div class="row mb-5 justify-content-center">
           <div class="col-md-8 text-center">
@@ -337,11 +335,11 @@
         </div>
       </div>
     </section>
+ -->
 
 
 
-
-    <section class="site-section">
+    <!-- <section class="site-section">
       <div class="container">
 
         <div class="row mb-5 justify-content-center">
@@ -391,7 +389,7 @@
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
 
     
     
@@ -407,11 +405,11 @@
           <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up">
             <div class="unit-4">
               <div class="unit-4-icon">
-                <img src="/team/resources/main/images/flaticon-svg/svg/001-wallet.svg" alt="Free Website Template by Free-Template.co" class="img-fluid w-25 mb-4">
+                <img src="/team/resources/main/images/task.png" alt="Free Website Template by Free-Template.co" class="img-fluid w-25 mb-4">
               </div>
               <div>
-                <h3>Business Consulting</h3>
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ratione animi tempora sint hic quod!</p>
+                <h3>프로젝트 관리</h3>
+                <p>시각적인 업무 보드로 기획 및 업무관리, 담당자 지정, 진행 상태을 확인합니다.</p>
                 <p><a href="#">Learn More</a></p>
               </div>
             </div>
@@ -419,11 +417,11 @@
           <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up" data-aos-delay="100">
             <div class="unit-4">
               <div class="unit-4-icon">
-                <img src="/team/resources/main/images/flaticon-svg/svg/006-credit-card.svg" alt="Free Website Template by Free-Template.co" class="img-fluid w-25 mb-4">
+                <img src="/team/resources/main/images/time2.png" alt="Free Website Template by Free-Template.co" class="img-fluid w-25 mb-4">
               </div>
               <div>
-                <h3>Credit Card</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores nemo beatae minus incidunt voluptates?</p>
+                <h3>업무시간 관리</h3>
+                <p>각 업무와 프로젝트에 소요된 시간을 트래킹하고 활동로그를 확인합니다.</p>
                 <p><a href="#">Learn More</a></p>
               </div>
             </div>
@@ -431,11 +429,11 @@
           <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up" data-aos-delay="200">
             <div class="unit-4">
               <div class="unit-4-icon">
-                <img src="/team/resources/main/images/flaticon-svg/svg/002-rich.svg" alt="Free Website Template by Free-Template.co" class="img-fluid w-25 mb-4">
+                <img src="/team/resources/main/images/file2.png" alt="Free Website Template by Free-Template.co" class="img-fluid w-25 mb-4">
               </div>
               <div>
-                <h3>Income Monitoring</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores optio veritatis aperiam consequuntur qui.</p>
+                <h3>파일 관리</h3>
+                <p>파일을 한곳에서 관리하며 메신저 또는 프로젝트 파일을 첨부하여 공유합니다.</p>
                 <p><a href="#">Learn More</a></p>
               </div>
             </div>
@@ -445,11 +443,11 @@
           <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up" data-aos-delay="">
             <div class="unit-4">
               <div class="unit-4-icon">
-                <img src="/team/resources/main/images/flaticon-svg/svg/003-notes.svg" alt="Free Website Template by Free-Template.co" class="img-fluid w-25 mb-4">
+                <img src="/team/resources/main/images/chat.png" alt="Free Website Template by Free-Template.co" class="img-fluid w-25 mb-4">
               </div>
               <div>
-                <h3>Insurance Consulting</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia labore suscipit distinctio inventore doloribus deserunt!</p>
+                <h3>업무 메신저</h3>
+                <p>파일공유, 수신확인 등 다양한 기능을 통해, 실시간 커뮤니케이션 합니다.</p>
                 <p><a href="#">Learn More</a></p>
               </div>
             </div>
@@ -457,11 +455,11 @@
           <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up" data-aos-delay="100">
             <div class="unit-4">
               <div class="unit-4-icon">
-                <img src="/team/resources/main/images/flaticon-svg/svg/004-cart.svg" alt="Free Website Template by Free-Template.co" class="img-fluid w-25 mb-4">
+                <img src="/team/resources/main/images/project.png" alt="Free Website Template by Free-Template.co" class="img-fluid w-25 mb-4">
               </div>
               <div>
-                <h3>Financial Investment</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque odio voluptatibus repellat hic officia quibusdam!</p>
+                <h3>성과 리포트</h3>
+                <p>성과 보고서 및 실시간 피드백을 통해 업무의 성과를 확인합니다.</p>
                 <p><a href="#">Learn More</a></p>
               </div>
             </div>
@@ -469,11 +467,11 @@
           <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up" data-aos-delay="200">
             <div class="unit-4">
               <div class="unit-4-icon">
-                <img src="/team/resources/main/images/flaticon-svg/svg/005-megaphone.svg" alt="Free Website Template by Free-Template.co" class="img-fluid w-25 mb-4">
+                <img src="/team/resources/main/images/timeLine.png" alt="Free Website Template by Free-Template.co" class="img-fluid w-25 mb-4">
               </div>
               <div>
-                <h3>Financial Management</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. In, iusto eaque velit saepe nobis ipsa?</p>
+                <h3>타임라인</h3>
+                <p>타임라인을 통해 업무의 진행상황을 한눈에 확인합니다.</p>
                 <p><a href="#">Learn More</a></p>
               </div>
             </div>
@@ -494,37 +492,39 @@
         <div class="row mb-5">
           <div class="col-md-6 mb-4 mb-lg-0 col-lg-4" data-aos="fade-up" data-aos-delay="">
             <div class="pricing">
-              <h3 class="text-center text-black">Basic</h3>
+              <h3 class="text-center text-black">Free</h3>
               <div class="price text-center mb-4 ">
-                <span><span>$47</span> / year</span>
+                <span><span>$0</span> / year</span>
               </div>
               <ul class="list-unstyled ul-check success mb-5">
                 
-                <li>Officia quaerat eaque neque</li>
-                <li>Possimus aut consequuntur incidunt</li>
-                <li class="remove">Lorem ipsum dolor sit amet</li>
+                <li>30일 무료체험</li>
+                <li>체험 후 결제 가능</li>
+               <!--  <li class="remove">Lorem ipsum dolor sit amet</li>
                 <li class="remove">Consectetur adipisicing elit</li>
-                <li class="remove">Dolorum esse odio quas architecto sint</li>
+                <li class="remove">Dolorum esse odio quas architecto sint</li> -->
+                <br><br><br><br><br>
               </ul>
               <p class="text-center">
-                <a href="#" class="btn btn-secondary">Buy Now</a>
+                <a href="#" class="btn btn-secondary">무료체험 시작</a>
               </p>
             </div>
           </div>
 
           <div class="col-md-6 mb-4 mb-lg-0 col-lg-4 pricing-popular" data-aos="fade-up" data-aos-delay="100">
             <div class="pricing">
-              <h3 class="text-center text-black">Premium</h3>
+              <h3 class="text-center text-black">Professional</h3>
               <div class="price text-center mb-4 ">
-                <span><span>$200</span> / year</span>
+                <span><span>$20</span> / 월</span>
               </div>
               <ul class="list-unstyled ul-check success mb-5">
                 
-                <li>Officia quaerat eaque neque</li>
-                <li>Possimus aut consequuntur incidunt</li>
-                <li>Lorem ipsum dolor sit amet</li>
-                <li>Consectetur adipisicing elit</li>
-                <li class="remove">Dolorum esse odio quas architecto sint</li>
+                <li>하나의 워크스페이스</li>
+                <li>프로젝트 관리</li>
+                <li>파일관리</li>
+                <li>업무 피드백</li>
+                <li>업무, 프로젝트, 프로젝트 그룹, 체크리스트 작성 무제한</li>
+                <!-- <li class="remove">Dolorum esse odio quas architecto sint</li> -->
               </ul>
               <p class="text-center">
                 <a href="#" class="btn btn-primary">Buy Now</a>
@@ -534,17 +534,17 @@
 
           <div class="col-md-6 mb-4 mb-lg-0 col-lg-4" data-aos="fade-up" data-aos-delay="200">
             <div class="pricing">
-              <h3 class="text-center text-black">Professional</h3>
+              <h3 class="text-center text-black">Business</h3>
               <div class="price text-center mb-4 ">
-                <span><span>$750</span> / year</span>
+                <span><span>$70</span> / 월</span>
               </div>
               <ul class="list-unstyled ul-check success mb-5">
                 
-                <li>Officia quaerat eaque neque</li>
-                <li>Possimus aut consequuntur incidunt</li>
-                <li>Lorem ipsum dolor sit amet</li>
-                <li>Consectetur adipisicing elit</li>
-                <li>Dolorum esse odio quas architecto sint</li>
+                <li>프로페셔널 요금제의 모든 기능</li>
+                <li>무제한 워크스페이스</li>
+                <li>파일 저장 용량 무제한</li>
+                <li>데이터 임포트 및 통합 지원</li>
+                <li>요청에 따라 전체 활동 로그 및 사용 데이터 내역 추출 지원</li>
               </ul>
               <p class="text-center">
                 <a href="#" class="btn btn-secondary">Buy Now</a>
@@ -562,52 +562,53 @@
           <div class="col-lg-6">
             
             <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
-            <h3 class="text-black h4 mb-4">Can I accept both Paypal and Stripe?</h3>
-            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+            <h3 class="text-black h4 mb-4">프로젝트 관리자는 어떤 일을 할 수 있나요?</h3>
+            <p>프로젝트 관리자는 프로젝트 수정, 삭제 및 글쓰기 권한 설정, 파일 다운로드 권한 설정이 가능합니다. 프로젝트 관리자는 프로젝트를 최초 생성 하거나 프로젝트 관리자에 의해서 권한을 부여 받을 수 있습니다. 개별 프로젝트의 관한 설정은 프로젝트 우측의 설정 버튼을 선택하시면 살펴 볼 수 있습니다.</p>
             </div>
             
             <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
-              <h3 class="text-black h4 mb-4">What available is refund period?</h3>
-              <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+              <h3 class="text-black h4 mb-4">'업무 작성' 기능은 무엇인가요?</h3>
+              <p>'업무 작성' 기능은 팀플랜에서 상대방에게 일을 요청하거나, 일을 진행할 때 이용하는 기능입니다. 팀플랜의 업무 작성 기능을 활용하면 간편하게 일을 요청하고, 또 진행 상황을 한눈에 알 수 있습니다.</p>
             </div>
-
+            <br>
             <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
-            <h3 class="text-black h4 mb-4">Can I accept both Paypal and Stripe?</h3>
-            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+	            <h3 class="text-black h4 mb-4">첨부파일 저장기간은 어떻게 되나요?</h3>
+	            <p>첨부 파일은 7일간 저장됩니다. 채팅 창에서 7일 이상 지난 파일은 더 이상 다운로드할 수 없습니다. </p>
             </div>
-            
+            <br>
             <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
-              <h3 class="text-black h4 mb-4">What available is refund period?</h3>
-              <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+              <h3 class="text-black h4 mb-4">결제금액 계산방법은 어떻게 하나요?</h3>
+              <p>요금제는 가입 후 1개월의 체험기간을 제공합니다. 1개월 이후에는 결제정보를 등록하셔야 하며, 등록하지 않을 경우는 사용하실 수 없습니다.</p>
             </div>
           </div>
+          
           <div class="col-lg-6">
 
             <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
-              <h3 class="text-black h4 mb-4">Where are you from?</h3>
-              <p>Voluptatum nobis obcaecati perferendis dolor totam unde dolores quod maxime corporis officia et. Distinctio assumenda minima maiores.</p>
+              <h3 class="text-black h4 mb-4">서비스 결제 / 비용 처리방식은 어떻게 이뤄지나요?</h3>
+              <p>서비스 결제/비용 처리 방식은 '선 납부 형식'이며, 가능한 결제 수단으로는 신용카드, 계좌이체, 무통장 입금이 있습니다. 결제 개월은 1개월, 12개월, 24개월 중 선택하실 수 있으며, 1개월 결제는 '신용카드'만 가능하십니다.</p>
             </div>
             
             <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
-              <h3 class="text-black h4 mb-4">What is your opening time?</h3>
-              <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-            </div>
-
-            <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
-            <h3 class="text-black h4 mb-4">Can I accept both Paypal and Stripe?</h3>
-            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+              <h3 class="text-black h4 mb-4">서비스 연장 / 추가는 어떻게 해야 하나요?</h3>
+              <p>기존 사용 중인 서비스 의 연장이나 추가가 필요할 경우, 고객사 내 관리자 분께서 간단하게 신청하실 수 있습니다. 기간 연장의 경우 1개월, 12개월, 24개월 연장이 가능하며, 1개월 연장의 경우 신용카드 결제만 가능합니다. 기간 연장 없이 부가 상품 추가만 원하시는 경우 '연장하지 않고 상품만 추가' 클릭 후 진행 부탁드립니다.</p>
             </div>
             
             <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
-              <h3 class="text-black h4 mb-4">What available is refund period?</h3>
-              <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+              <h3 class="text-black h4 mb-4">서비스 유형 변경은 어떻게 신청하나요?</h3>
+              <p>서비스 이용 중 유형 전환은 최소 3개월 사용 후 부터 가능하며, 담당자 협의 후 진행하실 수 있습니다. 유유선문의: 1234-1234 (2번 서비스 연장 및 추가 구매문의) / 메일문의: goott.teamplan@gmail.com</p>
+            </div>
+            
+            <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
+            <h3 class="text-black h4 mb-4">세금계산서를 발급하고 싶은데 어떻게 해야 하나요?</h3>
+            <p>세금계산서 발급은 결제 월 말일에 일괄적으로 발행해드립니다. 세금계산서 발급이 필요하신 고객사 담당자 분들께서는 팀플랜 대표메일 (goott.teamplan@gmail.com)로 '사업자 등록증 사본'과 '담당자 연락처'를 보내주시기 바랍니다.</p>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="site-section" id="about-section">
+    <!-- <section class="site-section" id="about-section">
       <div class="container">
 
         <div class="row">
@@ -652,7 +653,7 @@
 
         
       </div>
-    </section>
+    </section> -->
   
     
     
@@ -676,19 +677,19 @@
           <div class="col-md-4 text-center">
             <p class="mb-4">
               <span class="icon-room d-block h2 text-primary"></span>
-              <span>203 Fake St. Mountain View, San Francisco, California, USA</span>
+              <span>서울 구로구 시흥대로163길 33 2층</span>
             </p>
           </div>
           <div class="col-md-4 text-center">
             <p class="mb-4">
               <span class="icon-phone d-block h2 text-primary"></span>
-              <a href="#">+1 232 3235 324</a>
+              <a href="#">+82 02)1234-1234</a>
             </p>
           </div>
           <div class="col-md-4 text-center">
             <p class="mb-0">
               <span class="icon-mail_outline d-block h2 text-primary"></span>
-              <a href="#">youremail@domain.com</a>
+              <a href="#">goott.teamplan@gmail.com</a>
             </p>
           </div>
         </div>
@@ -757,16 +758,16 @@
             <div class="row">
               <div class="col-md-5">
                 <h2 class="footer-heading mb-4">About Us</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque facere laudantium magnam voluptatum autem. Amet aliquid nesciunt veritatis aliquam.</p>
+                <p>워크스페이스, 프로젝트 관리, 타임라인, 피드백, 파일공유 등 다양한 협업 도구를 갖추고 있습니다.</p>
               </div>
               <div class="col-md-3 ml-auto">
                 <h2 class="footer-heading mb-4">Quick Links</h2>
                 <ul class="list-unstyled">
-                  <li><a href="#about-section" class="smoothscroll">Terms</a></li>
-                  <li><a href="#about-section" class="smoothscroll">Policy</a></li>
+                 <!--  <li><a href="#about-section" class="smoothscroll">Terms</a></li> -->
+                <!--   <li><a href="#about-section" class="smoothscroll">Policy</a></li> -->
                   <li><a href="#about-section" class="smoothscroll">About Us</a></li>
                   <li><a href="#services-section" class="smoothscroll">Services</a></li>
-                  <li><a href="#testimonials-section" class="smoothscroll">Testimonials</a></li>
+               <!--    <li><a href="#testimonials-section" class="smoothscroll">Testimonials</a></li> -->
                   <li><a href="#contact-section" class="smoothscroll">Contact Us</a></li>
                 </ul>
               </div>
