@@ -45,7 +45,7 @@ public class WorkspaceController {
 	@PostMapping(path = { "/create-workspace" })
 	public String docreateworkspace(Workspace workspace, WorkspaceMember workspaceMember, HttpSession session) {
 		
-		int code = (int)(Math.random()*1000+1);		
+		int code = (int)(Math.random()*(9999999 - 1000000) + 1000000);		
 		workspace.setCode(String.valueOf(code));
 		//코드값을 workspace안에 set 넣는다.
 		workspaceService.insertWorkspace(workspace);		
@@ -244,17 +244,21 @@ public class WorkspaceController {
 	
 	@GetMapping("/checkJoin")
 	@ResponseBody
-	public int checkJoin(int code) {
+	public int checkJoin(int code, HttpSession s) {
+		String loginuser = ((Member) s.getAttribute("loginuser")).getEmail();
 		Workspace workspace = workspaceService.selectWorkspaceByCode(code);
 		
-		if (workspace != null) return workspace.getWorkspaceNo();
-		else return -1;
+		// return -1 : 코드 불일치, -2 : 이미 멤버로 참여되어있음
+		if (workspace == null) return -1;
+		for (Workspace w : workspaceService.selectWorkspacesByEmail(loginuser)) {
+			if (w.getWorkspaceNo() == workspace.getWorkspaceNo()) return -2;
+		}
+		
+		return workspace.getWorkspaceNo();
 	}
 	
 	@PostMapping("/join")
 	public String joinWorkspace(int workspaceNo, String email, HttpSession session) {
-		
-		System.out.println(workspaceNo);
 		HashMap<String, Object> params = new HashMap<>();
 		params.put("email", email);
 		params.put("workspaceNo", workspaceNo);
