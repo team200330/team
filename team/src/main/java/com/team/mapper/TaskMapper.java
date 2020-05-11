@@ -46,4 +46,8 @@ public interface TaskMapper {
 	// 업무분석 관련
 	int countCompletedTasks(HashMap<String, Object> params);
 	int countTaskByCreatedDate(HashMap<String, Object> params);
+
+	/////////// 프로젝트 확률관련
+	int taskCount(int projectNo);
+	int taskCompletedCount(int projectNo);
 }

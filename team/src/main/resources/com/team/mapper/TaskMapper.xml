@@ -174,14 +174,24 @@
 			<if test="email != null">AND t.writer = #{email}</if>
 	</select>
 	
-	<select id="countTaskByCreatedDate" parameterType="hashmap" resultType="int">
+	<select id="taskCount" parameterType="project" resultType="int">
 		SELECT COUNT(*)
 		FROM task t
-		INNER JOIN task_list l ON t.list_no = l.list_no
-		WHERE l.project_no = #{projectNo}
-		AND t.deleted = 0 AND l.deleted = 0
-		AND 
-		<![CDATA[ create_date >= #{startDate} AND create_date <= #{endDate}]]>
-		<if test='searchType == "completed"'>AND t.completed = 1</if>
+		INNER JOIN task_list tl
+		ON tl.list_no = t.list_no
+		INNER JOIN project p
+		ON p.project_no = tl.project_no
+		WHERE p.project_no = #{projectNo}
 	</select>
+	
+	<select id="taskCompletedCount" parameterType="project" resultType="int">
+		SELECT COUNT(*)
+		FROM task t
+		INNER JOIN task_list tl
+		ON tl.list_no = t.list_no
+		INNER JOIN project p
+		ON p.project_no = tl.project_no
+		WHERE p.project_no = #{projectNo} AND t.completed = 1
+	</select>
+
 </mapper>

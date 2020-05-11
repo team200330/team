@@ -119,4 +119,15 @@ public class TaskServiceImpl implements TaskService {
 		return taskMapper.countTaskByCreatedDate(params);
 	}
 
+	@Override
+	public int taskCount(int projectNo) {
+		return taskMapper.taskCount(projectNo);
+	}
+
+	@Override
+	public int taskCompletedCount(int projectNo) {
+		// TODO Auto-generated method stub
+		return taskMapper.taskCompletedCount(projectNo);
+	}
+
 }

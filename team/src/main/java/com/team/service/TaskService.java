@@ -46,4 +46,8 @@ public interface TaskService {
 	int countTaskByCreatedDate(HashMap<String, Object> params);
 	Task searchTask(int taskNo);
 
+	int taskCount(int projectNo);
+
+	int taskCompletedCount(int projectNo);
+
 }

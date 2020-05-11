@@ -6,8 +6,8 @@ a { color: #343a40;}
 a:hover { color: #527aa2;}
 </style>
 			<c:choose>
-			<c:when test="${not empty project}">
-			<c:forEach items="${ project }" var="project">
+			<c:when test="${not empty projectCount}">
+			<c:forEach items="${ projectCount }" var="project">
 		          <div class="col-md-3 col-sm-6 col-12 projectChk">
 		            <div class="info-box bg-info">
 					  
@@ -85,9 +85,9 @@ a:hover { color: #527aa2;}
 		                	</select>
  --%>		                	
 					    </span>
-		                <!-- <div class="progress">
-		                  <div class="progress-bar" style="width: 70%"></div>
-		                </div> -->
+		                <div class="progress">
+		                  <div class="progress-bar" style="width: ${project.probability}%"></div>
+		                </div>
 		              </div>
 		              <!-- /.info-box-content -->
 		            </div>
