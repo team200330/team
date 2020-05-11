@@ -36,53 +36,65 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           
-   
+          
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-users"></i>
+              <i class="nav-icon fas fa-chart-pie"></i>
               <p>
-                	멤버
+                	워크스페이스
                 <i class="right fas fa-angle-left"></i>
-                
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item" id="workspace_member_li">
-                <a href="#" class="nav-link">
+              <li class="nav-item" >
+                <a style="cursor:pointer" class="nav-link" id="inviteModal">
+                  <p>이메일로 팀원 초대</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/team/workspace/workspace-member?email=${ loginuser.email }&workspaceNo=${ workspaceNo }" class="nav-link">
                   
                   <p>워크스페이스 멤버</p>
-                  <script type="text/javascript">
+                </a>
+             </li>
+              <li class="nav-item" >
+                <a style="cursor:pointer" class="nav-link" id="joinModal">
+                  <p>다른 워크스페이스 참여하기</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          
+          
+          
+            <li class="nav-item">
+            <a href="/team/account/mypage" class="nav-link">
+              <i class="fas fa-user-circle" style="font-size: 15pt; margin: 4;margin-right: 7;"></i>
+              <p>
+                   	내 프로필
+              </p>
+            </a>
+          </li>
+   
+    
+          <li class="nav-item">
+            <a href="/team/workspace/workspace-member?email=${ loginuser.email }&workspaceNo=${ workspaceNo }" class="nav-link">
+              <i class="nav-icon fas fa-users"></i>
+              <p>
+                        워크스페이스 멤버
+                <!-- <script type="text/javascript">
 					window.addEventListener('load', function(event) {
 						var workspace_member_link = document.querySelector('#workspace_member_li > a');
 						workspace_member_link.addEventListener('click', function(event) {
 							if (current_workspace_no) {
 								location.href = "/team/workspace/workspace-member?email=${ loginuser.email }&workspaceNo=" + current_workspace_no;
 							} else {
-								event.preventDefault();
-								alert('선택된 워크스페이스가 없습니다.');
+								location.href = "/team/workspace/workspace-member?email=${ loginuser.email }&workspaceNo=" + ${ workspaceNo };
 							}
 						});
 						
 					});
-            		</script>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/team/account/mypage" class="nav-link">
-                  
-                  <p>내 프로필</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          
-          <li class="nav-item">
-            <a href="/team/workspace/workspace-member?workspaceNo=3" class="nav-link">
-            <a href="/team/workspace/workspace-member?email=${ loginuser.email }" class="nav-link">
-              <i class="nav-icon fas fa-users"></i>
-              <p>
-                        워크스페이스 멤버
-                <!-- <span class="right badge badge-danger">New</span> -->
+            	</script> -->
               </p>
             </a>
           </li>
@@ -97,6 +109,8 @@
             </a>
           </li>
 
+
+		  <c:if test="${not empty projectByNo}">
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-chart-pie"></i>
@@ -149,6 +163,10 @@
               </li>
               </ul>
               </li>
+              
+            </c:if>
+          
+          
           
         </ul>
       </nav>

@@ -88,7 +88,25 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public Project selectDetail(int projectNo) {
-		return projectMapper.selectDetail(projectNo);
+		Project p = projectMapper.selectDetail(projectNo);
+		
+		List<Member> m = new ArrayList<>();
+		
+		for (ProjectMember pm : p.getProjectMembers()) {
+			m.add(memberMapper.selectMemberByEmail(pm.getEmail()));
+			}
+		p.setMember(m);
+	
+		return p;
+	}
+	@Override
+	public void updateProjectMember(ProjectMember projectMember) {
+		projectMapper.updateProjectMember(projectMember);
+	}
+	
+	@Override
+	public void projectMemberDeleted(ProjectMember projectMember) {
+		projectMapper.projectMemberDeleted(projectMember);
 	}
 
 	@Override
@@ -108,7 +126,6 @@ public class ProjectServiceImpl implements ProjectService {
 			
 		for (WorkspaceMember m : workspaceMembers) 
 			members.add(memberMapper.selectMemberByEmail(m.getEmail()));
-		
 			
 		return members;
 	}
@@ -129,6 +146,22 @@ public class ProjectServiceImpl implements ProjectService {
 		
 		return projects;
 	}
+
+
+	@Override
+	public List<ProjectMember>findProjectMember(HashMap<String, Object> params) {
+		return projectMapper.selectProjectMember(params);
+	}
+
+
+	@Override
+	public void updateProjectDate(HashMap<String, Object> params) {
+		projectMapper.updateProjectDate(params);
+	}
+
+
+
+
 
 
 

@@ -172,7 +172,7 @@
   
       <!-- 멤버 추가 모달 -->
       <div class="modal fade" id="memberAddModal">
-        <div class="modal-dialog modal-sm" style="top:210;left:-195">
+        <div class="modal-dialog modal-sm" style="top: 50%; left: -10%;">
           <div class="modal-content">
             <div class="modal-header">
               <h6 class="modal-title" style="font-weight:bold">멤버</h6>

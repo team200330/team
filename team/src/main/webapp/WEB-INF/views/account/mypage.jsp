@@ -339,7 +339,7 @@ button {
 		// 계정 삭제
 		$(document).on("click", "#delete-user-btn", function() {
 			// 소유하고있는 워크스페이스 있으면 소유권이전 모달 띄우기
-			if ("${not empty mypage_workspaces}") $("#updateWorkspaceManagerModal").modal(); 
+			if ("${not empty mypage_workspaces}" == "true") $("#updateWorkspaceManagerModal").modal(); 
 			
 			// 없으면 계정삭제 모달 띄우기
 			else $("#deleteUserModal").modal();
@@ -417,21 +417,12 @@ button {
 						"email": "${loginuser.email}",
 						"managerEmail" : $(this).attr("data-email"), 
 						"workspaceNo" : $(this).attr("id")
-					}, 
-					success : function() {
-						$.ajax({
-							url : "/team/account/deleteMember",
-							method : "post",
-							data : {
-								"email" : "${loginuser.email}"
-							}
-						}); 
 					}
 				});
 			});
 			
 			// 계정 삭제
-			
+			$("#deleteUserForm").submit();
 		})
 		
 	});

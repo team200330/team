@@ -2,6 +2,7 @@ package com.team.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -131,6 +132,8 @@ public class ProjectController {
 		
 		HttpSession session = request.getSession();
         session.getAttribute("loginuser");
+        workspaceNo = (int) session.getAttribute("workspaceNo");
+        System.out.println(workspaceNo);
         
         // 임시 워크스페이스 번호 // 워크스페이스 속해있는 멤버 불러오기
  		if ( workspaceMembers == null ) workspaceMembers = projectService.findWorkspaceMembers(workspaceNo);
@@ -151,6 +154,8 @@ public class ProjectController {
 	public String list2(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
         session.getAttribute("loginuser");
+        workspaceNo = (int) session.getAttribute("workspaceNo");
+        System.out.println(workspaceNo);
         
         // 임시 워크스페이스 번호 // 워크스페이스 속해있는 멤버 불러오기
  		if ( workspaceMembers == null ) workspaceMembers = projectService.findWorkspaceMembers(workspaceNo);
@@ -167,6 +172,17 @@ public class ProjectController {
 		return "project/list2";
 	}
 	
+	@PostMapping(path = {"/addProjectMember"})
+	@ResponseBody	
+	public String addProjectMember(ProjectMember projectMember, int projectNo, String email) {
+		System.out.println(projectNo + email);
+		projectMember.setProjectNo(projectNo);
+		projectMember.setEmail(email);
+		projectService.updateProjectMember(projectMember);
+		
+		return "success";
+		
+	}
 	
 	@PostMapping(path = {"/detailUpdate"})
 	@ResponseBody	
@@ -176,8 +192,7 @@ public class ProjectController {
 		return "success";
 	}
 	
-	@SuppressWarnings("unused")
-	@PostMapping(value="/projectByproNo")
+	@PostMapping(path = {"/projectByproNo"})
 	@ResponseBody
 	public String projectNoByProNo (String projectNo, String proNo) {
 		String keyArr[] = {projectNo, proNo};
@@ -192,8 +207,20 @@ public class ProjectController {
 		
 	}
 	
-	@SuppressWarnings("unused")
-	@PostMapping(value="/deleted")
+	@PostMapping(path = {"/projectMemberDeleted"})
+	@ResponseBody
+	public String projectMemberDeleted (ProjectMember projectMember, int projectNo, String email) {
+		
+		System.out.println(projectNo + email);
+		projectMember.setProjectNo(projectNo);
+		projectMember.setEmail(email);
+		projectService.projectMemberDeleted(projectMember);
+		
+		return "success";
+		
+	}
+	
+	@PostMapping(path = {"/deleted"})
 	@ResponseBody
 	public String projectDeleted (String projectNo, String deleted) {
 		
@@ -208,26 +235,31 @@ public class ProjectController {
 		
 	}
 	
-	@GetMapping(path = {"/detail"})
-	@ResponseBody	
-	//public String write(int projectNo) {
-	public Project write(int projectNo, Model model) {
-		
-		Project projectDetail = projectService.selectDetail(projectNo);
-		model.addAttribute("projectDetail", projectDetail);
-		System.out.println("detail projectDetail 값" + projectDetail);
-		System.out.println(projectDetail.getProjectMembers());
-		
-		return projectDetail;
-		
-	}
 	
+	  @GetMapping(path = {"/detail"})
+	  @ResponseBody //public String write(int projectNo) { 
+	  public Project write(int projectNo, Model model) {
+	  
+	  Project projectDetail = projectService.selectDetail(projectNo);
+	  model.addAttribute("projectDetail", projectDetail);
+	  //System.out.println("detail projectDetail 값" + projectDetail);
+	  System.out.println(projectDetail.getMember());
+	  System.out.println(projectDetail); 
+	  return projectDetail;
+	  
+	  }
+
 
 	///////////////////
 	
 	@GetMapping("/getProjectMember")
 	@ResponseBody
-	public String getWorkspaceMembers(String str, String selected, String email) {
+	public String getWorkspaceMembers(String str, String selected, String email, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+        session.getAttribute("loginuser");
+        workspaceNo = (int) session.getAttribute("workspaceNo");
+        System.out.println(workspaceNo);
+        
 		String result = "";
 		String selectedMems[] = selected.split(":");
 		
@@ -252,7 +284,12 @@ public class ProjectController {
 	
 	@GetMapping("/getProjectMember2")
 	@ResponseBody
-	public String getWorkspaceMembers2(String str, String selected, String email) {
+	public String getWorkspaceMembers2(String str, String selected, String email, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+        session.getAttribute("loginuser");
+        workspaceNo = (int) session.getAttribute("workspaceNo");
+        System.out.println(workspaceNo);
+        
 		String result = "";
 		String selectedMems[] = selected.split(":");
 		
@@ -276,12 +313,6 @@ public class ProjectController {
 	}
 	
 
-	
-	
-	
-	
-	
-	
 	
 	// 프로젝트 CSV 로 내보내기
 	@Autowired
@@ -324,4 +355,32 @@ public class ProjectController {
 		downloadList = lists;
 		return "success";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	///////////////////////////////////////////////////////////////////////////////
+	// 분석페이지에서 프로젝트 마감일, 종료일 업데이트
+	@PostMapping("/updateProjectDate")
+	@ResponseBody
+	public String updateProjectDate(Date date, String dateType, int projectNo) {
+		// java.util.date -> java.sql.date
+		java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+		
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("dateType", dateType);
+		params.put("projectNo", projectNo);
+		params.put("date", sqlDate);
+		
+		projectService.updateProjectDate(params);
+		
+		return "success";
+	}
+	
 }

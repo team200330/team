@@ -4,7 +4,7 @@
 
 <head>
 <meta charset="utf-8">
-<title>워크스페이스 멤버</title>
+<title>프로젝트 분석</title>
 <link rel="stylesheet" href="/team/resources/css/log-feedback.css">
 <%@include file="/WEB-INF/views/modules/common-css.jsp"%>
 <style>
@@ -28,6 +28,11 @@ input::placeholder {
 	font-size: 11pt;
 	font-style: inherit;
 }
+.description-text {
+	font-weight: bold;
+    color: #6b6b6b;
+    font-size: 11pt;
+}
 </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -42,25 +47,25 @@ input::placeholder {
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper" style="background-color: #ececec">
 			<section class="section-header" style="">
-				<div class="header-left"
-					style="flex-basis: 33%; padding-top: 20px; padding-left: 20px; display: flex; flex-wrap: nowrap;">
-					<button type="button" class="btn btn-secondary"
-						style="height: 30px;">
-						<i class="fas fa-arrow-left"></i>
-					</button>
-					<a href="#" id="project-name" style="padding-left: 20px">프로젝트 명</a>
-				</div>
-				<div class="header-center"
-					style="flex-basis: 33%; text-align: center; padding-top: 20px;">
-					<a id="active3" class="f_link" href="/team/task/main">업무</a>&nbsp;&nbsp;
-					<a id="active2" class="f_link" href="/team/task/timeline">타임라인</a>&nbsp;&nbsp;
-					<a id="active" class="f_link" href="/team/task/analyticsmain">분석</a>
-				</div>
-				<div class="header-right"
-					style="flex-basis: 33%; padding-top: 20px;">
-				</div>
-			</section>
-			<hr />
+		<div class="header-left"
+			style="flex-basis: 20%; padding-top: 20px; padding-left: 20px; display: flex; flex-wrap: nowrap;">
+			<button type="button" class="btn btn-secondary" onclick="location.href='/team/project/prlist';"
+				style="height: 30px;">
+				<i class="fas fa-arrow-left"></i>
+			</button>
+			<a href="#" id="project-name" style="padding-left: 20px; font-size: 20px; font-weight: bold;">${projectByNo.projectName }</a>
+		</div>
+		<div class="header-center"
+			style="flex-basis: 60%; text-align: center; padding-top: 20px;">
+			<a id="active2" class="f_link" href="/team/task/main">업무</a>&nbsp;&nbsp;
+			<a id="active4" class="f_link" href="/team/task/timeline">타임라인</a>&nbsp;&nbsp;
+			<a id="active3" class="f_link" href="/team/task/calendar">캘린더</a>&nbsp;&nbsp;
+			<a id="active" class="f_link" href="/team/task/analyticsmain">분석</a>
+		</div>
+		<div class="header-right"
+			style="flex-basis: 20%; padding-top: 20px;"></div>
+	</section>
+	<hr />
 			<!-- /.content-body -->
 			<div id="task-body">
 				<jsp:include page="modules/analytics.jsp"></jsp:include>

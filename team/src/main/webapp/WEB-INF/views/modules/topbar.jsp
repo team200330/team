@@ -132,7 +132,7 @@
 					<span class="dropdown-item dropdown-header"></span>
 					<div class="dropdown-divider"></div>
 					<c:forEach var="workspace" items="${ workspaces }">
-					<a href="#" class="dropdown-item workspace_in_dropdown" data-workspaceNo="${ workspace.workspaceNo }">
+					<a href="/team/workspace/setting-workspace?email=${ loginuser.email }&workspaceNo=${ workspace.workspaceNo }" class="dropdown-item workspace_in_dropdown" data-workspaceNo="${ workspace.workspaceNo }">
 						<span class="text-sm">${ workspace.workspaceName }</span>
 					</a>
 					<div class="dropdown-divider"></div>
@@ -167,14 +167,14 @@
 	workspacename.addEventListener('click', function (event) {
 		console.log('say hello2');
     }); */
-
+	/*
     var current_workspace_no = null;
     var workspace_items = document.querySelectorAll(".workspace_in_dropdown")
     for (var idx = 0; idx < workspace_items.length; idx++) {
         workspace_items[idx].addEventListener('click', function(event) {
             
             event.preventDefault();
-
+			
             var item = event.target;
             //alert(item.attributes[2].value);
             current_workspace_no = item.attributes[2].value;

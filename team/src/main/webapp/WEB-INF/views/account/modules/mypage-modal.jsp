@@ -15,7 +15,7 @@
             </div>
             <div class="modal-body" style="margin:40px;margin-bottom:20px;margin-top:20;">
             	<div style="text-align: center;font-size: 11pt; color: #555555;">
-            		계정을 삭제하기 전에 회원님의 워크스페이스를 다른 팀원에게 이전해야 합니다. 워크스페이스만 이전되며 회원님이 생성한 프로젝트, 업무는 전부 삭제됩니다.
+            		계정을 삭제하기 전에 회원님의 워크스페이스를 다른 팀원에게 이전해야 합니다. 워크스페이스만 이전되며 회원님이 생성한 프로젝트, 업무는 전부 삭제됩니다. <br>소유권을 이전할 수 있는 팀원이 없다면 계정 삭제가 불가능합니다.
             	</div>
               	<div style="margin-top: 20px;font-size: 9.5pt;color: #9d9b9b;">소유권 이전이 필요한 워크스페이스</div>
               	 <table class="table table-head-fixed text-nowrap" style="border-top: 10px solid #dfdfdf;font-size: 10.5pt;">
@@ -110,8 +110,10 @@
             	</div>
             	<div style="text-align:center;font-size:11pt; font-weight:bold; margin-top:25px">
             		이메일 계정 확인<br><br>
-            		<input type="text" id="check-email" style="width: 250px;height: 30;border-radius: .20rem; border: 1px solid #b3b3b3; padding-left: 10px;margin-bottom:10px !important"><br>
+            		<form action="/team/account/deleteMember" method="post" id="deleteUserForm">
+            		<input type="text" name="email" id="check-email" style="width: 250px;height: 30;border-radius: .20rem; border: 1px solid #b3b3b3; padding-left: 10px;margin-bottom:10px !important"><br>
             		<input type="checkbox" id="check"> <span style="font-weight:normal; font-size:10pt; color:gray">계정 삭제에 동의합니다.</span>
+            		</form>
             	</div>
             	
             </div>

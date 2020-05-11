@@ -8,6 +8,8 @@
 		<result column="workspace_no" property="workspaceNo" />
 		<result column="project_name" property="projectName" />
 		<result column="startdate" property="startdate" />
+		<result column="deadline" property="deadline" />
+		<result column="enddate" property="enddate" />
 		<result column="content" property="content" />
 		<result column="manager_email" property="managerEmail" />
 		<result column="deleted" property="deleted" />
@@ -40,6 +42,18 @@
 		INSERT INTO project_member(project_no, email) 
 		VALUES (#{projectNo}, #{email})
 	</insert>
+	
+	<insert id="updateProjectMember" parameterType="projectMember" >
+		INSERT INTO project_member
+		SELECT #{projectNo}, #{email}
+		FROM DUAL 
+		WHERE NOT EXISTS (SELECT * FROM project_member WHERE project_no = #{projectNo} AND email = #{email} )
+	</insert>
+	
+	<delete id="projectMemberDeleted" parameterType="projectMember">
+		DELETE FROM project_member 
+		WHERE project_no = #{projectNo} AND email= #{email}
+	</delete>
 	
 	<select id="selectProject" resultMap="projectMap" parameterType="hashmap" >
 		<![CDATA[
@@ -85,7 +99,7 @@
 	
 	<select id="selectProjectByNo" parameterType="int" resultMap="projectMap">
 		SELECT * FROM project
-		WHERE project_no = #{ projectNo }
+		WHERE project_no = #{projectNo}
 	</select>
 
 	<select id="selectProjectListCount" parameterType="hashmap" resultType="int" >
@@ -125,6 +139,10 @@
 		WHERE project_no = #{ projectNo}
 	</select>
 	
+	<select id="selectProjectMember" parameterType="int" resultMap="projectMemberMap">
+		SELECT * FROM project_member WHERE project_no = #{ projectNo }
+	</select>
+	
 <!-- 	<select id="selectProjectMember" parameterType="hashmap" resultMap="feedbackMap">
 		SELECT DISTINCT wm.email FROM workspace_member wm
 		INNER JOIN project p 
@@ -161,6 +179,16 @@
 	</select> -->
 
 
+
+
+	<update id="updateProjectDate" parameterType="hashmap">
+		UPDATE project SET
+		<choose>
+			<when test='dateType == "deadline"'>deadline = #{ date }</when>
+			<when test='dateType == "enddate"'>enddate = #{ date }</when>
+		</choose>
+		WHERE project_no = #{ projectNo }
+	</update>
 </mapper>
 
 

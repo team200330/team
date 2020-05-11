@@ -5,9 +5,6 @@ $(function() {
 	let isDown = false;
 	let startX;
 	let scrollLeft;
-	$(document).on('click',function(e){
-		console.log($(e.target).attr("class"));
-	});
 	$(document).on('mousedown', slider, function(e) {
 		if (e.which == 1) {
 			isDown = true;
@@ -174,12 +171,12 @@ $(function() {
 		var task = {
 			"listNo" : listNo,
 			"content" : $("#task-content-" + listNo).val(),
-			"writer" : "test",
+			"writer" : $("#userName").text(),
 			// "startDate" : $.datepicker.formatDate('yy-mm-dd', new
 			// Date()),
 			// "endDate" : $.datepicker.formatDate('yy-mm-dd', new
 			// Date()),
-			"completedP" : "test"
+			"completedP" : $("#userName").text()
 		};
 		$.ajax({
 			url : "/team/task/addtask.action",
