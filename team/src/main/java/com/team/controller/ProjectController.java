@@ -25,6 +25,7 @@ import com.team.common.ConvertJsontoCSV;
 import com.team.common.DownloadView;
 import com.team.service.FeedbackService;
 import com.team.service.ProjectService;
+import com.team.service.TaskService;
 import com.team.service.TimelineService;
 import com.team.vo.Member;
 import com.team.vo.Project;
@@ -43,6 +44,11 @@ public class ProjectController {
 	@Autowired
 	@Qualifier("feedbackService")
 	private FeedbackService feedbackService;
+	
+	@Autowired
+	@Qualifier("taskService")
+	private TaskService taskService;
+	
 	
 	// 워크스페이스 멤버 리스트
 	private List<Member> workspaceMembers = null;
@@ -86,6 +92,21 @@ public class ProjectController {
 		
 		List<Project> projectList2 = projectService.findProject2(params);
 		model.addAttribute("project2", projectList2);
+		
+		List<Project> projectCount = new ArrayList<>();
+		for(Project p : projectList) {
+			p.getProjectNo();
+			int taskCount = taskService.taskCount(p.getProjectNo());
+			int taskCompletedCount = taskService.taskCompletedCount(p.getProjectNo());
+			
+			p.setProbability((double)taskCompletedCount / taskCount * 100);
+			projectCount.add(p);
+			System.out.println(p.getProbability());
+			System.out.println(taskCount);
+			System.out.println(taskCompletedCount);
+			
+		}
+		model.addAttribute("projectCount", projectCount);
 		
 		
 //		int pageSize = 2;	// 전체게시글수
@@ -146,6 +167,21 @@ public class ProjectController {
 		
 		List<Project> projectList = projectService.findProject(params);
 		model.addAttribute("project", projectList);
+		
+		List<Project> projectCount = new ArrayList<>();
+		for(Project p : projectList) {
+			p.getProjectNo();
+			int taskCount = taskService.taskCount(p.getProjectNo());
+			int taskCompletedCount = taskService.taskCompletedCount(p.getProjectNo());
+			
+			p.setProbability((double)taskCompletedCount / taskCount * 100);
+			projectCount.add(p);
+			System.out.println(p.getProbability());
+			System.out.println(taskCount);
+			System.out.println(taskCompletedCount);
+			
+		}
+		model.addAttribute("projectCount", projectCount);
 		
 		return "project/list";
 	}

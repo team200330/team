@@ -20,6 +20,8 @@ public class Project {
 	private int templateNo;
 	private int proNo;
 	
+	private double Probability;
+	
 	private List<Member> member;
 	private List<TaskList> taskLists;
 	private List<ProjectMember> projectMembers;

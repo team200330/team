@@ -120,8 +120,20 @@ public class TaskServiceImpl implements TaskService {
 	}
 
 	@Override
+	public int taskCount(int projectNo) {
+		return taskMapper.taskCount(projectNo);
+	}
+
+	@Override
+	public int taskCompletedCount(int projectNo) {
+		// TODO Auto-generated method stub
+		return taskMapper.taskCompletedCount(projectNo);
+	}
+	
+	@Override
 	public void updateTaskTimes(HashMap<String, Object> params) {
 		taskMapper.updateTaskTimes(params);
+
 	}
 
 }
