@@ -198,10 +198,10 @@
             	</div>
             	
             </div>
-            <div id="addFooter" class="modal-footer" style="border:none;color: white;background-color: #17a2b8;font-weight: bold;">
+<!--             <div id="addFooter" class="modal-footer" style="border:none;color: white;background-color: #17a2b8;font-weight: bold;">
               <i class="fas fa-user-plus"></i>
               <a href="/team/workspace/invite-workspace" style="color:white">멤버 초대하기</a>
-            </div>
+            </div> -->
           </div>
           <!-- /.modal-content -->
         </div>
